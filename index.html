@@ -6,8 +6,8 @@
   <title>Obel AI & Quality Consultants</title>
   <meta name="description" content="Enterprise AI, QMS consulting, and data automation services for SMEs — driving compliance, intelligence, and scale through trusted systems." />
   <link rel="icon" href="/favicon.ico" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body { font-family: 'IBM Plex Sans', sans-serif; }
     :root {
@@ -16,9 +16,11 @@
       --bg: #F8FAFC;
       --text: #111827;
     }
+    .bg-primary { background-color: var(--primary); }
+    .hover\:bg-accent:hover { background-color: var(--accent); }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 text-text">
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
@@ -38,7 +40,7 @@
     <section class="text-center py-16">
       <h1 class="text-4xl font-bold text-[color:var(--primary)] mb-4">Enterprise-Grade AI, Quality & Business Consulting for SMEs</h1>
       <p class="text-lg text-gray-700 mb-6 leading-relaxed">We design and deploy practical systems that scale — from ISO-compliant QMS to ML-powered automation. Trusted by businesses across retail, manufacturing, healthcare, and financial services.</p>
-      <a href="services.html" class="bg-[color:var(--primary)] text-white font-semibold px-6 py-3 rounded-full hover:bg-[color:var(--accent)] transition-transform transform hover:scale-105">Explore Our Services</a>
+      <a href="services.html" class="inline-block bg-primary text-white font-semibold px-6 py-3 rounded-full hover:bg-accent transition transform hover:scale-105">Explore Our Services</a>
     </section>
 
     <!-- Core Capabilities -->
@@ -49,12 +51,10 @@
           <h3 class="text-xl font-semibold mb-2">AI & Data Automation</h3>
           <p>ML pipelines, cloud infrastructure, data-driven decision systems — built to deliver insights and scale intelligently.</p>
         </div>
-
         <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-2">Quality Management Systems</h3>
           <p>ISO 9001/13485 compliance, document control, audit frameworks — robust systems designed for real-world operations.</p>
         </div>
-
         <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-2">Business Strategy & Process Improvement</h3>
           <p>Lean-aligned advisory to streamline processes, align KPIs, and enable measurable performance uplift.</p>
