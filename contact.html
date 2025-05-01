@@ -11,8 +11,8 @@
   <style>
     body { font-family: 'IBM Plex Sans', sans-serif; background-color: var(--bg); color: var(--text); }
     :root { --primary: #1B1F3B; --accent: #F5A623; --bg: #F8FAFC; --text: #111827; }
-    .svg-wave { position: absolute; top: 0; left: 0; width: 100%; height: 150px; }
-    #typewriter { font-size: 1.875rem; font-weight: 700; color: var(--primary); overflow: hidden; white-space: nowrap; border-right: .15em solid var(--primary); }
+    .svg-wave { position: absolute; top: 0; left: 0; width: 100%; height: 150px; z-index: -1; }
+    #typewriter { position: relative; z-index: 1; font-size: 1.875rem; font-weight: 700; color: var(--primary); overflow: hidden; white-space: nowrap; border-right: .15em solid var(--primary); }
     .floating-whatsapp { position: fixed; bottom: 24px; right: 24px; background-color: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; transition: transform .2s; }
     .floating-whatsapp:hover { transform: scale(1.1); }
   </style>
@@ -45,7 +45,8 @@
     <section class="max-w-4xl mx-auto px-4 grid gap-6">
       <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200" data-aos="fade-up">
         <div class="flex items-center mb-2">
-          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M2 4v16h20V4H2zm18 14H4V6h16v12z"/></svg>
+          <!-- Envelope Icon -->
+          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M2.25 4.5A2.25 2.25 0 014.5 2.25h15A2.25 2.25 0 0121.75 4.5v15a2.25 2.25 0 01-2.25 2.25H4.5A2.25 2.25 0 012.25 19.5v-15zM4.5 6v.495l7.5 5.004 7.5-5.004V6H4.5z"/></svg>
           <h2 class="text-xl font-semibold">Email Us</h2>
         </div>
         <p><a href="mailto:obelaiquality@gmail.com" class="text-[color:var(--primary)] underline">obelaiquality@gmail.com</a></p>
@@ -53,7 +54,8 @@
 
       <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200" data-aos="fade-up" data-aos-delay="100">
         <div class="flex items-center mb-2">
-          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15.46l-5.27-.61a1 1 0 0 0-1.04.45l-2.1 2.9a16 16 0 0 1-7.16-7.16l2.9-2.1a1 1 0 0 0 .45-1.04L8.54 3H4a1 1 0 0 0-1 1 19 19 0 1 0 19 19 1 1 0 0 0 1-1v-4.54z"/></svg>
+          <!-- Phone Icon -->
+          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.091 15.091 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27c1.21.48 2.53.74 3.89.74a1 1 0 011 1v3.5a1 1 0 01-1 1A17 17 0 013 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.36.26 2.68.74 3.89a1 1 0 01-.27 1.11l-2.2 2.2z"/></svg>
           <h2 class="text-xl font-semibold">WhatsApp</h2>
         </div>
         <p><a href="https://wa.me/27662720550" class="text-[color:var(--primary)] underline">+27 66 272 0550</a></p>
@@ -64,7 +66,7 @@
 
   <!-- Floating WhatsApp Widget -->
   <a href="https://wa.me/27662720550" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
-    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.79 11.79 0 0012 0C5.373 0 0 5.373 0 12a11.75 11.75 0 001.63 6.12L0 24l5.88-1.55A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.19-1.245-6.18-3.48-8.52zm-8.52 18c-2.01 0-3.95-.53-5.63-1.53l-.4-.24-3.49.92.93-3.4-.26-.42A9.951 9.951 0 012 12c0-5.523 4.477-10 10-10s10 4.477 10 10-4.48 10-10 10zm5.5-7.73c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15s-.78.97-.96 1.17c-.17.2-.34.22-.63.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.34.45-.51.15-.17.2-.28.3-.47.1-.17.05-.32-.02-.47-.07-.15-.68-1.63-.93-2.23-.25-.58-.5-.5-.69-.51h-.59c-.2 0-.47.07-.72.34s-.94.92-.94 2.25.96 2.61 1.1 2.79c.13.17 1.9 2.9 4.6 4.07.64.28 1.14.45 1.53.58.64.21 1.22.18 1.68.11.51-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.26-.2-.56-.35z"/></svg>
+    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.79 11.79 0 0012 0C5.373 0 0 5.373 0 12a11.75 11.75 0 001.63 6.12L0 24l5.88-1.55A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.19-1.245-6.18-3.48-8.52zm-8.52 18c-2.01 0-3.95-.53-5.63-1.53l-.4-.24-3.49.92.93-3.4-.26-.42A9.951 9.951 0 012 12c0-5.523 4.477-10 10-10s10 4.477 10 10-4.48 10-10 10zm5.5-7.73c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15s-.78.97-.96 1.17c-.17.2-.34.22-.63.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.34.45-.51.15-.17.2-.28.3-.47.10-.17.05-.32-.02-.47-.07-.15-.68-1.63-.93-2.23-.25-.58-.5-.5-.69-.51h-.59c-.20 0-.47.07-.72.34s-.94.92-.94 2.25.96 2.61 1.1 2.79c.13.17 1.9 2.90 4.60 4.07.64.28 1.14.45 1.53.58.64.21 1.22.18 1.68.11.51-.08 1.77-.72 2.02-1.42.25-.70.25-1.30.18-1.42-.07-.12-.26-.20-.56-.35z"/></svg>
   </a>
 
   <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
@@ -83,7 +85,8 @@
         el.textContent += text.charAt(idx++);
         setTimeout(type, 100);
       } else {
-        el.textContent = text; // ensure full text
+        // remove cursor after completion
+        el.style.borderRight = 'none';
       }
     }
     type();
