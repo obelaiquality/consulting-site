@@ -6,20 +6,29 @@
   <title>Obel AI & Quality Consultants</title>
   <meta name="description" content="Enterprise AI, QMS consulting, and data automation services for SMEs — driving compliance, intelligence, and scale through trusted systems." />
   <link rel="icon" href="/favicon.ico" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'IBM Plex Sans', sans-serif; }
+    :root {
+      --primary: #1B1F3B;
+      --accent: #F5A623;
+      --bg: #F8FAFC;
+      --text: #111827;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800">
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="index.html" class="font-bold text-xl text-blue-900">Obel AI & Quality Consultants</a>
+      <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
       <nav class="space-x-6 text-sm font-semibold">
-        <a href="index.html" class="text-blue-700 underline">Home</a>
-        <a href="services.html" class="hover:text-blue-700">Services</a>
-        <a href="data.html" class="hover:text-blue-700">AI & Data</a>
-        <a href="chatbot.html" class="hover:text-blue-700">Chatbot</a>
-        <a href="about.html" class="hover:text-blue-700">About</a>
-        <a href="contact.html" class="hover:text-blue-700">Contact</a>
+        <a href="index.html" class="text-[color:var(--primary)] underline">Home</a>
+        <a href="services.html" class="hover:text-[color:var(--primary)]">Services</a>
+        <a href="data.html" class="hover:text-[color:var(--primary)]">AI & Data</a>
+        <a href="chatbot.html" class="hover:text-[color:var(--primary)]">Chatbot</a>
+        <a href="about.html" class="hover:text-[color:var(--primary)]">About</a>
+        <a href="contact.html" class="hover:text-[color:var(--primary)]">Contact</a>
       </nav>
     </div>
   </header>
@@ -27,24 +36,26 @@
   <main class="max-w-6xl mx-auto px-4">
     <!-- Hero -->
     <section class="text-center py-16">
-      <h1 class="text-4xl font-bold text-blue-900 mb-4">Enterprise-Grade AI, Quality & Business Consulting for SMEs</h1>
-      <p class="text-lg text-gray-700 mb-6">We design and deploy practical systems that scale — from ISO-compliant QMS to ML-powered automation. Trusted by businesses across retail, manufacturing, health, and financial services.</p>
-      <a href="services.html" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition">Explore Our Services</a>
+      <h1 class="text-4xl font-bold text-[color:var(--primary)] mb-4">Enterprise-Grade AI, Quality & Business Consulting for SMEs</h1>
+      <p class="text-lg text-gray-700 mb-6 leading-relaxed">We design and deploy practical systems that scale — from ISO-compliant QMS to ML-powered automation. Trusted by businesses across retail, manufacturing, healthcare, and financial services.</p>
+      <a href="services.html" class="bg-[color:var(--primary)] text-white font-semibold px-6 py-3 rounded-full hover:bg-[color:var(--accent)] transition-transform transform hover:scale-105">Explore Our Services</a>
     </section>
 
-    <!-- Offerings -->
+    <!-- Core Capabilities -->
     <section class="py-12">
-      <h2 class="text-3xl font-bold text-blue-900 mb-8 text-center">Our Core Capabilities</h2>
+      <h2 class="text-3xl font-bold text-[color:var(--primary)] mb-8 text-center">Our Core Capabilities</h2>
       <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-2">AI & Data Automation</h3>
           <p>ML pipelines, cloud infrastructure, data-driven decision systems — built to deliver insights and scale intelligently.</p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-2">Quality Management Systems</h3>
           <p>ISO 9001/13485 compliance, document control, audit frameworks — robust systems designed for real-world operations.</p>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-2">Business Strategy & Process Improvement</h3>
           <p>Lean-aligned advisory to streamline processes, align KPIs, and enable measurable performance uplift.</p>
         </div>
