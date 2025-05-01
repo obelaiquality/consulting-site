@@ -7,17 +7,17 @@
   <meta name="description" content="Get in touch with Obel AI & Quality Consultants for enterprise AI, QMS, and process automation solutions for SMEs.">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
   <style>
-    body { font-family: 'IBM Plex Sans', sans-serif; }
-    :root {
-      --primary: #1B1F3B;
-      --accent: #F5A623;
-      --bg: #F8FAFC;
-      --text: #111827;
-    }
+    body { font-family: 'IBM Plex Sans', sans-serif; background-color: var(--bg); color: var(--text); }
+    :root { --primary: #1B1F3B; --accent: #F5A623; --bg: #F8FAFC; --text: #111827; }
+    .svg-wave { position: absolute; top: 0; left: 0; width: 100%; height: 150px; }
+    #typewriter { font-size: 1.875rem; font-weight: 700; color: var(--primary); overflow: hidden; white-space: nowrap; border-right: .15em solid var(--primary); }
+    .floating-whatsapp { position: fixed; bottom: 24px; right: 24px; background-color: #25D366; color: #fff; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000; transition: transform .2s; }
+    .floating-whatsapp:hover { transform: scale(1.1); }
   </style>
 </head>
-<body class="bg-gray-50 text-text">
+<body>
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
@@ -32,31 +32,61 @@
     </div>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-12">
-    <section>
-      <h1 class="text-3xl font-bold text-[color:var(--primary)] mb-6">Contact Us</h1>
-      <p class="mb-8 text-lg leading-relaxed">We're here to answer your questions and discuss how we can help your SME excel in AI, quality management, and process automation.</p>
+  <main class="relative pt-16">
+    <!-- SVG Wave Background -->
+    <svg class="svg-wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="var(--bg)" fill-opacity="1" d="M0,64L48,96C96,128,192,192,288,213.3C384,235,480,213,576,208C672,203,768,213,864,224C960,235,1056,245,1152,224C1248,203,1344,149,1392,122.7L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
 
-      <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 space-y-4">
-        <div class="flex items-center">
+    <!-- Typewriter Header -->
+    <section class="max-w-4xl mx-auto px-4 text-center mb-12">
+      <h1 id="typewriter" data-text="Have a question? Reach out to us today!"></h1>
+    </section>
+
+    <!-- Contact Cards -->
+    <section class="max-w-4xl mx-auto px-4 grid gap-6">
+      <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200" data-aos="fade-up">
+        <div class="flex items-center mb-2">
           <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M2 4v16h20V4H2zm18 14H4V6h16v12z"/></svg>
-          <p class="text-lg">📧 <a href="mailto:obelaiquality@gmail.com" class="text-[color:var(--primary)] underline">obelaiquality@gmail.com</a></p>
+          <h2 class="text-xl font-semibold">Email Us</h2>
         </div>
-        <div class="flex items-center">
-          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15.46l-5.27-.61a1 1 0 0 0-1.04.45l-2.1 2.9a16 16 0 0 1-7.16-7.16l2.9-2.1a1 1 0 0 0 .45-1.04L8.54 3H4a1 1 0 0 0-1 1 19 19 0 0 0 19 19 1 1 0 0 0 1-1v-4.54z"/></svg>
-          <p class="text-lg">📱 <a href="https://wa.me/27662720550" class="text-[color:var(--primary)] underline">+27 66 272 0550</a></p>
-        </div>
+        <p><a href="mailto:obelaiquality@gmail.com" class="text-[color:var(--primary)] underline">obelaiquality@gmail.com</a></p>
       </div>
 
-      <div class="mt-10">
-        <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Book a Discovery Call</h2>
-        <iframe src="https://calendly.com/obel-ai-quality/15min" width="100%" height="600" frameborder="0" class="rounded-2xl shadow-md"></iframe>
+      <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200" data-aos="fade-up" data-aos-delay="100">
+        <div class="flex items-center mb-2">
+          <svg class="w-6 h-6 mr-2 text-[color:var(--primary)]" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15.46l-5.27-.61a1 1 0 0 0-1.04.45l-2.1 2.9a16 16 0 0 1-7.16-7.16l2.9-2.1a1 1 0 0 0 .45-1.04L8.54 3H4a1 1 0 0 0-1 1 19 19 0 1 0 19 19 1 1 0 0 0 1-1v-4.54z"/></svg>
+          <h2 class="text-xl font-semibold">WhatsApp</h2>
+        </div>
+        <p><a href="https://wa.me/27662720550" class="text-[color:var(--primary)] underline">+27 66 272 0550</a></p>
       </div>
     </section>
+
   </main>
+
+  <!-- Floating WhatsApp Widget -->
+  <a href="https://wa.me/27662720550" target="_blank" class="floating-whatsapp" aria-label="Chat on WhatsApp">
+    <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.79 11.79 0 0012 0C5.373 0 0 5.373 0 12a11.75 11.75 0 001.63 6.12L0 24l5.88-1.55A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12 0-3.19-1.245-6.18-3.48-8.52zm-8.52 18c-2.01 0-3.95-.53-5.63-1.53l-.4-.24-3.49.92.93-3.4-.26-.42A9.951 9.951 0 012 12c0-5.523 4.477-10 10-10s10 4.477 10 10-4.48 10-10 10zm5.5-7.73c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15s-.78.97-.96 1.17c-.17.2-.34.22-.63.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.76-1.66-2.06-.17-.3-.02-.46.13-.6.13-.13.3-.34.45-.51.15-.17.2-.28.3-.47.1-.17.05-.32-.02-.47-.07-.15-.68-1.63-.93-2.23-.25-.58-.5-.5-.69-.51h-.59c-.2 0-.47.07-.72.34s-.94.92-.94 2.25.96 2.61 1.1 2.79c.13.17 1.9 2.9 4.6 4.07.64.28 1.14.45 1.53.58.64.21 1.22.18 1.68.11.51-.08 1.77-.72 2.02-1.42.25-.7.25-1.3.18-1.42-.07-.12-.26-.2-.56-.35z"/></svg>
+  </a>
 
   <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
     © 2025 Obel AI & Quality Consultants
   </footer>
+
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+    // Typewriter effect
+    const el = document.getElementById('typewriter');
+    const text = el.getAttribute('data-text');
+    let idx = 0;
+    function type() {
+      if (idx < text.length) {
+        el.textContent += text.charAt(idx++);
+        setTimeout(type, 100);
+      } else {
+        el.textContent = text; // ensure full text
+      }
+    }
+    type();
+  </script>
 </body>
 </html>
