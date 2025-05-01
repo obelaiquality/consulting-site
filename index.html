@@ -1,95 +1,59 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Obel AI & Quality Consultants</title>
-  <meta name="description" content="Enterprise AI & data automation, quality management, and business strategy consulting for SMEs—combining ML/AI expertise, robust QMS frameworks, and practical business insights."/>
-  <link rel="icon" href="/favicon.ico"/>
+  <meta name="description" content="Enterprise AI, QMS consulting, and data automation services for SMEs — driving compliance, intelligence, and scale through trusted systems." />
+  <link rel="icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
-  <style>
-    :root { --primary: #005F73; --accent: #F4A261; --bg: #F9FAFB; --text: #333; --head: #111; --card-bg: #fff; --maxw: 1200px; }
-    [data-theme="dark"] { --bg: #1E1E1E; --text: #EEE; --head: #FFF; }
-    *, *::before, *::after { box-sizing: border-box; }
-    body { margin:0; font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); line-height:1.6; }
-    a { color:var(--primary); text-decoration:none; }
-    header { background:var(--card-bg); border-bottom:1px solid #DDD; position:sticky; top:0; z-index:100; }
-    .container{max-width:var(--maxw);margin:0 auto;padding:0 2rem;}
-    nav{display:flex;align-items:center;justify-content:space-between;height:70px;}
-    .nav-links{list-style:none;display:flex;gap:1.5rem;}
-    .nav-links li a{font-weight:600;}
-    .menu-toggle, .theme-toggle{display:none;cursor:pointer;font-size:1.5rem;}
-    @media(max-width:768px){.nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--card-bg);flex-direction:column;padding:1rem;} .nav-links.show{display:flex;} .menu-toggle, .theme-toggle{display:block;}}
-    main{padding-top:2rem;}
-    section{padding:4rem 0;}
-    h1,h2,h3{color:var(--head);margin-bottom:1rem;}
-    .hero{background:var(--card-bg);text-align:center;padding:6rem 2rem;border-bottom:1px solid #EEE;}
-    .btn{display:inline-block;background:var(--primary);color:#fff;padding:.75rem 1.5rem;border-radius:6px;font-weight:600;transition:background .2s;}
-    .btn:hover{background:var(--accent);}
-    .grid{display:grid;gap:2rem;}
-    .offerings .grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
-    .card{background:var(--card-bg);border:1px solid #DDD;border-radius:8px;padding:2rem;transition:transform .2s,box-shadow .2s;}
-    .card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.1);}
-    footer{background:var(--card-bg);text-align:center;padding:2rem 0;border-top:1px solid #DDD;font-size:.875rem;color:#555;}
-  </style>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <header>
-    <div class="container nav">
-      <a href="index.html" class="logo"><strong>Obel AI & Quality Consultants</strong></a>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="data.html">AI & Data</a></li>
-        <li><a href="chatbot.html">Chatbot</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
-      </ul>
-      <div>
-        <span class="theme-toggle" id="theme-toggle">🌙</span>
-        <span class="menu-toggle" id="mobile-menu">☰</span>
-      </div>
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="font-bold text-xl text-blue-900">Obel AI & Quality Consultants</a>
+      <nav class="space-x-6 text-sm font-semibold">
+        <a href="index.html" class="text-blue-700 underline">Home</a>
+        <a href="services.html" class="hover:text-blue-700">Services</a>
+        <a href="data.html" class="hover:text-blue-700">AI & Data</a>
+        <a href="chatbot.html" class="hover:text-blue-700">Chatbot</a>
+        <a href="about.html" class="hover:text-blue-700">About</a>
+        <a href="contact.html" class="hover:text-blue-700">Contact</a>
+      </nav>
     </div>
   </header>
-  <main class="container">
+
+  <main class="max-w-6xl mx-auto px-4">
     <!-- Hero -->
-    <section class="hero" id="home">
-      <h1>Empowering SMEs with AI, Quality & Business Strategy</h1>
-      <p>We combine ML-driven automation, robust QMS frameworks, and hands-on business consulting to drive growth, compliance, and efficiency.</p>
-      <a href="services.html" class="btn">Discover Our Offerings</a>
+    <section class="text-center py-16">
+      <h1 class="text-4xl font-bold text-blue-900 mb-4">Enterprise-Grade AI, Quality & Business Consulting for SMEs</h1>
+      <p class="text-lg text-gray-700 mb-6">We design and deploy practical systems that scale — from ISO-compliant QMS to ML-powered automation. Trusted by businesses across retail, manufacturing, health, and financial services.</p>
+      <a href="services.html" class="bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition">Explore Our Services</a>
     </section>
+
     <!-- Offerings -->
-    <section class="offerings container">
-      <h2>Our Core Consulting Offerings</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>AI & Data Automation</h3>
-          <p>Led by Neil Slabbert, MLE Innovation Lead. Custom ML/AI workflows, data pipelines, and automation to streamline operations and unlock insights.</p>
+    <section class="py-12">
+      <h2 class="text-3xl font-bold text-blue-900 mb-8 text-center">Our Core Capabilities</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h3 class="text-xl font-semibold mb-2">AI & Data Automation</h3>
+          <p>ML pipelines, cloud infrastructure, data-driven decision systems — built to deliver insights and scale intelligently.</p>
         </div>
-        <div class="card">
-          <h3>Quality Management Systems</h3>
-          <p>Led by Zani Slabbert (née Malan). ISO 9001, BRCGS, internal audits, and QMS design with practical, compliance-first solutions.</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h3 class="text-xl font-semibold mb-2">Quality Management Systems</h3>
+          <p>ISO 9001/13485 compliance, document control, audit frameworks — robust systems designed for real-world operations.</p>
         </div>
-        <div class="card">
-          <h3>Business Strategy & Process Improvement</h3>
-          <p>Strategic consulting to optimize workflows, enhance decision-making, and implement scalable processes tailored to your SME’s needs.</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h3 class="text-xl font-semibold mb-2">Business Strategy & Process Improvement</h3>
+          <p>Lean-aligned advisory to streamline processes, align KPIs, and enable measurable performance uplift.</p>
         </div>
       </div>
     </section>
   </main>
-  <footer>© 2025 Obel AI & Quality Consultants</footer>
-  <script>
-    document.getElementById('mobile-menu').addEventListener('click',()=>{
-      document.querySelector('.nav-links').classList.toggle('show');
-    });
-    document.getElementById('theme-toggle').addEventListener('click',()=>{
-      const html=document.documentElement;
-      const cur=html.getAttribute('data-theme');
-      const nxt=cur==='light'?'dark':'light';
-      html.setAttribute('data-theme',nxt);
-      document.getElementById('theme-toggle').textContent=nxt==='light'?'🌙':'☀️';
-    });
-  </script>
+
+  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
+    © 2025 Obel AI & Quality Consultants
+  </footer>
 </body>
 </html>
