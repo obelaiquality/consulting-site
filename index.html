@@ -1,14 +1,95 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <!-- … head content (meta, fonts, styles) from index.html -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Obel AI & Quality Consultants</title>
+  <meta name="description" content="Enterprise AI & data automation, quality management, and business strategy consulting for SMEs—combining ML/AI expertise, robust QMS frameworks, and practical business insights."/>
+  <link rel="icon" href="/favicon.ico"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <style>
+    :root { --primary: #005F73; --accent: #F4A261; --bg: #F9FAFB; --text: #333; --head: #111; --card-bg: #fff; --maxw: 1200px; }
+    [data-theme="dark"] { --bg: #1E1E1E; --text: #EEE; --head: #FFF; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family:'Inter',sans-serif; color:var(--text); background:var(--bg); line-height:1.6; }
+    a { color:var(--primary); text-decoration:none; }
+    header { background:var(--card-bg); border-bottom:1px solid #DDD; position:sticky; top:0; z-index:100; }
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 2rem;}
+    nav{display:flex;align-items:center;justify-content:space-between;height:70px;}
+    .nav-links{list-style:none;display:flex;gap:1.5rem;}
+    .nav-links li a{font-weight:600;}
+    .menu-toggle, .theme-toggle{display:none;cursor:pointer;font-size:1.5rem;}
+    @media(max-width:768px){.nav-links{display:none;position:absolute;top:70px;left:0;right:0;background:var(--card-bg);flex-direction:column;padding:1rem;} .nav-links.show{display:flex;} .menu-toggle, .theme-toggle{display:block;}}
+    main{padding-top:2rem;}
+    section{padding:4rem 0;}
+    h1,h2,h3{color:var(--head);margin-bottom:1rem;}
+    .hero{background:var(--card-bg);text-align:center;padding:6rem 2rem;border-bottom:1px solid #EEE;}
+    .btn{display:inline-block;background:var(--primary);color:#fff;padding:.75rem 1.5rem;border-radius:6px;font-weight:600;transition:background .2s;}
+    .btn:hover{background:var(--accent);}
+    .grid{display:grid;gap:2rem;}
+    .offerings .grid{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));}
+    .card{background:var(--card-bg);border:1px solid #DDD;border-radius:8px;padding:2rem;transition:transform .2s,box-shadow .2s;}
+    .card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,0,0,0.1);}
+    footer{background:var(--card-bg);text-align:center;padding:2rem 0;border-top:1px solid #DDD;font-size:.875rem;color:#555;}
+  </style>
 </head>
 <body>
-  <!-- … header/nav from index.html -->
+  <header>
+    <div class="container nav">
+      <a href="index.html" class="logo"><strong>Obel AI & Quality Consultants</strong></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="data.html">AI & Data</a></li>
+        <li><a href="chatbot.html">Chatbot</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div>
+        <span class="theme-toggle" id="theme-toggle">🌙</span>
+        <span class="menu-toggle" id="mobile-menu">☰</span>
+      </div>
+    </div>
+  </header>
   <main class="container">
-    <!-- Hero & Offerings as before -->
+    <!-- Hero -->
+    <section class="hero" id="home">
+      <h1>Empowering SMEs with AI, Quality & Business Strategy</h1>
+      <p>We combine ML-driven automation, robust QMS frameworks, and hands-on business consulting to drive growth, compliance, and efficiency.</p>
+      <a href="services.html" class="btn">Discover Our Offerings</a>
+    </section>
+    <!-- Offerings -->
+    <section class="offerings container">
+      <h2>Our Core Consulting Offerings</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>AI & Data Automation</h3>
+          <p>Led by Neil Slabbert, MLE Innovation Lead. Custom ML/AI workflows, data pipelines, and automation to streamline operations and unlock insights.</p>
+        </div>
+        <div class="card">
+          <h3>Quality Management Systems</h3>
+          <p>Led by Zani Slabbert (née Malan). ISO 9001, BRCGS, internal audits, and QMS design with practical, compliance-first solutions.</p>
+        </div>
+        <div class="card">
+          <h3>Business Strategy & Process Improvement</h3>
+          <p>Strategic consulting to optimize workflows, enhance decision-making, and implement scalable processes tailored to your SME’s needs.</p>
+        </div>
+      </div>
+    </section>
   </main>
   <footer>© 2025 Obel AI & Quality Consultants</footer>
-  <!-- … scripts from index.html -->
+  <script>
+    document.getElementById('mobile-menu').addEventListener('click',()=>{
+      document.querySelector('.nav-links').classList.toggle('show');
+    });
+    document.getElementById('theme-toggle').addEventListener('click',()=>{
+      const html=document.documentElement;
+      const cur=html.getAttribute('data-theme');
+      const nxt=cur==='light'?'dark':'light';
+      html.setAttribute('data-theme',nxt);
+      document.getElementById('theme-toggle').textContent=nxt==='light'?'🌙':'☀️';
+    });
+  </script>
 </body>
 </html>
