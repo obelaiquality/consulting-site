@@ -4,54 +4,70 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chatbot — Obel AI & Quality Consultants</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <meta name="description" content="Custom WhatsApp AI chatbots for internal and external engagement—enterprise-grade, secure, and data-driven.">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body { font-family: 'IBM Plex Sans', sans-serif; }
+    :root {
+      --primary: #1B1F3B;
+      --accent: #F5A623;
+      --bg: #F8FAFC;
+      --text: #111827;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-text">
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="index.html" class="font-bold text-xl text-blue-900">Obel AI & Quality Consultants</a>
+      <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
       <nav class="space-x-6 text-sm font-semibold">
-        <a href="index.html" class="hover:text-blue-700">Home</a>
-        <a href="services.html" class="hover:text-blue-700">Services</a>
-        <a href="data.html" class="hover:text-blue-700">AI & Data</a>
-        <a href="chatbot.html" class="text-blue-700 underline">Chatbot</a>
-        <a href="about.html" class="hover:text-blue-700">About</a>
-        <a href="contact.html" class="hover:text-blue-700">Contact</a>
+        <a href="index.html" class="hover:text-[color:var(--primary)]">Home</a>
+        <a href="services.html" class="hover:text-[color:var(--primary)]">Services</a>
+        <a href="data.html" class="hover:text-[color:var(--primary)]">AI & Data</a>
+        <a href="chatbot.html" class="text-[color:var(--primary)] underline">Chatbot</a>
+        <a href="about.html" class="hover:text-[color:var(--primary)]">About</a>
+        <a href="contact.html" class="hover:text-[color:var(--primary)]">Contact</a>
       </nav>
     </div>
   </header>
 
   <main class="max-w-4xl mx-auto px-4 py-12">
     <section>
-      <h1 class="text-3xl font-bold mb-4 text-blue-900">WhatsApp AI Chatbot Solutions</h1>
-      <p class="mb-6 text-lg">We build custom AI-powered chatbots that integrate with WhatsApp to streamline communication, enhance support, and reduce manual workload for both internal teams and external customers.</p>
+      <h1 class="text-3xl font-bold text-[color:var(--primary)] mb-4">WhatsApp AI Chatbot Solutions</h1>
+      <p class="mb-6 text-lg leading-relaxed">Custom AI chatbots on WhatsApp to streamline support, automate FAQs, and engage users with secure, context-aware conversations.</p>
+      <p class="mb-8 text-lg leading-relaxed">Our bots integrate seamlessly with your backend systems and knowledge bases—delivering fast, accurate responses and escalating to human agents when needed.</p>
 
-      <p class="mb-6 text-lg">Obel AI & Quality Consultants delivers chatbots that are deeply integrated with your business context—backed by proprietary data, security controls, and smart fallback to live agents where needed. Our solutions are trusted across compliance-heavy and operationally complex environments.</p>
-
-      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200 mb-6">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Key Features</h2>
-        <ul class="list-disc list-inside space-y-2">
-          <li>Contextual knowledge base using your internal documents, FAQs, or SOPs</li>
-          <li>Role-based flows: distinguish between employee-facing and customer-facing dialogues</li>
-          <li>Secure fallback handover to human agents for escalation</li>
-          <li>GCP, OpenAI, and Twilio integration with minimal infrastructure burden</li>
-        </ul>
-      </div>
-
-      <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
-        <h2 class="text-2xl font-semibold text-gray-800 mb-4">Sample Node.js Integration</h2>
-        <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>const twilio = require('twilio');
+      <div class="grid md:grid-cols-2 gap-6 mb-10">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <h2 class="text-xl font-semibold mb-3">Key Features</h2>
+          <ul class="list-disc list-inside space-y-2">
+            <li>Contextual responses powered by your documents and data</li>
+            <li>Role-based interaction flows for employees vs. customers</li>
+            <li>Secure handover to live agents for escalation</li>
+            <li>Scalable serverless deployment on GCP & Twilio</li>
+          </ul>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+          <h2 class="text-xl font-semibold mb-3">Integration Example</h2>
+          <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>const twilio = require('twilio');
 const client = new twilio(accountSid, authToken);
 
-app.post('/whatsapp', (req, res) => {
+app.post('/webhook/whatsapp', async (req, res) => {
   const incoming = req.body.Body;
-  // Enrich message with vector store context
-  // Call OpenAI for intelligent response
-  // Send back a reply via WhatsApp
+  // enrich with vector-store context
+  const reply = await callOpenAI(incoming);
+  await client.messages.create({
+    from: 'whatsapp:+1234567890',
+    to: req.body.From,
+    body: reply
+  });
+  res.sendStatus(200);
 });</code></pre>
-        <a href="contact.html" class="inline-block mt-6 bg-blue-600 text-white font-semibold px-6 py-3 rounded hover:bg-blue-700 transition">Get Your Chatbot</a>
+        </div>
       </div>
+
+      <a href="contact.html" class="fixed bottom-6 right-6 bg-[color:var(--accent)] text-white font-semibold px-5 py-3 rounded-full shadow-lg hover:scale-105 transition transform">Talk to Us</a>
     </section>
   </main>
 
