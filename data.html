@@ -1,35 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <!-- … head imports -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI & Data — Obel AI & Quality Consultants</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <!-- … header/nav -->
-  <main class="container">
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="font-bold text-xl text-blue-900">Obel AI & Quality Consultants</a>
+      <nav class="space-x-6 text-sm font-semibold">
+        <a href="index.html" class="hover:text-blue-700">Home</a>
+        <a href="services.html" class="hover:text-blue-700">Services</a>
+        <a href="data.html" class="text-blue-700 underline">AI & Data</a>
+        <a href="chatbot.html" class="hover:text-blue-700">Chatbot</a>
+        <a href="about.html" class="hover:text-blue-700">About</a>
+        <a href="contact.html" class="hover:text-blue-700">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-12">
     <section>
-      <h1>AI & Data Consulting</h1>
-      <p>Led by Neil Slabbert, MLE Innovation Lead at Pepkor with deep expertise in GCP, MLOps, and algorithmic trading.</p>
-      <div class="grid">
-        <div class="card">
-          <h3>MLOps & Cloud Infrastructure</h3>
-          <p>Vertex AI Pipelines, Cloud Build/CD, Docker/K8s deployments, MLflow, secure Cloud SQL.</p>
+      <h1 class="text-3xl font-bold mb-6 text-blue-900">AI & Data Consulting</h1>
+      <p class="mb-8 text-lg">Obel AI & Quality Consultants delivers high-impact, production-ready AI and data solutions. We help SMEs deploy enterprise-grade workflows, automate decisions, and scale insights with confidence.</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h2 class="text-xl font-semibold mb-2">MLOps & Cloud Infrastructure</h2>
+          <p>Deploy and monitor ML pipelines using Vertex AI, Cloud Build/CD, Docker/K8s, and MLflow. Enable reproducibility, security, and speed at scale.</p>
         </div>
-        <div class="card">
-          <h3>Data Engineering & Pipelines</h3>
-          <p>ETL on BigQuery/Snowflake, Polars for fast DataFrame ops, Airflow scheduling, data-quality checks.</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h2 class="text-xl font-semibold mb-2">Data Engineering & Pipelines</h2>
+          <p>Build robust ETL pipelines using BigQuery, Snowflake, and Polars. Leverage Airflow for orchestration and implement rigorous data quality controls.</p>
         </div>
-        <div class="card">
-          <h3>Algorithmic Trading & Quant Strategies</h3>
-          <p>Mean reversion, arbitrage-lab setups, IBKR integration, risk-managed backtests on JSE & FX.</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h2 class="text-xl font-semibold mb-2">Algorithmic Trading & Quant R&D</h2>
+          <p>Design and test quant strategies (mean reversion, arbitrage) with IBKR integration. Build backtestable, risk-controlled models on JSE, FX, and global markets.</p>
         </div>
-        <div class="card">
-          <h3>Monitoring & Model Governance</h3>
-          <p>NannyML drift detection, custom Ops Suite alerts, model versioning & retraining pipelines.</p>
+        <div class="bg-white p-6 rounded-lg shadow-md border border-gray-200">
+          <h2 class="text-xl font-semibold mb-2">Monitoring & Model Governance</h2>
+          <p>Track model performance with NannyML, detect drift, and manage retraining cycles. Implement alerting and audit trails via Google Cloud Operations Suite.</p>
         </div>
       </div>
     </section>
   </main>
-  <!-- … footer & scripts -->
+
+  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
+    © 2025 Obel AI & Quality Consultants
+  </footer>
 </body>
 </html>
