@@ -1,28 +1,69 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <!-- … head imports -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Obel AI & Quality Consultants</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-  <!-- … header/nav -->
-  <main class="container">
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <header class="bg-white shadow sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="font-bold text-xl text-blue-900">Obel AI & Quality Consultants</a>
+      <nav class="space-x-6 text-sm font-semibold">
+        <a href="index.html" class="hover:text-blue-700">Home</a>
+        <a href="services.html" class="hover:text-blue-700">Services</a>
+        <a href="data.html" class="hover:text-blue-700">AI & Data</a>
+        <a href="chatbot.html" class="hover:text-blue-700">Chatbot</a>
+        <a href="about.html" class="hover:text-blue-700">About</a>
+        <a href="contact.html" class="text-blue-700 underline">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-12">
     <section>
-      <h1>Contact Us</h1>
-      <form name="contact" method="POST" data-netlify="true">
+      <h1 class="text-3xl font-bold mb-6 text-blue-900">Contact Us</h1>
+      <p class="mb-8 text-lg">Whether you’re looking to explore a partnership, book a discovery session, or just want to learn more about our services, we’d love to hear from you.</p>
+
+      <form name="contact" method="POST" data-netlify="true" class="bg-white p-6 rounded-lg shadow-md space-y-6 border border-gray-200">
         <input type="hidden" name="form-name" value="contact">
-        <p><label>Name<br><input type="text" name="name" required></label></p>
-        <p><label>Email<br><input type="email" name="email" required></label></p>
-        <p><label>Message<br><textarea name="message" rows="4" required></textarea></label></p>
-        <p><button type="submit" class="btn">Send</button></p>
+
+        <div>
+          <label class="block font-semibold mb-1" for="name">Name</label>
+          <input class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="text" name="name" id="name" required>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="email">Email</label>
+          <input class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" type="email" name="email" id="email" required>
+        </div>
+
+        <div>
+          <label class="block font-semibold mb-1" for="message">Message</label>
+          <textarea class="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" name="message" id="message" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded font-semibold hover:bg-blue-700 transition">Send</button>
       </form>
-      <h2>Or reach us directly</h2>
-      <p>Email: <a href="mailto:zanimalan11@gmail.com">zanimalan11@gmail.com</a></p>
-      <p>WhatsApp: <a href="https://wa.me/27662720550">066 272 0550</a></p>
-      <h2>Book a 15-min Call</h2>
-      <iframe src="https://calendly.com/obel-ai-quality/15min" width="100%" height="600" frameborder="0"></iframe>
+
+      <div class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Other ways to reach us</h2>
+        <p>Email: <a href="mailto:zanimalan11@gmail.com" class="text-blue-700 underline">zanimalan11@gmail.com</a></p>
+        <p>WhatsApp: <a href="https://wa.me/27662720550" class="text-blue-700 underline">066 272 0550</a></p>
+      </div>
+
+      <div class="mt-10">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2">Book a Discovery Call</h2>
+        <iframe src="https://calendly.com/obel-ai-quality/15min" width="100%" height="600" frameborder="0" class="rounded shadow"></iframe>
+      </div>
     </section>
   </main>
-  <!-- … footer & scripts -->
+
+  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
+    © 2025 Obel AI & Quality Consultants
+  </footer>
 </body>
 </html>
+
