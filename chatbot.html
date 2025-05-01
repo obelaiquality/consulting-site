@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <!-- … head imports -->
+  <title>Chatbot — Obel AI & Quality Consultants</title>
+</head>
+<body>
+  <!-- … header/nav -->
+  <main class="container">
+    <section>
+      <h1>WhatsApp AI Chatbot</h1>
+      <p>Deploy a custom AI chatbot on WhatsApp for both employee and customer use—powered by your data.</p>
+      <h2>Features</h2>
+      <ul>
+        <li>Contextual knowledge base from internal docs or customer FAQs</li>
+        <li>Role-based flows: internal (HR, IT) vs external (support, sales)</li>
+        <li>Easy handover to live agents when needed</li>
+      </ul>
+      <h2>Integration Example (Node.js)</h2>
+      <pre><code>const twilio = require('twilio');
+const client = new twilio(accountSid, authToken);
+app.post('/whatsapp', (req, res) => {
+  const incoming = req.body.Body;
+  // enrich with vector-store context, call OpenAI, send reply
+});</code></pre>
+      <a href="contact.html" class="btn">Get Your Chatbot</a>
+    </section>
+  </main>
+  <!-- … footer & scripts -->
+</body>
+</html>
