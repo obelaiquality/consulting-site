@@ -34,43 +34,30 @@
 
   <main class="max-w-4xl mx-auto px-4 py-12">
     <section>
-      <h1 class="text-3xl font-bold text-[color:var(--primary)] mb-4">WhatsApp AI Chatbot Solutions</h1>
-      <p class="mb-6 text-lg leading-relaxed">Custom AI chatbots on WhatsApp to streamline support, automate FAQs, and engage users with secure, context-aware conversations.</p>
-      <p class="mb-8 text-lg leading-relaxed">Our bots integrate seamlessly with your backend systems and knowledge bases—delivering fast, accurate responses and escalating to human agents when needed.</p>
+      <h1 class="text-3xl font-bold text-[color:var(--primary)] mb-4">Smart Chatbots</h1>
+      <p class="mb-6 text-lg leading-relaxed">
+        Empower your team and customers with bots that find answers instantly—no more digging through documents.
+      </p>
 
-      <div class="grid md:grid-cols-2 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-          <h2 class="text-xl font-semibold mb-3">Key Features</h2>
-          <ul class="list-disc list-inside space-y-2">
-            <li>Contextual responses powered by your documents and data</li>
-            <li>Role-based interaction flows for employees vs. customers</li>
-            <li>Secure handover to live agents for escalation</li>
-            <li>Scalable serverless deployment on GCP & Twilio</li>
-          </ul>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+          <h3 class="text-xl font-semibold mb-2">Instant Search</h3>
+          <p>Pull product info or policy details from PDFs in seconds.</p>
         </div>
         <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-          <h2 class="text-xl font-semibold mb-3">Integration Example</h2>
-          <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>const twilio = require('twilio');
-const client = new twilio(accountSid, authToken);
-
-app.post('/webhook/whatsapp', async (req, res) => {
-  const incoming = req.body.Body;
-  // enrich with vector-store context
-  const reply = await callOpenAI(incoming);
-  await client.messages.create({
-    from: 'whatsapp:+1234567890',
-    to: req.body.From,
-    body: reply
-  });
-  res.sendStatus(200);
-});</code></pre>
+          <h3 class="text-xl font-semibold mb-2">Multi-Channel</h3>
+          <p>Plug into your website chat or WhatsApp for seamless interactions.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
+          <h3 class="text-xl font-semibold mb-2">Insight Capture</h3>
+          <p>Store conversations and turn them into actionable reports.</p>
         </div>
       </div>
-
-      <a href="contact.html" class="fixed bottom-6 right-6 bg-[color:var(--accent)] text-white font-semibold px-5 py-3 rounded-full shadow-lg hover:scale-105 transition transform">Talk to Us</a>
     </section>
   </main>
 
-  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">© 2025 Obel AI & Quality Consultants</footer>
+  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
+    © 2025 Obel AI & Quality Consultants
+  </footer>
 </body>
 </html>
