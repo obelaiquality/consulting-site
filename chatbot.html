@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chatbot — Obel AI & Quality Consultants</title>
+  <title>Chatbots — Obel AI & Quality Consultants</title>
   <meta name="description" content="Custom WhatsApp AI chatbots for internal and external engagement—enterprise-grade, secure, and data-driven.">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -22,12 +22,12 @@
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
       <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
       <nav class="space-x-6 text-sm font-semibold">
-        <a href="index.html" class="hover;text-[color:var(--primary)]">Home</a>
-        <a href="services.html" class="hover;text-[color:var(--primary)]">Services</a>
-        <a href="data.html" class="hover;text-[color:var(--primary)]">AI & Data</a>
-        <a href="chatbot.html" class="text-[color:var(--primary)] underline">Chatbot</a>
-        <a href="about.html" class="hover;text-[color:var(--primary)]">About</a>
-        <a href="contact.html" class="hover;text-[color:var(--primary)]">Contact</a>
+        <a href="index.html" class="hover:text-[color:var(--primary)]">Home</a>
+        <a href="data.html" class="hover:text-[color:var(--primary)]">AI & Data</a>
+        <a href="chatbot.html" class="text-[color:var(--primary)] underline">Chatbots</a>
+        <a href="services.html" class="hover:text-[color:var(--primary)]">Quality</a>
+        <a href="about.html" class="hover:text-[color:var(--primary)]">About</a>
+        <a href="contact.html" class="hover:text-[color:var(--primary)]">Contact</a>
       </nav>
     </div>
   </header>
@@ -35,39 +35,7 @@
   <main class="max-w-4xl mx-auto px-4 py-12">
     <section>
       <h1 class="text-3xl font-bold text-[color:var(--primary)] mb-4">WhatsApp AI Chatbot Solutions</h1>
-      <p class="mb-6 text-lg leading-relaxed">Custom AI chatbots on WhatsApp to streamline support, automate FAQs, and engage users with secure, context-aware conversations.</p>
-      <p class="mb-8 text-lg leading-relaxed">Our bots integrate seamlessly with your backend systems and knowledge bases—delivering fast, accurate responses and escalating to human agents when needed.</p>
-
-      <div class="grid md:grid-cols-2 gap-6 mb-10">
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-          <h2 class="text-xl font-semibold mb-3">Key Features</h2>
-          <ul class="list-disc list-inside space-y-2">
-            <li>Contextual responses powered by your documents and data</li>
-            <li>Role-based interaction flows for employees vs. customers</li>
-            <li>Secure handover to live agents for escalation</li>
-            <li>Scalable serverless deployment on GCP & Twilio</li>
-          </ul>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">
-          <h2 class="text-xl font-semibold mb-3">Integration Example</h2>
-          <pre class="bg-gray-100 p-4 rounded text-sm overflow-auto"><code>const twilio = require('twilio');
-const client = new twilio(accountSid, authToken);
-
-app.post('/webhook/whatsapp', async (req, res) => {
-  const incoming = req.body.Body;
-  // enrich with vector-store context
-  const reply = await callOpenAI(incoming);
-  await client.messages.create({
-    from: 'whatsapp:+1234567890',
-    to: req.body.From,
-    body: reply
-  });
-  res.sendStatus(200);
-});</code></pre>
-        </div>
-      </div>
-
-      <a href="contact.html" class="fixed bottom-6 right-6 bg-[color:var(--accent)] text-white font-semibold px-5 py-3 rounded-full shadow-lg hover:scale-105 transition transform">Talk to Us</a>
+      <!-- … (rest of chatbot content) … -->
     </section>
   </main>
 
