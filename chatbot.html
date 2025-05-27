@@ -13,7 +13,7 @@
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    /* match main/data page base styles exactly */
+    /* exactly the same base styles & overrides as on the main and data pages */
     body {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -32,6 +32,7 @@
       --h3-size:     28px;
     }
 
+    /* Responsive heading overrides */
     h1 {
       font-family: 'Albert Sans', sans-serif;
       font-weight: 600;
@@ -64,6 +65,14 @@
       line-height: 1.5;
     }
 
+    blockquote {
+      font-family: 'Montserrat', serif;
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1.4;
+      color: #666666;
+    }
+
     .btn-primary {
       font-family: 'Inter', sans-serif;
       font-weight: 600;
@@ -76,7 +85,7 @@
 
     a { letter-spacing: 0; }
 
-    /* slide-in primary-color underline on hover & focus */
+    /* sliding primary-color underline on hover */
     .nav-link {
       position: relative;
       display: inline-flex;
@@ -111,7 +120,7 @@
 </head>
 <body class="bg-gray-50 text-content-text">
 
-  <!-- Header/Nav -->
+  <!-- Header/Nav (identical to main & data pages) -->
   <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
     <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
@@ -121,7 +130,7 @@
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="data.html"    class="nav-link">AI & Data</a></li>
         <li><a href="chatbot.html" class="nav-link">Chatbots</a></li>
-        <li><a href="services.html" class="nav-link">Quality</a></li>
+        <li><a href="services.html"class="nav-link">Quality</a></li>
         <li><a href="about.html"   class="nav-link">About</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
@@ -129,10 +138,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section
-    class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
-    style="background-image: url('assets/images/cody-chan-tssW6xa6v1A-unsplash.jpg');"
-  >
+  <section class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
+           style="background-image: url('assets/images/cody-chan-tssW6xa6v1A-unsplash.jpg');">
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Smart Chatbots</h1>
