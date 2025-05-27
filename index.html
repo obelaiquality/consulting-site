@@ -21,12 +21,12 @@
 </head>
 <body class="bg-gray-50 text-content-text">  <!-- # Light background and default content text colour -->
   <!-- Header/Nav -->
-  <header class="bg-black sticky top-0 z-50">  <!-- # Black top ribbon -->
-  <div class="flex justify-between items-center max-w-6xl mx-auto px-6 py-1">  <!-- # Centered container with minimal vertical padding -->
+  <header class="bg-black sticky top-0 z-50 h-40">  <!-- # Black ribbon fixed height -->
+  <div class="flex justify-between items-center h-full">  <!-- # Full-height flex container without padding -->
     <a href="index.html">  <!-- # Logo link -->
-      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />  <!-- # Logo sized to 3rem (h-40) -->
+      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />  <!-- # Logo fills full header height -->
     </a>
-    <nav class="space-x-6 text-sm font-semibold">  <!-- # Navigation links -->
+    <nav class="space-x-6 text-sm font-semibold pr-6">  <!-- # Navigation with right padding for edge separation -->
       <a href="index.html" class="text-white underline">Home</a>
       <a href="data.html" class="text-white hover:text-[color:var(--accent)]">AI & Data</a>
       <a href="chatbot.html" class="text-white hover:text-[color:var(--accent)]">Chatbots</a>
@@ -100,8 +100,8 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">  <!-- # Footer container -->
-    © 2025 Obel AI & Quality Consultants  <!-- # Copyright text -->
+  <footer class="bg-black text-white text-center text-sm py-4">  <!-- # Footer container with black background and white text -->
+    © 2025 Obel AI & Quality  <!-- # Copyright text -->
   </footer>
 </body>
 </html>  <!-- # End of document -->
