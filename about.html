@@ -1,58 +1,83 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>About Us — Obel AI & Quality Consultants</title>
-  <meta name="description" content="Obel AI & Quality Consultants transforms SME operations through enterprise-grade AI, quality management, and process automation.">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <meta name="description" content="Obel AI & Quality Consultants transforms SME operations through enterprise-grade AI, quality management, and process automation." />
+  <link rel="icon" href="/favicon.ico" />
+  <!-- Google Fonts: Albert Sans, Inter & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    body { font-family: 'Poppins', sans-serif; }
+    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
     :root {
       --primary: #1B1F3B;
       --accent: #F5A623;
-      --bg: #F8FAFC;
-      --text: #111827;
+      --overlay: rgba(0, 0, 0, 0.5);
+      --text: #FFFFFF;
+      --content-text: #111827;
+      --h1-size: 48px;
+      --h1-mobile: 32px;
+      --h2-size: 36px;
+      --h3-size: 28px;
     }
+    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
+    @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
+    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
+    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
+    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
+    .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+    a { letter-spacing: 0; }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-white shadow sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
-      <nav class="space-x-6 text-sm font-semibold">
-        <a href="index.html" class="hover:text-[color:var(--primary)]">Home</a>
-        <a href="data.html" class="hover:text-[color:var(--primary)]">AI & Data</a>
-        <a href="chatbot.html" class="hover:text-[color:var(--primary)]">Chatbots</a>
-        <a href="services.html" class="hover:text-[color:var(--primary)]">Quality</a>
-        <a href="about.html" class="text-[color:var(--primary)] underline">About</a>
-        <a href="contact.html" class="hover:text-[color:var(--primary)]">Contact</a>
-      </nav>
-    </div>
+<body class="bg-gray-50 text-content-text">
+
+  <!-- Header/Nav -->
+  <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
+    <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
+      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
+    </a>
+    <nav class="flex justify-center items-center h-full">
+      <ul class="flex space-x-8 text-white text-sm font-semibold">
+        <li><a href="index.html" class="hover:text-[color:var(--accent)]">Home</a></li>
+        <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
+        <li><a href="chatbot.html" class="hover:text-[color:var(--accent)]">Chatbots</a></li>
+        <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
+        <li><a href="about.html" class="underline text-[color:var(--accent)]">About</a></li>
+        <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main class="max-w-4xl mx-auto px-4 py-12 space-y-16">
-    <!-- Intro -->
-    <section class="text-center">
-      <h1 class="text-4xl font-bold text-[color:var(--primary)] mb-4">About Us</h1>
-      <p class="text-lg leading-relaxed text-gray-700 mx-auto max-w-2xl">
+  <!-- Hero Section -->
+  <section class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
+           style="background-image: url('assets/images/thomas-fatin-onL8m59LEoI-unsplash.jpg');">
+    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
+    <div class="relative max-w-3xl">
+      <h1>About Us</h1>
+      <p class="text-xl font-medium mt-4">
         We combine expertise in quality systems and AI-driven automation to help growing businesses work smarter—without the enterprise price tag.
       </p>
-    </section>
+    </div>
+  </section>
 
-    <!-- Background & Differentiators -->
+  <!-- Content Sections -->
+  <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
     <section class="grid md:grid-cols-2 gap-8">
-      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
         <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Our Background</h2>
-        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-gray-700 space-y-2">
+        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
           <li>Strong foundation in internal auditing and process optimization ensuring solid, compliant systems.</li>
           <li>Deep experience in AI, data automation, and custom software development for actionable efficiency.</li>
         </ul>
       </div>
-      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
         <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Why We’re Different</h2>
-        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-gray-700 space-y-2">
+        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
           <li>Holistic Expertise: Blending quality systems know-how with cutting-edge technology.</li>
           <li>SME Focus: Right-sized, budget-friendly solutions—no one-size-fits-all.</li>
           <li>Long-Term Partnership: Built for today's goals and tomorrow’s growth.</li>
@@ -61,8 +86,10 @@
     </section>
   </main>
 
-  <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
+  <!-- Footer -->
+  <footer class="bg-black text-white text-center text-sm py-4">
     © 2025 Obel AI & Quality Consultants
   </footer>
+
 </body>
 </html>
