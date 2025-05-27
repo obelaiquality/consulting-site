@@ -21,12 +21,12 @@
 </head>
 <body class="bg-gray-50 text-content-text">  <!-- # Light background and default content text colour -->
   <!-- Header/Nav -->
-  <header class="bg-black sticky top-0 z-50 h-40">  <!-- # Black ribbon fixed height -->
-  <div class="flex justify-between items-center h-40">  <!-- # Full-height flex container without padding -->
+  <header class="bg-black sticky top-0 z-50">  <!-- # Slim black ribbon auto height -->
+  <div class="flex justify-between items-center max-w-6xl mx-auto px-6 py-0">  <!-- # Removed vertical padding to tightly fit logo height -->  <!-- # Minimal vertical padding -->
     <a href="index.html">  <!-- # Logo link -->
-      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />  <!-- # Logo fills full header height -->
+      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />  <!-- # Logo sized to 3rem height -->
     </a>
-    <nav class="space-x-6 text-sm font-semibold pr-6">  <!-- # Navigation with right padding for edge separation -->
+    <nav class="space-x-6 text-sm font-semibold">  <!-- # Navigation links -->
       <a href="index.html" class="text-white underline">Home</a>
       <a href="data.html" class="text-white hover:text-[color:var(--accent)]">AI & Data</a>
       <a href="chatbot.html" class="text-white hover:text-[color:var(--accent)]">Chatbots</a>
@@ -55,7 +55,7 @@
     <div class="relative max-w-6xl mx-auto px-4 py-16">  <!-- # Centered content container -->
       <h2 class="text-3xl font-bold text-[color:var(--text)] text-center mb-8">What Makes Us Different</h2>  <!-- # Section title -->
       <div class="grid md:grid-cols-3 gap-8">  <!-- # Three-column grid on md+ -->
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200">  <!-- # Card container -->
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">  <!-- # Card container -->
           <!-- # Icon -->
           <h3 class="text-xl font-semibold mb-2 text-center text-[color:var(--primary)]">Tailored, Not One-Size-Fits-All</h3>  <!-- # Card title -->
           <p class="text-[color:var(--content-text)] text-center">Smaller, targeted solutions that fit your business—no bending to massive systems.</p>  <!-- # Card description -->
