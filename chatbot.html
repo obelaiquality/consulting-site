@@ -13,7 +13,7 @@
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    /* exactly the same base styles & overrides as on main & data pages */
+    /* exactly the same base styles & overrides as on your Data page */
     body {
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -32,7 +32,7 @@
       --h3-size:     28px;
     }
 
-    /* Responsive heading overrides */
+    /* Responsive headings exactly as Data page */
     h1 {
       font-family: 'Albert Sans', sans-serif;
       font-weight: 600;
@@ -77,7 +77,7 @@
 
     a { letter-spacing: 0; }
 
-    /* slide-in primary-color underline on hover */
+    /* exactly the same nav underline logic */
     .nav-link {
       position: relative;
       display: inline-flex;
@@ -96,18 +96,21 @@
       background-color: var(--primary);
       transition: width 0.3s ease, left 0.3s ease;
     }
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link:focus {
       color: var(--primary);
     }
-    .nav-link:hover::after {
+    .nav-link:hover::after,
+    .nav-link:focus::after {
       left: 0;
       width: 100%;
     }
+    .nav-link:focus { outline: none; }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
 
-  <!-- Header/Nav (identical to main & data pages) -->
+  <!-- Header/Nav (identical to Data page) -->
   <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
     <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
@@ -131,6 +134,7 @@
   >
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
+      <!-- same responsive classes as Data page -->
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Smart Chatbots</h1>
       <p class="text-xl font-medium mb-6">
         Empower your team and customers with bots that find answers instantly—no more digging through documents.
