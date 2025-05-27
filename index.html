@@ -6,38 +6,64 @@
   <title>Obel AI & Quality</title>  <!-- # Browser tab title -->
   <meta name="description" content="AI, Data, Quality Management & Business Automation solutions for SMEs—tailored advisory and implementation." />  <!-- # SEO description -->
   <link rel="icon" href="/favicon.ico" />  <!-- # Favicon link -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />  <!-- # Google Fonts -->
+  <!-- Google Fonts: Albert Sans, Inter & Montserrat -->
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />  <!-- # Google Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />  <!-- # Tailwind CSS -->
   <style>  <!-- # Inline CSS variables -->
-    body { font-family: 'Poppins', sans-serif; }  <!-- # Base font -->
+    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; letter-spacing: 0; }  <!-- # Body text uses Inter 400, 16px, 1.5 line-height -->  <!-- # Base font -->
     :root {  <!-- # CSS custom properties -->
       --primary: #1B1F3B;  <!-- # Primary brand colour -->
       --accent: #F5A623;  <!-- # Accent brand colour -->
       --overlay: rgba(0, 0, 0, 0.5);  <!-- # Overlay opacity colour -->
       --text: #FFFFFF;  <!-- # White text colour -->
       --content-text: #111827;  <!-- # Dark text colour for cards -->
-    }
+    
+    /* Typography scale */
+    --h1-size: 48px; /* desktop */
+    --h1-mobile: 32px;
+    --h2-size: 36px;
+    --h3-size: 28px;
+}  
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">  <!-- # Light background and default content text colour -->
+  <style>
+    /* Headings */
+    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
+    @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
+    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
+    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
+    /* Body Text */
+    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; letter-spacing: 0; }
+    /* Pull-quote */
+    blockquote { font-family: 'Montserrat', serif; font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.4; color: #666666; }
+    /* Buttons */
+    .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 4px; }
+    /* Links */
+    a { letter-spacing: 0; }
+  </style>  <!-- # Light background and default content text colour -->
   <!-- Header/Nav -->
-  <header class="bg-black sticky top-0 z-50">  <!-- # Slim black ribbon auto height -->
-  <div class="flex justify-between items-center max-w-6xl mx-auto px-6 py-0">  <!-- # Removed vertical padding to tightly fit logo height -->  <!-- # Minimal vertical padding -->
-    <a href="index.html">  <!-- # Logo link -->
-      <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />  <!-- # Logo sized to 3rem height -->
-    </a>
-    <nav class="space-x-6 text-sm font-semibold">  <!-- # Navigation links -->
-      <a href="index.html" class="text-white underline">Home</a>
-      <a href="data.html" class="text-white hover:text-[color:var(--accent)]">AI & Data</a>
-      <a href="chatbot.html" class="text-white hover:text-[color:var(--accent)]">Chatbots</a>
-      <a href="services.html" class="text-white hover:text-[color:var(--accent)]">Quality</a>
-      <a href="about.html" class="text-white hover:text-[color:var(--accent)]">About</a>
-      <a href="contact.html" class="text-white hover:text-[color:var(--accent)]">Contact</a>
-    </nav>
-  </div>
+<header class="bg-black sticky top-0 z-50 h-40 relative">
+  <!-- Logo positioned independently -->
+  <a href="index.html" class="absolute left-6 top-0 h-40 flex items-center">
+    <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
+  </a>
+  <!-- Ribbon nav centered vertically -->
+  <nav class="flex justify-center items-center h-full">
+    <ul class="flex space-x-8 text-white text-sm font-semibold">
+      <li><a href="index.html" class="underline">Home</a></li>
+      <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
+      <li><a href="chatbot.html" class="hover:text-[color:var(--accent)]">Chatbots</a></li>
+      <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
+      <li><a href="about.html" class="hover:text-[color:var(--accent)]">About</a></li>
+      <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
+    </ul>
+  </nav>
 </header>
 
-  <!-- Hero Section -->
+<!-- Hero Section -->
   <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">  <!-- # Gradient background, centered white text, padded -->
     <div class="max-w-3xl">  <!-- # Content width constraint -->
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Smart, Affordable Solutions for Growing Businesses</h1>  <!-- # Main headline responsive sizes -->
