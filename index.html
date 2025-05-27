@@ -1,17 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="light">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Obel AI & Quality</title>
-  <meta name="description" content="AI, Data, Quality Management & Business Automation solutions for SMEs—tailored advisory and implementation." />
-  <link rel="icon" href="/favicon.ico" />
+<!DOCTYPE html>  <!-- # Defines this document as HTML5 -->
+<html lang="en" data-theme="light">  <!-- # Root element with language and theme -->
+<head>  <!-- # Metadata container -->
+  <meta charset="UTF-8" />  <!-- # Character encoding -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />  <!-- # Responsive viewport settings -->
+  <title>Obel AI & Quality</title>  <!-- # Browser tab title -->
+  <meta name="description" content="AI, Data, Quality Management & Business Automation solutions for SMEs—tailored advisory and implementation." />  <!-- # SEO description -->
+  <link rel="icon" href="/favicon.ico" />  <!-- # Favicon link -->
+  <!-- Google Fonts: Albert Sans, Inter & Montserrat -->
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <style>
-    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />  <!-- # Google Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />  <!-- # Tailwind CSS -->
+  <style>  <!-- # Inline CSS variables -->
+    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; letter-spacing: 0; }
     :root {
       --primary: #1B1F3B;
       --accent: #F5A623;
@@ -23,38 +24,43 @@
       --h2-size: 36px;
       --h3-size: 28px;
     }
+  </style>
+</head>
+<body class="bg-gray-50 text-content-text">
+  <style>
+    /* Headings */
     h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
     @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
     h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
     h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
-    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
-    blockquote { font-family: 'Montserrat', serif; font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.4; color: #666; }
+    /* Body Text */
+    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; letter-spacing: 0; }
+    /* Pull-quote */
+    blockquote { font-family: 'Montserrat', serif; font-style: italic; font-weight: 400; font-size: 24px; line-height: 1.4; color: #666666; }
+    /* Buttons */
     .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 4px; }
+    /* Links */
     a { letter-spacing: 0; }
   </style>
-</head>
-<body class="bg-gray-50 text-content-text">
 
-  <!-- Logo-only header, ~65% of logo width (260px) -->
-  <header
-    class="bg-black sticky top-0 z-50 h-16 relative overflow-visible inline-block"
-    style="width:260px;">
+  <!-- Header/Nav -->
+  <header class="bg-black sticky top-0 z-50 h-[94px] relative overflow-visible">
+    <!-- Logo positioned independently and overflowing -->
     <a href="index.html" class="absolute left-6 -top-12 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
+    <!-- Ribbon nav -->
+    <nav class="flex justify-center items-center h-full">
+      <ul class="flex space-x-8 text-white text-sm font-semibold">
+        <li><a href="index.html" class="underline">Home</a></li>
+        <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
+        <li><a href="chatbot.html" class="hover:text-[color:var(--accent)]">Chatbots</a></li>
+        <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
+        <li><a href="about.html" class="hover:text-[color:var(--accent)]">About</a></li>
+        <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
+      </ul>
+    </nav>
   </header>
-
-  <!-- Main ribbon nav below the logo bar -->
-  <nav class="bg-white shadow-md">
-    <ul class="flex justify-center space-x-8 text-[color:var(--primary)] text-sm font-semibold py-4">
-      <li><a href="index.html" class="underline">Home</a></li>
-      <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
-      <li><a href="chatbot.html" class="hover:text-[color:var(--accent)]">Chatbots</a></li>
-      <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
-      <li><a href="about.html" class="hover:text-[color:var(--accent)]">About</a></li>
-      <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
-    </ul>
-  </nav>
 
   <!-- Hero Section -->
   <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
@@ -95,7 +101,7 @@
     <div class="max-w-6xl mx-auto px-4 py-12">
       <h2 class="text-3xl font-bold text-white text-center mb-6">Our Services</h2>
       <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 text-[color:var(--content-text)] transform transition hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-3 text-[color:var(--primary)]">AI, Data & Automation Solutions</h3>
           <ul class="list-disc list-inside space-y-2">
             <li>Smart search tools for your internal data</li>
@@ -104,7 +110,7 @@
             <li>Data-driven workflows that cut manual work</li>
           </ul>
         </div>
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 text-[color:var(--content-text)] transform transition hover:-translate-y-1 hover:shadow-xl">
           <h3 class="text-xl font-semibold mb-3 text-[color:var(--primary)]">Quality Systems & Internal Auditing</h3>
           <ul class="list-disc list-inside space-y-2">
             <li>Practical, value-focused reviews against ISO 9001:2015, BRCGS Agents & Brokers, and more.</li>
