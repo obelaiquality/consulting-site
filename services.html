@@ -6,34 +6,72 @@
   <title>Quality — Obel AI & Quality Consultants</title>
   <meta name="description" content="Build solid foundations with systems and audits that ensure compliance and drive continuous improvement." />
   <link rel="icon" href="/favicon.ico" />
-  <!-- Google Fonts: Albert Sans, Inter & Montserrat -->
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
+    /* match main/data/chatbot pages exactly */
+    body {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+    }
     :root {
       --primary: #1B1F3B;
-      --accent: #F5A623;
+      --accent:  #F5A623;
       --overlay: rgba(0, 0, 0, 0.5);
-      --text: #FFFFFF;
+      --text:    #FFFFFF;
       --content-text: #111827;
-      --h1-size: 48px;
-      --h1-mobile: 32px;
-      --h2-size: 36px;
-      --h3-size: 28px;
+      --h1-size:     48px;
+      --h1-mobile:   32px;
+      --h2-size:     36px;
+      --h3-size:     28px;
     }
-    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
-    @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
-    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
-    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
-    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
-    .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
+    h1 {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 600;
+      font-size: var(--h1-size);
+      line-height: 1.2;
+      letter-spacing: 0.15em;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: var(--h1-mobile); }
+    }
+    h2 {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 600;
+      font-size: var(--h2-size);
+      line-height: 1.2;
+      letter-spacing: 0.1em;
+    }
+    h3 {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 400;
+      font-size: var(--h3-size);
+      line-height: 1.2;
+      letter-spacing: 0.05em;
+    }
+    p, ul, li {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .btn-primary {
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border-radius: 4px;
+    }
     a { letter-spacing: 0; }
-
-    /* sliding primary-color underline on hover */
+    /* nav underline on hover/focus */
     .nav-link {
       position: relative;
       display: inline-flex;
@@ -52,40 +90,33 @@
       background-color: var(--primary);
       transition: width 0.3s ease, left 0.3s ease;
     }
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link:focus {
       color: var(--primary);
     }
-    .nav-link:hover::after {
+    .nav-link:hover::after,
+    .nav-link:focus::after {
       left: 0;
       width: 100%;
     }
-    /* active link */
-    .nav-link.active {
-      color: var(--primary);
-    }
-    .nav-link.active::after {
-      left: 0;
-      width: 100%;
-    }
+    .nav-link:focus { outline: none; }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
 
   <!-- Header/Nav -->
   <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
-    <!-- Logo -->
     <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
-    <!-- Navigation -->
     <nav class="flex justify-center items-center h-full">
-      <ul class="flex space-x-6 text-sm font-semibold">
+      <ul class="flex space-x-6 text-white text-sm font-semibold">
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="data.html" class="nav-link">AI & Data</a></li>
         <li><a href="chatbot.html" class="nav-link">Chatbots</a></li>
         <li><a href="services.html" class="nav-link">Quality</a></li>
         <li><a href="about.html" class="nav-link">About</a></li>
-        <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
     </nav>
   </header>
@@ -97,8 +128,8 @@
   >
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
-      <h1>Quality Systems & Auditing</h1>
-      <p class="text-xl font-medium mt-4">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Quality Systems & Auditing</h1>
+      <p class="text-xl font-medium mb-6">
         Build solid foundations with systems and audits that ensure compliance and drive continuous improvement.
       </p>
     </div>
