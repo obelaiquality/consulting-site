@@ -25,27 +25,22 @@
       --h2-size: 36px;
       --h3-size: 28px;
     }
-    /* Headings */
     h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
     @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
     h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
     h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
-    /* Body Text */
     p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
-    /* Pull-quote */
     blockquote { font-family: 'Montserrat', serif; font-style: italic; font-size: 24px; line-height: 1.4; color: #666; }
-    /* Buttons */
     .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
-    /* Links */
     a { letter-spacing: 0; }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
 
   <!-- Header/Nav -->
-  <header class="bg-black sticky top-0 z-50 h-28 relative overflow-visible">
-    <!-- Logo (160px tall) sits inside the 112px header -->
-    <a href="index.html" class="absolute left-6 top-0 h-40 flex items-center">
+  <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
+    <!-- Logo (160px tall), shifted up so only the white content shows -->
+    <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
     <!-- Navigation -->
