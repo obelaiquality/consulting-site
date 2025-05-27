@@ -38,25 +38,60 @@
     .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 4px; }
     /* Links */
     a { letter-spacing: 0; }
+
+    /* sliding primary-color underline on hover */
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      color: white;
+      transition: color 0.3s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0.25rem;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    .nav-link:hover::after {
+      left: 0;
+      width: 100%;
+    }
+    /* active link */
+    .nav-link.active {
+      color: var(--primary);
+    }
+    .nav-link.active::after {
+      left: 0;
+      width: 100%;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
 
   <!-- Header/Nav -->
   <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
-    <!-- Logo (160px tall), shifted up -->
+    <!-- Logo -->
     <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
     <!-- Navigation -->
     <nav class="flex justify-center items-center h-full">
-      <ul class="flex space-x-8 text-white text-sm font-semibold">
-        <li><a href="index.html" class="hover:text-[color:var(--accent)]">Home</a></li>
-        <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
-        <li><a href="chatbot.html" class="underline text-[color:var(--accent)]">Chatbots</a></li>
-        <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
-        <li><a href="about.html" class="hover:text-[color:var(--accent)]">About</a></li>
-        <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
+      <ul class="flex space-x-6 text-sm font-semibold">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="data.html" class="nav-link">AI & Data</a></li>
+        <li><a href="chatbot.html" class="nav-link active">Chatbots</a></li>
+        <li><a href="services.html" class="nav-link">Quality</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
     </nav>
   </header>
