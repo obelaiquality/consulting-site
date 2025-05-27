@@ -16,22 +16,49 @@
     body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
     :root {
       --primary: #1B1F3B;
-      --accent: #F5A623;
       --overlay: rgba(0, 0, 0, 0.5);
-      --text: #FFFFFF;
-      --content-text: #111827;
-      --h1-size: 48px;
-      --h1-mobile: 32px;
-      --h2-size: 36px;
-      --h3-size: 28px;
     }
-    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
-    @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
-    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
-    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
+    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: 48px; line-height: 1.2; letter-spacing: 0.15em; }
+    @media (max-width: 768px) { h1 { font-size: 32px; } }
+    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: 36px; line-height: 1.2; letter-spacing: 0.1em; }
+    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: 0.05em; }
     p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
     .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; padding: 12px 20px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.1em; }
     a { letter-spacing: 0; }
+
+    /* sliding primary-color underline on hover */
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 0.75rem;
+      color: white;
+      transition: color 0.3s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0.25rem;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: var(--primary);
+      transition: width 0.3s ease, left 0.3s ease;
+    }
+    .nav-link:hover {
+      color: var(--primary);
+    }
+    .nav-link:hover::after {
+      left: 0;
+      width: 100%;
+    }
+    .nav-link.active {
+      color: var(--primary);
+    }
+    .nav-link.active::after {
+      left: 0;
+      width: 100%;
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
@@ -42,13 +69,13 @@
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
     <nav class="flex justify-center items-center h-full">
-      <ul class="flex space-x-8 text-white text-sm font-semibold">
-        <li><a href="index.html" class="hover:text-[color:var(--accent)]">Home</a></li>
-        <li><a href="data.html" class="hover:text-[color:var(--accent)]">AI & Data</a></li>
-        <li><a href="chatbot.html" class="hover:text-[color:var(--accent)]">Chatbots</a></li>
-        <li><a href="services.html" class="hover:text-[color:var(--accent)]">Quality</a></li>
-        <li><a href="about.html" class="underline text-[color:var(--accent)]">About</a></li>
-        <li><a href="contact.html" class="hover:text-[color:var(--accent)]">Contact</a></li>
+      <ul class="flex space-x-6 text-sm font-semibold">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="data.html" class="nav-link">AI & Data</a></li>
+        <li><a href="chatbot.html" class="nav-link">Chatbots</a></li>
+        <li><a href="services.html" class="nav-link">Quality</a></li>
+        <li><a href="about.html" class="nav-link active">About</a></li>
+        <li><a href="contact.html" class="nav-link">Contact</a></li>
       </ul>
     </nav>
   </header>
