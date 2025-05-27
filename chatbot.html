@@ -16,30 +16,21 @@
     body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
     :root {
       --primary: #1B1F3B;
-      --accent: #F5A623;
       --overlay: rgba(0, 0, 0, 0.5);
-      --text: #FFFFFF;
-      --content-text: #111827;
       --h1-size: 48px;
       --h1-mobile: 32px;
-      --h2-size: 36px;
-      --h3-size: 28px;
     }
-    /* Headings */
-    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h1-size); line-height: 1.2; letter-spacing: 0.15em; }
-    @media (max-width: 768px) { h1 { font-size: var(--h1-mobile); } }
-    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: var(--h2-size); line-height: 1.2; letter-spacing: 0.1em; }
-    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: var(--h3-size); line-height: 1.2; letter-spacing: 0.05em; }
-    /* Body Text */
-    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
-    /* Pull-quote */
-    blockquote { font-family: 'Montserrat', serif; font-style: italic; font-size: 24px; line-height: 1.4; color: #666666; }
-    /* Buttons */
-    .btn-primary { font-family: 'Inter', sans-serif; font-weight: 600; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 20px; border-radius: 4px; }
-    /* Links */
-    a { letter-spacing: 0; }
-
-    /* sliding primary-color underline on hover */
+    h1 {
+      font-family: 'Albert Sans', sans-serif;
+      font-weight: 600;
+      font-size: var(--h1-size);
+      line-height: 1.2;
+      letter-spacing: 0.15em;
+    }
+    @media (max-width: 768px) {
+      h1 { font-size: var(--h1-mobile); }
+    }
+    /* slide-in primary-color underline on hover */
     .nav-link {
       position: relative;
       display: inline-flex;
@@ -58,20 +49,18 @@
       background-color: var(--primary);
       transition: width 0.3s ease, left 0.3s ease;
     }
-    .nav-link:hover {
+    .nav-link:hover,
+    .nav-link:focus {
       color: var(--primary);
     }
-    .nav-link:hover::after {
+    .nav-link:hover::after,
+    .nav-link:focus::after {
       left: 0;
       width: 100%;
     }
-    /* active link */
-    .nav-link.active {
-      color: var(--primary);
-    }
-    .nav-link.active::after {
-      left: 0;
-      width: 100%;
+    /* remove focus outline */
+    .nav-link:focus {
+      outline: none;
     }
   </style>
 </head>
@@ -79,16 +68,14 @@
 
   <!-- Header/Nav -->
   <header class="bg-black sticky top-0 z-50 h-28 relative overflow-hidden">
-    <!-- Logo -->
     <a href="index.html" class="absolute left-6 -top-6 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
-    <!-- Navigation -->
     <nav class="flex justify-center items-center h-full">
-      <ul class="flex space-x-6 text-sm font-semibold">
+      <ul class="flex space-x-6 text-white text-sm font-semibold">
         <li><a href="index.html" class="nav-link">Home</a></li>
         <li><a href="data.html" class="nav-link">AI & Data</a></li>
-        <li><a href="chatbot.html" class="nav-link active">Chatbots</a></li>
+        <li><a href="chatbot.html" class="nav-link">Chatbots</a></li>
         <li><a href="services.html" class="nav-link">Quality</a></li>
         <li><a href="about.html" class="nav-link">About</a></li>
         <li><a href="contact.html" class="nav-link">Contact</a></li>
@@ -97,7 +84,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20" style="background-image: url('assets/images/cody-chan-tssW6xa6v1A-unsplash.jpg');">
+  <section class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
+           style="background-image: url('assets/images/cody-chan-tssW6xa6v1A-unsplash.jpg');">
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
       <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Smart Chatbots</h1>
