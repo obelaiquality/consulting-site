@@ -11,14 +11,23 @@
   <style>
     body { font-family: 'Poppins', sans-serif; }
     :root {
-      --primary: #1B1F3B; --accent: #F5A623; --bg: #F8FAFC; --text: #111827;
+      --primary: #1B1F3B;
+      --accent: #F5A623;
+      --bg: #F8FAFC;
+      --text: #111827;
     }
   </style>
 </head>
 <body class="bg-gray-50 text-text">
+  <!-- Header/Nav with updated logo/icon variations -->
   <header class="bg-white shadow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-      <a href="index.html" class="font-bold text-xl text-[color:var(--primary)]">Obel AI & Quality Consultants</a>
+      <a href="index.html" class="flex items-center space-x-3">
+        <!-- Icon/Monogram -->
+        <img src="assets/images/obel-icon.svg" alt="Obel icon" class="h-8 w-8" />
+        <!-- Wordmark -->
+        <img src="assets/images/obel-wordmark.svg" alt="Obel AI & Quality Consultants" class="h-6 hidden sm:inline" />
+      </a>
       <nav class="space-x-6 text-sm font-semibold">
         <a href="index.html" class="text-[color:var(--primary)] underline">Home</a>
         <a href="data.html" class="hover:text-[color:var(--primary)]">AI & Data</a>
@@ -30,65 +39,67 @@
     </div>
   </header>
 
-  <main>
-    <!-- Hero + What Makes Us Different (backdrop) -->
-    <section
-      class="bg-cover bg-right text-black"
-      style="background-image: url('assets/images/ChatGPT Image May 12, 2025, 07_35_30 PM.png'); background-position: right top;"
-    >
-      <div class="max-w-6xl mx-auto px-4 py-16 text-center">
-        <h1 class="text-4xl font-bold mb-4">Smart, Affordable Solutions for Growing Businesses</h1>
-        <p class="text-xl font-medium mb-6">Custom AI, data, and quality system solutions — designed for your needs, built for your future.</p>
-        <p class="text-lg leading-relaxed max-w-3xl mx-auto mb-6">
-          We believe that smart technology shouldn’t only be for big corporates.<br>
-          We help SMEs unlock the power of AI, data automation, and quality systems through practical, custom-built solutions.
-        </p>
-      </div>
+  <!-- Hero + What Makes Us Different (backdrop) -->
+  <section
+    class="bg-cover bg-right text-black"
+    style="background-image: url('assets/images/hero-background.jpg'); background-position: center center;"
+  >
+    <div class="max-w-6xl mx-auto px-4 py-24 text-center">
+      <h1 class="text-5xl lg:text-6xl font-bold mb-4 text-[color:var(--primary)]">Smart, Affordable Solutions for Growing Businesses</h1>
+      <p class="text-2xl font-medium mb-6 text-[color:var(--text)]">Custom AI, data, and quality system solutions — designed for your needs, built for your future.</p>
+      <p class="text-lg leading-relaxed max-w-3xl mx-auto mb-6 text-[color:var(--text)]">
+        We believe that smart technology shouldn’t only be for big corporates.<br />
+        We help SMEs unlock the power of AI, data automation, and quality systems through practical, custom-built solutions.
+      </p>
+    </div>
 
-      <div class="max-w-6xl mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold text-[color:var(--primary)] mb-8 text-center">What Makes Us Different</h2>
-        <div class="grid md:grid-cols-3 gap-6">
-          <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-            <h3 class="text-xl font-semibold mb-2">Tailored, Not One-Size-Fits-All</h3>
-            <p>Smaller, targeted solutions that fit your business—no bending to massive systems.</p>
-          </div>
-          <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-            <h3 class="text-xl font-semibold mb-2">Cost-Effective and Accessible</h3>
-            <p>Modern tech made affordable for SMEs, without compromising quality.</p>
-          </div>
-          <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-            <h3 class="text-xl font-semibold mb-2">Built for the Long Term</h3>
-            <p>Flexible, scalable solutions that evolve with your growth.</p>
-          </div>
+    <div class="max-w-6xl mx-auto px-4 py-12">
+      <h2 class="text-3xl font-bold text-[color:var(--primary)] mb-8 text-center">What Makes Us Different</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Tailored Card with new iconography -->
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <img src="assets/images/icon-tailored.svg" alt="Tailored solutions" class="h-10 w-10 mb-4 mx-auto" />
+          <h3 class="text-xl font-semibold mb-2">Tailored, Not One-Size-Fits-All</h3>
+          <p>Smaller, targeted solutions that fit your business—no bending to massive systems.</p>
+        </div>
+        <!-- Cost-Effective Card -->
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <img src="assets/images/icon-cost.svg" alt="Cost-effective" class="h-10 w-10 mb-4 mx-auto" />
+          <h3 class="text-xl font-semibold mb-2">Cost-Effective and Accessible</h3>
+          <p>Modern tech made affordable for SMEs, without compromising quality.</p>
+        </div>
+        <!-- Built for Long Term Card -->
+        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+          <img src="assets/images/icon-scalable.svg" alt="Built for the long term" class="h-10 w-10 mb-4 mx-auto" />
+          <h3 class="text-xl font-semibold mb-2">Built for the Long Term</h3>
+          <p>Flexible, scalable solutions that evolve with your growth.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Our Services -->
-    <section class="max-w-6xl mx-auto px-4 py-12">
-      <h2 class="text-3xl font-bold text-[color:var(--primary)] mb-6 text-center">Our Services</h2>
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-          <h3 class="text-xl font-semibold mb-3">AI, Data & Automation Solutions</h3>
-          <ul class="list-disc list-inside space-y-2">
-            <li>Smart search tools for your internal data</li>
-            <li>Customer chatbot integrations into WhatsApp or website</li>
-            <li>Automation for document control, supplier reviews, reporting</li>
-            <li>Data-driven workflows that cut manual work</li>
-          </ul>
-        </div>
-        <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
-          <h3 class="text-xl font-semibold mb-3">Quality Systems & Internal Auditing</h3>
-          <ul class="list-disc list-inside space-y-2">
-            <li>Practical, value-focused reviews against ISO 9001:2015, BRCGS Agents & Brokers, and more.</li>
-            <li>Ongoing support to maintain compliance & optimize processes.</li>
-          </ul>
-        </div>
+  <!-- Our Services Section (unchanged below) -->
+  <section class="max-w-6xl mx-auto px-4 py-12">
+    <h2 class="text-3xl font-bold text-[color:var(--primary)] mb-6 text-center">Our Services</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+        <h3 class="text-xl font-semibold mb-3">AI, Data & Automation Solutions</h3>
+        <ul class="list-disc list-inside space-y-2 text-[color:var(--text)]">
+          <li>Smart search tools for your internal data</li>
+          <li>Customer chatbot integrations into WhatsApp or website</li>
+          <li>Automation for document control, supplier reviews, reporting</li>
+          <li>Data-driven workflows that cut manual work</li>
+        </ul>
       </div>
-    </section>
-    
-    <!-- ... rest unchanged ... -->
-  </main>
+      <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition-transform hover:-translate-y-1 hover:shadow-xl">
+        <h3 class="text-xl font-semibold mb-3">Quality Systems & Internal Auditing</h3>
+        <ul class="list-disc list-inside space-y-2 text-[color:var(--text)]">
+          <li>Practical, value-focused reviews against ISO 9001:2015, BRCGS Agents & Brokers, and more.</li>
+          <li>Ongoing support to maintain compliance & optimize processes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <footer class="bg-white border-t text-center text-sm py-4 text-gray-500">
     © 2025 Obel AI & Quality Consultants
