@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
     body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
@@ -42,12 +43,12 @@
 <body class="bg-gray-50 text-content-text">
 
   <!-- Header/Nav -->
-  <header class="bg-black sticky top-0 z-50 h-40 relative">
-    <!-- Logo fully inside header now -->
+  <header class="bg-black sticky top-0 z-50 h-28 relative overflow-visible">
+    <!-- Logo (160px tall) sits inside the 112px header -->
     <a href="index.html" class="absolute left-6 top-0 h-40 flex items-center">
       <img src="assets/images/obel_primary_cl.png" alt="Obel logo" class="h-40 w-auto" />
     </a>
-    <!-- Ribbon nav -->
+    <!-- Navigation -->
     <nav class="flex justify-center items-center h-full">
       <ul class="flex space-x-8 text-white text-sm font-semibold">
         <li><a href="index.html" class="underline">Home</a></li>
