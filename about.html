@@ -59,6 +59,25 @@
       left: 0;
       width: 100%;
     }
+
+    /* Hero typography adjustments to match index page */
+    .hero-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
@@ -85,7 +104,7 @@
            style="background-image: url('assets/images/daniel-leone-v7daTKlZzaw-unsplash.jpg');">
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
-      <h1>About Us</h1>
+      <h1 class="hero-title">About Us</h1>
       <p class="text-xl font-medium mt-4">
         We combine expertise in quality systems and AI-driven automation to help growing businesses work smarter—without the enterprise price tag.
       </p>

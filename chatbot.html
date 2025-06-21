@@ -106,6 +106,25 @@
       width: 100%;
     }
     .nav-link:focus { outline: none; }
+
+    /* Hero typography adjustments to match index page */
+    .hero-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
@@ -135,7 +154,7 @@
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
       <!-- same responsive classes as Data page -->
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Smart Chatbots</h1>
+      <h1 class="hero-title font-bold mb-4">Smart Chatbots</h1>
       <p class="text-xl font-medium mb-6">
         Empower your team and customers with bots that find answers instantly—no more digging through documents.
       </p>

@@ -111,6 +111,25 @@
       left: 0;
       width: 100%;
     }
+
+    /* Hero typography adjustments to match index page */
+    .hero-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
@@ -135,7 +154,7 @@
   <!-- Hero Section (now charcoal background) -->
   <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
     <div class="max-w-3xl">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+      <h1 class="hero-title font-bold mb-4">
         AI, Data & Automation Solutions
       </h1>
       <p class="text-xl font-medium mb-6">

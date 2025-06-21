@@ -52,6 +52,25 @@
       left: 0;
       width: 100%;
     }
+
+    /* Hero typography adjustments to match index page */
+    .hero-title {
+      font-family: 'Albert Sans', sans-serif;
+      font-size: 1.875rem;
+      line-height: 2.25rem;
+    }
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      .hero-title {
+        font-size: 3rem;
+        line-height: 1;
+      }
+    }
   </style>
 </head>
 <body class="bg-gray-50 text-content-text">
@@ -80,7 +99,7 @@
   >
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <div class="relative max-w-3xl">
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">Let’s Connect</h1>
+      <h1 class="hero-title font-bold mb-4">Let’s Connect</h1>
       <p class="text-xl font-medium">
         Ready to explore how smarter AI, data automation, and robust quality systems can transform your SME?
       </p>
