@@ -93,12 +93,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section
-    class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
-    style="background-image: url('assets/images/antonella-messaglia-cbJirZf2tO0-unsplash.jpg');"
-  >
-    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
-    <div class="relative max-w-3xl">
+  <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
+    <div class="max-w-3xl">
       <h1 class="hero-title font-bold mb-4">Let’s Connect</h1>
       <p class="text-xl font-medium">
         Ready to explore how smarter AI, data automation, and robust quality systems can transform your SME?
@@ -106,11 +102,13 @@
     </div>
   </section>
 
-  <!-- Contact Details -->
-  <main class="max-w-4xl mx-auto px-4 py-12 text-center text-[color:var(--content-text)]">
-    <p class="mb-8 text-lg leading-relaxed">
-      Reach out for a <strong>free exploratory session</strong>—no obligations, just a friendly chat to uncover the best fit for your needs.
-    </p>
+  <!-- Contact Details with background image -->
+  <section class="relative bg-cover bg-center" style="background-image: url('assets/images/antonella-messaglia-cbJirZf2tO0-unsplash.jpg');">
+    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
+    <main class="relative max-w-4xl mx-auto px-4 py-12 text-center text-[color:var(--content-text)]">
+      <p class="mb-8 text-lg leading-relaxed">
+        Reach out for a <strong>free exploratory session</strong>—no obligations, just a friendly chat to uncover the best fit for your needs.
+      </p>
     <div class="space-y-6 text-lg mb-10">
       <p>
         📧 Email us at
@@ -131,7 +129,8 @@
     >
       Book Your Free Session
     </a>
-  </main>
+    </main>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-black text-white text-center text-sm py-4">

@@ -100,10 +100,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
-           style="background-image: url('assets/images/daniel-leone-v7daTKlZzaw-unsplash.jpg');">
-    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
-    <div class="relative max-w-3xl">
+  <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
+    <div class="max-w-3xl">
       <h1 class="hero-title">About Us</h1>
       <p class="text-xl font-medium mt-4">
         We combine expertise in quality systems and AI-driven automation to help growing businesses work smarter—without the enterprise price tag.
@@ -111,26 +109,29 @@
     </div>
   </section>
 
-  <!-- Content Sections -->
-  <main class="max-w-6xl mx-auto px-4 py-12 space-y-16">
-    <section class="grid md:grid-cols-2 gap-8">
-      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
-        <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Our Background</h2>
-        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
-          <li>Strong foundation in internal auditing and process optimization ensuring solid, compliant systems.</li>
-          <li>Deep experience in AI, data automation, and custom software development for actionable efficiency.</li>
-        </ul>
-      </div>
-      <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
-        <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Why We’re Different</h2>
-        <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
-          <li>Holistic Expertise: Blending quality systems know-how with cutting-edge technology.</li>
-          <li>SME Focus: Right-sized, budget-friendly solutions—no one-size-fits-all.</li>
-          <li>Long-Term Partnership: Built for today's goals and tomorrow’s growth.</li>
-        </ul>
-      </div>
-    </section>
-  </main>
+  <!-- Image Section moved below hero -->
+  <section class="relative bg-cover bg-center" style="background-image: url('assets/images/daniel-leone-v7daTKlZzaw-unsplash.jpg');">
+    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
+    <div class="relative max-w-6xl mx-auto px-4 py-12 space-y-16">
+      <section class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
+          <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Our Background</h2>
+          <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
+            <li>Strong foundation in internal auditing and process optimization ensuring solid, compliant systems.</li>
+            <li>Deep experience in AI, data automation, and custom software development for actionable efficiency.</li>
+          </ul>
+        </div>
+        <div class="bg-white p-8 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
+          <h2 class="text-2xl font-semibold text-[color:var(--primary)] mb-4">Why We’re Different</h2>
+          <ul class="list-disc list-inside marker:text-[color:var(--primary)] text-[color:var(--content-text)] space-y-2">
+            <li>Holistic Expertise: Blending quality systems know-how with cutting-edge technology.</li>
+            <li>SME Focus: Right-sized, budget-friendly solutions—no one-size-fits-all.</li>
+            <li>Long-Term Partnership: Built for today's goals and tomorrow’s growth.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-black text-white text-center text-sm py-4">

@@ -141,12 +141,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section
-    class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
-    style="background-image: url('assets/images/dario-bronnimann-fGx3pcVtf2o-unsplash.jpg');"
-  >
-    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
-    <div class="relative max-w-3xl">
+  <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
+    <div class="max-w-3xl">
       <h1 class="hero-title font-bold mb-4">Quality Systems & Auditing</h1>
       <p class="text-xl font-medium mb-6">
         Build solid foundations with systems and audits that ensure compliance and drive continuous improvement.
@@ -154,9 +150,11 @@
     </div>
   </section>
 
-  <!-- Services Grid -->
-  <main class="max-w-6xl mx-auto px-4 py-12">
-    <div class="grid md:grid-cols-3 gap-6">
+  <!-- Services Grid with background image -->
+  <section class="relative bg-cover bg-center" style="background-image: url('assets/images/dario-bronnimann-fGx3pcVtf2o-unsplash.jpg');">
+    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
+    <div class="relative max-w-6xl mx-auto px-4 py-12">
+      <div class="grid md:grid-cols-3 gap-6">
       <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
         <h3 class="text-xl font-semibold mb-2 text-[color:var(--primary)]">QMS Implementation</h3>
         <p class="text-[color:var(--content-text)]">Tailored quality frameworks aligned with ISO 9001:2015 and other key standards.</p>
@@ -169,13 +167,14 @@
         <h3 class="text-xl font-semibold mb-2 text-[color:var(--primary)]">Ongoing Support</h3>
         <p class="text-[color:var(--content-text)]">Expert guidance to maintain compliance, optimise processes, and scale as you grow.</p>
       </div>
-    </div>
+      </div>
 
-    <div class="mt-8 text-center text-lg">
-      <strong>Our Expertise Includes:</strong><br />
-      ISO 9001:2015 • BRCGS Agents & Brokers • HACCP • other industry standards
+      <div class="mt-8 text-center text-lg">
+        <strong>Our Expertise Includes:</strong><br />
+        ISO 9001:2015 • BRCGS Agents & Brokers • HACCP • other industry standards
+      </div>
     </div>
-  </main>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-black text-white text-center text-sm py-4">
