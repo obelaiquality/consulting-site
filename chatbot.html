@@ -147,13 +147,8 @@
   </header>
 
   <!-- Hero Section -->
-  <section
-    class="relative bg-cover bg-center flex items-center justify-center text-white text-center px-4 py-20"
-    style="background-image: url('assets/images/greg-shield-aBVidOolyu8-unsplash.jpg');"
-  >
-    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
-    <div class="relative max-w-3xl">
-      <!-- same responsive classes as Data page -->
+  <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
+    <div class="max-w-3xl">
       <h1 class="hero-title font-bold mb-4">Smart Chatbots</h1>
       <p class="text-xl font-medium mb-6">
         Empower your team and customers with bots that find answers instantly—no more digging through documents.
@@ -161,9 +156,11 @@
     </div>
   </section>
 
-  <!-- Features Grid -->
-  <main class="max-w-6xl mx-auto px-4 py-12">
-    <div class="grid md:grid-cols-3 gap-6">
+  <!-- Features Grid with background image -->
+  <section class="relative bg-cover bg-center" style="background-image: url('assets/images/greg-shield-aBVidOolyu8-unsplash.jpg');">
+    <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
+    <div class="relative max-w-6xl mx-auto px-4 py-12">
+      <div class="grid md:grid-cols-3 gap-6">
       <div class="bg-white p-6 rounded-2xl shadow-md border border-gray-200 transform transition hover:-translate-y-1 hover:shadow-xl">
         <h3 class="text-xl font-semibold mb-2 text-[color:var(--primary)]">Instant Search</h3>
         <p class="text-[color:var(--content-text)]">Pull product info or policy details from PDFs in seconds.</p>
@@ -176,8 +173,9 @@
         <h3 class="text-xl font-semibold mb-2 text-[color:var(--primary)]">Insight Capture</h3>
         <p class="text-[color:var(--content-text)]">Store conversations and turn them into actionable reports.</p>
       </div>
+      </div>
     </div>
-  </main>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-black text-white text-center text-sm py-4">
