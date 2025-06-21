@@ -13,7 +13,7 @@
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
   <style>
-    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
+    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; margin: 0; display: flex; min-height: 100vh; flex-direction: column; }
     :root {
       --primary: #1B1F3B;
       --overlay: rgba(0, 0, 0, 0.5);
@@ -103,7 +103,7 @@
   </section>
 
   <!-- Contact Details with background image -->
-  <section class="relative bg-cover bg-center pb-20" style="background-image: url('assets/images/antonella-messaglia-cbJirZf2tO0-unsplash.jpg');">
+  <section class="relative bg-cover bg-center pb-20 flex-grow" style="background-image: url('assets/images/antonella-messaglia-cbJirZf2tO0-unsplash.jpg');">
     <div class="absolute inset-0 bg-[color:var(--overlay)]"></div>
     <main class="relative max-w-4xl mx-auto px-4 py-12 text-center text-[color:var(--content-text)]">
       <p class="mb-8 text-lg leading-relaxed">
@@ -133,7 +133,7 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-black text-white text-center text-sm py-4">
+  <footer class="bg-black text-white text-center text-sm py-4" style="margin-top: auto;">
     © 2025 Obel AI & Quality Consultants
   </footer>
 
