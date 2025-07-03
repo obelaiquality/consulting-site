@@ -12,77 +12,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
   <!-- Tailwind CSS -->
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <style>
-    body { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; margin: 0; display: flex; min-height: 100vh; flex-direction: column; }
-    :root {
-      --primary: #1B1F3B;
-      --overlay: rgba(0, 0, 0, 0.5);
-    }
-    h1 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: 48px; line-height: 1.2; letter-spacing: 0.15em; }
-    @media (max-width: 768px) { h1 { font-size: 32px; } }
-    h2 { font-family: 'Albert Sans', sans-serif; font-weight: 600; font-size: 36px; line-height: 1.2; letter-spacing: 0.1em; }
-    h3 { font-family: 'Albert Sans', sans-serif; font-weight: 400; font-size: 28px; line-height: 1.2; letter-spacing: 0.05em; }
-    p, ul, li { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 16px; line-height: 1.5; }
-    a { letter-spacing: 0; }
-
-    /* sliding primary-color underline on hover */
-    .nav-link {
-      position: relative;
-      display: inline-flex;
-      align-items: center;
-      padding: 0.125rem 0.75rem;
-      color: white;
-      transition: color 0.3s;
-    }
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: 0.25rem;
-      left: 50%;
-      width: 0;
-      height: 2px;
-      background-color: var(--primary);
-      transition: width 0.3s ease, left 0.3s ease;
-    }
-    .nav-link:hover, .nav-link.active {
-      color: #323a6b;
-    }
-    .nav-link:hover::after,
-    .nav-link.active::after {
-      left: 0;
-      width: 100%;
-    }
-
-    /* Hero typography adjustments to match index page */
-    .hero-title {
-      font-family: 'Albert Sans', sans-serif;
-      font-size: 1.875rem;
-      line-height: 2.25rem;
-    }
-    @media (min-width: 768px) {
-      .hero-title {
-        font-size: 2.25rem;
-        line-height: 2.5rem;
-      }
-    }
-    @media (min-width: 1024px) {
-      .hero-title {
-        font-size: 3rem;
-        line-height: 1;
-      }
-    }
-  </style>
+  <link href="assets/css/main.css" rel="stylesheet" />
 </head>
 <body class="flex flex-col min-h-screen bg-gray-50 text-content-text">
 
   <!-- Header/Nav -->
   <div id="site-nav"></div>
-  <script>
-    fetch('partials/nav.html')
-    .then(res => res.text())
-    .then(html => document.getElementById('site-nav').innerHTML = html);
-  </script>
-
+  <script src="assets/js/main.js"></script>
 
   <!-- Hero Section -->
   <section class="bg-gradient-to-b from-gray-700 to-gray-800 flex items-center justify-center text-white text-center px-4 py-20">
