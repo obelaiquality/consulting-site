@@ -1,0 +1,202 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+
+const sources = [
+  { label: 'ISO 9001:2026 — Quality management systems — Requirements (ISO)', url: 'https://www.iso.org/standard/88464.html' },
+  { label: 'ISO 9001:2015 — Quality management systems — Requirements (ISO, valid to 2029)', url: 'https://www.iso.org/standard/62085.html' },
+  { label: 'ISO 9000 family — Quality management (ISO)', url: 'https://www.iso.org/iso-9001-quality-management.html' },
+  { label: 'Quality management principles (ISO)', url: 'https://www.iso.org/publication/PUB100080.html' },
+  { label: 'SANAS — South African National Accreditation System', url: 'https://www.sanas.co.za/' },
+];
+
+const related = [
+  { label: 'External Document Control', href: '/product/external-document-control', note: 'The register, AI Suggestions and folder tree' },
+  { label: 'Supplier certificate tracking', href: '/guides/supplier-certificate-tracking', note: 'A practical process for expiry dates' },
+  { label: 'ISO 9001 clause map', href: '/iso-9001', note: 'How Obel MS maps to clause 7.5' },
+  { label: 'Pricing', href: '/pricing', note: 'From R1,490 a month, no setup fee' },
+];
+
+const faqs = [
+  {
+    q: "What does 'control of external documents' mean in ISO 9001?",
+    a: "It means putting the same discipline around documents you didn't write — standards, customer specifications, regulations, supplier certificates — as you do around your own procedures. You identify which external documents your quality system depends on, keep the current version available where it's used, and stop an outdated version being used by mistake.",
+  },
+  {
+    q: 'What are examples of external documents in ISO 9001?',
+    a: 'Published standards such as ISO 9001 itself or a national standard, customer drawings and specifications, laws and regulations that apply to your product, and documents your suppliers issue about their own goods: certificates of analysis, certificates of conformance, safety data sheets, and halal, kosher, allergen or GMO statements.',
+  },
+  {
+    q: 'What is the difference between internal and external documents in ISO 9001?',
+    a: 'An internal document is one your organisation authors and controls, such as a standard operating procedure or policy. An external document originates outside your organisation and you cannot change its content — you can only control how it is identified, stored, distributed and kept current within your own system.',
+  },
+  {
+    q: 'How do you prevent unintended use of obsolete documents?',
+    a: 'Track an expiry or review date for every external document, assign an owner who is notified before that date, and remove or clearly mark superseded versions so only the current one is accessible where the work happens. A register with computed status, rather than a shared folder full of files, makes this straightforward to prove at audit.',
+  },
+  {
+    q: 'Do supplier certificates count as external documents under ISO 9001?',
+    a: "Yes. A certificate of analysis, certificate of conformance or safety data sheet that a supplier issues about their own product is a document of external origin. If your organisation determined it's necessary for planning or operating your quality system, it falls under the same clause 7.5.3.2 controls as a standard or a customer specification.",
+  },
+];
+---
+<GuideLayout
+  title="Control of external documents (ISO 9001) | Obel MS"
+  description="Which documents count as external under ISO 9001, how to keep a register, and a free external document register template you can copy."
+  h1="Control of external documents under ISO 9001"
+  answer="External documents are standards, customer specifications, regulations and supplier certificates that originate outside your organisation but affect your quality management system. ISO 9001 clause 7.5.3.2 requires you to identify them, control their distribution and use, and prevent outdated versions being used. A register with an owner and a review date is the simplest way to do this."
+  published="2026-09-26"
+  updated="2026-09-26"
+  readingMinutes={7}
+  sources={sources}
+  related={related}
+  faqs={faqs}
+>
+  <h2>What counts as an external document under ISO 9001?</h2>
+  <p>
+    An external document is any piece of documented information your quality system relies on that someone outside your organisation wrote and controls. You did not author it, and you cannot change its content — you can only decide how you receive it, store it and keep it current inside your own system.
+  </p>
+  <p>The most common categories a quality manager deals with are:</p>
+  <ul>
+    <li><strong>Published standards</strong> you work to, such as ISO 9001 itself, a national standard, or an industry code of practice.</li>
+    <li><strong>Customer specifications, drawings and purchase-order terms</strong> that define what you must deliver.</li>
+    <li><strong>Laws and regulations</strong> relevant to your product, sector or export markets.</li>
+    <li><strong>Supplier certificates and statements</strong>: certificates of analysis (COA), certificates of conformance (COC), safety data sheets (SDS), halal or kosher certificates, and allergen or GMO statements.</li>
+    <li><strong>Calibration certificates</strong> issued by an external laboratory for your measuring equipment.</li>
+    <li><strong>Accreditation and certification body documents</strong>, such as your own ISO 9001 certificate from a <a href="https://www.sanas.co.za/" rel="noopener" target="_blank">SANAS</a>-accredited body.</li>
+  </ul>
+  <p>
+    Documents you write yourself — standard operating procedures, policies, work instructions and forms — are not external documents. Those fall under internal document control instead, which is a separate discipline from what's covered here.
+  </p>
+
+  <h2>What does ISO 9001 clause 7.5.3.2 actually require?</h2>
+  <p>
+    Clause 7.5.3 sets out the general controls your organisation must apply to all documented information: it must be available and suitable where and when it's needed, adequately protected, and properly managed for distribution, storage, version control and retention. Sub-clause 7.5.3.2 extends those same controls specifically to documents of external origin that your organisation has determined are necessary for planning and operating the quality system.
+  </p>
+  <p>
+    In plain terms: once you decide a customer specification or a supplier's certificate matters to your quality system, you must identify it, control how it's distributed and used, and make sure nobody works from a version that's been superseded or has lapsed. The standard doesn't prescribe a specific tool for this — a register is simply the most practical way most SMEs meet it.
+  </p>
+  <p>
+    External documents also connect to clause 8.4, control of externally provided processes, products and services — the clause that governs supplier management more broadly. A certificate you hold on a supplier is both an external document under 7.5.3.2 and evidence you're meeting 8.4's requirement to verify what a supplier provides. Our <a href="/guides/supplier-certificate-tracking">guide to tracking supplier certificates</a> covers that side of the process in more detail.
+  </p>
+  <p>
+    None of this requires a particular piece of software. A small company with two suppliers can meet clause 7.5.3.2 with a well-kept spreadsheet and some discipline about who checks it and when. What the clause does require, whatever tool you use, is that the current version is the one people actually work from, that you can show when each document was last checked, and that nobody can point to an expired certificate and say no one owned it.
+  </p>
+  <p>
+    Clause 7.5 keeps the same numbering and the same intent in both the 2015 and the 2026 editions of the standard, so this guidance applies whichever one your organisation is certified to. Certificates issued to ISO 9001:2015 stay valid during the transition to ISO 9001:2026, so you don't need to change how you control external documents just because the standard has a new edition.
+  </p>
+
+  <h2>What should an external document register include?</h2>
+  <p>
+    A register is the simplest tool for this: one row per document, naming what it is, who issued it, when it was issued, when it needs to be reviewed or renewed, who owns it, and where the current version is held. That's usually enough to answer every question an auditor will ask about a specific document in seconds rather than minutes.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Document</th>
+          <th>Type</th>
+          <th>Source / issuer</th>
+          <th>Revision or issue date</th>
+          <th>Expiry or review date</th>
+          <th>Owner</th>
+          <th>Where held</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Certificate of Analysis — Citric Acid</td>
+          <td>COA</td>
+          <td>Northwind Ingredients</td>
+          <td>14 Jan 2026</td>
+          <td>14 Jan 2027</td>
+          <td>Quality Manager</td>
+          <td>EDC Register</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>Safety Data Sheet — Packaging Adhesive</td>
+          <td>SDS</td>
+          <td>Kestrel Packaging</td>
+          <td>3 Mar 2025</td>
+          <td>No expiry set</td>
+          <td>Operations Manager</td>
+          <td>EDC Register</td>
+          <td>No expiry set</td>
+        </tr>
+        <tr>
+          <td>Halal Certification — Botanical Extract</td>
+          <td>Halal certificate</td>
+          <td>Silverleaf Botanics</td>
+          <td>20 Jun 2025</td>
+          <td>19 Jun 2026</td>
+          <td>Quality Manager</td>
+          <td>EDC Register</td>
+          <td>Expiring soon</td>
+        </tr>
+        <tr>
+          <td>Customer Drawing — Pack Format 220, Rev 3</td>
+          <td>Customer specification</td>
+          <td>Brightwell Foods (customer)</td>
+          <td>2 Sep 2025</td>
+          <td>Reviewed on next revision</td>
+          <td>Design Lead</td>
+          <td>EDC Register</td>
+          <td>Active</td>
+        </tr>
+        <tr>
+          <td>ISO 9001:2015 Certification</td>
+          <td>Quality certificate</td>
+          <td>SANAS-accredited certification body</td>
+          <td>14 Feb 2024</td>
+          <td>Annual surveillance audit</td>
+          <td>Quality Manager</td>
+          <td>EDC Register</td>
+          <td>Active</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Copy the columns above into a spreadsheet to get started, or see how <a href="/product/external-document-control">External Document Control</a> builds and keeps this register current for you without anyone typing a row by hand.
+  </p>
+
+  <h2>How do you decide when to review or replace an external document?</h2>
+  <p>
+    Use the expiry date the issuer gives you wherever one exists — most supplier certificates, halal and kosher certifications, and calibration certificates carry an explicit date. Where no expiry date is printed on the document itself, such as most safety data sheets, set a periodic review date instead, commonly annually, so someone still checks it hasn't been superseded by a newer revision.
+  </p>
+  <p>
+    Customer specifications and drawings change on their own schedule, usually tied to a revision number rather than a date — the trigger to review is a new revision landing in your inbox, not a calendar reminder. Your own ISO 9001 certificate is reviewed on the cycle your certification body sets, typically an annual surveillance audit with recertification every three years.
+  </p>
+  <p>
+    Regulations and published standards are the hardest to keep current, because nobody sends you a notification when one changes — you have to go looking. Assign a named owner to each regulation or standard you rely on, and set a routine review date, even if it's only once a year, so checking for an update is somebody's job rather than an accident.
+  </p>
+
+  <h2>What do auditors check about external document control?</h2>
+  <p>
+    Auditors testing clause 7.5.3.2 usually ask to see specific documents and trace them through your system, rather than reading a procedure. The most common checks are:
+  </p>
+  <ul>
+    <li>Can you produce the current version of a named external document, and show it's the one in use on the floor or in the file?</li>
+    <li>Can you show that a superseded or expired version isn't still sitting in a shared folder someone might open by mistake?</li>
+    <li>Do you have evidence — a register entry, a reminder, an approval — that someone reviewed the document before its expiry date, not after?</li>
+    <li>Is there a named owner for each document, so it's clear whose job it is to notice when something lapses?</li>
+  </ul>
+  <p>
+    The most common finding is not a missing document — it's a missing owner or a missing review date, which leaves a certificate to expire quietly until an audit or a customer complaint surfaces it.
+  </p>
+
+  <h2>What does Obel MS External Document Control automate?</h2>
+  <p>
+    Obel MS is built around ISO 9001 clause 7.5.3.2, and its External Document Control module removes the manual work of keeping a register like the one above up to date:
+  </p>
+  <ul>
+    <li><strong>AI Suggestions.</strong> Upload a certificate once and the document type, supplier, manufacturer, product and dates come back as suggestions you Accept, Edit or Dismiss before approving.</li>
+    <li><strong>Auto-filing by Supplier, Manufacturer and Product.</strong> Approved documents land in the right folder on their own, built from the document's own metadata — nobody drags a file into a tree by hand.</li>
+    <li><strong>Document Status computed for you.</strong> Every document shows as Active, Expiring soon, Expired or No expiry set, calculated from its own dates rather than tracked in a separate spreadsheet.</li>
+    <li><strong>Expiry digest by email and Teams.</strong> Before anything lapses, the people who need to know get a digest, instead of finding out at an audit.</li>
+  </ul>
+  <p>
+    Obel MS itself is not "ISO 9001 certified" — no software can be, since certification applies to an organisation's quality system, assessed by an accredited body, not to a tool. What Obel MS gives you is the document control structure clause 7.5.3.2 expects, built and maintained for you. See the full <a href="/iso-9001">ISO 9001 clause map</a> for how each part of the standard maps to the product, or check <a href="/pricing">pricing</a> to see what's included from the Starter plan.
+  </p>
+</GuideLayout>

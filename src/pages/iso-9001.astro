@@ -1,4 +1,5 @@
 ---
+import RelatedGuides from '../components/RelatedGuides.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 interface Row {
@@ -106,13 +107,14 @@ const moduleClass: Record<Row['module'], string> = {
 ---
 
 <BaseLayout
-  title="ISO 9001 clause map"
-  description="A clause-by-clause map of ISO 9001:2015 Clause 7.5 and related clauses, showing exactly what Obel MS supports today and what stays yours."
+  title="ISO 9001 Clause 7.5 Mapped to Software | Obel MS"
+  description="What ISO 9001 clause 7.5 and related clauses require for documented information, mapped to what Obel MS does for you and what stays yours."
+  breadcrumbs={[{ name: 'ISO 9001 clause map', href: '/iso-9001' }]}
 >
   <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
     <div class="container-x">
       <div class="max-w-[46rem]">
-        <p class="label-dot mb-6">ISO 9001:2015 clause map</p>
+        <p class="label-dot mb-6">ISO 9001:2015 and ISO 9001:2026 clause map</p>
         <h1 class="t-h2" data-split data-split-load>
           What ISO 9001 asks for, and where Obel MS does it.
         </h1>
@@ -120,6 +122,11 @@ const moduleClass: Record<Row['module'], string> = {
           No software is ISO 9001 certified — organisations are, by an accredited certification body.
           What Obel MS does is give you the document control and workflow structure that clause 7.5 and
           its neighbours ask for, so the evidence is there when your auditor asks for it.
+        </p>
+        <p class="t-body mt-4">
+          ISO 9001:2026 was published on 16 September 2026. The clause numbers below apply to both editions:
+          clause 7.5 keeps its place and its intent. Certificates to ISO 9001:2015 stay valid through a
+          three-year transition. <a class="link-u text-ink" href="/guides/iso-9001-2026-changes">See what changed</a>.
         </p>
       </div>
 
@@ -167,7 +174,8 @@ const moduleClass: Record<Row['module'], string> = {
       </div>
     </div>
   </section>
-</BaseLayout>
+<RelatedGuides slugs={['iso-9001-2026-changes', 'iso-9001-document-control', 'document-control-procedure']} />
+  </BaseLayout>
 
 <style>
   .clause-scroll { overflow-x: auto; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); }

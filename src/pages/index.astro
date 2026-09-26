@@ -20,7 +20,7 @@ const jsonLd = {
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   description: site.description,
-  offers: { '@type': 'AggregateOffer', priceCurrency: 'ZAR', lowPrice: plans[0].price.ZAR, highPrice: plans[plans.length - 1].price.ZAR, offerCount: plans.length },
+  offers: (() => { const live = plans.filter((p) => p.status === 'live'); return { '@type': 'AggregateOffer', priceCurrency: 'ZAR', lowPrice: Math.min(...live.map((p) => p.price.ZAR)), highPrice: Math.max(...live.map((p) => p.price.ZAR)), offerCount: live.length }; })(),
 };
 ---
 <BaseLayout jsonLd={jsonLd}>

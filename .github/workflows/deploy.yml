@@ -38,3 +38,20 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+  # Tell Bing (which also feeds ChatGPT search and Copilot) and other IndexNow engines what changed.
+  # The key is public by design; it is served at https://obel-ai.com/a8516f76ccfbd500482fd028ba2ac12d.txt
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_KEY: a8516f76ccfbd500482fd028ba2ac12d
+    steps:
+      - name: Submit sitemap URLs to IndexNow
+        run: |
+          sleep 30
+          urls=$(curl -fsSL https://obel-ai.com/sitemap-0.xml | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//' | jq -R . | jq -s .)
+          echo "Submitting $(echo "$urls" | jq length) URLs"
+          jq -n --arg key "$INDEXNOW_KEY" --argjson urls "$urls" \
+            '{host: "obel-ai.com", key: $key, keyLocation: ("https://obel-ai.com/" + $key + ".txt"), urlList: $urls}' \
+            | curl -sS -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-

@@ -10,21 +10,51 @@ interface Props {
   ogImage?: string;
   noindex?: boolean;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Trail below Home, e.g. [{ name: 'Product', href: '/product/...' }]. Adds BreadcrumbList JSON-LD. */
+  breadcrumbs?: { name: string; href: string }[];
+  ogType?: 'website' | 'article';
 }
-const { title, description = site.description, ogImage = '/og.png', noindex = false, jsonLd } = Astro.props;
-const fullTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.tagline}`;
+const { title, description = site.description, ogImage = '/og.png', noindex = false, jsonLd, breadcrumbs, ogType = 'website' } = Astro.props;
+const fullTitle = title ? (title.includes(site.name) || title.includes('Obel') ? title : `${title} | ${site.name}`) : `${site.name}: Hosted ISO 9001 Document Control for SMEs`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogUrl = new URL(ogImage, site.url).href;
 
 const org = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': `${site.url}/#organization`,
   name: site.company,
+  alternateName: 'Obel AI',
   url: site.url,
   email: site.email,
   logo: `${site.url}/favicon.png`,
+  description: `${site.company} builds and hosts ${site.name}, ISO 9001 document control and workflow management software for small and mid-sized companies.`,
+  areaServed: site.areaServed,
+  contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: site.email, availableLanguage: ['English'] },
+  ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),
 };
-const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+const webSite = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${site.url}/#website`,
+  name: site.name,
+  url: site.url,
+  inLanguage: 'en-ZA',
+  publisher: { '@id': `${site.url}/#organization` },
+};
+const crumbs = breadcrumbs?.length
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [{ name: 'Home', href: '/' }, ...breadcrumbs].map((b, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: b.name,
+        item: new URL(b.href, site.url).href,
+      })),
+    }
+  : null;
+const ld = [org, webSite, ...(crumbs ? [crumbs] : []), ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
 ---
 <!doctype html>
 <html lang="en-ZA">
@@ -39,7 +69,8 @@ const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])]
     <link rel="icon" href="/favicon.png" type="image/png" sizes="150x150" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <meta name="theme-color" content="#111110" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:locale" content="en_ZA" />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -52,6 +83,7 @@ const ld = [org, ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])]
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable site summary" />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <!-- Mark JS early so reveal styles apply before paint; fail-safe shows content if the motion engine never boots. -->
     <script is:inline>

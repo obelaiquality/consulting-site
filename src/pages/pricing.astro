@@ -1,14 +1,15 @@
 ---
+import RelatedGuides from '../components/RelatedGuides.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PricingTable from '../components/sections/PricingTable.astro';
 import Faq from '../components/sections/Faq.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
-import { plans, site } from '../data/site';
+import { plans, site, addons, services, pricingTerms, discounts } from '../data/site';
 
 type Cell = true | false | string;
 interface CompareRow {
   label: string;
-  values: [Cell, Cell, Cell];
+  values: [Cell, Cell, Cell, Cell];
 }
 interface CompareGroup {
   name: string;
@@ -21,40 +22,42 @@ const compareGroups: CompareGroup[] = [
   {
     name: 'Documents',
     rows: [
-      { label: 'External Document Control', values: [true, true, true] },
-      { label: 'Supplier certificate and expiry tracking', values: [true, true, true] },
-      { label: 'Auto-filed Supplier → Manufacturer → Product folders', values: [true, true, true] },
-      { label: 'Internal Document Control', values: ['—', '—', 'Early access'] },
+      { label: 'External Document Control', values: [true, true, true, true] },
+      { label: 'Expiry alerts by email and Teams', values: [true, true, true, true] },
+      { label: 'Auto-filed Supplier, Manufacturer and Product folders', values: [true, true, true, true] },
+      { label: 'Audit trail and document versioning', values: [true, true, true, true] },
+      { label: 'AI metadata extraction (digital PDFs)', values: ['100 a month', '300 a month', '1,000 a month', 'Agreed'] },
+      { label: 'Document storage', values: ['10 GB', '25 GB', '100 GB', 'Agreed'] },
     ],
   },
   {
     name: 'Workflows',
     rows: [
-      { label: 'Workflow Manager', values: [false, true, true] },
-      { label: 'Nonconformance, change, complaint and supplier-deviation templates', values: [false, true, true] },
-      { label: 'Approvals routed by job title', values: [false, true, true] },
-      { label: 'Effectiveness verification and PDF record reports', values: [false, true, true] },
-      { label: 'Custom workflow templates built with you', values: [false, false, true] },
+      { label: 'Workflow Manager', values: [false, false, true, true] },
+      { label: 'Nonconformance, CAPA, change, complaint and deviation templates', values: [false, false, true, true] },
+      { label: 'Approvals routed by job title', values: [false, false, true, true] },
+      { label: 'Effectiveness verification and PDF record reports', values: [false, false, true, true] },
+      { label: 'AI stage and executive summaries', values: [false, false, true, true] },
+      { label: 'AI assistant with a usage cap', values: [false, false, 'Coming soon', 'Coming soon'] },
     ],
   },
   {
     name: 'Platform',
     rows: [
-      { label: 'Editors', values: ['Up to 5', 'Up to 20', 'Unlimited'] },
-      { label: 'Viewers', values: ['Unlimited', 'Unlimited', 'Unlimited'] },
-      { label: 'Full audit trail', values: [true, true, true] },
-      { label: 'AI metadata extraction on upload', values: [false, true, true] },
-      { label: 'Daily backups', values: [true, true, true] },
-      { label: 'Dedicated cloud project on request', values: [false, false, true] },
+      { label: 'Named users', values: ['3', '10', '30', 'Agreed'] },
+      { label: 'Read-only viewers', values: ['Unlimited', 'Unlimited', 'Unlimited', 'Unlimited'] },
+      { label: 'Hosted on Google Cloud in Johannesburg', values: [true, true, true, true] },
+      { label: 'Daily backups, encrypted at rest and in transit', values: [true, true, true, true] },
+      { label: 'Dedicated environment, HA database, UAT copy, release hold', values: [false, false, false, true] },
     ],
   },
   {
     name: 'Service',
     rows: [
-      { label: 'Support', values: ['Email', 'Priority', 'Priority'] },
-      { label: 'Guided migration of your existing registers', values: [false, true, true] },
-      { label: 'Quarterly system review with a quality consultant', values: [false, false, true] },
-      { label: 'Audit-day support', values: [false, false, true] },
+      { label: 'Support', values: ['Email, 5 business days', 'Email, 2 business days', 'Next business day', 'Named contact'] },
+      { label: 'Quarterly 1-hour review call', values: [false, false, true, true] },
+      { label: 'Quality agreement', values: [false, false, false, true] },
+      { label: 'Once-off onboarding', values: ['None', 'R6,500', 'R15,000', 'Agreed'] },
     ],
   },
 ];
@@ -65,19 +68,23 @@ const jsonLd = {
   name: site.name,
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
-  offers: plans.map((p) => ({
-    '@type': 'Offer',
-    name: p.name,
-    price: p.price.ZAR,
-    priceCurrency: 'ZAR',
-    url: `${site.url}/pricing`,
-  })),
+  offers: plans
+    .filter((p) => p.status === 'live')
+    .map((p) => ({
+      '@type': 'Offer',
+      name: p.name,
+      price: p.price.ZAR,
+      priceCurrency: 'ZAR',
+      priceSpecification: { '@type': 'UnitPriceSpecification', price: p.price.ZAR, priceCurrency: 'ZAR', unitText: 'MONTH', valueAddedTaxIncluded: false },
+      url: `${site.url}/pricing`,
+    })),
 };
 ---
 
 <BaseLayout
-  title="Pricing"
-  description="Obel MS pricing: hosted External Document Control and Workflow Manager, from R1,490 a month. No setup fee on Starter and Growth."
+  title="ISO 9001 QMS Software Pricing | Obel MS"
+  description="Hosted ISO 9001 document control from R1,490 a month excl. VAT. Workflow Manager from R7,950. Hosted in Johannesburg, support included."
+  breadcrumbs={[{ name: 'Pricing', href: '/pricing' }]}
   jsonLd={jsonLd}
 >
   <section class="pricing-hero section-y !pb-16">
@@ -86,7 +93,7 @@ const jsonLd = {
         Simple pricing. Hosting and support included.
       </h1>
       <p class="t-lead mt-6" data-reveal>
-        Three plans, priced by tier rather than per user. Pick annual or monthly billing, and ZAR or USD.
+        Three plans on sale today, and a validated plan for regulated teams in 2027. Hosting, backups, updates and support are in every plan. All ZAR prices exclude 15% VAT.
       </p>
     </div>
   </section>
@@ -102,7 +109,7 @@ const jsonLd = {
       <h2 id="compare-heading" class="t-h2 max-w-[20ch]" data-reveal>Compare plans in detail</h2>
       <div class="compare-scroll mt-10">
         <table class="compare-table">
-          <caption class="sr-only">Feature comparison across Starter, Growth and Scale</caption>
+          <caption class="sr-only">Feature comparison across Lite, Essentials, Professional and Validated</caption>
           <thead>
             <tr>
               <th scope="col" class="compare-feature-col">Feature</th>
@@ -147,8 +154,41 @@ const jsonLd = {
     </div>
   </section>
 
+  <section class="section-y !pt-0" aria-labelledby="extras-heading">
+    <div class="container-x grid gap-12 lg:grid-cols-2">
+      <div>
+        <h2 id="extras-heading" class="t-h3">Add-ons</h2>
+        <p class="t-body mt-2">Grow a plan without changing tier.</p>
+        <dl class="extras mt-6">
+          {addons.map((a) => (
+            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum">R{a.price.ZAR.toLocaleString('en-US')} {a.unit}</dd></div>
+          ))}
+        </dl>
+      </div>
+      <div>
+        <h2 class="t-h3">Quality consulting</h2>
+        <p class="t-body mt-2">Our consultants help with implementation, internal audits and audit days.</p>
+        <dl class="extras mt-6">
+          {services.map((a) => (
+            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum">R{a.price.ZAR.toLocaleString('en-US')} {a.unit}</dd></div>
+          ))}
+        </dl>
+      </div>
+      <div class="lg:col-span-2">
+        <h2 class="t-h3">Discounts</h2>
+        <dl class="extras mt-6 max-w-2xl">
+          {discounts.map((d) => (
+            <div class="extras-row"><dt>{d.name}</dt><dd>{d.value}</dd></div>
+          ))}
+        </dl>
+        <p class="text-[13px] text-muted mt-6">{pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa. {pricingTerms.availability}</p>
+      </div>
+    </div>
+  </section>
+
   <Faq tags={['pricing']} heading="Pricing questions" withSchema />
 
+  <RelatedGuides slugs={['qms-software-cost', 'spreadsheets-vs-qms-software', 'iso-9001-software-south-africa']} />
   <CtaBand />
 </BaseLayout>
 
@@ -205,4 +245,8 @@ const jsonLd = {
   .compare-table tbody th.compare-feature-col { font-weight: 400; color: var(--color-muted); }
   .compare-cell { text-align: center; color: var(--color-muted); }
   .compare-cell.is-featured { background: var(--color-surface-2); }
+  .extras { border-top: 1px solid var(--color-line); }
+  .extras-row { display: flex; justify-content: space-between; gap: 1rem; padding: 14px 0; border-bottom: 1px solid var(--color-line); font-size: 15px; }
+  .extras-row dt { color: var(--color-ink); }
+  .extras-row dd { color: var(--color-muted); }
 </style>

@@ -140,6 +140,16 @@
   .link-u { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .45s var(--ease-out); }
   .link-u:hover { background-size: 100% 1px; }
 
+  /* Lead forms: sending state + fallback panel (src/scripts/lead.ts). */
+  .btn.is-sending { pointer-events: none; opacity: .85; }
+  .btn.is-sending::after { content: ''; width: 14px; height: 14px; border-radius: 99px; border: 2px solid currentColor; border-right-color: transparent; animation: lead-spin .7s linear infinite; }
+  @keyframes lead-spin { to { transform: rotate(360deg); } }
+  .lead-fb { margin-top: 18px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--color-line); background: var(--color-surface); }
+  .lead-fb-title { font-size: 14.5px; font-weight: 500; color: var(--color-ink); }
+  .lead-fb-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .lead-fb-note { margin-top: 12px; font-size: 13px; color: var(--color-muted); }
+  .lead-ok { padding: 22px; border-radius: 14px; border: 1px solid var(--color-green-border); background: rgb(220 252 231 / .45); }
+
   /* Subtle dotted paper grid used behind product mocks. */
   .paper-grid { background-image: radial-gradient(rgb(17 17 16 / 0.09) 1px, transparent 1px); background-size: 22px 22px; }
 }

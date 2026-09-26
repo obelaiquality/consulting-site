@@ -1,0 +1,254 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+
+const changesTable = [
+  {
+    change: 'Quality culture and ethical behaviour',
+    detail: 'Leadership commitment (5.1.1) and awareness (7.3) now name quality culture and ethical behaviour explicitly, rather than leaving them implied.',
+    action: 'Add a line on quality culture to your induction and toolbox talks, and to leadership’s own commitments.',
+  },
+  {
+    change: 'Climate change integrated',
+    detail: 'The 2024 climate-change amendment to clauses 4.1 and 4.2 is now built into the core text, so you must decide whether climate change is a relevant issue for your organisation and interested parties.',
+    action: 'Add a short climate-change line to your context-of-the-organisation review, even if the answer is "not currently material."',
+  },
+  {
+    change: 'Risks and opportunities split in 6.1',
+    detail: 'Clause 6.1 separates the determination and evaluation of risks from the determination and evaluation of opportunities, instead of treating them as one combined exercise.',
+    action: 'Split your risk register into two columns, or two short sections, so opportunities get their own space instead of trailing after risks.',
+  },
+  {
+    change: 'Continual improvement merged into 10.1',
+    detail: 'Clause 10 moves from three subclauses to two: continual improvement, previously 10.3, is now folded into 10.1. Nonconformity and corrective action (10.2) is reported as substantively unchanged.',
+    action: 'Update the clause references in your procedures; the corrective action process itself does not need to change.',
+  },
+  {
+    change: 'New management review input',
+    detail: 'Management review (9.3.2) gains an explicit input covering changes in the needs and expectations of interested parties.',
+    action: 'Add a standing agenda item to management review that asks what has changed for customers, regulators and other interested parties.',
+  },
+];
+
+const checklist = [
+  { step: 'Gap assessment', meaning: 'Compare your current documented information and procedures against the 2026 clause wording, and list what genuinely needs to change versus what is just a terminology update.' },
+  { step: 'Update documented-information wording', meaning: 'Replace "maintain" and "retain" in your own procedures with the standard’s new "available as documented information" phrasing, where you have copied the old wording directly.' },
+  { step: 'Awareness and quality culture', meaning: 'Brief your team on quality culture and ethical behaviour as an explicit expectation, not just an implied one, and record that the briefing happened.' },
+  { step: 'Management review agenda', meaning: 'Add interested parties’ changing needs and expectations, and climate change where relevant, as standing agenda items.' },
+  { step: 'Talk to your certification body', meaning: 'Ask when they expect to be accredited to audit against the 2026 edition, and when your own recertification or surveillance audit is likely to move to it.' },
+];
+
+const principles = [
+  { name: 'Customer focus', body: 'Understand what customers and other interested parties value, and let that shape decisions.' },
+  { name: 'Leadership', body: 'Leaders set a clear purpose and align people around shared objectives.' },
+  { name: 'Engagement of people', body: 'People at every level are competent, resourced and empowered to contribute.' },
+  { name: 'Process approach', body: 'Activities are managed as connected processes, not isolated tasks.' },
+  { name: 'Improvement', body: 'Improvement is an ongoing habit, not a one-off project.' },
+  { name: 'Evidence-based decision-making', body: 'Decisions are informed by reliable data and feedback, not assumptions.' },
+  { name: 'Relationship management', body: 'Long-term success depends on strong relationships with suppliers, partners and other interested parties.' },
+];
+
+const faqs = [
+  {
+    q: 'What changed in ISO 9001:2026?',
+    a: 'ISO 9001:2026 is the sixth edition of the standard, published 16 September 2026. It keeps the same clauses 4 to 10 and the same certification logic, but unifies "maintain" and "retain" into a single "available as documented information" wording, makes quality culture and ethical behaviour explicit, integrates the 2024 climate-change amendment, splits risks and opportunities in clause 6.1, and adds a management review input on interested parties’ changing needs.',
+  },
+  {
+    q: 'What is the ISO 9001:2026 transition period?',
+    a: 'The transition period is three years from publication. ISO 9001:2015 certificates stay valid for audits and certification for about three years after the 16 September 2026 publication date, so by the end of September 2029 organisations are expected to have moved to the 2026 edition.',
+  },
+  {
+    q: 'Do I need to recertify to ISO 9001:2026 right now?',
+    a: 'No. Your existing ISO 9001:2015 certificate remains valid through the transition window. Your certification body needs its own accreditation to the 2026 edition before it can audit against it, so ask them when they expect to be ready and when your next surveillance or recertification audit is likely to move over.',
+  },
+  {
+    q: 'What changed for document control in ISO 9001:2026?',
+    a: 'Document control keeps its clause number, 7.5, and its three-part structure. The main change is wording: the separate verbs "maintain documented information" and "retain documented information" are unified into "available as documented information" throughout the standard. This is described as a clarity change, not a new requirement, so your document and record controls do not need to be rebuilt.',
+  },
+  {
+    q: 'Is ISO 9001:2026 a completely new standard?',
+    a: 'No. Every source that has reviewed it describes it as an evolutionary, measured revision, not a rebuild. The Harmonized Structure, the process approach and the core requirements are retained; the changes are targeted refinements to language, emphasis and a handful of clauses, rather than a wholesale restructuring like the 2000 or 2008 revisions.',
+  },
+  {
+    q: 'Does software need to be ISO 9001:2026 certified?',
+    a: 'No. Certification applies to an organisation’s quality management system, not to software. A document control or workflow tool can be built around the requirements of clause 7.5, in both the 2015 and 2026 editions, but it is your organisation, not the software, that holds the certificate.',
+  },
+];
+---
+<GuideLayout
+  title="ISO 9001:2026: what changed for document control | Obel MS"
+  description="What actually changed in ISO 9001:2026, the transition timeline for your 2015 certificate, and what it means for document control under clause 7.5."
+  h1="ISO 9001:2026: what changed for document control"
+  answer={`ISO 9001:2026, published 16 September 2026, keeps the same clause 4–10 structure and keeps clause 7.5 for documented information, now worded as "available as documented information." It adds quality culture, integrates climate change, and splits risks and opportunities in clause 6.1. Your 2015 certificate stays valid for about three years, until around the end of September 2029.`}
+  published="2026-09-26"
+  updated="2026-09-26"
+  readingMinutes={8}
+  sources={[
+    { label: 'ISO 9001:2026 — Quality management systems — Requirements (ISO)', url: 'https://www.iso.org/standard/88464.html' },
+    { label: 'ISO/TC 176/SC 2 — committee news on the FDIS approval and publication', url: 'https://committee.iso.org/sites/tc176sc2/home/news/content-left-area/news-and-updates/news-1.html' },
+    { label: 'Quality management principles – Your foundation for success (ISO, PUB100080)', url: 'https://www.iso.org/publication/PUB100080.html' },
+    { label: 'BSI — ISO 9001:2026 key changes and guidance', url: 'https://www.bsigroup.com/en-US/products-and-services/standards-services/iso-9001-2026-key-changes-and-guidance/' },
+    { label: 'DNV — ISO 9001 revision and transition', url: 'https://www.dnv.us/assurance/Management-Systems/new-iso/transition/iso-9001-revision/' },
+    { label: 'LRQA — ISO 9001:2026 FDIS update', url: 'https://www.lrqa.com/en/latest-news/iso-9001-fdis-update/' },
+  ]}
+  related={[
+    { label: 'ISO 9001 clause map', href: '/iso-9001', note: 'Every clause 7.5 requirement mapped to Obel MS' },
+    { label: 'ISO 9001 document control', href: '/guides/iso-9001-document-control', note: 'What clause 7.5 asks for, in full' },
+    { label: 'Document control procedure', href: '/guides/document-control-procedure', note: 'A worked example you can adapt' },
+    { label: 'External Document Control', href: '/product/external-document-control', note: 'Supplier certificates, controlled and audited' },
+    { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Nonconformance, CAPA and change control' },
+  ]}
+  faqs={faqs}
+>
+  <h2>What changed in ISO 9001:2026?</h2>
+  <p>
+    ISO published the sixth edition of ISO 9001 on 16 September 2026, after a Final Draft International
+    Standard approved with strong international support in August 2026. Every review of it, from certification
+    bodies to independent consultants, describes it the same way: an evolutionary, measured revision rather
+    than a rebuild. The Harmonized Structure is untouched &mdash; clause 4 is still context of the organisation,
+    clause 8 is still operation, and the certification logic behind an ISO 9001 audit has not changed.
+  </p>
+  <p>
+    What has changed is language, emphasis and a handful of clauses. The two verbs "maintain" and "retain"
+    that governed documented information are unified into a single phrase. Quality culture and ethical
+    behaviour become explicit leadership and awareness requirements. The 2024 climate-change amendment is
+    folded into the core text instead of standing apart from it. Clause 6.1 separates risk from opportunity.
+    Clause 10 is restructured from three subclauses to two. None of this asks a small company to tear up its
+    quality management system and start again &mdash; see the checklist below for what actually needs doing.
+  </p>
+
+  <h2>What is the ISO 9001:2026 transition period?</h2>
+  <p>
+    The transition period is three years from publication. ISO 9001:2015 certificates stay valid, and can
+    continue to be audited and issued against, for about three years from the 16 September 2026 publication
+    date &mdash; so by the end of September 2029, organisations are expected to have moved across to the 2026
+    edition. That figure is consistent across the standard’s own committee page and independent certification
+    bodies, so treat it as the planning date to work back from.
+  </p>
+  <p>
+    Certification bodies themselves have to complete their own accreditation to audit against the 2026 edition
+    before they can offer it to clients, which takes them time after publication. In practice that means most
+    organisations will not be asked to move immediately: your existing surveillance and recertification cycle
+    against ISO 9001:2015 continues to run, and your certification body will tell you when the 2026 edition
+    becomes an option, and eventually the only option, for your audits.
+  </p>
+
+  <h2>Do I need to recertify to ISO 9001:2026?</h2>
+  <p>
+    Not immediately, and not on your own timetable. Your current ISO 9001:2015 certificate remains valid
+    through the transition window described above, so there is no need to book a special recertification
+    audit the moment the 2026 edition is published. The practical first step is simply to ask your
+    certification body when they expect to be ready to audit against the new edition, and where that falls
+    relative to your next scheduled audit.
+  </p>
+  <p>
+    What is worth doing now, well ahead of any deadline, is the gap assessment in the checklist further down
+    this guide. Most of what changed is wording rather than new work, so a small company’s transition is
+    usually a documentation and awareness exercise, not a redesign of how the business runs.
+  </p>
+
+  <h2>What changed for document control under clause 7.5?</h2>
+  <p>
+    Document control keeps its clause number and its three-part structure: 7.5.1 general, 7.5.2 creating and
+    updating, 7.5.3 control of documented information. Nothing about that numbering or structure moves in
+    ISO 9001:2026, and the substance of what you have to do is reported as largely unchanged from the 2015
+    edition. See our guide to <a href="/guides/iso-9001-document-control">ISO 9001 document control</a> for
+    the full clause 7.5 breakdown, which still applies.
+  </p>
+  <p>
+    The change that does run through 7.5, and through the rest of the standard with it, is terminology. ISO
+    9001:2015 asked you to <strong>maintain</strong> documents &mdash; keep them current as your process
+    changes &mdash; and <strong>retain</strong> records &mdash; keep evidence of what happened, unchanged.
+    ISO 9001:2026 replaces both verbs with one phrase: information must be <strong>"available as documented
+    information"</strong>, or "available as evidence of" a given activity. It is described as a clarity change,
+    not a new requirement.
+  </p>
+  <p>
+    In practice, that means two things for a small company. First, your actual document and record controls
+    &mdash; version history, approvals, retention, protecting documents from unauthorised change &mdash; do
+    not need to change, because the underlying requirement has not moved. Second, if your own document control
+    procedure quotes the standard’s old "maintain" and "retain" wording directly, update that wording so it
+    matches the current edition. Our <a href="/guides/document-control-procedure">document control procedure
+    example</a> shows what a procedure covering this looks like end to end.
+  </p>
+
+  <h2>What other changes matter for a small company?</h2>
+  <p>
+    Beyond document control, a handful of other changes are corroborated across multiple independent reviews
+    of the standard. Each is a real change in emphasis, and each has a modest, practical response for a
+    20 to 200 person company rather than a large project.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Change</th>
+          <th>What it means</th>
+          <th>What to do</th>
+        </tr>
+      </thead>
+      <tbody>
+        {changesTable.map((c) => (
+          <tr>
+            <td>{c.change}</td>
+            <td>{c.detail}</td>
+            <td>{c.action}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>ISO 9001:2026 transition checklist</h2>
+  <p>
+    None of these steps need to happen before your next audit. They are worth starting now so the transition
+    is a series of small updates rather than a scramble in 2029.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Step</th>
+          <th>What it involves</th>
+        </tr>
+      </thead>
+      <tbody>
+        {checklist.map((c) => (
+          <tr>
+            <td>{c.step}</td>
+            <td>{c.meaning}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>What are the seven quality management principles behind ISO 9001?</h2>
+  <p>
+    ISO’s companion brochure to the ISO 9000 family, "Quality management principles &ndash; Your foundation
+    for success," sets out seven principles that underpin ISO 9001 in both the 2015 and 2026 editions. They
+    are not new in ISO 9001:2026, but they are useful context for why clauses like leadership, improvement
+    and evidence-based decision-making exist in the standard at all.
+  </p>
+  <ul>
+    {principles.map((p) => (
+      <li><strong>{p.name}.</strong> {p.body}</li>
+    ))}
+  </ul>
+
+  <h2>How does Obel MS help with ISO 9001:2026 document control?</h2>
+  <p>
+    <a href="/product/external-document-control">External Document Control</a> is built around clause 7.5 of
+    ISO 9001 &mdash; in both the 2015 and 2026 editions, since the underlying document control requirement is
+    unchanged in substance. Every supplier certificate you upload is auto-filed by supplier, manufacturer and
+    product, its status is worked out automatically as Active, Expiring soon, Expired or No expiry set, and
+    every upload, approval and new version is recorded in a full audit trail you can hand an auditor directly.
+  </p>
+  <p>
+    For the corrective action side of a quality management system, <a href="/product/workflow-manager">Workflow
+    Manager</a> gives you a standard Nonconformance template with built-in effectiveness verification, so a
+    nonconformance is not just logged but closed out and checked, with every stage of that process recorded in
+    the same audit trail. Internal Document Control, for the SOPs and policies you write yourself, is coming
+    soon; see the <a href="/iso-9001">ISO 9001 clause map</a> for how the rest of clause 7.5 lines up against
+    what Obel MS supports today.
+  </p>
+</GuideLayout>

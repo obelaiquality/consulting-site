@@ -1,4 +1,5 @@
 ---
+import RelatedGuides from '../../components/RelatedGuides.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureRow from '../../components/product/FeatureRow.astro';
 import ProductCta from '../../components/product/ProductCta.astro';
@@ -13,7 +14,7 @@ import MockDigest from '../../components/product/MockDigest.astro';
 import MockAuditTrail from '../../components/product/MockAuditTrail.astro';
 import { site, plans } from '../../data/site';
 
-const starter = plans.find((p) => p.id === 'starter')!;
+const starter = plans.find((p) => p.id === 'professional')!;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,8 +33,9 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="Workflow Manager"
-  description="Nonconformance, change management, complaint and supplier-deviation workflows, staged, approved by job title, verified for effectiveness and recorded in a full audit trail."
+  title="CAPA and Nonconformance Software | Obel MS"
+  description="Nonconformance, CAPA, change control and complaint workflows with approvals by job title, effectiveness checks and a full audit trail. Built for small teams."
+  breadcrumbs={[{ name: 'Workflow Manager', href: '/product/workflow-manager' }]}
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -169,8 +171,9 @@ const jsonLd = {
     </div>
   </section>
 
+  <RelatedGuides slugs={['capa-and-nonconformance', 'iso-9001-2026-changes', 'spreadsheets-vs-qms-software']} />
   <ProductCta
     title="Give corrective actions a place to close."
-    body={`From R${starter.price.ZAR.toLocaleString('en-ZA')} a month, hosted in South Africa. We help you migrate your open registers.`}
+    body={`From R${starter.price.ZAR.toLocaleString('en-ZA')} a month excl. VAT, hosted in South Africa. We help you migrate your open registers.`}
   />
 </BaseLayout>

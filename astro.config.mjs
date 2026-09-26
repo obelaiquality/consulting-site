@@ -7,7 +7,12 @@ export default defineConfig({
   site: 'https://obel-ai.com',
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      // Only real, indexable pages: no 404 and no legacy .html redirect stubs.
+      filter: (page) => !page.includes('/404') && !page.endsWith('.html/') && !page.endsWith('.html'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
     // Pre-bundle the motion libraries so the dev server never serves mismatched dep hashes.

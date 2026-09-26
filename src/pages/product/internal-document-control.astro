@@ -5,7 +5,7 @@ import MockIdcPreview from '../../components/product/MockIdcPreview.astro';
 import IdcWaitlistForm from '../../components/product/IdcWaitlistForm.astro';
 import { site, plans } from '../../data/site';
 
-const starter = plans.find((p) => p.id === 'starter')!;
+const starter = plans.find((p) => p.id === 'lite')!;
 
 const planned = [
   { title: 'Drafting', body: 'Write an SOP, policy or work instruction inside Obel MS, not a Word file emailed around for comments.' },
@@ -33,8 +33,9 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="Internal Document Control"
-  description="Internal Document Control is coming to Obel MS: drafting, review and approval routing, revision control, periodic review reminders, controlled issue and obsolete handling for SOPs, policies and work instructions."
+  title="Internal Document Control (Coming Soon) | Obel MS"
+  description="SOPs, policies and work instructions: drafting, approval routing, revision control and periodic review. Coming soon to Obel MS. Join the waitlist."
+  breadcrumbs={[{ name: 'Internal Document Control', href: '/product/internal-document-control' }]}
   jsonLd={jsonLd}
 >
   <!-- Hero -->

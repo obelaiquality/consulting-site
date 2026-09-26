@@ -1,4 +1,5 @@
 ---
+import RelatedGuides from '../../components/RelatedGuides.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureRow from '../../components/product/FeatureRow.astro';
 import ProductCta from '../../components/product/ProductCta.astro';
@@ -11,7 +12,7 @@ import MockDigest from '../../components/product/MockDigest.astro';
 import MockPlatformAudit from '../../components/product/MockPlatformAudit.astro';
 import { site, plans } from '../../data/site';
 
-const starter = plans.find((p) => p.id === 'starter')!;
+const starter = plans.find((p) => p.id === 'lite')!;
 
 const steps = [
   { title: 'Upload to the Inbox', body: 'Drop a supplier certificate, spec or statement into the Inbox. PDF, PNG or JPG, any file the auditor hands you.' },
@@ -38,8 +39,9 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="External Document Control"
-  description="Supplier certificates, specs and statements: uploaded, AI-read, approved and auto-filed into a Supplier / Manufacturer / Product folder tree, with expiry tracked for you."
+  title="External Document Control Software | Obel MS"
+  description="Supplier certificates and specs, AI-read and auto-filed by supplier, manufacturer and product, with expiry tracked for you. Hosted in South Africa."
+  breadcrumbs={[{ name: 'External Document Control', href: '/product/external-document-control' }]}
   jsonLd={jsonLd}
 >
   <!-- Hero -->
@@ -86,7 +88,7 @@ const jsonLd = {
     <div class="container-x">
       <FeatureRow label="Step 2" title="Fields, read for you, not guessed.">
         <Fragment slot="text">
-          <p class="t-body">Obel MS reads the document's own text first, and falls back to OCR for a scan. Document Type, Supplier, Manufacturer, Product, Certificate No., Issue Date and Expiration Date come back as suggestions you can accept, edit or dismiss.</p>
+          <p class="t-body">Obel MS reads the text of digital PDFs. Document Type, Supplier, Manufacturer, Product, Certificate No., Issue Date and Expiration Date come back as suggestions you can accept, edit or dismiss. Scanned images are not read automatically yet; you enter their details by hand.</p>
           <p class="t-body">Nothing is written to the record until you approve it.</p>
         </Fragment>
         <Fragment slot="mock"><MockAiSuggestions /></Fragment>
@@ -168,8 +170,9 @@ const jsonLd = {
     </div>
   </section>
 
+  <RelatedGuides slugs={['control-of-external-documents', 'supplier-certificate-tracking', 'iso-9001-document-control']} />
   <ProductCta
     title="Get your supplier certificates under control."
-    body={`From R${starter.price.ZAR.toLocaleString('en-ZA')} a month, hosted in South Africa. We migrate your existing register for you.`}
+    body={`From R${starter.price.ZAR.toLocaleString('en-ZA')} a month excl. VAT, hosted in South Africa. We migrate your existing register for you.`}
   />
 </BaseLayout>

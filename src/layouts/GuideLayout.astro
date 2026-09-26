@@ -1,0 +1,155 @@
+---
+/*
+ * Answer-first guide layout (SEO + AI search).
+ * - H1, then a 40–60 word direct answer (props.answer), then the article body (slot).
+ * - Visible "Updated" date that matches dateModified in the Article JSON-LD. Only change `updated`
+ *   when the content really changes.
+ * - Sources list (external authorities) and related Obel MS pages for internal linking.
+ * - Article + BreadcrumbList (+ FAQPage when faqs are passed) JSON-LD that mirrors visible content.
+ */
+import BaseLayout from './BaseLayout.astro';
+import { site } from '../data/site';
+
+interface Faq { q: string; a: string }
+interface Props {
+  title: string; // <title> (≤ 60 chars incl. brand suffix)
+  description: string; // ≤ 155 chars
+  h1: string;
+  answer: string; // the answer-first paragraph, plain text
+  published: string; // YYYY-MM-DD
+  updated: string; // YYYY-MM-DD
+  readingMinutes?: number;
+  sources?: { label: string; url: string }[];
+  related?: { label: string; href: string; note?: string }[];
+  faqs?: Faq[];
+}
+const { title, description, h1, answer, published, updated, readingMinutes, sources = [], related = [], faqs = [] } = Astro.props;
+const url = new URL(Astro.url.pathname, site.url).href;
+const fmt = (d: string) => new Date(d + 'T00:00:00Z').toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: h1,
+    description,
+    datePublished: published,
+    dateModified: updated,
+    mainEntityOfPage: url,
+    author: { '@type': 'Organization', name: site.company, url: site.url },
+    publisher: { '@type': 'Organization', name: site.company, url: site.url, logo: { '@type': 'ImageObject', url: `${site.url}/favicon.png` } },
+    image: `${site.url}/og.png`,
+    inLanguage: 'en-ZA',
+  },
+];
+if (faqs.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f: Faq) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  });
+}
+---
+<BaseLayout title={title} description={description} jsonLd={jsonLd} ogType="article" breadcrumbs={[{ name: 'Guides', href: '/guides' }, { name: h1, href: Astro.url.pathname }]}>
+  <article class="guide pt-[calc(var(--nav-h)+clamp(2.5rem,6vw,5rem))] pb-[var(--section-y)]">
+    <div class="container-x">
+      <nav aria-label="Breadcrumb" class="text-[13px] text-muted">
+        <ol class="flex flex-wrap items-center gap-2">
+          <li><a class="link-u" href="/">Home</a></li>
+          <li aria-hidden="true">/</li>
+          <li><a class="link-u" href="/guides">Guides</a></li>
+        </ol>
+      </nav>
+
+      <header class="mt-6 max-w-[52rem]">
+        <h1 class="t-h2 !text-[clamp(2.2rem,4.6vw,3.9rem)]">{h1}</h1>
+        <p class="mt-5 text-[13.5px] text-muted">
+          <span>Updated <time datetime={updated}>{fmt(updated)}</time></span>
+          {readingMinutes && <span>, {readingMinutes} minute read</span>}
+          <span>. By {site.company}.</span>
+        </p>
+        <div class="answer mt-8">
+          <p class="answer-label">In short</p>
+          <p class="answer-text">{answer}</p>
+        </div>
+      </header>
+
+      <div class="guide-grid mt-14">
+        <div class="prose-guide">
+          <slot />
+
+          {faqs.length > 0 && (
+            <section aria-labelledby="guide-faq">
+              <h2 id="guide-faq">Frequently asked questions</h2>
+              {faqs.map((f: Faq) => (
+                <div class="faq-item">
+                  <h3>{f.q}</h3>
+                  <p>{f.a}</p>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {sources.length > 0 && (
+            <section aria-labelledby="guide-sources" class="sources">
+              <h2 id="guide-sources">Sources</h2>
+              <ol>
+                {sources.map((s: { label: string; url: string }) => <li><a href={s.url} rel="noopener" target="_blank">{s.label}</a></li>)}
+              </ol>
+            </section>
+          )}
+        </div>
+
+        <aside class="guide-aside" aria-label="Related">
+          <div class="aside-inner">
+            <p class="t-label">See it in Obel MS</p>
+            <ul class="mt-4 flex flex-col gap-3">
+              {related.map((r: { label: string; href: string; note?: string }) => (
+                <li>
+                  <a class="aside-link" href={r.href}>
+                    <span class="text-ink font-medium text-[14.5px]">{r.label}</span>
+                    {r.note && <span class="text-muted text-[13px]">{r.note}</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href="/contact#demo" class="btn btn-primary btn-sm mt-6 w-full">Book a demo</a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .answer { border-left: 3px solid var(--color-green); padding: 18px 22px; background: var(--color-surface); border-radius: 0 12px 12px 0; box-shadow: var(--shadow-soft); }
+  .answer-label { font-size: 13px; font-weight: 600; color: var(--color-green); }
+  .answer-text { margin-top: 6px; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.6; color: var(--color-ink); }
+  .guide-grid { display: grid; gap: 3rem; }
+  @media (min-width: 1024px) { .guide-grid { grid-template-columns: minmax(0, 8fr) minmax(0, 3.5fr); gap: 5rem; align-items: start; } }
+  .guide-aside .aside-inner { position: sticky; top: calc(var(--nav-h) + 32px); padding: 22px; border: 1px solid var(--color-line); border-radius: 14px; background: var(--color-surface); }
+  .aside-link { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; margin-inline: -12px; border-radius: 10px; transition: background-color .2s; }
+  @media (hover: hover) and (pointer: fine) { .aside-link:hover { background: var(--color-surface-2); } }
+
+  /* Long-form typography */
+  .prose-guide { max-width: 44rem; color: #2c2c29; font-size: 17px; line-height: 1.75; }
+  .prose-guide :global(h2) { margin-top: 3.2rem; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 2.3vw, 2rem); line-height: 1.12; letter-spacing: -0.03em; color: var(--color-ink); scroll-margin-top: calc(var(--nav-h) + 24px); }
+  .prose-guide :global(h3) { margin-top: 2rem; font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; letter-spacing: -0.015em; color: var(--color-ink); }
+  .prose-guide :global(p) { margin-top: 1rem; }
+  .prose-guide :global(ul), .prose-guide :global(ol) { margin-top: 1rem; padding-left: 1.3rem; }
+  .prose-guide :global(ul) { list-style: disc; } .prose-guide :global(ol) { list-style: decimal; }
+  .prose-guide :global(li) { margin-top: .45rem; padding-left: .2rem; }
+  .prose-guide :global(li::marker) { color: var(--color-muted); }
+  .prose-guide :global(a) { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-line-hover); text-underline-offset: 3px; }
+  .prose-guide :global(a:hover) { text-decoration-color: var(--color-ink); }
+  .prose-guide :global(strong) { color: var(--color-ink); font-weight: 600; }
+  .prose-guide :global(table) { width: 100%; margin-top: 1.5rem; border-collapse: collapse; font-size: 14.5px; line-height: 1.5; }
+  .prose-guide :global(.table-wrap) { overflow-x: auto; margin-top: 1.5rem; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-surface); }
+  .prose-guide :global(.table-wrap table) { margin-top: 0; }
+  .prose-guide :global(th) { text-align: left; font-weight: 600; color: var(--color-ink); background: var(--color-surface-2); padding: 10px 14px; border-bottom: 1px solid var(--color-line); }
+  .prose-guide :global(td) { padding: 10px 14px; border-top: 1px solid #ebebea; vertical-align: top; }
+  .prose-guide :global(blockquote) { margin-top: 1.5rem; padding-left: 1.2rem; border-left: 2px solid var(--color-line-hover); color: var(--color-muted); }
+  .faq-item + .faq-item { border-top: 1px solid var(--color-line); }
+  .faq-item { padding-bottom: 1rem; }
+  .sources ol { font-size: 14.5px; }
+</style>

@@ -6,12 +6,26 @@ export const site = {
   url: 'https://obel-ai.com',
   tagline: 'Hosted ISO 9001 document control and workflow management.',
   description:
-    'Obel MS is a hosted quality management system for growing companies. External document control and workflow management built around ISO 9001:2015 clause 7.5 — hosted, maintained and supported for you.',
+    'Hosted ISO 9001 document control and CAPA workflows for SMEs. Supplier certificates, expiry alerts and audit trail, hosted in South Africa, from R1,490 a month.',
   email: 'chat@obel-ai.com',
   demoMailto:
     'mailto:chat@obel-ai.com?subject=Obel%20MS%20demo%20request&body=Hi%20Obel%20team%2C%0A%0AI%27d%20like%20a%20demo%20of%20Obel%20MS.%0A%0ACompany%3A%0ARole%3A%0ATeam%20size%3A%0AStandards%20we%20work%20to%3A%0A',
   region: 'Johannesburg, South Africa (Google Cloud africa-south1)',
   appUrl: '#', // TODO: set when the hosted app has a public sign-in URL
+  /*
+   * Web3Forms access key (https://web3forms.com): enter chat@obel-ai.com there and it emails you a key.
+   * With a key, demo and waitlist requests are delivered straight to that inbox.
+   * Without a key, the forms fall back to "open in your email app / Gmail / Outlook / copy".
+   * The key is safe to publish: it can only send mail to the inbox that created it.
+   */
+  web3formsKey: '' as string,
+  /*
+   * Official profiles of the company elsewhere (LinkedIn, G2, Capterra, Crunchbase, Google Business Profile).
+   * They go into the Organization schema as `sameAs`, which helps search engines and AI assistants
+   * recognise Obel as one entity. Add each URL once the profile exists; never add a profile that is not live.
+   */
+  sameAs: [] as string[],
+  areaServed: ['ZA', 'GB', 'EU'],
 };
 
 export const nav = [
@@ -25,77 +39,129 @@ export const nav = [
   },
   { label: 'ISO 9001', href: '/iso-9001' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'Guides', href: '/guides' },
   { label: 'Security', href: '/security' },
-  { label: 'About', href: '/about' },
 ] as const;
 
 export type Currency = 'ZAR' | 'USD';
 
+/*
+ * Pricing Rev B (Obel Cloud pricing review, 26 Sep 2026; chosen by Neil).
+ * ZAR excludes 15% VAT, per month, billed annually. Month-to-month costs 15% more.
+ * USD is for clients outside South Africa (no VAT). Until multi-tenancy is live, every plan
+ * starts with "Book a demo / Start onboarding"; there is no self-serve checkout yet.
+ */
+export const pricingTerms = {
+  vatNote: 'All ZAR prices exclude 15% VAT.',
+  contract: 'Billed annually. Month-to-month costs 15% more.',
+  monthlyUplift: 0.15,
+  availability: '99.5% availability target, best effort.',
+};
+
 export const plans = [
   {
-    id: 'starter',
-    name: 'Starter',
-    blurb: 'Get your external documents under control.',
-    price: { ZAR: 1490, USD: 85 },
-    annualNote: 'Billed annually. R1,790 month-to-month.',
-    annualNoteUSD: 'Billed annually. $99 month-to-month.',
-    users: 'Up to 5 editors, unlimited viewers',
+    id: 'lite',
+    name: 'Lite',
+    status: 'live' as const,
+    blurb: 'Supplier certificates under control, for small teams.',
+    price: { ZAR: 1490, USD: 95 },
+    setup: { ZAR: 0, USD: 0, label: 'No setup fee' },
+    users: '3 named users, unlimited read-only viewers',
     featured: false,
-    cta: 'Start with Starter',
+    cta: 'Start onboarding',
     features: [
       'External Document Control',
-      'Supplier certificate and expiry tracking',
       'Expiry alerts by email and Teams',
-      'Full audit trail',
-      'Daily backups',
-      'Email support',
+      'Full audit trail and document versioning',
+      'AI metadata extraction for digital PDFs, 100 documents a month',
+      '10 GB document storage',
+      'Email support within 5 business days',
+      '14-day trial on a demo workspace',
     ],
   },
   {
-    id: 'growth',
-    name: 'Growth',
-    blurb: 'Documents and the workflows around them.',
-    price: { ZAR: 2990, USD: 165 },
-    annualNote: 'Billed annually. R3,590 month-to-month.',
-    annualNoteUSD: 'Billed annually. $199 month-to-month.',
-    users: 'Up to 20 editors, unlimited viewers',
-    featured: true,
-    cta: 'Start with Growth',
-    features: [
-      'Everything in Starter',
-      'Workflow Manager',
-      'Nonconformance, change, complaint and supplier-deviation templates',
-      'Approvals routed by job title',
-      'AI metadata extraction on upload',
-      'Effectiveness verification and PDF record reports',
-      'Guided migration of your existing registers',
-      'Priority support',
-    ],
-  },
-  {
-    id: 'scale',
-    name: 'Scale',
-    blurb: 'For multi-site teams and heavier audits.',
-    price: { ZAR: 5990, USD: 330 },
-    annualNote: 'Billed annually. R7,190 month-to-month.',
-    annualNoteUSD: 'Billed annually. $399 month-to-month.',
-    users: 'Unlimited editors, unlimited viewers',
+    id: 'essentials',
+    name: 'Essentials',
+    status: 'live' as const,
+    blurb: 'More people, more documents, faster support.',
+    price: { ZAR: 3950, USD: 250 },
+    setup: { ZAR: 6500, USD: 420, label: 'guided onboarding: import of up to 200 documents and 2 remote training sessions' },
+    users: '10 named users, unlimited read-only viewers',
     featured: false,
-    cta: 'Talk to us',
+    cta: 'Book a demo',
     features: [
-      'Everything in Growth',
-      'Internal Document Control (early access)',
-      'Custom workflow templates built with you',
-      'Dedicated cloud project on request',
-      'Quarterly system review with a quality consultant',
-      'Audit-day support',
+      'Everything in Lite',
+      '10 named users',
+      'AI metadata extraction, 300 documents a month',
+      '25 GB document storage',
+      'Email support within 2 business days',
+      'Guided onboarding and training',
+    ],
+  },
+  {
+    id: 'professional',
+    name: 'Professional',
+    status: 'live' as const,
+    blurb: 'Documents and the workflows around them.',
+    price: { ZAR: 7950, USD: 520 },
+    setup: { ZAR: 15000, USD: 980, label: 'onboarding: up to 5 workflow templates configured and migration of up to 1,000 documents' },
+    users: '30 named users, unlimited read-only viewers',
+    featured: true,
+    cta: 'Book a demo',
+    features: [
+      'Everything in Essentials',
+      'Workflow Manager for nonconformance, CAPA, change control, complaints and supplier deviations',
+      'Approvals routed by job title and effectiveness verification',
+      'AI stage and executive summaries',
+      'AI assistant with a monthly usage cap (coming soon)',
+      'AI metadata extraction, 1,000 documents a month',
+      '100 GB document storage',
+      'Next-business-day support',
+      'A 1-hour review call every quarter',
+    ],
+  },
+  {
+    id: 'validated',
+    name: 'Validated (GxP)',
+    status: 'waitlist' as const,
+    blurb: 'For regulated teams. Join the waitlist for 2027.',
+    price: { ZAR: 24500, USD: 1590 },
+    setup: { ZAR: 0, USD: 0, label: 'Setup agreed per project' },
+    users: 'Agreed per client',
+    featured: false,
+    cta: 'Join the waitlist',
+    features: [
+      'Everything in Professional',
+      'Own dedicated environment',
+      'High-availability database',
+      'A UAT copy and a release hold',
+      'Quality agreement',
     ],
   },
 ] as const;
 
+export const discounts = [
+  { name: 'Two-year prepayment', value: '10% off' },
+  { name: 'NGOs and academic institutions', value: '20% off' },
+  { name: 'Founding customers (our first five clients)', value: '20% off year one' },
+];
+
+export const addons = [
+  { name: 'Extra 5 users', price: { ZAR: 750, USD: 49 }, unit: 'a month' },
+  { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 23 }, unit: 'a month' },
+  { name: 'Extra 1,000 AI documents', price: { ZAR: 350, USD: 23 }, unit: 'a month' },
+];
+
+export const services = [
+  { name: 'Consulting day', price: { ZAR: 9500, USD: 620 }, unit: 'a day' },
+  { name: 'Consulting half day', price: { ZAR: 5500, USD: 360 }, unit: 'a half day' },
+  { name: 'Remote consulting', price: { ZAR: 1250, USD: 82 }, unit: 'an hour' },
+  { name: 'Audit-day support', price: { ZAR: 12500, USD: 815 }, unit: 'a day' },
+];
+
 export const managed = [
   { title: 'Hosting', body: 'We run Obel MS on Google Cloud in Johannesburg. No servers, no installs, no IT tickets.' },
-  { title: 'Backups', body: 'Daily backups of your database and documents, with restores we test.' },
+  { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
   { title: 'Updates', body: 'New features and security patches land without downtime windows you have to plan.' },
   { title: 'Migration', body: 'We import your existing registers and spreadsheets so you start with history, not a blank page.' },
   { title: 'Support', body: 'Real quality people, not a ticket bot. We speak ISO 9001 as well as we speak software.' },

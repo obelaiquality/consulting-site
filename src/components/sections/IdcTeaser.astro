@@ -5,7 +5,6 @@
  * per docs/BUILD-SPEC.md section 1 (see also src/data/demo.ts).
  */
 import AppWindow from '../mock/AppWindow.astro';
-import { site } from '../../data/site';
 
 const sopRows = [
   { code: 'SOP-QA-001', title: 'Document Control Procedure', rev: 'Rev 4' },
@@ -27,7 +26,7 @@ const sopRows = [
         Internal Document Control brings drafting, review, approval, periodic review and controlled issue of your own procedures into the same system.
       </p>
 
-      <form class="idc-waitlist mt-8" data-idc-waitlist novalidate data-reveal>
+      <form class="idc-waitlist mt-8" data-idc-teaser-form novalidate data-reveal>
         <label for="idc-email" class="t-label mb-2 block">Get notified when it&rsquo;s ready</label>
         <div class="flex flex-col gap-3 sm:flex-row">
           <input
@@ -41,7 +40,8 @@ const sopRows = [
           />
           <button type="submit" class="btn btn-primary shrink-0">Join the waitlist</button>
         </div>
-        <p class="mt-3 text-[13px] text-muted">We don&rsquo;t have a release date yet &mdash; we&rsquo;ll email you the moment it is.</p>
+        <p class="mt-3 text-[13px] text-muted" data-teaser-note role="status" aria-live="polite">We don&rsquo;t have a release date yet. We&rsquo;ll email you the moment it is ready.</p>
+        <div class="lead-fb" data-teaser-fb hidden></div>
       </form>
     </div>
 
@@ -114,15 +114,8 @@ const sopRows = [
   .idc-input:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
 </style>
 
-<script define:vars={{ waitlistEmail: site.email }}>
-  const form = document.querySelector('[data-idc-waitlist]');
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = form.elements.namedItem('email')?.value.trim();
-    const body = email
-      ? `Please add ${email} to the Internal Document Control waitlist.`
-      : 'Please add me to the Internal Document Control waitlist.';
-    const mailto = `mailto:${waitlistEmail}?subject=${encodeURIComponent('IDC waitlist')}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
-  });
+<script>
+  import { wireWaitlist } from '../../scripts/lead';
+  const form = document.querySelector<HTMLFormElement>('[data-idc-teaser-form]');
+  if (form) wireWaitlist(form, form.querySelector('[data-teaser-note]'), form.querySelector('[data-teaser-fb]'));
 </script>

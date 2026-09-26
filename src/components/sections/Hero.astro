@@ -1,6 +1,8 @@
 ---
 import AppWindow from '../mock/AppWindow.astro';
 import { edcDocs } from '../../data/demo';
+import { plans } from '../../data/site';
+const fromPrice = 'R' + Math.min(...plans.filter((p) => p.status === 'live').map((p) => p.price.ZAR)).toLocaleString('en-US');
 const rows = edcDocs.slice(0, 7);
 ---
 <section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
@@ -9,9 +11,9 @@ const rows = edcDocs.slice(0, 7);
   <div class="container-x relative">
     <div class="grid lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
       <div class="lg:col-span-9">
-        <a href="/iso-9001" class="hero-badge" data-reveal>
+        <a href="/guides/iso-9001-2026-changes" class="hero-badge" data-reveal>
           <span class="size-1.5 rounded-full bg-green shadow-[0_0_0_3px_rgb(22_101_52/0.14)]"></span>
-          Built around ISO 9001:2015 clause 7.5
+          Ready for ISO 9001:2026. See what changed for document control
         </a>
         <h1 class="t-hero mt-7 max-w-[15ch]" data-split data-split-load>
           ISO 9001 document control, without the ISO&nbsp;9001 price&nbsp;tag.
@@ -27,7 +29,7 @@ const rows = edcDocs.slice(0, 7);
     <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
       <a href="/contact#demo" class="btn btn-primary" data-magnetic>Book a 20-minute demo</a>
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
-      <p class="text-[14px] text-muted">From <span class="text-ink font-medium tnum">R1,490</span> a month, hosted in South Africa.</p>
+      <p class="text-[14px] text-muted">From <span class="text-ink font-medium tnum">{fromPrice}</span> a month, hosted and supported in South Africa.</p>
     </div>
 
     <!-- Product stage -->

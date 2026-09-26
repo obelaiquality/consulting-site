@@ -15,13 +15,14 @@ const standards = ['ISO 9001', 'ISO 13485', 'FSSC 22000', 'BRCGS', 'Other'];
 const steps = [
   { n: '1', title: 'Tell us where you are', body: 'This form: your team size, the standards you work to, and what’s slowing you down right now.' },
   { n: '2', title: 'We reply to confirm a time', body: 'A real person from Obel, usually within one working day. No scheduling bot.' },
-  { n: '3', title: 'A 20-minute walkthrough', body: 'We show External Document Control and Workflow Manager against your own kind of documents, not a generic slide deck.' },
+  { n: '3', title: 'A 20-minute walkthrough', body: 'We walk you through External Document Control and Workflow Manager in a live demo workspace, using the kinds of documents you work with. No slide deck.' },
 ];
 ---
 
 <BaseLayout
-  title="Contact"
-  description="Book a 20-minute demo of Obel MS, or get in touch about consulting, implementation and audit prep."
+  title="Book a Demo | Obel MS"
+  description="Book a 20-minute demo of Obel MS hosted document control and workflow software, or ask about consulting, implementation and audit prep."
+  breadcrumbs={[{ name: 'Contact', href: '/contact' }]}
 >
   <section id="demo" class="section-y pt-[calc(var(--nav-h)+3rem)]">
     <div class="container-x">
@@ -97,7 +98,14 @@ const steps = [
               <button type="submit" class="btn btn-primary w-fit" data-magnetic>Send demo request</button>
               <p id="form-status" class="text-[14px] text-muted" aria-live="polite"></p>
             </div>
+            <!-- Honeypot: people never see or fill this; bots do. -->
+            <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <div id="demo-fallback" class="lead-fb" hidden aria-live="polite"></div>
           </form>
+          <div id="demo-sent" class="lead-ok" hidden tabindex="-1">
+            <p class="t-h3">Request sent.</p>
+            <p class="t-body mt-2">Thank you. A person from Obel will reply to your work email within one working day to agree a time.</p>
+          </div>
         </div>
 
         <div class="lg:col-span-5">
@@ -150,6 +158,8 @@ const steps = [
 </style>
 
 <script>
+  import { sendLead, renderFallback, setSending, leadBackendEnabled } from '../scripts/lead';
+
   // Preselect the plan from ?plan=<id> (links from the pricing table).
   {
     const plan = new URLSearchParams(location.search).get('plan');
@@ -218,23 +228,37 @@ const steps = [
       const get = (k: string) => (data.get(k) as string) || '';
       const planLabel = (form.elements.namedItem('plan') as HTMLSelectElement)?.selectedOptions[0]?.text || 'Not sure yet';
 
-      const subject = `Obel MS demo request — ${get('company')}`;
-      const bodyLines = [
-        `Name: ${get('name')}`,
-        `Work email: ${get('email')}`,
-        `Company: ${get('company')}`,
-        `Role: ${get('role')}`,
-        `Team size: ${get('teamSize')}`,
-        `Standards: ${get('standards')}`,
-        `Plan of interest: ${planLabel}`,
-        '',
-        'Message:',
-        get('message') || '(none)',
-      ];
-      const mailto = `mailto:chat@obel-ai.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-
-      window.location.href = mailto;
-      status.textContent = 'Your email app should open with the request ready to send.';
+      if ((form.elements.namedItem('botcheck') as HTMLInputElement)?.checked) return;
+      const lead = {
+        subject: `Obel MS demo request: ${get('company')}`,
+        replyTo: get('email'),
+        name: get('name'),
+        fields: {
+          Name: get('name'),
+          'Work email': get('email'),
+          Company: get('company'),
+          Role: get('role'),
+          'Team size': get('teamSize'),
+          Standards: get('standards'),
+          'Plan of interest': planLabel,
+          Message: get('message'),
+        },
+      };
+      const button = form.querySelector<HTMLButtonElement>('button[type=submit]');
+      const fallback = document.getElementById('demo-fallback');
+      setSending(button, true);
+      status.textContent = 'Sending your request…';
+      sendLead(lead).then((sent) => {
+        setSending(button, false);
+        if (sent) {
+          form.hidden = true;
+          const done = document.getElementById('demo-sent');
+          if (done) { done.hidden = false; done.focus(); }
+          return;
+        }
+        status.textContent = '';
+        if (fallback) renderFallback(fallback, lead, leadBackendEnabled());
+      });
     });
   }
 </script>

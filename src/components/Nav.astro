@@ -1,6 +1,6 @@
 ---
 import Logo from './ui/Logo.astro';
-import { nav, site } from '../data/site';
+import { nav } from '../data/site';
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 type MenuLink = { label: string; href: string; soon: boolean };
 const mobileLinks: MenuLink[] = nav.flatMap((item): MenuLink[] =>
@@ -68,7 +68,7 @@ const isActive = (href?: string) => !!href && (path === href || (href !== '/' &&
         </a>
       ))}
       <a href="/contact" class="mobile-link">Contact</a>
-      <a href={site.demoMailto} class="btn btn-light mt-6">Book a demo</a>
+      <a href="/contact#demo" class="btn btn-light mt-6">Book a demo</a>
     </div>
   </div>
 </header>

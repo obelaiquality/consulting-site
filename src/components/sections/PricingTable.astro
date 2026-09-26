@@ -1,40 +1,29 @@
 ---
 /*
- * Pricing table. Billing (Annual | Monthly) and Currency (ZAR | USD) are real segmented
- * controls; prices update in place with a quick vertical roll. Monthly figures are parsed
- * out of site.ts's annualNote/annualNoteUSD strings (not hard-coded) so site.ts stays the
- * single source of truth for every number on this page.
+ * Pricing table. Currency (ZAR | USD) is a real segmented control; prices and setup fees update
+ * in place with a quick vertical roll. Every number comes from src/data/site.ts.
+ * Billing (Annual | Monthly, +15%) is a second segmented control.
+ * Plans with status "waitlist" (Validated) show "From" pricing, a Coming 2027 badge and a waitlist CTA.
  */
-import { plans, type Currency } from '../../data/site';
+import { plans, pricingTerms, type Currency } from '../../data/site';
 
 interface Props {
   compact?: boolean;
 }
 const { compact = false } = Astro.props;
 
-/** Pull the "R1,790" / "$99" month-to-month figure out of a note like
- *  "Billed annually. R1,790 month-to-month." — mirrors site.ts, never restates it. */
-function parseMonthly(note: string): number {
-  const match = note.match(/[R$]\s?([\d,]+)/);
-  return match ? parseInt(match[1].replace(/,/g, ''), 10) : 0;
-}
-
 function fmt(n: number, cur: Currency): string {
   return (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
 }
+/** Month-to-month price: annual price plus the uplift, rounded to R5 / $1. */
+const monthly = (n: number, cur: Currency) => (cur === 'ZAR' ? Math.round((n * (1 + pricingTerms.monthlyUplift)) / 5) * 5 : Math.round(n * (1 + pricingTerms.monthlyUplift)));
+const setupText = (p: (typeof plans)[number], cur: Currency) =>
+  p.setup[cur] > 0 ? `Plus ${fmt(p.setup[cur], cur)} once for ${p.setup.label}.` : `${p.setup.label}.`;
 
-const rows = plans.map((p) => ({
-  ...p,
-  monthly: {
-    ZAR: parseMonthly(p.annualNote),
-    USD: parseMonthly(p.annualNoteUSD),
-  },
-}));
-
-const priceData = rows.map((p) => ({
+const priceData = plans.map((p) => ({
   id: p.id,
-  ZAR: { annual: p.price.ZAR, monthly: p.monthly.ZAR, annualNote: p.annualNote },
-  USD: { annual: p.price.USD, monthly: p.monthly.USD, annualNote: p.annualNoteUSD },
+  ZAR: { annual: fmt(p.price.ZAR, 'ZAR'), monthly: fmt(monthly(p.price.ZAR, 'ZAR'), 'ZAR'), setup: setupText(p, 'ZAR') },
+  USD: { annual: fmt(p.price.USD, 'USD'), monthly: fmt(monthly(p.price.USD, 'USD'), 'USD'), setup: setupText(p, 'USD') },
 }));
 ---
 
@@ -48,7 +37,7 @@ const priceData = rows.map((p) => ({
           <button type="button" class="switch-btn" data-billing="annual" aria-pressed="true">Annual</button>
           <button type="button" class="switch-btn" data-billing="monthly" aria-pressed="false">Monthly</button>
         </div>
-        <span class="switch-note">2 months free</span>
+        <span class="switch-note">Monthly is 15% more</span>
       </div>
       <div class="flex items-center gap-3">
         <span class="text-[13px] text-muted">Currency</span>
@@ -58,33 +47,37 @@ const priceData = rows.map((p) => ({
           <button type="button" class="switch-btn" data-currency="USD" aria-pressed="false">USD</button>
         </div>
       </div>
+      <p class="text-[13px] text-muted">{pricingTerms.vatNote} {pricingTerms.contract}</p>
     </div>
   )}
 
-  <div class="grid gap-6 md:grid-cols-3 md:items-start" data-reveal-group>
-    {rows.map((p) => (
+  <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4 md:items-start" data-reveal-group>
+    {plans.map((p) => (
       <div
-        class:list={['plan-card', p.featured ? 'plan-featured' : 'card']}
+        class:list={['plan-card', p.featured ? 'plan-featured' : 'card', { 'plan-waitlist': p.status === 'waitlist' }]}
         data-plan={p.id}
         data-reveal
       >
         <div class:list={['flex h-full flex-col p-7', p.featured ? 'md:py-9' : 'md:py-8']}>
-          <h3 class="t-h3">{p.name}</h3>
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="t-h3">{p.name}</h3>
+            {p.status === 'waitlist' && <span class="pill pill-grey">Coming 2027</span>}
+            
+          </div>
           <p class:list={['mt-2 text-[14px] leading-relaxed', p.featured ? 'text-night-muted' : 'text-muted']}>
             {p.blurb}
           </p>
 
           <div class="mt-6 flex items-baseline gap-1.5">
+            {p.status === 'waitlist' && <span class="text-[15px] text-muted">From</span>}
             <span class="price-roll" data-price-roll>
               <span class="price-num t-num tnum" data-price-num>{fmt(p.price.ZAR, 'ZAR')}</span>
             </span>
             <span class:list={['text-[15px]', p.featured ? 'text-night-muted' : 'text-muted']}>/month</span>
           </div>
-          {!compact && (
-            <p class:list={['mt-1.5 text-[12.5px]', p.featured ? 'text-night-muted' : 'text-dim']} data-price-note>
-              {p.annualNote}
-            </p>
-          )}
+          <p class:list={['mt-1.5 text-[12.5px]', p.featured ? 'text-night-muted' : 'text-muted']} data-price-note>
+            {setupText(p, 'ZAR')}
+          </p>
           <p class:list={['mt-4 text-[13px]', p.featured ? 'text-night-muted' : 'text-muted']}>{p.users}</p>
 
           <a
@@ -95,7 +88,7 @@ const priceData = rows.map((p) => ({
           </a>
 
           <ul class="mt-7 space-y-3">
-            {(compact ? p.features.slice(0, 4) : p.features).map((f) => (
+            {(compact ? p.features.slice(0, 5) : p.features).map((f) => (
               <li class="flex items-start gap-2.5 text-[14px] leading-snug">
                 <svg
                   viewBox="0 0 16 16"
@@ -120,16 +113,16 @@ const priceData = rows.map((p) => ({
     ))}
   </div>
 
-  {!compact && (
-    <div class="mt-10 max-w-[60ch] space-y-2">
-      <p class="text-[14px] text-muted">
-        All plans include hosting in South Africa, daily backups, updates and support. No setup fee on Starter and Growth.
-      </p>
-      <p class="text-[13px] text-dim">
+  <div class="mt-10 max-w-[64ch] space-y-2">
+    <p class="text-[14px] text-muted">
+      Every plan is hosted on Google Cloud in Johannesburg, with daily backups, updates and support included. {pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa.
+    </p>
+    {!compact && (
+      <p class="text-[13px] text-muted">
         Enterprise QMS platforms often cost R200,000 a year or more, before setup.
       </p>
-    </div>
-  )}
+    )}
+  </div>
 </div>
 
 <style>
@@ -168,6 +161,7 @@ const priceData = rows.map((p) => ({
   .switch-note { font-size: 12.5px; color: var(--color-green); font-weight: 500; }
 
   .plan-card { border-radius: var(--radius-lg); }
+  .plan-waitlist { background: transparent; border-style: dashed; }
   .plan-featured {
     background: var(--color-night);
     color: var(--color-night-fg);
@@ -188,8 +182,8 @@ const priceData = rows.map((p) => ({
 
   interface PlanPrice {
     id: string;
-    ZAR: { annual: number; monthly: number; annualNote: string };
-    USD: { annual: number; monthly: number; annualNote: string };
+    ZAR: { annual: string; monthly: string; setup: string };
+    USD: { annual: string; monthly: string; setup: string };
   }
 
   onReady(() => {
@@ -203,76 +197,45 @@ const priceData = rows.map((p) => ({
       return;
     }
 
-    let billing: 'annual' | 'monthly' = 'annual';
-    let currency: 'ZAR' | 'USD' = 'ZAR';
-
-    const fmt = (n: number, cur: 'ZAR' | 'USD') => (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
-
     function updateRoll(el: HTMLElement, text: string) {
       const current = el.querySelector<HTMLElement>('[data-price-num]');
       if (!current || current.textContent === text) return;
-
       if (reduced) {
         current.textContent = text;
         return;
       }
-
-      const startHeight = current.offsetHeight;
-      el.style.height = `${startHeight}px`;
+      el.style.height = `${current.offsetHeight}px`;
       current.removeAttribute('data-price-num');
-
       const next = current.cloneNode(true) as HTMLElement;
       next.textContent = text;
       next.setAttribute('data-price-num', '');
       el.appendChild(next);
-
       current.style.position = 'absolute';
       current.style.inset = '0';
       next.style.position = 'absolute';
       next.style.inset = '0';
-
       gsap.set(next, { yPercent: 100, opacity: 0 });
-      gsap.to(current, {
-        yPercent: -100,
-        opacity: 0,
-        duration: 0.22,
-        ease: 'power2.out',
-        onComplete: () => current.remove(),
-      });
+      gsap.to(current, { yPercent: -100, opacity: 0, duration: 0.22, ease: 'power2.out', onComplete: () => current.remove() });
       gsap.to(next, {
-        yPercent: 0,
-        opacity: 1,
-        duration: 0.22,
-        ease: 'power2.out',
-        onComplete: () => {
-          next.style.position = '';
-          next.style.inset = '';
-          el.style.height = '';
-        },
+        yPercent: 0, opacity: 1, duration: 0.22, ease: 'power2.out',
+        onComplete: () => { next.style.position = ''; next.style.inset = ''; el.style.height = ''; },
       });
     }
 
-    function render() {
+    let billing: 'annual' | 'monthly' = 'annual';
+    let currency: 'ZAR' | 'USD' = 'ZAR';
+    const render = () => {
       plansData.forEach((p) => {
-        const card = root!.querySelector<HTMLElement>(`[data-plan="${p.id}"]`);
+        const card = root.querySelector<HTMLElement>(`[data-plan="${p.id}"]`);
         if (!card) return;
         const roll = card.querySelector<HTMLElement>('[data-price-roll]');
         const note = card.querySelector<HTMLElement>('[data-price-note]');
-        const src = p[currency];
-        const amount = billing === 'annual' ? src.annual : src.monthly;
-
-        if (roll) updateRoll(roll, fmt(amount, currency));
-        if (note) {
-          note.textContent =
-            billing === 'annual'
-              ? src.annualNote
-              : `Billed monthly. ${fmt(src.annual, currency)}/month if billed annually.`;
-        }
+        if (roll) updateRoll(roll, p[currency][billing]);
+        if (note) note.textContent = p[currency].setup;
       });
-    }
-
-    function setupGroup(name: 'billing' | 'currency', onChange: (value: string) => void) {
-      const group = root!.querySelector<HTMLElement>(`[data-switch="${name}"]`);
+    };
+    const wire = (name: 'billing' | 'currency', onChange: (v: string) => void) => {
+      const group = root.querySelector<HTMLElement>(`[data-switch="${name}"]`);
       if (!group) return;
       const thumb = group.querySelector<HTMLElement>('[data-thumb]');
       const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>('.switch-btn'));
@@ -281,17 +244,11 @@ const priceData = rows.map((p) => ({
           buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
           if (thumb) thumb.style.transform = `translateX(${i * 100}%)`;
           onChange(btn.dataset[name] || '');
+          render();
         });
       });
-    }
-
-    setupGroup('billing', (value) => {
-      billing = value === 'monthly' ? 'monthly' : 'annual';
-      render();
-    });
-    setupGroup('currency', (value) => {
-      currency = value === 'USD' ? 'USD' : 'ZAR';
-      render();
-    });
+    };
+    wire('billing', (v) => { billing = v === 'monthly' ? 'monthly' : 'annual'; });
+    wire('currency', (v) => { currency = v === 'USD' ? 'USD' : 'ZAR'; });
   });
 </script>

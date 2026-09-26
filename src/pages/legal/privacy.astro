@@ -13,7 +13,9 @@ const sections = [
   },
   {
     title: '3. The contact form',
-    body: `The "Book a demo" form on our Contact page doesn’t submit anywhere. When you press send, your browser composes an email to ${site.email} using your own email client and opens it for you to review and send. We only receive what you choose to send us, the way any email works.`,
+    body: site.web3formsKey
+      ? `When you send the "Book a demo" or waitlist form, the details you enter are delivered to ${site.email} through Web3Forms, a form-delivery service, which passes them on by email. We use them only to reply to your request and keep them no longer than needed for that. If sending fails, the page offers to open the request in your own email app instead.`
+      : `The "Book a demo" and waitlist forms do not store anything. When you press send, the page prepares an email to ${site.email} and offers to open it in your email app, Gmail or Outlook, or to copy it. We only receive what you choose to send us, the way any email works.`,
   },
   {
     title: '4. What we do with an email you send us',

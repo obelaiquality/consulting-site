@@ -1,4 +1,5 @@
 ---
+import RelatedGuides from '../components/RelatedGuides.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
 
@@ -11,6 +12,8 @@ const groups: Group[] = [
     items: [
       { term: 'Where your data lives', detail: `We host Obel MS on Google Cloud, ${site.region}. Your data stays in South Africa.` },
       { term: 'Backups', detail: 'Daily backups of your database and documents. We test restores — a backup you can’t restore isn’t a backup.' },
+      { term: 'Encryption', detail: 'Your data is encrypted at rest and in transit.' },
+      { term: 'Availability', detail: 'We target 99.5% availability on a best-effort basis. Service credits come with the Validated plan.' },
       { term: 'Updates', detail: 'New features and security patches land without downtime windows you have to plan around.' },
     ],
   },
@@ -25,8 +28,8 @@ const groups: Group[] = [
   {
     title: 'AI features',
     items: [
-      { term: 'What it does', detail: 'AI reads uploaded documents to suggest metadata (type, certificate number, expiry date) on EDC uploads, and drafts stage and executive summaries on Workflow Manager records.' },
-      { term: 'Where it runs', detail: 'Through the OpenAI API. Nothing is used to train a model on your data.' },
+      { term: 'What it does', detail: 'AI reads the text of uploaded digital PDFs to suggest metadata (type, certificate number, expiry date) on EDC uploads, and drafts stage and executive summaries on Workflow Manager records.' },
+      { term: 'Where it runs', detail: 'Through the OpenAI API. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
       { term: 'Your control', detail: 'An admin can switch AI processing off entirely. Where it runs, a consent gate appears before it processes anything.' },
       { term: 'Human in the loop', detail: 'Every AI suggestion is Accept, Edit or Dismiss — nothing files itself without a person approving it.' },
     ],
@@ -47,8 +50,9 @@ const roadmap = [
 ---
 
 <BaseLayout
-  title="Security and hosting"
-  description="Where Obel MS is hosted, how access and backups work, how AI features are gated, and what's still on the roadmap."
+  title="Security, Hosting and POPIA | Obel MS"
+  description="Hosted on Google Cloud in Johannesburg, encrypted at rest and in transit, daily backups. How access, AI features and POPIA are handled."
+  breadcrumbs={[{ name: 'Security', href: '/security' }]}
 >
   <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
     <div class="container-x">
@@ -99,7 +103,8 @@ const roadmap = [
       </div>
     </div>
   </section>
-</BaseLayout>
+<RelatedGuides slugs={['iso-9001-software-south-africa', 'qms-software-cost', 'spreadsheets-vs-qms-software']} />
+  </BaseLayout>
 
 <style>
   .def-group { padding-block: 2.75rem; border-top: 1px solid var(--color-line); }

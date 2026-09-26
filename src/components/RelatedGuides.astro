@@ -1,0 +1,35 @@
+---
+/* Contextual links from product and compliance pages into the answer-first guides. */
+import { guides, type GuideMeta } from '../data/guides';
+interface Props { slugs: string[]; heading?: string }
+const { slugs, heading = 'Guides on this topic' } = Astro.props;
+const list: GuideMeta[] = slugs
+  .map((s: string) => guides.find((g: GuideMeta) => g.slug === s))
+  .filter((g: GuideMeta | undefined): g is GuideMeta => Boolean(g));
+---
+{list.length > 0 && (
+  <section class="section-y !pt-0" aria-labelledby="related-guides">
+    <div class="container-x">
+      <h2 id="related-guides" class="t-h3">{heading}</h2>
+      <ul class="rg-list mt-6">
+        {list.map((g: GuideMeta) => (
+          <li>
+            <a href={`/guides/${g.slug}`} class="rg-row">
+              <span class="rg-title">{g.title}</span>
+              <span class="rg-sum">{g.summary}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .rg-list { display: grid; gap: 12px; }
+  @media (min-width: 900px) { .rg-list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+  .rg-row { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 18px 20px; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-surface); transition: border-color .2s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .rg-row:hover { border-color: var(--color-line-hover); } }
+  .rg-title { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; letter-spacing: -0.015em; line-height: 1.25; color: var(--color-ink); }
+  .rg-sum { font-size: 14px; line-height: 1.55; color: var(--color-muted); }
+</style>

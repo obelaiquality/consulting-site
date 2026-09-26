@@ -131,6 +131,14 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - Daily backups, updates, monitoring and migration of your existing registers.
 - Support from quality consultants.
 
+**Updates (26 Sep 2026):**
+- Pricing is Rev B in `src/data/site.ts`: Lite, Essentials, Professional, and Validated (GxP) as a 2027 waitlist. Every ZAR price is shown excl. 15% VAT, billed annually, and month-to-month costs 15% more.
+- AI metadata extraction works on digital PDFs only. OCR of scanned images is off.
+- You may say: encrypted at rest and in transit, and "99.5% availability target, best effort".
+- The AI chat assistant may appear only as "coming soon".
+- ISO 9001:2026 was published on 16 September 2026, and clause 7.5 keeps its number. Write "ISO 9001" without a year, or name both editions. ISO 9001:2015 certificates stay valid through a three-year transition.
+- Guides live in `src/pages/guides/` and use `GuideLayout`, with an answer-first "In short" box, question-led H2s and cited sources. Register every guide in `src/data/guides.ts`. Change `updated` only when the content really changes.
+
 **Never claim:**
 - That the software is "ISO 9001 certified" or "compliant". Say "supports ISO 9001 compliance" or "built around clause 7.5". Only organisations get certified.
 - SSO, SAML or MFA.
@@ -139,7 +147,8 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - A chat assistant or "ask the AI anything".
 - Full-text search across all documents.
 - Multi-tenant architecture.
-- 21 CFR Part 11 or GxP validation. That is a future roadmap item.
+- 21 CFR Part 11, e-signatures, "validated" or GxP compliance. The Validated plan is a waitlist only.
+- OCR of scanned documents, or 99.9% uptime.
 - Uptime percentages, customer counts or testimonials.
 - IDC as available. It is "coming soon", with a waitlist.
 
