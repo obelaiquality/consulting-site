@@ -10,7 +10,7 @@ import MockDigest from '../../components/product/MockDigest.astro';
 import recordsImg from '../../assets/app/wfm-records-my.png';
 import detailsImg from '../../assets/app/wfm-record-details.png';
 import verifyImg from '../../assets/app/wfm-record-verification.png';
-import auditImg from '../../assets/app/wfm-record-audit.png';
+import reportImg from '../../assets/app/wfm-record-report.png';
 import designerImg from '../../assets/app/wfm-template-designer.png';
 import reportsImg from '../../assets/app/reports-wfm.png';
 import { site, plans } from '../../data/site';
@@ -54,7 +54,7 @@ const jsonLd = {
         </div>
       </div>
       <div class="mt-14 md:mt-20" data-reveal>
-        <ScreenFrame src={recordsImg} alt="Workflow Manager records list with nonconformance, CAPA, audit and change records at different stages" crop={0.62} eager sizes="(min-width: 1280px) 1200px, 100vw" />
+        <ScreenFrame src={recordsImg} alt="Workflow Manager records list with audit, nonconformance and CAPA records at different stages" crop={0.543} top={0.34} eager sizes="(min-width: 1280px) 1200px, 100vw" />
         <p class="wm-caption">A real Obel MS screen with example data.</p>
       </div>
     </div>
@@ -105,7 +105,7 @@ const jsonLd = {
         <Fragment slot="text">
           <p class="t-body">After the corrective action, the record waits for its verification date. The verifier reviews the evidence and marks the action Effective or Ineffective. An ineffective result reopens the record.</p>
         </Fragment>
-        <Fragment slot="mock"><ScreenFrame src={verifyImg} alt="A record in its verification stage, with the verification date and the Verify button" crop={0.72} /></Fragment>
+        <Fragment slot="mock"><ScreenFrame src={verifyImg} alt="A record in its verification stage, with the Mark Effective and Mark Ineffective outcome" crop={0.72} /></Fragment>
       </FeatureRow>
 
       <FeatureRow label="AI drafts, people approve" title="Summaries your team edits and approves.">
@@ -148,11 +148,11 @@ const jsonLd = {
   <!-- What auditors see -->
   <section class="section-y pt-0">
     <div class="container-x">
-      <FeatureRow label="What auditors see" title="Every stage change, with a name and a time.">
+      <FeatureRow label="What auditors see" title="A report for every record.">
         <Fragment slot="text">
-          <p class="t-body">The audit trail records each stage change, approval, entry, attachment and verification. Download the record and its audit trail as a PDF for the audit file.</p>
+          <p class="t-body">Each record has a report with its details, references, executive summary, entries, approvals and verification. Download it as a PDF for the audit file. The audit trail logs each stage change, approval, entry and attachment with its date and time.</p>
         </Fragment>
-        <Fragment slot="mock"><ScreenFrame src={auditImg} alt="The audit trail of a record, listing each approval, stage change and entry with its date and time" crop={0.72} /></Fragment>
+        <Fragment slot="mock"><ScreenFrame src={reportImg} alt="The report of a nonconformance record, with its main details, references and executive summary" crop={0.72} /></Fragment>
       </FeatureRow>
     </div>
   </section>
@@ -160,7 +160,7 @@ const jsonLd = {
   <RelatedGuides slugs={['capa-and-nonconformance', 'iso-9001-2026-changes', 'spreadsheets-vs-qms-software']} />
   <ProductCta
     title="Give corrective actions a place to close."
-    body={`Workflow Manager is part of the Professional plan, from R${professional.price.ZAR.toLocaleString('en-ZA')} a month excl. VAT, hosted in South Africa. We help you migrate your open registers.`}
+    body={`Workflow Manager is part of the Professional plan, from R${professional.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. We help you migrate your open registers.`}
   />
 </BaseLayout>
 

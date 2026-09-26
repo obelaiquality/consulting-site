@@ -9,14 +9,15 @@ import ScreenFrame from '../mock/ScreenFrame.astro';
 import recordsImg from '../../assets/app/wfm-records-my.png';
 import detailsImg from '../../assets/app/wfm-record-details.png';
 import verifyImg from '../../assets/app/wfm-record-verification.png';
-import auditImg from '../../assets/app/wfm-record-audit.png';
+import reportImg from '../../assets/app/wfm-record-report.png';
 
 const chapters = [
   {
     title: 'Record it',
     body: 'Anyone can raise a nonconformance, a CAPA, an audit, a change or a document review. Each record starts from a template with its stages, deadlines and approvers already set.',
     img: recordsImg,
-    alt: 'Workflow Manager records list with nonconformance, change and supplier records at different stages and statuses',
+    top: 0.285,
+    alt: 'Workflow Manager records list with audit, nonconformance and CAPA records at different stages and statuses',
   },
   {
     title: 'Investigate and approve',
@@ -28,13 +29,13 @@ const chapters = [
     title: 'Verify the fix',
     body: 'After the corrective action, the record waits for its verification date. The verifier checks the evidence and marks the action Effective or Ineffective.',
     img: verifyImg,
-    alt: 'A record in verification, with the Verify button and the full history of entries',
+    alt: 'A record in verification, with the Mark Effective and Mark Ineffective outcome',
   },
   {
     title: 'Show the auditor',
-    body: 'Every stage change, approval, entry and attachment is in the audit trail with a name and a time. You can download the record and its audit trail as a PDF.',
-    img: auditImg,
-    alt: 'The audit trail of a record, listing each approval, stage change and entry with its date and time',
+    body: 'Each record has a report with its details, summary, entries, approvals and verification. Download it as a PDF, together with the audit trail of every change.',
+    img: reportImg,
+    alt: 'The report of a nonconformance record, with its main details, references and executive summary, ready to download as a PDF',
   },
 ];
 ---
@@ -57,7 +58,7 @@ const chapters = [
               <p class="wfs-step-body">{c.body}</p>
             </div>
             <div class="wfs-inline-shot">
-              <ScreenFrame src={c.img} alt={c.alt} crop={0.72} sizes="100vw" />
+              <ScreenFrame src={c.img} alt={c.alt} crop={0.6} top={c.top} sizes="100vw" />
             </div>
           </li>
         ))}
@@ -66,7 +67,7 @@ const chapters = [
       <div class="wfs-stage" aria-hidden="true">
         {chapters.map((c, i) => (
           <div class="wfs-shot" data-wfs-shot={i}>
-            <ScreenFrame src={c.img} alt="" crop={0.72} sizes="(min-width: 1024px) 62vw, 100vw" />
+            <ScreenFrame src={c.img} alt="" crop={0.6} top={c.top} sizes="(min-width: 1024px) 62vw, 100vw" />
           </div>
         ))}
       </div>

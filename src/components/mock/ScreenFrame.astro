@@ -14,9 +14,12 @@ interface Props {
   eager?: boolean;
   /** Crop to the top part of the screenshot, as a fraction of its height (0–1). */
   crop?: number;
+  /** Start the crop this far down the screenshot, as a fraction of its height (0–1). */
+  top?: number;
   sizes?: string;
 }
-const { src, alt, url = 'app.obel-ai.com', class: cls = '', eager = false, crop, sizes = '(min-width: 1024px) 60vw, 100vw' } = Astro.props;
+const { src, alt, url = 'app.obel-ai.com', class: cls = '', eager = false, crop, top = 0, sizes = '(min-width: 1024px) 60vw, 100vw' } = Astro.props;
+const shift = top ? `margin-top: -${((top * src.height) / src.width) * 100}%` : '';
 const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.width} / ${src.height}`;
 ---
 <figure class:list={['screen-frame', cls]}>
@@ -34,6 +37,7 @@ const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.
       loading={eager ? 'eager' : 'lazy'}
       fetchpriority={eager ? 'high' : 'auto'}
       class="sf-img"
+      style={shift}
     />
   </div>
 </figure>
