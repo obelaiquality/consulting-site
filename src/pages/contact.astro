@@ -3,7 +3,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, plans } from '../data/site';
 
 const planParam = Astro.url.searchParams.get('plan');
-console.log('DEBUG contact.astro Astro.url =', Astro.url.href, 'planParam=', JSON.stringify(planParam));
+const DEBUG_URL = Astro.url.href;
+const DEBUG_SEARCH = Astro.url.search;
+const DEBUG_REQUEST_URL = Astro.request.url;
 const planOptions = [
   ...plans.map((p) => ({ id: p.id, name: p.name })),
   { id: 'not-sure', name: 'Not sure yet' },
@@ -25,6 +27,7 @@ const steps = [
   title="Contact"
   description="Book a 20-minute demo of Obel MS, or get in touch about consulting, implementation and audit prep."
 >
+  <p id="debug-info" style="display:none">{`url=${DEBUG_URL} search=${DEBUG_SEARCH} reqUrl=${DEBUG_REQUEST_URL} planParam=${planParam} preselected=${preselectedPlan}`}</p>
   <section id="demo" class="section-y pt-[calc(var(--nav-h)+3rem)]">
     <div class="container-x">
       <div class="max-w-[42rem]">
