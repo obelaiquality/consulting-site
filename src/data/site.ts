@@ -111,7 +111,7 @@ export const plans = [
     cta: 'Book a demo',
     features: [
       'Everything in Essentials',
-      'Workflow Manager for nonconformance, CAPA, change control, complaints and supplier deviations',
+      'Workflow Manager with standard templates for nonconformance, CAPA, change control, audits and document review',
       'Approvals routed by job title and effectiveness verification',
       'AI stage and executive summaries',
       'AI assistant with a monthly usage cap (coming soon)',

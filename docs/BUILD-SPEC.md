@@ -110,11 +110,10 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
   - Upload New Version keeps the version history. There are also bulk metadata edit, archive and unarchive, and a full audit log.
   - The Register grid columns are: Original Filename, Document Title, Document Type, Product, Supplier, Manufacturer, Statement Type, Catalogue No., Certificate No., Number, Issue Date, Expiration Date, Status, Document Status.
 - WFM:
-  - Five standard templates: **Nonconformance** (NC-001, 6 stages incl. verification), **Change Management** (CM-001), **Customer Complaint** (CC-001), **Supplier Deviation** (SD-001), **Action** (ACT-001). Stage names are in `demo.ts`.
+  - Five standard templates, no template codes: **Nonconformance** (5 stages incl. verification), **CAPA** (6 stages incl. verification), **Audit** (5 stages incl. verification), **Change Control** (6 stages incl. verification), **Document Review** (4 stages, no verification). Stage names are in `demo.ts`. Customers can also build their own templates in the template designer.
   - A template designer with drag-to-reorder stages, stage deadlines, approvals routed by job title, custom fields and template versioning ("New version" versus "Copy").
   - Record statuses: Active, Pending Approval, Awaiting Verification, Completed, Cancelled. "Overdue" is a due status, not a record status.
   - Effectiveness verification with the outcomes "Mark Effective" and "Mark Ineffective".
-  - A Customer Complaint can be escalated to a Nonconformance or a Supplier Deviation.
   - Entries and attachments of any file type up to 50 MB.
   - The audit trail shows each entry as "**Actor** action: detail" with a `YYYY-MM-DD HH:MM` time, and can be downloaded as a PDF.
   - Each record has a Report tab with a PDF.
@@ -151,6 +150,7 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - OCR of scanned documents, or 99.9% uptime.
 - Uptime percentages, customer counts or testimonials.
 - IDC as available. It is "coming soon", with a waitlist.
+- Do not claim Customer Complaint, Supplier Deviation or Action templates, template codes, or escalation between records.
 
 ## 7. How to check your work
 

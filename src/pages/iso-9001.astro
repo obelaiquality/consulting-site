@@ -19,7 +19,7 @@ const rows: Row[] = [
   {
     clause: '7.5.1',
     requires: 'Maintain the documented information your QMS needs, both what the standard requires and what you decide you need.',
-    support: 'The EDC Register holds supplier certificates, specifications and statements. Workflow Manager records (Nonconformance, Change Management, Customer Complaint, Supplier Deviation, Action) hold the rest.',
+    support: 'The EDC Register holds supplier certificates, specifications and statements. Workflow Manager records (Nonconformance, CAPA, Audit, Change Control, Document Review) hold the rest.',
     module: 'EDC and WFM',
   },
   {
@@ -61,13 +61,13 @@ const rows: Row[] = [
   {
     clause: '8.4',
     requires: 'Control externally provided processes, products and services, based on their effect on your QMS.',
-    support: 'Supplier certificates and specifications live in EDC with expiry tracking. A Supplier Deviation record in Workflow Manager handles a supplier falling short.',
+    support: 'Supplier certificates and specifications live in EDC with expiry tracking. A Nonconformance or CAPA record in Workflow Manager handles a supplier falling short.',
     module: 'EDC and WFM',
   },
   {
     clause: '8.7',
     requires: 'Identify and control outputs that do not conform to requirements.',
-    support: 'The Nonconformance template (NC-001) routes a finding through six stages, including verification, with approvals assigned by job title.',
+    support: 'The Nonconformance template routes a finding through five stages, including verification, with approvals assigned by job title.',
     module: 'WFM',
   },
   {
@@ -85,7 +85,7 @@ const rows: Row[] = [
   {
     clause: '10.2',
     requires: 'React to nonconformity, evaluate the need for corrective action, and check that it worked.',
-    support: 'Nonconformance and Action records track cause and correction, and effectiveness verification closes the loop with Mark Effective or Mark Ineffective.',
+    support: 'Nonconformance and CAPA records track cause and correction, and effectiveness verification closes the loop with Mark Effective or Mark Ineffective.',
     module: 'WFM',
   },
 ];

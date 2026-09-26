@@ -1,0 +1,147 @@
+---
+/*
+ * Workflow Manager showcase: the centrepiece of the home page, built from real app screenshots.
+ * Desktop with motion: one pinned scene, four chapters; one screenshot changes at a time
+ * (opacity and a very small scale), and the chapter list follows the timeline.
+ * Mobile or reduced motion: each chapter shows its text and its screenshot, in order.
+ */
+import ScreenFrame from '../mock/ScreenFrame.astro';
+import recordsImg from '../../assets/app/wfm-records-my.png';
+import detailsImg from '../../assets/app/wfm-record-details.png';
+import verifyImg from '../../assets/app/wfm-record-verification.png';
+import auditImg from '../../assets/app/wfm-record-audit.png';
+
+const chapters = [
+  {
+    title: 'Record it',
+    body: 'Anyone can raise a nonconformance, a CAPA, an audit, a change or a document review. Each record starts from a template with its stages, deadlines and approvers already set.',
+    img: recordsImg,
+    alt: 'Workflow Manager records list with nonconformance, change and supplier records at different stages and statuses',
+  },
+  {
+    title: 'Investigate and approve',
+    body: 'Each stage has instructions, a deadline and a place for entries and evidence. When a stage needs sign-off, the Quality Manager approves or rejects it with a comment.',
+    img: detailsImg,
+    alt: 'A nonconformance record waiting for approval, with Approve and Reject buttons, the stage header and the entries',
+  },
+  {
+    title: 'Verify the fix',
+    body: 'After the corrective action, the record waits for its verification date. The verifier checks the evidence and marks the action Effective or Ineffective.',
+    img: verifyImg,
+    alt: 'A record in verification, with the Verify button and the full history of entries',
+  },
+  {
+    title: 'Show the auditor',
+    body: 'Every stage change, approval, entry and attachment is in the audit trail with a name and a time. You can download the record and its audit trail as a PDF.',
+    img: auditImg,
+    alt: 'The audit trail of a record, listing each approval, stage change and entry with its date and time',
+  },
+];
+---
+<section class="wfs bg-night text-night-fg" data-wf-showcase aria-labelledby="wfs-title">
+  <div class="container-x wfs-head">
+    <p class="label-dot is-live wfs-label">Workflow Manager</p>
+    <h2 id="wfs-title" class="t-h2 mt-5 max-w-[20ch]">Every corrective action, from first report to proven fix.</h2>
+    <p class="wfs-lead">Workflow Manager runs each nonconformance, CAPA, audit, change and document review the same way every time. These are real screens from Obel MS, with example data.</p>
+  </div>
+
+  <div class="container-x">
+    <div class="wfs-grid" data-wfs-pin>
+      <ol class="wfs-steps">
+        <span class="wfs-rail" aria-hidden="true"><span class="wfs-rail-fill" data-wfs-rail></span></span>
+        {chapters.map((c, i) => (
+          <li class:list={['wfs-step', { 'is-on': i === 0 }]} data-wfs-step={i}>
+            <span class="wfs-num tnum" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3 class="wfs-step-title">{c.title}</h3>
+              <p class="wfs-step-body">{c.body}</p>
+            </div>
+            <div class="wfs-inline-shot">
+              <ScreenFrame src={c.img} alt={c.alt} crop={0.72} sizes="100vw" />
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="wfs-stage" aria-hidden="true">
+        {chapters.map((c, i) => (
+          <div class="wfs-shot" data-wfs-shot={i}>
+            <ScreenFrame src={c.img} alt="" crop={0.72} sizes="(min-width: 1024px) 62vw, 100vw" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wfs { position: relative; padding-block: clamp(6rem, 11vw, 10rem) clamp(5rem, 9vw, 8rem); }
+  .wfs-label { color: var(--color-night-fg); }
+  .wfs-lead { margin-top: 1.4rem; max-width: 38rem; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.6; color: var(--color-night-muted); }
+  .wfs-grid { margin-top: clamp(3rem, 6vw, 5rem); display: grid; gap: 3rem; }
+  .wfs-grid > * { min-width: 0; }
+  .wfs-steps { position: relative; display: grid; gap: 3rem; padding-left: 2.75rem; }
+  .wfs-rail { position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: var(--color-night-line); }
+  .wfs-rail-fill { position: absolute; inset: 0; background: var(--color-green-bright); transform-origin: top; transform: scaleY(0); }
+  .wfs-step { position: relative; }
+  .wfs-num { position: absolute; left: -2.75rem; top: 0; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 99px; background: var(--color-night); border: 1px solid var(--color-night-line); font-size: 12px; font-weight: 600; color: var(--color-night-muted); transition: background-color .4s var(--ease-calm), color .4s var(--ease-calm), border-color .4s var(--ease-calm); }
+  .wfs-step-title { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-night-fg); }
+  .wfs-step-body { margin-top: .55rem; font-size: 15.5px; line-height: 1.65; color: var(--color-night-muted); max-width: 30rem; }
+  .wfs-inline-shot { margin-top: 1.5rem; }
+  .wfs-stage { display: none; }
+
+  /* Pinned desktop scene */
+  @media (min-width: 1024px) {
+    .wf-pinned .wfs-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4.5rem; align-items: center; min-height: calc(100vh - 140px); }
+    .wf-pinned .wfs-inline-shot { display: none; }
+    .wf-pinned .wfs-steps { gap: 2.25rem; }
+    .wf-pinned .wfs-step { transition: opacity .5s var(--ease-calm); }
+    .wf-pinned .wfs-step:not(.is-on) { opacity: .42; }
+    .wf-pinned .wfs-step.is-on .wfs-num { background: var(--color-night-fg); border-color: var(--color-night-fg); color: var(--color-night); }
+    .wf-pinned .wfs-step.is-done .wfs-num { background: var(--color-green-bright); border-color: var(--color-green-bright); color: var(--color-night); }
+    .wf-pinned .wfs-stage { display: block; position: relative; }
+    .wf-pinned .wfs-shot { position: absolute; inset: 0 auto auto 0; width: 100%; opacity: 0; will-change: opacity, transform; }
+    .wf-pinned .wfs-shot:first-child { position: relative; opacity: 1; }
+  }
+</style>
+
+<script>
+  import { onReady, gsap, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const root = document.querySelector<HTMLElement>('[data-wf-showcase]');
+    if (!root || reduced) return;
+
+    // The ink panel grows from an inset card to full width as it arrives.
+    gsap.fromTo(root,
+      { clipPath: 'inset(0% 3.5% 0% 3.5% round 32px)' },
+      { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
+        scrollTrigger: { trigger: root, start: 'top bottom', end: 'top 15%', scrub: 1 } });
+
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 1024px)', () => {
+      root.classList.add('wf-pinned');
+      const q = gsap.utils.selector(root);
+      const shots = q('[data-wfs-shot]') as HTMLElement[];
+      const steps = q('[data-wfs-step]') as HTMLElement[];
+      const n = shots.length;
+      const setStep = (k: number) => steps.forEach((s, i) => { s.classList.toggle('is-on', i === k); s.classList.toggle('is-done', i < k); });
+
+      gsap.set(shots, { opacity: 0, scale: 1.015 });
+      gsap.set(shots[0], { opacity: 1, scale: 1 });
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power2.inOut' },
+        scrollTrigger: { trigger: q('[data-wfs-pin]')[0], start: 'center center', end: `+=${n * 70}%`, pin: true, scrub: 1 },
+        onUpdate: () => setStep(Math.min(n - 1, Math.floor(tl.progress() * n))),
+      });
+      for (let i = 1; i < n; i++) {
+        tl.to(shots[i - 1], { opacity: 0, scale: 0.985, duration: 0.5 }, i)
+          .to(shots[i], { opacity: 1, scale: 1, duration: 0.5 }, i);
+      }
+      tl.to(q('[data-wfs-rail]'), { scaleY: 1, ease: 'none', duration: n }, 0).to({}, { duration: 0.4 });
+      setStep(0);
+      return () => root.classList.remove('wf-pinned');
+    });
+  });
+</script>

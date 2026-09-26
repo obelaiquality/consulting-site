@@ -38,20 +38,22 @@ export const edcTree = [
   { name: 'Kestrel Packaging', count: 0, children: [] },
 ];
 
+/* The five standard templates the app seeds (obel-ms-saas tests/fixtures/standard_templates.json).
+ * approvals = stage indexes that need sign-off. The app adds a Verification stage to four of them. */
 export const wfmTemplates = [
-  { code: 'NC-001', name: 'Nonconformance', stages: ['Report & Record', 'Immediate Correction', 'Investigation & Severity Assessment', 'Root Cause Analysis', 'Corrective & Preventive Action', 'Verification'], approvals: [2, 4], verification: true },
-  { code: 'CM-001', name: 'Change Management', stages: ['Log Change', 'Review & Action Plan', 'Implement & Close', 'Verification'], approvals: [1, 2], verification: true },
-  { code: 'CC-001', name: 'Customer Complaint', stages: ['Log Complaint', 'Investigation & Customer Response', 'Close or Escalate'], approvals: [], verification: false },
-  { code: 'SD-001', name: 'Supplier Deviation', stages: ['Log Deviation & Submit to Supplier', 'Supplier Investigation & Root Cause', 'Supplier Corrective Action', 'Verify Implementation', 'Verification'], approvals: [2, 3], verification: true },
-  { code: 'ACT-001', name: 'Action', stages: ['Log Action', 'Close Action'], approvals: [], verification: false },
+  { name: 'Nonconformance', stages: ['Report & Record', 'Immediate Correction', 'Investigation & Severity Assessment', 'CAPA', 'Verification'], approvals: [3], verification: true },
+  { name: 'CAPA', stages: ['Raise CAPA', 'Root Cause Analysis', 'Action Plan', 'Implement Actions', 'Close Out', 'Verification'], approvals: [1, 2, 4], verification: true },
+  { name: 'Audit', stages: ['Plan Audit', 'Conduct Audit', 'Record Findings & Issue Report', 'CAPA & Close Out', 'Verification'], approvals: [2, 3], verification: true },
+  { name: 'Change Control', stages: ['Raise Change Request', 'Impact Assessment', 'Approval', 'Implement Change', 'Verify Implementation', 'Verification'], approvals: [2, 4], verification: true },
+  { name: 'Document Review', stages: ['Schedule Review', 'Conduct Review', 'Update Document', 'Approve & Issue'], approvals: [3], verification: false },
 ];
 
 export const wfmRecords = [
-  { code: 'wf2609140007', title: 'Mislabelled carton - batch 24-118', template: 'Nonconformance', stage: '3/6', status: 'Pending Approval', tone: 'amber' as Tone, due: '2026-09-29', agent: 'Thandi Mokoena', createdBy: 'Pieter van Wyk', overdue: false },
-  { code: 'wf2609110003', title: 'Update allergen matrix for new flavour', template: 'Change Management', stage: '2/4', status: 'Active', tone: 'green' as Tone, due: '2026-10-03', agent: 'Aisha Patel', createdBy: 'Thandi Mokoena', overdue: false },
-  { code: 'wf2609020011', title: 'Late delivery complaint - Retail DC', template: 'Customer Complaint', stage: '2/3', status: 'Active', tone: 'green' as Tone, due: '2026-09-24', agent: 'Johan Botha', createdBy: 'Aisha Patel', overdue: true },
-  { code: 'wf2608270002', title: 'Supplier COA missing moisture result', template: 'Supplier Deviation', stage: '5/5', status: 'Awaiting Verification', tone: 'blue' as Tone, due: '2026-12-27', agent: 'Thandi Mokoena', createdBy: 'Johan Botha', overdue: false },
-  { code: 'wf2608190005', title: 'Calibrate check-weigher line 2', template: 'Action', stage: '2/2', status: 'Completed', tone: 'grey' as Tone, due: '2026-08-30', agent: 'Sipho Dlamini', createdBy: 'Pieter van Wyk', overdue: false },
+  { code: 'wf2609140007', title: 'Mislabelled carton - batch 24-118', template: 'Nonconformance', stage: '4/5', status: 'Pending Approval', tone: 'amber' as Tone, due: '2026-09-29', agent: 'Thandi Mokoena', createdBy: 'Pieter van Wyk', overdue: false },
+  { code: 'wf2609110003', title: 'Update allergen matrix for new flavour', template: 'Change Control', stage: '2/6', status: 'Active', tone: 'green' as Tone, due: '2026-10-03', agent: 'Aisha Patel', createdBy: 'Thandi Mokoena', overdue: false },
+  { code: 'wf2609020011', title: 'Repeat label misprints on line 3', template: 'CAPA', stage: '2/6', status: 'Active', tone: 'green' as Tone, due: '2026-09-24', agent: 'Johan Botha', createdBy: 'Aisha Patel', overdue: true },
+  { code: 'wf2608270002', title: 'Supplier COA missing moisture result', template: 'Nonconformance', stage: '5/5', status: 'Awaiting Verification', tone: 'blue' as Tone, due: '2026-12-27', agent: 'Thandi Mokoena', createdBy: 'Johan Botha', overdue: false },
+  { code: 'wf2608190005', title: 'Internal audit - goods receiving', template: 'Audit', stage: '5/5', status: 'Completed', tone: 'grey' as Tone, due: '2026-08-30', agent: 'Sipho Dlamini', createdBy: 'Pieter van Wyk', overdue: false },
 ];
 
 /* Audit trail rows use the app's format: bold actor, action, optional ": detail", then "YYYY-MM-DD HH:MM". */

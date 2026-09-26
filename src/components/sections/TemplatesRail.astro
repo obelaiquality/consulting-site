@@ -1,19 +1,18 @@
 ---
 /*
- * Five standard templates, one panel each, pulled straight from demo.ts wfmTemplates. Desktop
- * pins the section and translates the panel track horizontally against scroll, ease 'none',
- * with a thin progress bar tied to the same scrub. Mobile/reduced motion fall back to a native
- * horizontal scroll-snap row — no JS required for that reading to work.
+ * The five standard templates, one card each, from demo.ts wfmTemplates.
+ * This is the quiet part after the pinned Workflow Manager scene, so it does not pin or scrub.
+ * Wide screens: five cards in one row. Narrower screens: a native scroll-snap row with faded edges.
  */
 import { wfmTemplates } from '../../data/demo';
 ---
 
-<section class="tr-scene bg-night section-y" data-templates-rail aria-labelledby="tr-heading">
+<section class="tr-scene bg-night" data-templates-rail aria-labelledby="tr-heading">
   <div class="container-x"><div class="tr-head">
-    <h2 id="tr-heading" class="t-h2 text-night-fg">Five templates, ready on day one</h2>
+    <h2 id="tr-heading" class="t-h2 text-night-fg">Five templates, ready on day one.</h2>
     <p class="tr-lead">
-      Start with five templates built for the processes ISO 9001 auditors ask about. Change any
-      stage, deadline or approver in the template designer.
+      Each template covers a process that ISO 9001 auditors ask about. Change any stage, deadline
+      or approver in the template designer, or build your own templates.
     </p></div>
   </div>
 
@@ -25,8 +24,8 @@ import { wfmTemplates } from '../../data/demo';
             const approvalSet = new Set(t.approvals);
             const lastIdx = t.stages.length - 1;
             return (
-              <article class="tr-panel" data-tr-panel>
-                <p class="tr-panel-code tnum">{t.code}</p>
+              <article class="tr-panel" data-reveal>
+                <p class="tr-panel-code tnum">Standard template</p>
                 <h3 class="tr-panel-name">{t.name}</h3>
                 <p class="tr-panel-count">{t.stages.length} stages</p>
                 <ol class="tr-panel-stages">
@@ -35,13 +34,10 @@ import { wfmTemplates } from '../../data/demo';
                       <span class="tr-panel-num tnum">{i + 1}</span>
                       <span class="tr-panel-stage-name">{stage}</span>
                       {approvalSet.has(i) && <span class="tr-tag">Approval</span>}
-                      {t.verification && i === lastIdx && <span class="tr-tag tr-tag-verify">Verification</span>}
+                      {t.verification && i === lastIdx && <span class="tr-tag tr-tag-verify">Effectiveness check</span>}
                     </li>
                   ))}
                 </ol>
-                {t.code === 'CC-001' && (
-                  <p class="tr-panel-footer">It can escalate to a Nonconformance or a Supplier Deviation.</p>
-                )}
               </article>
             );
           })
@@ -49,95 +45,38 @@ import { wfmTemplates } from '../../data/demo';
       </div>
     </div>
   </div>
-
-  <div class="tr-progress-track" aria-hidden="true">
-    <div class="tr-progress-bar" data-tr-progress></div>
-  </div>
 </section>
 
 <style>
-  .tr-scene { position: relative; overflow: hidden; }
+  .tr-scene { position: relative; overflow: hidden; padding-block: clamp(2rem, 4vw, 3rem) clamp(6rem, 10vw, 9rem); }
   .tr-head { max-width: 40rem; }
   .tr-lead { margin-top: 1.25rem; font-size: clamp(1.05rem, 1.35vw, 1.25rem); line-height: 1.55; color: var(--color-night-muted); }
 
-  .tr-scroller { margin-top: 3.5rem; }
-  .tr-track { display: flex; gap: 24px; padding-bottom: 4px; }
-
-  /* Mobile / reduced-motion / no-JS: the scroller itself scrolls, snap-aligned. */
-  .tr-scroller { overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; }
+  .tr-scroller { margin-top: 3rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter, 20px); -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 48px), transparent 100%); }
+  .tr-scroller::-webkit-scrollbar { display: none; }
   .tr-scroller:focus-visible { outline: 2px solid var(--color-green-bright); outline-offset: 4px; }
-  .tr-panel { scroll-snap-align: start; }
+  .tr-track { display: flex; gap: 14px; padding-bottom: 4px; }
 
-  @media (min-width: 1024px) {
-    /* JS takes over: the track is transformed by GSAP, so the scroller itself must not scroll. */
-    .tr-scroller[data-js-driven] { overflow: visible; scroll-snap-type: none; }
-  }
+  .tr-panel { flex: none; width: min(82vw, 320px); scroll-snap-align: start; display: flex; flex-direction: column;
+    background: var(--color-night-2); border: 1px solid var(--color-night-line); border-radius: 16px; padding: 22px 22px 24px;
+    transition: border-color .5s var(--ease-calm), background-color .5s var(--ease-calm); }
+  .tr-panel:hover { border-color: rgb(255 255 255 / 0.18); }
+  .tr-panel-code { font-size: 12px; color: var(--color-night-muted); }
+  .tr-panel-name { margin-top: 6px; font-family: var(--font-display); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-night-fg); }
+  .tr-panel-count { margin-top: 4px; font-size: 13px; color: var(--color-night-muted); }
 
-  .tr-panel {
-    flex: none;
-    width: 420px;
-    background: var(--color-night-2);
-    border: 1px solid var(--color-night-line);
-    border-radius: 16px;
-    padding: 26px 26px 28px;
-    display: flex;
-    flex-direction: column;
-  }
-  .tr-panel-code { font-size: 12.5px; color: var(--color-night-muted); }
-  .tr-panel-name { margin-top: 6px; font-family: var(--font-display); font-weight: 700; font-size: 28px; letter-spacing: -0.02em; line-height: 1.08; color: var(--color-night-fg); }
-  .tr-panel-count { margin-top: 6px; font-size: 13px; color: var(--color-night-muted); }
-
-  .tr-panel-stages { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--color-night-line); display: flex; flex-direction: column; gap: 14px; }
-  .tr-panel-stage { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-  .tr-panel-num { flex: none; width: 20px; font-size: 13px; color: var(--color-night-muted); }
-  .tr-panel-stage-name { font-size: 14.5px; color: var(--color-night-fg); }
-  .tr-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--color-night-line); font-size: 10.5px; font-weight: 600; color: var(--color-night-muted); }
+  .tr-panel-stages { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--color-night-line); display: flex; flex-direction: column; gap: 12px; }
+  .tr-panel-stage { display: grid; grid-template-columns: 18px 1fr; column-gap: 8px; row-gap: 5px; align-items: baseline; }
+  .tr-panel-num { font-size: 12px; color: var(--color-night-muted); }
+  .tr-panel-stage-name { font-size: 14px; line-height: 1.35; color: var(--color-night-fg); }
+  .tr-tag { grid-column: 2; justify-self: start; display: inline-flex; align-items: center; height: 19px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--color-night-line); font-size: 10.5px; font-weight: 600; color: var(--color-night-muted); }
   .tr-tag-verify { border-color: var(--color-green-border); color: var(--color-green-bright); }
 
-  .tr-panel-footer { margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--color-night-line); font-size: 13px; color: var(--color-night-muted); }
-
-  .tr-progress-track { display: none; }
-  @media (min-width: 1024px) {
-    .tr-progress-track { display: block; margin-top: 3rem; height: 2px; background: var(--color-night-line); }
+  @media (min-width: 1280px) {
+    .tr-scroller { overflow: visible; mask-image: none; scroll-snap-type: none; }
+    .tr-track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+    .tr-panel { width: auto; padding: 20px 18px 22px; }
+    .tr-panel-name { font-size: 19px; white-space: nowrap; }
   }
-  .tr-progress-bar { height: 100%; width: 100%; background: var(--color-green-bright); transform: scaleX(0); transform-origin: left; }
 </style>
-
-<script>
-  import { onReady, gsap, reduced } from '../../scripts/motion';
-
-  onReady(() => {
-    if (reduced) return;
-    const section = document.querySelector<HTMLElement>('[data-templates-rail]');
-    const scroller = document.querySelector<HTMLElement>('[data-tr-scroller]');
-    const track = document.querySelector<HTMLElement>('[data-tr-track]');
-    const progress = document.querySelector<HTMLElement>('[data-tr-progress]');
-    if (!section || !scroller || !track || !progress) return;
-
-    const mm = gsap.matchMedia();
-    mm.add('(min-width: 1024px)', () => {
-      scroller.setAttribute('data-js-driven', '');
-      scroller.scrollLeft = 0;
-
-      const tl = gsap.timeline({
-        defaults: { ease: 'none' },
-        scrollTrigger: {
-          trigger: section,
-          start: 'top top',
-          end: () => `+=${Math.max(track.scrollWidth - scroller.clientWidth, 1)}`,
-          scrub: 1,
-          pin: true,
-          invalidateOnRefresh: true,
-        },
-      });
-      tl.to(track, { x: () => -(track.scrollWidth - scroller.clientWidth) }, 0);
-      tl.fromTo(progress, { scaleX: 0 }, { scaleX: 1 }, 0);
-
-      return () => {
-        scroller.removeAttribute('data-js-driven');
-        gsap.set(track, { x: 0 });
-        gsap.set(progress, { scaleX: 0 });
-      };
-    });
-  });
-</script>
