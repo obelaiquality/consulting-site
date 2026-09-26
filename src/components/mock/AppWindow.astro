@@ -1,0 +1,74 @@
+---
+/*
+ * A faithful miniature of the Obel MS app chrome: black top bar (logo tile, "MS", nav pills),
+ * warm off-white canvas, eyebrow + Syne page title and underline tab strip.
+ * Slot the page body into it. Everything is HTML/CSS so it stays crisp and animatable.
+ */
+import Logo from '../ui/Logo.astro';
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  tabs?: string[];
+  activeTab?: number;
+  activeNav?: 'Quality' | 'Home';
+  class?: string;
+  url?: string;
+}
+const { eyebrow = 'Quality Management', title, tabs = [], activeTab = 0, activeNav = 'Quality', class: cls = '', url = 'app.obel-ai.com' } = Astro.props;
+---
+<div class:list={['app-window', cls]}>
+  <div class="aw-chrome" aria-hidden="true">
+    <span class="aw-dots"><i></i><i></i><i></i></span>
+    <span class="aw-url"><svg viewBox="0 0 12 12" class="size-2.5" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2.5" y="5.5" width="7" height="5" rx="1"/><path d="M4 5.5V4a2 2 0 1 1 4 0v1.5"/></svg>{url}</span>
+  </div>
+  <div class="aw-bar" aria-hidden="true">
+    <span class="aw-logo"><Logo mark class="h-[11px] w-auto" label="" /></span>
+    <span class="aw-ms">MS</span>
+    <span class="aw-sep"></span>
+    <span class:list={['aw-navpill', { on: activeNav === 'Home' }]}>Home</span>
+    <span class:list={['aw-navpill', { on: activeNav === 'Quality' }]}>Quality</span>
+    <span class="aw-navpill hidden sm:inline-flex">Operations</span>
+    <span class="aw-navpill hidden md:inline-flex">Reports</span>
+    <span class="ml-auto flex items-center gap-1.5">
+      <span class="aw-icon"></span>
+      <span class="aw-avatar">TM</span>
+    </span>
+  </div>
+  <div class="aw-canvas">
+    {title && (
+      <div class="aw-head">
+        <p class="aw-eyebrow">{eyebrow}</p>
+        <p class="aw-title">{title}</p>
+        {tabs.length > 0 && (
+          <div class="aw-tabs">
+            {tabs.map((t, i) => <span class:list={['aw-tab', { on: i === activeTab }]} data-aw-tab={i}>{t}</span>)}
+          </div>
+        )}
+      </div>
+    )}
+    <slot />
+  </div>
+</div>
+
+<style>
+  .app-window { position: relative; border-radius: 14px; background: #f8f8f6; border: 1px solid rgb(17 17 16 / 0.14); box-shadow: var(--shadow-window); overflow: hidden; font-family: var(--font-sans); color: var(--color-ink); isolation: isolate; }
+  .aw-chrome { display: flex; align-items: center; gap: 12px; height: 30px; padding: 0 12px; background: #0b0b0a; }
+  .aw-dots { display: flex; gap: 6px; } .aw-dots i { width: 9px; height: 9px; border-radius: 99px; background: #2e2e2b; }
+  .aw-url { display: inline-flex; align-items: center; gap: 6px; margin-inline: auto; transform: translateX(-24px); height: 18px; padding: 0 10px; border-radius: 6px; background: #1c1c1a; color: #7d7d75; font-size: 10.5px; }
+  .aw-bar { display: flex; align-items: center; gap: 8px; height: 42px; padding: 0 14px; background: #111110; border-bottom: 1px solid #2a2a28; color: #9a9a92; font-size: 11.5px; }
+  .aw-logo { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 5px; background: #000; color: #fff; border: 1px solid #2a2a28; }
+  .aw-ms { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.12em; font-size: 10px; color: #6c6c64; }
+  .aw-sep { width: 1px; height: 16px; background: #2a2a28; margin: 0 4px; }
+  .aw-navpill { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 7px; }
+  .aw-navpill.on { color: #fff; background: #1f1f1d; box-shadow: inset 0 0 0 1px #3a3a36; font-weight: 600; }
+  .aw-icon { width: 24px; height: 24px; border-radius: 6px; border: 1px solid #2a2a28; }
+  .aw-avatar { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 6px; background: #fff; color: #111110; font-size: 9px; font-weight: 700; }
+  .aw-canvas { position: relative; padding: 18px 20px 20px; }
+  .aw-head { margin-bottom: 14px; }
+  .aw-eyebrow { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: #b8b8b0; font-weight: 500; }
+  .aw-title { margin-top: 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.02em; line-height: 1.1; }
+  .aw-tabs { display: flex; gap: 2px; margin-top: 12px; border-bottom: 1px solid #d8d8d4; font-size: 11.5px; overflow: hidden; }
+  .aw-tab { position: relative; padding: 7px 11px; color: #78786e; white-space: nowrap; transition: color .3s; }
+  .aw-tab.on { color: #111110; font-weight: 600; }
+  .aw-tab.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #111110; }
+</style>

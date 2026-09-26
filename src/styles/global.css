@@ -1,0 +1,166 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/syne';
+@import '@fontsource-variable/dm-sans';
+
+/*
+ * Obel MS marketing site — design tokens.
+ * Neutrals, text ramp, status colours and fonts mirror the product
+ * (obel-ms-saas/frontend/src/styles/tokens.css) so the site and the app feel like one thing.
+ * Rule: status colours (green/amber/blue/red) are accents only — dots, pills, small marks.
+ */
+@theme {
+  --font-display: 'Syne Variable', 'Syne', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'DM Sans Variable', 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --color-bg: #f8f8f6;
+  --color-surface: #ffffff;
+  --color-surface-2: #f4f4f2;
+  --color-surface-3: #ebebea;
+  --color-line: #d8d8d4;
+  --color-line-soft: rgb(17 17 16 / 0.08);
+  --color-line-hover: #b0b0a8;
+  --color-ink: #111110;
+  --color-muted: #78786e;
+  --color-dim: #b8b8b0;
+
+  /* Ink (dark) surfaces — navbar, CTA band, footer. */
+  --color-night: #111110;
+  --color-night-2: #1a1a18;
+  --color-night-3: #232320;
+  --color-night-line: #2a2a28;
+  --color-night-fg: #f0f0ec;
+  --color-night-muted: #9a9a92;
+
+  --color-green: #166534;
+  --color-green-bright: #22c55e;
+  --color-green-bg: #dcfce7;
+  --color-green-border: #bbf7d0;
+  --color-amber: #b45309;
+  --color-amber-bg: #fef3c7;
+  --color-amber-text: #92400e;
+  --color-amber-border: #fde68a;
+  --color-blue: #2563eb;
+  --color-blue-bg: #dbeafe;
+  --color-blue-text: #1e40af;
+  --color-blue-border: #bfdbfe;
+  --color-red: #dc2626;
+  --color-red-bg: #fee2e2;
+  --color-red-text: #991b1b;
+  --color-red-border: #fecaca;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-soft: 0 1px 2px rgb(17 17 16 / 0.04), 0 8px 30px rgb(17 17 16 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(17 17 16 / 0.04), 0 24px 60px -12px rgb(17 17 16 / 0.18);
+  --shadow-window: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 40px 100px -30px rgb(17 17 16 / 0.35), 0 12px 30px -12px rgb(17 17 16 / 0.12);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --gutter: clamp(1rem, 4vw, 2.5rem);
+    --section-y: clamp(5rem, 11vw, 10rem);
+    --nav-h: 64px;
+  }
+  html {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--nav-h) + 24px);
+  }
+  body {
+    background: var(--color-bg);
+    font-size: 1rem;
+    line-height: 1.6;
+    font-feature-settings: 'ss01', 'cv11';
+    overflow-x: clip;
+  }
+  a, button { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  ::selection { background: var(--color-ink); color: var(--color-bg); }
+  :focus-visible { outline: 2px solid var(--color-green); outline-offset: 3px; border-radius: 4px; }
+  img, svg, video { display: block; max-width: 100%; }
+  h1, h2, h3, h4 { font-family: var(--font-display); text-wrap: balance; }
+  p { text-wrap: pretty; }
+}
+
+@layer components {
+  .container-x { width: 100%; max-width: 1320px; margin-inline: auto; padding-inline: var(--gutter); }
+  .section-y { padding-block: var(--section-y); }
+
+  /* Type scale. Syne gets tight leading and negative tracking at display sizes. */
+  .t-hero { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.6rem, 6.4vw, 5.9rem); line-height: 0.98; letter-spacing: -0.045em; }
+  .t-h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4.2vw, 3.6rem); line-height: 1.02; letter-spacing: -0.035em; }
+  .t-h3 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 1.8vw, 1.6rem); line-height: 1.15; letter-spacing: -0.02em; }
+  .t-lead { font-size: clamp(1.05rem, 1.35vw, 1.25rem); line-height: 1.55; color: var(--color-muted); max-width: 40rem; }
+  .t-body { font-size: 1rem; line-height: 1.65; color: var(--color-muted); max-width: 38rem; }
+  /* Uppercase eyebrow: ONLY inside product mock-ups, because the real app uses it. Never on marketing headings. */
+  .t-eyebrow { font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-muted); }
+  .t-label { font-size: 14px; font-weight: 500; color: var(--color-ink); letter-spacing: -0.005em; }
+  .tnum { font-variant-numeric: tabular-nums; }
+  .t-num { font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; }
+
+  /* Section label: sentence case, with the green 'approved' dot. Use only where a label adds information. */
+  .label-dot { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 14px; font-weight: 500; color: var(--color-ink); }
+  .label-dot::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: var(--color-green); box-shadow: 0 0 0 3px rgb(22 101 52 / 0.12); }
+
+  .hairline { border-color: var(--color-line-soft); }
+  .card { background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-lg); }
+
+  /* Status pills, same palette as the app's StatusPill. */
+  .pill { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 9px; border-radius: 999px; font-size: 11.5px; font-weight: 600; white-space: nowrap; border: 1px solid transparent; }
+  .pill::before { content: ''; width: 6px; height: 6px; border-radius: 999px; background: currentColor; opacity: 0.85; }
+  .pill-green { background: var(--color-green-bg); color: var(--color-green); border-color: var(--color-green-border); }
+  .pill-amber { background: var(--color-amber-bg); color: var(--color-amber-text); border-color: var(--color-amber-border); }
+  .pill-blue { background: var(--color-blue-bg); color: var(--color-blue-text); border-color: var(--color-blue-border); }
+  .pill-red { background: var(--color-red-bg); color: var(--color-red-text); border-color: var(--color-red-border); }
+  .pill-grey { background: var(--color-surface-2); color: var(--color-muted); border-color: var(--color-line); }
+
+  /* Buttons. Primary = ink. The app's green is kept for in-product mock buttons only. */
+  .btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; height: 44px; padding: 0 1.15rem; border-radius: 999px; font-weight: 500; font-size: 15px; letter-spacing: -0.005em; white-space: nowrap; transition: background-color .25s var(--ease-out), color .25s var(--ease-out), border-color .25s var(--ease-out), transform .16s var(--ease-out), box-shadow .25s var(--ease-out); will-change: transform; }
+  .btn-primary { background: var(--color-ink); color: var(--color-night-fg); box-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 6px 16px -6px rgb(17 17 16 / 0.5); }
+  @media (hover: hover) and (pointer: fine) { .btn-primary:hover { background: #2a2a27; } .btn-ghost:hover { border-color: var(--color-line-hover); background: var(--color-surface); } .btn-light:hover { background: #ffffff; } .btn-night-ghost:hover { border-color: #56564e; background: rgb(255 255 255 / 0.04); } }
+  .btn:active { transform: scale(0.97); }
+  .btn-ghost { color: var(--color-ink); border: 1px solid var(--color-line); background: rgb(255 255 255 / 0.6); }
+  .btn-light { background: var(--color-night-fg); color: var(--color-ink); }
+  .btn-night-ghost { color: var(--color-night-fg); border: 1px solid #3a3a36; }
+  .btn-sm { height: 36px; padding: 0 0.95rem; font-size: 14px; }
+
+  /* Animated underline link. */
+  .link-u { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .45s var(--ease-out); }
+  .link-u:hover { background-size: 100% 1px; }
+
+  /* Subtle dotted paper grid used behind product mocks. */
+  .paper-grid { background-image: radial-gradient(rgb(17 17 16 / 0.09) 1px, transparent 1px); background-size: 22px 22px; }
+}
+
+/* ---------- Motion primitives ----------
+ * [data-reveal] elements start hidden only when JS has booted (html.js) and motion is allowed.
+ * scripts/motion.ts animates them in. Without JS or with reduced motion, content is simply visible. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js [data-reveal] { opacity: 0; transform: translateY(16px); }
+  html.js [data-reveal='fade'] { transform: none; }
+  html.js [data-split] .line-inner { transform: translateY(105%); }
+}
+[data-split] .line { display: block; overflow: hidden; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+[data-split] .line-inner { display: block; will-change: transform; }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}

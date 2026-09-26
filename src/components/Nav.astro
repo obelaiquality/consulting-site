@@ -1,0 +1,123 @@
+---
+import Logo from './ui/Logo.astro';
+import { nav, site } from '../data/site';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href?: string) => !!href && (path === href || (href !== '/' && path.startsWith(href)));
+---
+<header class="site-nav" data-nav>
+  <div class="nav-inner container-x">
+    <a href="/" class="flex items-center gap-3 text-night-fg shrink-0" aria-label="Obel MS home">
+      <span class="logo-tile"><Logo mark class="h-[18px] w-auto" label="" /></span>
+      <Logo word class="h-[13px] w-auto hidden sm:block" label="" />
+    </a>
+    <span class="nav-divider hidden lg:block" aria-hidden="true"></span>
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) =>
+          'children' in item ? (
+            <li class="relative group" data-dropdown>
+              <button class="nav-link" aria-expanded="false" aria-haspopup="true">
+                {item.label}
+                <svg class="size-3 opacity-60 transition-transform duration-300 group-hover:rotate-180" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 4.5 6 7.5 9 4.5" /></svg>
+              </button>
+              <div class="dropdown" role="menu">
+                <div class="dropdown-panel">
+                  {item.children.map((c) => (
+                    <a href={c.href} class="dropdown-item" role="menuitem">
+                      <span class="flex items-center gap-2 text-[14px] font-medium text-ink">
+                        {c.label}
+                        {c.status === 'soon' ? <span class="pill pill-grey !h-[18px] !text-[10px]">Coming soon</span> : <span class="pill pill-green !h-[18px] !text-[10px]">Live</span>}
+                      </span>
+                      <span class="text-[13px] text-muted">{c.note}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li><a href={item.href} class:list={['nav-link', { 'is-active': isActive(item.href) }]}>{item.label}</a></li>
+          )
+        )}
+      </ul>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <a href="/contact" class="nav-link hidden md:inline-flex">Contact</a>
+      <a href="/contact#demo" class="btn btn-light btn-sm" data-magnetic="0.2">
+        Book a demo
+      </a>
+      <button class="menu-btn lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-btn>
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu lg:hidden" data-mobile-menu hidden>
+    <div class="container-x py-6 flex flex-col gap-1">
+      {nav.flatMap((item) => ('children' in item ? item.children.map((c) => ({ label: c.label, href: c.href, soon: c.status === 'soon' })) : [{ label: item.label, href: item.href, soon: false }])).map((l) => (
+        <a href={l.href} class="mobile-link">
+          {l.label}
+          {l.soon && <span class="pill pill-grey !bg-transparent !text-night-muted !border-night-line">Soon</span>}
+        </a>
+      ))}
+      <a href="/contact" class="mobile-link">Contact</a>
+      <a href={site.demoMailto} class="btn btn-light mt-6">Book a demo</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; background: rgb(17 17 16 / 0.92); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid var(--color-night-line); transition: background-color .4s var(--ease-out), transform .5s var(--ease-out); }
+  .site-nav.is-hidden { transform: translateY(-100%); }
+  .nav-inner { height: var(--nav-h); display: flex; align-items: center; gap: 1.25rem; }
+  .logo-tile { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: #000; border: 1px solid #2f2f2c; }
+  .nav-divider { width: 1px; height: 22px; background: var(--color-night-line); }
+  .nav-link { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 12px; border-radius: 8px; font-size: 14px; color: var(--color-night-muted); transition: color .2s, background-color .2s; }
+  .nav-link:hover, .group:hover > .nav-link, .nav-link.is-active { color: var(--color-night-fg); background: rgb(255 255 255 / 0.06); }
+  .nav-link.is-active { box-shadow: inset 0 0 0 1px #3a3a36; }
+  .dropdown { position: absolute; left: -8px; top: 100%; padding-top: 10px; opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity .25s var(--ease-out), transform .35s var(--ease-out), visibility .25s; }
+  .group:hover .dropdown, .group:focus-within .dropdown { opacity: 1; visibility: visible; transform: none; }
+  .dropdown-panel { width: 360px; padding: 6px; border-radius: 14px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); }
+  .dropdown-item { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border-radius: 10px; transition: background-color .2s; }
+  .dropdown-item:hover { background: var(--color-surface-2); }
+  .menu-btn { position: relative; width: 38px; height: 38px; border-radius: 8px; border: 1px solid var(--color-night-line); }
+  .menu-btn span { position: absolute; left: 11px; right: 11px; height: 1.5px; background: var(--color-night-fg); transition: transform .35s var(--ease-out); }
+  .menu-btn span:first-child { top: 15px; } .menu-btn span:last-child { top: 21px; }
+  .menu-btn[aria-expanded='true'] span:first-child { transform: translateY(3px) rotate(45deg); }
+  .menu-btn[aria-expanded='true'] span:last-child { transform: translateY(-3px) rotate(-45deg); }
+  .mobile-menu { border-top: 1px solid var(--color-night-line); background: var(--color-night); max-height: calc(100dvh - var(--nav-h)); overflow-y: auto; }
+  .mobile-link { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; color: var(--color-night-fg); border-bottom: 1px solid var(--color-night-line); }
+</style>
+
+<script>
+  const navEl = document.querySelector<HTMLElement>('[data-nav]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]');
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    btn.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    if (menu) menu.hidden = open;
+  });
+  // Hide on scroll down, show on scroll up (never while the mobile menu is open).
+  let lastY = window.scrollY;
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      const menuOpen = btn?.getAttribute('aria-expanded') === 'true';
+      navEl?.classList.toggle('is-hidden', !menuOpen && y > 240 && y > lastY + 4);
+      if (y < lastY - 4 || y < 240) navEl?.classList.remove('is-hidden');
+      lastY = y;
+      ticking = false;
+    });
+  }, { passive: true });
+  document.querySelectorAll<HTMLElement>('[data-dropdown]').forEach((dd) => {
+    const b = dd.querySelector('button');
+    dd.addEventListener('mouseenter', () => b?.setAttribute('aria-expanded', 'true'));
+    dd.addEventListener('mouseleave', () => b?.setAttribute('aria-expanded', 'false'));
+  });
+</script>
