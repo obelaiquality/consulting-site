@@ -2,16 +2,12 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, plans } from '../data/site';
 
-const planParam = Astro.url.searchParams.get('plan');
-const DEBUG_URL = Astro.url.href;
-const DEBUG_SEARCH = Astro.url.search;
-const DEBUG_REQUEST_URL = Astro.request.url;
 const planOptions = [
   ...plans.map((p) => ({ id: p.id, name: p.name })),
   { id: 'not-sure', name: 'Not sure yet' },
 ];
-const validPlanIds = planOptions.map((p) => p.id);
-const preselectedPlan = planParam && validPlanIds.includes(planParam) ? planParam : 'not-sure';
+// Static site: the ?plan= query is read in the browser (see script below), never at build time.
+const preselectedPlan = 'not-sure';
 
 const teamSizes = ['1–10', '11–50', '51–200', '200+'];
 const standards = ['ISO 9001', 'ISO 13485', 'FSSC 22000', 'BRCGS', 'Other'];
@@ -27,7 +23,6 @@ const steps = [
   title="Contact"
   description="Book a 20-minute demo of Obel MS, or get in touch about consulting, implementation and audit prep."
 >
-  <p id="debug-info" style="display:none">{`url=${DEBUG_URL} search=${DEBUG_SEARCH} reqUrl=${DEBUG_REQUEST_URL} planParam=${planParam} preselected=${preselectedPlan}`}</p>
   <section id="demo" class="section-y pt-[calc(var(--nav-h)+3rem)]">
     <div class="container-x">
       <div class="max-w-[42rem]">
@@ -155,6 +150,13 @@ const steps = [
 </style>
 
 <script>
+  // Preselect the plan from ?plan=<id> (links from the pricing table).
+  {
+    const plan = new URLSearchParams(location.search).get('plan');
+    const select = document.getElementById('f-plan') as HTMLSelectElement | null;
+    if (plan && select && [...select.options].some((o) => o.value === plan)) select.value = plan;
+  }
+
   type FieldKey = 'name' | 'email' | 'company' | 'role' | 'teamSize' | 'standards';
 
   const form = document.getElementById('demo-form') as HTMLFormElement | null;

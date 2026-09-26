@@ -159,6 +159,8 @@ const inboxRows = [
 
 <style>
   .scene-grid { display: grid; gap: 3rem; }
+  .scene-grid > * { min-width: 0; }
+  .scene-stage { overflow: hidden; border-radius: 14px; }
   @media (min-width: 1024px) { .scene-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4rem; align-items: center; min-height: calc(100vh - var(--nav-h) - 80px); } }
 
   .scene-steps { position: relative; display: grid; gap: 2rem; padding-left: 2.75rem; }

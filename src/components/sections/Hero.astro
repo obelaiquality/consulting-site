@@ -1,7 +1,6 @@
 ---
 import AppWindow from '../mock/AppWindow.astro';
 import { edcDocs } from '../../data/demo';
-import { site } from '../../data/site';
 const rows = edcDocs.slice(0, 7);
 ---
 <section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
@@ -48,7 +47,7 @@ const rows = edcDocs.slice(0, 7);
           </div>
           <div class="mock-table">
             <div class="mt-row mt-head">
-              <span></span><span>Document Title</span><span class="hidden md:block">Document Type</span><span class="hidden lg:block">Product</span><span class="hidden sm:block">Supplier</span><span class="hidden xl:block">Certificate No.</span><span>Expiration Date</span><span>Document Status</span>
+              <span></span><span>Document Title</span><span class="hidden md:block">Document Type</span><span class="hidden lg:block">Product</span><span class="hidden sm:block">Supplier</span><span class="hidden xl:block">Certificate No.</span><span class="hidden sm:block">Expiration Date</span><span>Document Status</span>
             </div>
             {rows.map((d, i) => (
               <div class:list={['mt-row', { 'mt-row-hl': i === 1 }]} data-hero-row={i}>
@@ -58,7 +57,7 @@ const rows = edcDocs.slice(0, 7);
                 <span class="hidden lg:block truncate">{d.product}</span>
                 <span class="hidden sm:block truncate">{d.supplier}</span>
                 <span class="hidden xl:block truncate tnum">{d.cert || '—'}</span>
-                <span class="tnum">{d.expiry || '—'}</span>
+                <span class="tnum hidden sm:block">{d.expiry || '—'}</span>
                 <span><span class={`pill pill-${d.tone}`}>{d.status}</span></span>
               </div>
             ))}
@@ -110,7 +109,7 @@ const rows = edcDocs.slice(0, 7);
   .mock-btn { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; color: var(--color-muted); }
   .mock-btn-green { background: var(--color-green); border-color: var(--color-green); color: #fff; font-weight: 600; }
   .mock-table { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
-  .mt-row { display: grid; grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) 110px; align-items: center; gap: 14px; height: 38px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); transition: background-color .4s; }
+  .mt-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 112px; align-items: center; gap: 14px; height: 38px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); transition: background-color .4s; }
   @media (min-width: 640px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }
   @media (min-width: 768px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }
   @media (min-width: 1024px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }

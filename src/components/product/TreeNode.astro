@@ -44,9 +44,9 @@ const isEmpty = node.count === 0 && !expandable;
     <div class="tree-branch" data-tree-collapsible data-tree-branch={id} data-branch-depth={depth}>
       <div class="tree-branch-inner">
         <ul class="tree-children">
-          {hasChildren && node.children!.map((child, i) => <Astro.self node={child} depth={depth + 1} index={i} parentId={id} />)}
+          {hasChildren && node.children!.map((child: TreeChild, i: number) => <Astro.self node={child} depth={depth + 1} index={i} parentId={id} />)}
           {hasFiles &&
-            node.files!.map((f, i) => (
+            node.files!.map((f: string, i: number) => (
               <li class="tree-node" data-depth={depth + 1}>
                 <div class="tree-row tree-row-file" data-tree-row data-file-row={`${id}-f${i}`}>
                   <span class="tree-toggle tree-toggle-static" aria-hidden="true"></span>

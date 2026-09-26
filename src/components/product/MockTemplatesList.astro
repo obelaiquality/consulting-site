@@ -1,0 +1,25 @@
+---
+/* Compact list of the five standard WFM templates. */
+import { wfmTemplates } from '../../data/demo';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<div class:list={['tpl-list', cls]}>
+  {wfmTemplates.map((t) => (
+    <div class="tpl-row" data-reveal>
+      <span class="tpl-code tnum">{t.code}</span>
+      <span class="tpl-name">{t.name}</span>
+      <span class="tpl-stages">{t.stages.length} stage{t.stages.length === 1 ? '' : 's'}</span>
+      {t.verification && <span class="pill pill-blue">Verification</span>}
+      {t.approvals.length > 0 && <span class="pill pill-grey">{t.approvals.length} approval{t.approvals.length === 1 ? '' : 's'}</span>}
+    </div>
+  ))}
+</div>
+
+<style>
+  .tpl-list { border-top: 1px solid var(--color-line); }
+  .tpl-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 16px 4px; border-bottom: 1px solid var(--color-line); }
+  .tpl-code { font-size: 12px; color: var(--color-dim); width: 60px; flex-shrink: 0; }
+  .tpl-name { font-family: var(--font-display); font-weight: 600; font-size: 17px; letter-spacing: -0.01em; color: var(--color-ink); flex: 1; min-width: 12ch; }
+  .tpl-stages { font-size: 13px; color: var(--color-muted); }
+</style>

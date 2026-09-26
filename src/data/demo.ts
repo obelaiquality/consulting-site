@@ -56,7 +56,7 @@ export const wfmRecords = [
 
 /* Audit trail rows use the app's format: bold actor, action, optional ": detail", then "YYYY-MM-DD HH:MM". */
 export const auditTrail = [
-  { actor: 'Pieter van Wyk', action: 'created record', detail: 'Nonconformance · Mislabelled carton - batch 24-118', at: '2026-09-14 08:12' },
+  { actor: 'Pieter van Wyk', action: 'created record', detail: 'Nonconformance, Mislabelled carton - batch 24-118', at: '2026-09-14 08:12' },
   { actor: 'Pieter van Wyk', action: 'added entry', detail: '48 cartons quarantined at dispatch', at: '2026-09-14 08:31' },
   { actor: 'System', action: 'stage advanced', detail: 'Immediate Correction → Investigation & Severity Assessment', at: '2026-09-15 16:04' },
   { actor: 'Thandi Mokoena', action: 'uploaded attachment', detail: 'label-proof-v3.pdf', at: '2026-09-16 10:22' },

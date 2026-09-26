@@ -8,7 +8,11 @@ export default defineConfig({
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
   integrations: [sitemap()],
-  vite: { plugins: [tailwindcss()] },
+  vite: {
+    plugins: [tailwindcss()],
+    // Pre-bundle the motion libraries so the dev server never serves mismatched dep hashes.
+    optimizeDeps: { include: ['gsap', 'gsap/ScrollTrigger', 'gsap/SplitText', 'lenis'] },
+  },
   prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Old consulting-site URLs keep working.
   redirects: {

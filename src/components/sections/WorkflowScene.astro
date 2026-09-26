@@ -1,8 +1,7 @@
 ---
 /*
- * Workflow Manager signature scene. Dark section: the page crosses from paper to night as a
- * 30vh "curtain" spacer at the top of the section scrolls past (background-color + text-color
- * scrub, the one non-transform/opacity GSAP exception the build spec allows).
+ * Workflow Manager signature scene. Dark section: the ink panel grows from an inset rounded
+ * card to full bleed as it scrolls in (scrubbed clip-path).
  *
  * Left: sticky text rail (desktop). Right: a pinned vertical stage diagram of the Nonconformance
  * template (6 stages, data straight from demo.ts) with a record card and a growing audit trail,
@@ -18,7 +17,6 @@ const approvalSet = new Set(template.approvals);
 ---
 
 <section class="wf-scene bg-night" data-workflow-scene aria-labelledby="wf-heading">
-  <div class="wf-curtain" data-wf-curtain aria-hidden="true"></div>
 
   <div class="container-x">
     <div class="wf-grid">
@@ -104,9 +102,8 @@ const approvalSet = new Set(template.approvals);
 
 <style>
   .wf-scene { position: relative; color: var(--color-night-fg); }
-  .wf-curtain { height: 30vh; }
 
-  .wf-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; padding-block: 2rem 8rem; }
+  .wf-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; padding-block: clamp(5rem, 10vw, 9rem) 8rem; }
   @media (min-width: 1024px) {
     .wf-grid { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
   }
@@ -166,27 +163,18 @@ const approvalSet = new Set(template.approvals);
 </style>
 
 <script>
-  import { onReady, gsap, ScrollTrigger, reduced } from '../../scripts/motion';
+  import { onReady, gsap, reduced } from '../../scripts/motion';
 
   onReady(() => {
     const section = document.querySelector<HTMLElement>('[data-workflow-scene]');
-    const curtain = document.querySelector<HTMLElement>('[data-wf-curtain]');
-    const heading = document.querySelector<HTMLElement>('[data-wf-heading]');
-    const lead = document.querySelector<HTMLElement>('[data-wf-lead]');
-    if (!section || !curtain || !heading || !lead) return;
+    if (!section) return;
     if (reduced) return;
 
-    // Curtain: background + heading/lead colour scrub from paper to night, over the curtain's
-    // own 30vh of scroll. Colour is an explicitly-allowed GSAP scrub target here (see ProblemScroll).
-    gsap.set(section, { backgroundColor: '#f8f8f6' });
-    gsap.set(heading, { color: '#111110' });
-    gsap.set(lead, { color: '#78786e' });
-    gsap.timeline({
-      scrollTrigger: { trigger: curtain, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
-    })
-      .fromTo(section, { backgroundColor: '#f8f8f6' }, { backgroundColor: '#111110', ease: 'none' }, 0)
-      .fromTo(heading, { color: '#111110' }, { color: '#f0f0ec', ease: 'none' }, 0)
-      .fromTo(lead, { color: '#78786e' }, { color: '#9a9a92', ease: 'none' }, 0);
+    // Flow into the dark scene: the ink panel grows from an inset rounded card to full bleed.
+    gsap.fromTo(section,
+      { clipPath: 'inset(0% 3.5% 0% 3.5% round 32px)' },
+      { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 15%', scrub: 0.6 } });
 
     // Pinned stage narrative: desktop only.
     const mm = gsap.matchMedia();

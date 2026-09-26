@@ -1,0 +1,208 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PricingTable from '../components/sections/PricingTable.astro';
+import Faq from '../components/sections/Faq.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import { plans, site } from '../data/site';
+
+type Cell = true | false | string;
+interface CompareRow {
+  label: string;
+  values: [Cell, Cell, Cell];
+}
+interface CompareGroup {
+  name: string;
+  rows: CompareRow[];
+}
+
+/* Every row below mirrors a claim in docs/BUILD-SPEC.md section 6 and a feature already
+ * listed for that tier in src/data/site.ts — nothing here is invented. */
+const compareGroups: CompareGroup[] = [
+  {
+    name: 'Documents',
+    rows: [
+      { label: 'External Document Control', values: [true, true, true] },
+      { label: 'Supplier certificate and expiry tracking', values: [true, true, true] },
+      { label: 'Auto-filed Supplier → Manufacturer → Product folders', values: [true, true, true] },
+      { label: 'Internal Document Control', values: ['—', '—', 'Early access'] },
+    ],
+  },
+  {
+    name: 'Workflows',
+    rows: [
+      { label: 'Workflow Manager', values: [false, true, true] },
+      { label: 'Nonconformance, change, complaint and supplier-deviation templates', values: [false, true, true] },
+      { label: 'Approvals routed by job title', values: [false, true, true] },
+      { label: 'Effectiveness verification and PDF record reports', values: [false, true, true] },
+      { label: 'Custom workflow templates built with you', values: [false, false, true] },
+    ],
+  },
+  {
+    name: 'Platform',
+    rows: [
+      { label: 'Editors', values: ['Up to 5', 'Up to 20', 'Unlimited'] },
+      { label: 'Viewers', values: ['Unlimited', 'Unlimited', 'Unlimited'] },
+      { label: 'Full audit trail', values: [true, true, true] },
+      { label: 'AI metadata extraction on upload', values: [false, true, true] },
+      { label: 'Daily backups', values: [true, true, true] },
+      { label: 'Dedicated cloud project on request', values: [false, false, true] },
+    ],
+  },
+  {
+    name: 'Service',
+    rows: [
+      { label: 'Support', values: ['Email', 'Priority', 'Priority'] },
+      { label: 'Guided migration of your existing registers', values: [false, true, true] },
+      { label: 'Quarterly system review with a quality consultant', values: [false, false, true] },
+      { label: 'Audit-day support', values: [false, false, true] },
+    ],
+  },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: plans.map((p) => ({
+    '@type': 'Offer',
+    name: p.name,
+    price: p.price.ZAR,
+    priceCurrency: 'ZAR',
+    url: `${site.url}/pricing`,
+  })),
+};
+---
+
+<BaseLayout
+  title="Pricing"
+  description="Obel MS pricing: hosted External Document Control and Workflow Manager, from R1,490 a month. No setup fee on Starter and Growth."
+  jsonLd={jsonLd}
+>
+  <section class="pricing-hero section-y !pb-16">
+    <div class="container-x">
+      <h1 class="pricing-h1 max-w-[18ch]" data-split data-split-load>
+        Simple pricing. Hosting and support included.
+      </h1>
+      <p class="t-lead mt-6" data-reveal>
+        Three plans, priced by tier rather than per user. Pick annual or monthly billing, and ZAR or USD.
+      </p>
+    </div>
+  </section>
+
+  <section class="section-y !pt-0">
+    <div class="container-x">
+      <PricingTable />
+    </div>
+  </section>
+
+  <section class="section-y" aria-labelledby="compare-heading">
+    <div class="container-x">
+      <h2 id="compare-heading" class="t-h2 max-w-[20ch]" data-reveal>Compare plans in detail</h2>
+      <div class="compare-scroll mt-10">
+        <table class="compare-table">
+          <caption class="sr-only">Feature comparison across Starter, Growth and Scale</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="compare-feature-col">Feature</th>
+              {plans.map((p) => (
+                <th scope="col" class:list={['compare-plan-col', { 'is-featured': p.featured }]}>{p.name}</th>
+              ))}
+            </tr>
+          </thead>
+          {compareGroups.map((group) => (
+            <tbody>
+              <tr class="compare-group-row">
+                <th colspan={plans.length + 1} class="compare-group-label">{group.name}</th>
+              </tr>
+              {group.rows.map((row) => (
+                <tr>
+                  <th scope="row" class="compare-feature-col">{row.label}</th>
+                  {row.values.map((v, i) => (
+                    <td class:list={['compare-cell', { 'is-featured': plans[i].featured }]}>
+                      {v === true ? (
+                        <>
+                          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" class="check-icon text-ink">
+                            <path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                          </svg>
+                          <span class="sr-only">Included</span>
+                        </>
+                      ) : v === false ? (
+                        <>
+                          <span aria-hidden="true" class="text-dim">&ndash;</span>
+                          <span class="sr-only">Not included</span>
+                        </>
+                      ) : (
+                        <span class="tnum text-[13.5px]">{v}</span>
+                      )}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          ))}
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <Faq tags={['pricing']} heading="Pricing questions" withSchema />
+
+  <CtaBand />
+</BaseLayout>
+
+<style>
+  .pricing-h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    font-size: clamp(2.4rem, 5.4vw, 4.2rem);
+  }
+
+  .check-icon { width: 14px; height: 14px; }
+
+  .compare-scroll { overflow-x: auto; }
+  .compare-table {
+    width: 100%;
+    min-width: 640px;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .compare-table thead th {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 2;
+    background: var(--color-bg);
+    text-align: left;
+    padding: 12px 16px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .compare-table thead th.is-featured { background: var(--color-surface-2); }
+  .compare-plan-col { text-align: center !important; }
+
+  .compare-group-row th {
+    text-align: left;
+    padding: 20px 16px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-muted);
+    background: var(--color-bg);
+  }
+
+  .compare-table tbody tr:not(.compare-group-row) th,
+  .compare-table tbody tr:not(.compare-group-row) td {
+    padding: 12px 16px;
+    border-top: 1px solid var(--color-line-soft);
+  }
+  .compare-feature-col { text-align: left; font-weight: 500; color: var(--color-ink); max-width: 34ch; }
+  .compare-table tbody th.compare-feature-col { font-weight: 400; color: var(--color-muted); }
+  .compare-cell { text-align: center; color: var(--color-muted); }
+  .compare-cell.is-featured { background: var(--color-surface-2); }
+</style>

@@ -2,6 +2,12 @@
 import Logo from './ui/Logo.astro';
 import { nav, site } from '../data/site';
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+type MenuLink = { label: string; href: string; soon: boolean };
+const mobileLinks: MenuLink[] = nav.flatMap((item): MenuLink[] =>
+  'children' in item
+    ? item.children.map((c) => ({ label: c.label, href: c.href, soon: c.status === 'soon' }))
+    : [{ label: item.label, href: item.href, soon: false }],
+);
 const isActive = (href?: string) => !!href && (path === href || (href !== '/' && path.startsWith(href)));
 ---
 <header class="site-nav" data-nav>
@@ -55,7 +61,7 @@ const isActive = (href?: string) => !!href && (path === href || (href !== '/' &&
 
   <div id="mobile-menu" class="mobile-menu lg:hidden" data-mobile-menu hidden>
     <div class="container-x py-6 flex flex-col gap-1">
-      {nav.flatMap((item) => ('children' in item ? item.children.map((c) => ({ label: c.label, href: c.href, soon: c.status === 'soon' })) : [{ label: item.label, href: item.href, soon: false }])).map((l) => (
+      {mobileLinks.map((l) => (
         <a href={l.href} class="mobile-link">
           {l.label}
           {l.soon && <span class="pill pill-grey !bg-transparent !text-night-muted !border-night-line">Soon</span>}

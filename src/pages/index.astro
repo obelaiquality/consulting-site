@@ -3,13 +3,49 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import ProblemScroll from '../components/sections/ProblemScroll.astro';
 import EdcScene from '../components/sections/EdcScene.astro';
+import WorkflowScene from '../components/sections/WorkflowScene.astro';
+import TemplatesRail from '../components/sections/TemplatesRail.astro';
 import ManagedStack from '../components/sections/ManagedStack.astro';
 import ClauseMap from '../components/sections/ClauseMap.astro';
+import IdcTeaser from '../components/sections/IdcTeaser.astro';
+import PricingTable from '../components/sections/PricingTable.astro';
+import Faq from '../components/sections/Faq.astro';
+import CtaBand from '../components/sections/CtaBand.astro';
+import { plans, site } from '../data/site';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: site.name,
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: site.description,
+  offers: { '@type': 'AggregateOffer', priceCurrency: 'ZAR', lowPrice: plans[0].price.ZAR, highPrice: plans[plans.length - 1].price.ZAR, offerCount: plans.length },
+};
 ---
-<BaseLayout>
+<BaseLayout jsonLd={jsonLd}>
   <Hero />
   <ProblemScroll />
   <EdcScene />
-  <ManagedStack />
+  <WorkflowScene />
+  <TemplatesRail />
+  <div class="paper-return">
+    <ManagedStack />
+  </div>
   <ClauseMap />
+  <IdcTeaser />
+  <section class="section-y" aria-labelledby="home-pricing">
+    <div class="container-x">
+      <h2 id="home-pricing" class="t-h2 max-w-[18ch]">Priced for teams that do their own quality.</h2>
+      <p class="t-lead mt-5">Hosting, backups, updates and support are in every plan.</p>
+    </div>
+    <div class="mt-12"><PricingTable compact /></div>
+  </section>
+  <Faq tags={['general', 'iso', 'security']} heading="Questions quality managers ask us" withSchema />
+  <CtaBand />
 </BaseLayout>
+
+<style>
+  /* Paper slides back over the dark scenes with rounded shoulders. */
+  .paper-return { position: relative; z-index: 2; margin-top: -32px; background: var(--color-bg); border-radius: 32px 32px 0 0; }
+</style>

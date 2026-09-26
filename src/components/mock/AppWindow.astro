@@ -41,7 +41,7 @@ const { eyebrow = 'Quality Management', title, tabs = [], activeTab = 0, activeN
         <p class="aw-title">{title}</p>
         {tabs.length > 0 && (
           <div class="aw-tabs">
-            {tabs.map((t, i) => <span class:list={['aw-tab', { on: i === activeTab }]} data-aw-tab={i}>{t}</span>)}
+            {tabs.map((t: string, i: number) => <span class:list={['aw-tab', { on: i === activeTab }]} data-aw-tab={i}>{t}</span>)}
           </div>
         )}
       </div>

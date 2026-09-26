@@ -32,6 +32,6 @@ npm run build    # static site in dist/
 
 ## Deploy
 
-`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. The repository's Pages source must be set to **GitHub Actions**. `public/CNAME` keeps the `obel-ai.com` domain.
+`.github/workflows/deploy.yml` builds and publishes to GitHub Pages on every push to `main`. The repository's Pages source must be set to **GitHub Actions**. `public/CNAME` keeps the `obel-ai.com` domain. `public/og.png` is the social share image, rendered once from the site typography.
 
 The old consulting pages (`/about.html`, `/services.html`, `/data.html`, `/chatbot.html`, `/contact.html`) redirect to their new equivalents.

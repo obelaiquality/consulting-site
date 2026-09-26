@@ -1,0 +1,50 @@
+---
+/* Waitlist form: email + "Join the waitlist". Composes a mailto to chat@obel-ai.com,
+   subject "IDC waitlist", with the visitor's address in the body — no server, no dates promised. */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<form class:list={['wl-form', cls]} data-idc-waitlist novalidate>
+  <label class="wl-label" for="idc-waitlist-email">Work email</label>
+  <div class="wl-row">
+    <input
+      id="idc-waitlist-email"
+      name="email"
+      type="email"
+      inputmode="email"
+      autocomplete="email"
+      required
+      placeholder="you@company.com"
+      class="wl-input"
+    />
+    <button type="submit" class="btn btn-primary">Join the waitlist</button>
+  </div>
+  <p class="wl-note" data-idc-waitlist-note role="status" aria-live="polite"></p>
+</form>
+
+<style>
+  .wl-form { max-width: 30rem; }
+  .wl-label { display: block; font-size: 13px; color: var(--color-muted); margin-bottom: 8px; }
+  .wl-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .wl-input { flex: 1; min-width: 12rem; height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid var(--color-line); background: var(--color-surface); font-size: 16px; color: var(--color-ink); }
+  .wl-input:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
+  .wl-note { margin-top: 10px; font-size: 13px; color: var(--color-muted); min-height: 1.2em; }
+</style>
+
+<script>
+  import { site } from '../../data/site';
+  const form = document.querySelector<HTMLFormElement>('[data-idc-waitlist]');
+  const note = document.querySelector<HTMLElement>('[data-idc-waitlist-note]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = (form.querySelector<HTMLInputElement>('#idc-waitlist-email')?.value || '').trim();
+    if (!email) {
+      if (note) note.textContent = 'Add your email first.';
+      return;
+    }
+    const body = encodeURIComponent(`Hi Obel team,\n\nPlease add me to the Internal Document Control waitlist.\n\nEmail: ${email}\n`);
+    const href = `mailto:${site.email}?subject=${encodeURIComponent('IDC waitlist')}&body=${body}`;
+    window.location.href = href;
+    if (note) note.textContent = "Opening your email client — we'll be in touch.";
+  });
+</script>

@@ -1,0 +1,40 @@
+---
+/* Greyed, unclickable preview mock for Internal Document Control — coming soon, no dates. */
+import AppWindow from '../mock/AppWindow.astro';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const rows = [
+  { title: 'Quality Manual', type: 'Manual', status: 'Draft' },
+  { title: 'SOP-014 Incoming Goods Inspection', type: 'SOP', status: 'Under Review' },
+  { title: 'WI-032 Line Changeover', type: 'Work Instruction', status: 'Approved' },
+  { title: 'POL-003 Document Control Policy', type: 'Policy', status: 'Approved' },
+];
+---
+<div class:list={['idc-wrap', cls]}>
+  <AppWindow title="Internal Document Control" tabs={['Drafts', 'In Review', 'Controlled', 'Obsolete']} activeTab={0}>
+    <div class="idc-overlay" aria-hidden="true">
+      <span class="pill pill-grey">Coming soon</span>
+    </div>
+    <div class="idc-table" aria-hidden="true">
+      <div class="idc-row idc-head">
+        <span>Document Title</span><span>Type</span><span>Status</span>
+      </div>
+      {rows.map((r) => (
+        <div class="idc-row">
+          <span class="truncate">{r.title}</span>
+          <span class="truncate">{r.type}</span>
+          <span><span class="pill pill-grey">{r.status}</span></span>
+        </div>
+      ))}
+    </div>
+  </AppWindow>
+</div>
+
+<style>
+  .idc-wrap { position: relative; filter: grayscale(1); opacity: 0.55; pointer-events: none; user-select: none; }
+  .idc-overlay { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; }
+  .idc-table { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
+  .idc-row { display: grid; grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr) 130px; align-items: center; gap: 14px; height: 38px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); }
+  .idc-row:first-child { border-top: 0; }
+  .idc-head { height: 34px; background: var(--color-surface-2); font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+</style>
