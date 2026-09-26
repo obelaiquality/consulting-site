@@ -18,7 +18,7 @@ export const site = {
    * Without a key, the forms fall back to "open in your email app / Gmail / Outlook / copy".
    * The key is safe to publish: it can only send mail to the inbox that created it.
    */
-  web3formsKey: '' as string,
+  web3formsKey: '7137c373-adc7-4cb1-a533-75eedc607469' as string,
   /*
    * Official profiles of the company elsewhere (LinkedIn, G2, Capterra, Crunchbase, Google Business Profile).
    * They go into the Organization schema as `sameAs`, which helps search engines and AI assistants

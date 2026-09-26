@@ -29,19 +29,15 @@ export function leadText(lead: Lead) {
 export async function sendLead(lead: Lead): Promise<boolean> {
   if (!site.web3formsKey) return false;
   try {
-    const res = await fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        access_key: site.web3formsKey,
-        subject: lead.subject,
-        from_name: 'obel-ai.com',
-        ...(lead.replyTo ? { email: lead.replyTo, replyto: lead.replyTo } : {}),
-        ...(lead.name ? { name: lead.name } : {}),
-        botcheck: false,
-        ...lead.fields,
-      }),
-    });
+    // FormData keeps this a "simple" CORS request (no preflight), which Web3Forms accepts from any origin.
+    const body = new FormData();
+    body.append('access_key', site.web3formsKey);
+    body.append('subject', lead.subject);
+    body.append('from_name', 'obel-ai.com');
+    if (lead.replyTo) { body.append('email', lead.replyTo); body.append('replyto', lead.replyTo); }
+    if (lead.name) body.append('name', lead.name);
+    for (const [k, v] of Object.entries(lead.fields)) body.append(k, v || '(none)');
+    const res = await fetch(ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body });
     const json = (await res.json().catch(() => ({}))) as { success?: boolean };
     return res.ok && json.success === true;
   } catch {
