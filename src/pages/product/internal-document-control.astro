@@ -8,7 +8,7 @@ import { site, plans } from '../../data/site';
 const starter = plans.find((p) => p.id === 'lite')!;
 
 const planned = [
-  { title: 'Drafting', body: 'Write an SOP, policy or work instruction inside Obel MS, not a Word file emailed around for comments.' },
+  { title: 'Drafting', body: 'Write an SOP, policy or work instruction directly inside Obel MS.' },
   { title: 'Review and approval routing', body: 'Send a draft for review and approval to the right job title before it becomes a controlled document.' },
   { title: 'Revision control', body: 'Every edit becomes a new revision, with the prior one kept and viewable.' },
   { title: 'Periodic review reminders', body: 'Documents come up for review on a schedule, instead of quietly going stale.' },
@@ -33,7 +33,7 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="Internal Document Control (Coming Soon) | Obel MS"
+  title="Internal Document Control (coming soon) | Obel MS"
   description="SOPs, policies and work instructions: drafting, approval routing, revision control and periodic review. Coming soon to Obel MS. Join the waitlist."
   breadcrumbs={[{ name: 'Internal Document Control', href: '/product/internal-document-control' }]}
   jsonLd={jsonLd}
@@ -45,7 +45,7 @@ const jsonLd = {
         <p class="label-dot">Internal Document Control <span class="pill pill-grey ml-1">Coming soon</span></p>
         <h1 class="t-hero mt-6 max-w-[18ch]" data-split data-split-load>Internal Document Control is coming.</h1>
         <p class="t-lead mt-6">
-          SOPs, policies and work instructions, drafted, reviewed, approved and kept current &mdash; the same way External Document Control and Workflow Manager already work today.
+          SOPs, policies and work instructions are drafted, reviewed, approved and kept current. It works the same way External Document Control and Workflow Manager already do today.
         </p>
       </div>
       <div class="mt-14 md:mt-16" data-reveal>
@@ -58,7 +58,7 @@ const jsonLd = {
   <section class="section-y">
     <div class="container-x">
       <div class="max-w-xl mb-12" data-reveal>
-        <p class="label-dot mb-4">Planned, not shipped</p>
+        <p class="label-dot mb-4">Planned features</p>
         <h2 class="t-h2">What we're building next.</h2>
         <p class="t-body mt-4">We'd rather tell you what's planned than dress up a screenshot. Nothing below is live yet, and we're not naming a date.</p>
       </div>
@@ -80,7 +80,7 @@ const jsonLd = {
       <div class="card max-w-2xl p-8 sm:p-10" data-reveal>
         <p class="label-dot mb-4">Get notified</p>
         <h2 class="t-h2 !text-[1.8rem]">Join the waitlist.</h2>
-        <p class="t-body mt-3">We'll email you when Internal Document Control opens for early access. No spam, no dates promised.</p>
+        <p class="t-body mt-3">We will only email you about Internal Document Control opening for early access. We cannot give a date yet.</p>
         <div class="mt-6">
           <IdcWaitlistForm />
         </div>

@@ -174,7 +174,7 @@ const approvalSet = new Set(template.approvals);
     gsap.fromTo(section,
       { clipPath: 'inset(0% 3.5% 0% 3.5% round 32px)' },
       { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none',
-        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 15%', scrub: 0.6 } });
+        scrollTrigger: { trigger: section, start: 'top bottom', end: 'top 15%', scrub: 1 } });
 
     // Pinned stage narrative: desktop only.
     const mm = gsap.matchMedia();
@@ -219,7 +219,7 @@ const approvalSet = new Set(template.approvals);
       const tl = gsap.timeline({
         defaults: { ease: 'none' },
         onUpdate: () => render(tl.progress() * total),
-        scrollTrigger: { trigger: pinEl, start: 'top top', end: '+=250%', scrub: 0.6, pin: true },
+        scrollTrigger: { trigger: pinEl, start: 'top top', end: '+=250%', scrub: 1, pin: true },
       });
 
       connectors.forEach((line, i) => {

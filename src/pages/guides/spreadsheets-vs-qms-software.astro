@@ -2,9 +2,9 @@
 import GuideLayout from '../../layouts/GuideLayout.astro';
 
 const sources = [
-  { label: 'ISO 9001:2026 — Quality management systems — Requirements (ISO)', url: 'https://www.iso.org/standard/88464.html' },
-  { label: 'ISO 9001:2015 — Quality management systems — Requirements (ISO, valid to 2029)', url: 'https://www.iso.org/standard/62085.html' },
-  { label: 'ISO 9000 family — Quality management (ISO)', url: 'https://www.iso.org/iso-9001-quality-management.html' },
+  { label: 'ISO 9001:2026: quality management systems, requirements (ISO)', url: 'https://www.iso.org/standard/88464.html' },
+  { label: 'ISO 9001:2015: quality management systems, requirements (ISO, valid to 2029)', url: 'https://www.iso.org/standard/62085.html' },
+  { label: 'ISO 9000 family: quality management (ISO)', url: 'https://www.iso.org/iso-9001-quality-management.html' },
   { label: 'Quality management principles (ISO)', url: 'https://www.iso.org/publication/PUB100080.html' },
 ];
 
@@ -19,7 +19,7 @@ const related = [
 const faqs = [
   {
     q: 'Is spreadsheet-based document control good enough, or do I need software?',
-    a: "It depends on scope, not preference. A spreadsheet is genuinely fine for a single-site business with one editor and a short list of documents. Once several people edit records, you have suppliers or customers asking for evidence, or you're preparing for a certification audit, the manual checking a spreadsheet relies on becomes the weak point.",
+    a: "It depends on scope. A spreadsheet is fine for a single-site business with one editor and a short list of documents. Once several people edit records, you have suppliers or customers asking for evidence, or you're preparing for a certification audit, the manual checking a spreadsheet relies on becomes the weak point.",
   },
   {
     q: 'How much does QMS software cost?',
@@ -27,15 +27,15 @@ const faqs = [
   },
   {
     q: 'What is the best system for documentation control?',
-    a: "There isn't a single best system — it depends on company size, number of editors, and how much audit evidence you need to produce on demand. The right test is whether the system can show who changed what and when, remind someone before a document lapses, and let a new auditor find the current version without you walking them through it.",
+    a: "There isn't a single best system. It depends on company size, number of editors, and how much audit evidence you need to produce on demand. The right test is whether the system can show who changed what and when, remind someone before a document lapses, and let a new auditor find the current version without you walking them through it.",
   },
   {
     q: 'Can a small business get by with a shared drive instead of a spreadsheet?',
-    a: 'A shared drive works for storing files, but it does not track version history, expiry dates or who approved what on its own — you would still need a spreadsheet or a tracking sheet alongside it to cover those gaps. At that point you have effectively built a weaker, unlinked version of what dedicated software does natively.',
+    a: 'A shared drive works for storing files, but it does not track version history, expiry dates or who approved what on its own. You would still need a spreadsheet or a tracking sheet alongside it to cover those gaps. At that point you have effectively built a weaker, unlinked version of what dedicated software does natively.',
   },
   {
     q: 'What are the risks of using a shared drive as your quality system?',
-    a: 'The main risks are version drift — different people trusting different copies of the same document — and no reliable way to prove, after the fact, who approved a change or when a document was last reviewed. Both are common findings when an auditor traces a document through a company that runs its QMS from a shared drive.',
+    a: 'The main risks are version drift, meaning different people trust different copies of the same document, and no reliable way to prove, after the fact, who approved a change or when a document was last reviewed. Both are common findings when an auditor traces a document through a company that runs its QMS from a shared drive.',
   },
 ];
 ---
@@ -43,7 +43,7 @@ const faqs = [
   title="QMS software vs spreadsheets for ISO 9001 | Obel MS"
   description="An honest comparison of spreadsheets and shared drives against QMS software for ISO 9001: version control, audit trail, reminders and cost."
   h1="Spreadsheets vs QMS software for ISO 9001"
-  answer="Spreadsheets can work for a very small, single-site quality system with one editor and a handful of documents. Once you have more than a few suppliers, several editors, or an audit history to defend, a spreadsheet cannot enforce version control, prove who changed what, or remind anyone before a certificate expires — dedicated QMS software can."
+  answer="Spreadsheets can work for a small, single-site quality system with one editor and a handful of documents. Once you have more than a few suppliers, several editors or an audit history to defend, a spreadsheet cannot enforce version control, prove who changed what, or remind anyone before a certificate expires. Dedicated QMS software can."
   published="2026-09-26"
   updated="2026-09-26"
   readingMinutes={7}
@@ -53,21 +53,21 @@ const faqs = [
 >
   <h2>What's the real difference between a spreadsheet and QMS software?</h2>
   <p>
-    A spreadsheet stores information; it doesn't enforce anything. Nothing stops two people saving different versions of the same file, nothing reminds anyone before a certificate expires, and nothing records who changed a cell last unless someone manually notes it. QMS software is built around the same document-control ideas ISO 9001 clause 7.5.3 describes — availability, protection, version control, retention — as features rather than habits you have to maintain by hand.
+    A spreadsheet stores information. It doesn't enforce anything. Nothing stops two people saving different versions of the same file, nothing reminds anyone before a certificate expires, and nothing records who changed a cell last unless someone manually notes it. QMS software is built around the same document-control ideas ISO 9001 clause 7.5.3 describes, availability, protection, version control and retention, as features rather than habits you have to maintain by hand.
   </p>
   <p>
-    This isn't only about documents. The same gap shows up in process records — nonconformances, change requests, supplier deviations — which most spreadsheet-based systems track as a row with a status column someone updates by hand. Software built for this designs the status, the approval step and the audit trail into the record itself, so the record can't quietly go stale the way a status cell can.
+    This isn't only about documents. The same gap shows up in process records, such as nonconformances, change requests and supplier deviations, which most spreadsheet-based systems track as a row with a status column someone updates by hand. Software built for this designs the status, the approval step and the audit trail into the record itself, so the record can't quietly go stale the way a status cell can.
   </p>
   <p>
     That doesn't make a spreadsheet wrong. It makes it a manual system, where the discipline lives in a person's routine rather than in the tool. Whether that's good enough depends entirely on how much is riding on that routine never slipping.
   </p>
   <p>
-    Take a simple example: a quality manager tracks certificates from three suppliers — Northwind Ingredients, Kestrel Packaging and Silverleaf Botanics — in a shared spreadsheet. Nothing stops a colleague opening an older copy from their downloads folder and editing it by mistake, and nothing tells anyone a certificate expired last week unless someone happens to scroll to that row. The information is all there; the checking still depends entirely on a person remembering to look.
+    Take a simple example. A quality manager tracks certificates from three suppliers, Northwind Ingredients, Kestrel Packaging and Silverleaf Botanics, in a shared spreadsheet. Nothing stops a colleague opening an older copy from their downloads folder and editing it by mistake, and nothing tells anyone a certificate expired last week unless someone happens to scroll to that row. The information is all there. The checking still depends entirely on a person remembering to look.
   </p>
 
   <h2>Spreadsheets vs shared drives vs QMS software: a comparison</h2>
   <p>
-    The table below compares the three approaches most SMEs actually use, across the things an ISO 9001 auditor — and a busy quality manager — cares about most. None of these factors are hypothetical: they map directly onto what clause 7.5.3 expects for documented information, whichever tool you use to meet it.
+    The table below compares the three approaches most SMEs use, across the things an ISO 9001 auditor and a busy quality manager care about most. None of these factors are hypothetical. They map directly onto what clause 7.5.3 expects for documented information, whichever tool you use to meet it.
   </p>
   <div class="table-wrap">
     <table>
@@ -81,13 +81,13 @@ const faqs = [
       <tbody>
         <tr>
           <td>Version control</td>
-          <td>Manual; the last save wins, older copies often survive elsewhere</td>
-          <td>Built in; a new version is recorded, the prior one kept in history</td>
+          <td>Manual, the last save wins, older copies often survive elsewhere</td>
+          <td>Built in, a new version is recorded, the prior one kept in history</td>
         </tr>
         <tr>
           <td>Access control</td>
           <td>Whatever the file share or folder permissions allow</td>
-          <td>Role-based; who can edit, approve or only view is set per person</td>
+          <td>Role-based, who can edit, approve or only view is set per person</td>
         </tr>
         <tr>
           <td>Audit trail</td>
@@ -101,7 +101,7 @@ const faqs = [
         </tr>
         <tr>
           <td>Reporting</td>
-          <td>Manual — someone builds a pivot table or counts rows by hand</td>
+          <td>Manual. Someone builds a pivot table or counts rows by hand</td>
           <td>Live dashboards and status counts, no manual recount needed</td>
         </tr>
         <tr>
@@ -112,12 +112,12 @@ const faqs = [
         <tr>
           <td>Setup effort</td>
           <td>Minimal to start, but structure tends to erode over time without upkeep</td>
-          <td>A short onboarding step; most vendors help migrate your existing registers</td>
+          <td>A short onboarding step, most vendors help migrate your existing registers</td>
         </tr>
         <tr>
           <td>IT burden</td>
           <td>Low day to day, but you own backups, permissions and file-naming discipline</td>
-          <td>Hosting, backups and updates are the vendor's responsibility, not yours</td>
+          <td>Hosting, backups and updates are the vendor's responsibility</td>
         </tr>
       </tbody>
     </table>
@@ -125,13 +125,13 @@ const faqs = [
 
   <h2>When is a spreadsheet still fine?</h2>
   <p>
-    A spreadsheet is a reasonable, defensible choice when your scope is genuinely small: one site, one person maintaining the register, a handful of external documents and suppliers, and no pattern of documents slipping through unnoticed. Plenty of small companies run a clean, audit-ready spreadsheet for years without trouble, provided the discipline behind it — a fixed review date, a named owner, a habit of checking — never lapses.
+    A spreadsheet is a reasonable, defensible choice when your scope is small: one site, one person maintaining the register, a handful of external documents and suppliers, and no pattern of documents slipping through unnoticed. Plenty of small companies run a clean, audit-ready spreadsheet for years without trouble, provided the discipline behind it, a fixed review date, a named owner, a habit of checking, never lapses.
   </p>
   <p>
-    The honest risk isn't the spreadsheet itself; it's that the whole system depends on one person's memory and availability. If that person is out sick, changes roles, or simply gets busy during a product launch, nothing in the spreadsheet itself will flag what's been missed.
+    The whole system depends on one person's memory and availability. If that person is out sick, changes roles, or gets busy during a product launch, nothing in the spreadsheet itself will flag what's been missed.
   </p>
   <p>
-    It's also worth being honest about what a spreadsheet can't do even when it's well maintained: it can't show an auditor, on request, exactly who approved a document and when, without you narrating the history yourself. For a very small company that's rarely a problem, because the same one or two people who maintain the sheet can usually recall or reconstruct that history. As the team grows, that informal memory is the first thing to break down.
+    It's also worth being honest about what a spreadsheet can't do even when it's well maintained: it can't show an auditor, on request, exactly who approved a document and when, without you narrating the history yourself. For a small company that's rarely a problem, because the same one or two people who maintain the sheet can usually recall or reconstruct that history. As the team grows, that informal memory is the first thing to break down.
   </p>
 
   <h2>What are the signs you've outgrown spreadsheets?</h2>
@@ -139,31 +139,31 @@ const faqs = [
     A few patterns reliably show up once a spreadsheet-based system is under strain:
   </p>
   <ul>
-    <li>More than one person edits the register, and you've had a version-conflict moment — two people working from different copies.</li>
+    <li>More than one person edits the register, and you've had a version-conflict moment: two people working from different copies.</li>
     <li>You've had, or narrowly avoided, an expired supplier certificate or customer specification being used without anyone noticing in time.</li>
     <li>Preparing for an audit means someone spending a day or more reconstructing what happened, rather than pulling it up directly.</li>
     <li>Your supplier or customer count has grown enough that "just checking the sheet" no longer happens on a reliable schedule.</li>
-    <li>You're being asked for evidence — an audit trail, a timestamped approval — that a spreadsheet cell simply can't produce.</li>
+    <li>You're being asked for evidence, such as an audit trail or a timestamped approval, that a spreadsheet cell can't produce.</li>
   </ul>
   <p>
-    None of these mean the sheet failed you; they mean the scope has changed since you built it. See our <a href="/guides/control-of-external-documents">guide to controlling external documents</a> and <a href="/guides/supplier-certificate-tracking">tracking supplier certificates</a> for what a register needs to cover either way.
+    None of these mean the sheet failed you. They mean the scope has changed since you built it. See our <a href="/guides/control-of-external-documents">guide to controlling external documents</a> and <a href="/guides/supplier-certificate-tracking">tracking supplier certificates</a> for what a register needs to cover either way.
   </p>
   <p>
-    A useful way to test where you stand: pick any document or supplier certificate at random and time how long it takes to answer three questions — is this the current version, who approved it, and when does it next need review. If that takes a search through email and a few phone calls rather than a few seconds, the system is already costing you more time than it looks like on paper.
+    A useful way to test where you stand: pick any document or supplier certificate at random and time how long it takes to answer three questions, namely is this the current version, who approved it, and when does it next need review. If that takes a search through email and a few phone calls rather than a few seconds, the system is already costing you more time than it looks like on paper.
   </p>
   <p>
-    It's worth running that test on a document that hasn't been touched in a while, not just the ones you know well. The documents that catch companies out at audit are rarely the ones the quality manager checks every week — they're the one supplier certificate or one customer specification nobody has opened since it was filed, which is exactly the kind of gap a spreadsheet's structure can't surface on its own.
+    Run that test on a document that hasn't been touched in a while, too. The documents that catch companies out at audit are rarely the ones the quality manager checks every week. They're the one supplier certificate or one customer specification nobody has opened since it was filed, which is exactly the kind of gap a spreadsheet's structure can't surface on its own.
   </p>
 
-  <h2>What does moving to QMS software actually involve?</h2>
+  <h2>What does moving to QMS software involve?</h2>
   <p>
-    Moving your existing registers across is usually the biggest perceived barrier and, in practice, the smaller part of the work — most of what you're moving is already structured as rows in a spreadsheet. The bigger part is agreeing who owns what going forward, since software makes ownership visible rather than implicit.
+    Moving your existing registers across is usually the biggest perceived barrier and, in practice, the smaller part of the work. Most of what you're moving is already structured as rows in a spreadsheet. The bigger part is agreeing who owns what going forward, since software makes ownership visible rather than implicit.
   </p>
   <p>
-    Expect three practical steps: importing your current documents and their metadata, deciding who gets editor access versus view-only access, and agreeing the expiry-reminder window you want, commonly 30 days. None of that requires downtime — most SMEs keep their spreadsheet as a reference during the switch and stop updating it once the new register is confirmed complete.
+    Expect three practical steps: importing your current documents and their metadata, deciding who gets editor access versus view-only access, and agreeing the expiry-reminder window you want, commonly 30 days. None of that requires downtime. Most SMEs keep their spreadsheet as a reference during the switch and stop updating it once the new register is confirmed complete.
   </p>
   <p>
-    Cost is usually the first question and the easiest one to answer honestly: weigh the monthly subscription against the time currently spent maintaining the spreadsheet, chasing suppliers by memory, and reconstructing history before an audit. For most small teams, that time cost is the larger of the two — it's just less visible because it's spread across a person's week rather than appearing as a single line on an invoice.
+    Cost is usually the first question and the easiest one to answer honestly. Weigh the monthly subscription against the time currently spent maintaining the spreadsheet, chasing suppliers by memory, and reconstructing history before an audit. For most small teams, that time cost is the larger of the two. It is less visible, because it's spread across a person's week rather than appearing as a single line on an invoice.
   </p>
   <p>
     Obel MS hosts, backs up and maintains <a href="/product/external-document-control">External Document Control</a> and <a href="/product/workflow-manager">Workflow Manager</a> for you, and helps import your existing registers so you start with your history intact rather than a blank page. See <a href="/pricing">pricing</a> for what's included at each tier, with no setup fee on the Starter and Growth plans.

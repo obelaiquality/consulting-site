@@ -19,7 +19,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Is Obel MS ISO 9001 certified?',
-    a: 'No software can be ISO 9001 certified — only your organisation’s quality management system can be, by an accredited certification body. Obel MS is built around clause 7.5 (documented information), which is in both ISO 9001:2015 and the new ISO 9001:2026, to support that certification.',
+    a: 'No software can be ISO 9001 certified. Only your organisation’s quality management system can, through an accredited certification body. Obel MS is built around clause 7.5 (documented information), which is in both ISO 9001:2015 and the new ISO 9001:2026, to support that certification.',
     tags: ['iso'],
   },
   {
@@ -29,7 +29,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Can you migrate our spreadsheets?',
-    a: 'Yes. As part of onboarding we import your existing registers and spreadsheets, so you start with your document and supplier history already in place, not a blank system.',
+    a: 'Yes. As part of onboarding we import your existing registers and spreadsheets, so you start with your document and supplier history already in place.',
     tags: ['general'],
   },
   {
@@ -69,18 +69,23 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'How do supplier expiry alerts work?',
-    a: 'Each document’s status — Active, Expiring soon, Expired or No expiry set — is calculated automatically, with a default 30-day expiring-soon window you can change. Alerts go out as an org-wide digest by email and in Teams.',
+    a: 'Each document’s status is calculated automatically: Active, Expiring soon, Expired or No expiry set. The expiring-soon window defaults to 30 days and you can change it. Alerts go out as an org-wide digest by email and in Teams.',
     tags: ['general'],
   },
   {
     q: 'Does Obel MS work for ISO 13485 or GxP environments?',
-    a: 'Obel MS is built for ISO 9001 today. A Validated (GxP) plan for regulated teams, with a dedicated environment and a quality agreement, is planned for 2027. Join the waitlist from the pricing page and we will talk you through what it will cover.',
+    a: 'Obel MS is built for ISO 9001 today. It does not yet support regulated GxP environments or ISO 13485 validation. If that is what you need, tell us about your requirements.',
     tags: ['iso'],
   },
   {
     q: 'What AI features do you use, and is our data used to train AI models?',
-    a: 'AI features — metadata extraction on upload and record summaries — use OpenAI models via API, and your admin can switch them off. Under OpenAI’s API terms, API data is not used for model training.',
+    a: 'AI metadata extraction on upload and record summaries use OpenAI models through the API, and your admin can switch them off. Under OpenAI’s API terms, API data is not used for model training.',
     tags: ['security'],
+  },
+  {
+    q: 'Is AI metadata extraction included?',
+    a: 'Yes. AI metadata extraction is included on every plan and module, under fair use. It reads digital PDFs today, and reading scanned documents (OCR) is in testing. Fair use is up to 1,000 pages a month on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, we agree a volume plan with you.',
+    tags: ['pricing', 'general'],
   },
   {
     q: 'Is pricing per user?',

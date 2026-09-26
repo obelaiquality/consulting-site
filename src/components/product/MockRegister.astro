@@ -39,8 +39,8 @@ const rows = edcDocs;
           <span class="hidden md:block truncate">{d.type}</span>
           <span class="hidden lg:block truncate">{d.product}</span>
           <span class="hidden sm:block truncate">{d.supplier}</span>
-          <span class="hidden xl:block truncate tnum">{d.cert || '—'}</span>
-          <span class="tnum">{d.expiry || '—'}</span>
+          <span class="hidden xl:block truncate tnum">{d.cert || '-'}</span>
+          <span class="tnum">{d.expiry || '-'}</span>
           <span><span class="pill pill-green">Validated</span></span>
           <span class="hidden lg:block"><span class={`pill pill-${d.tone}`}>{d.status}</span></span>
         </div>

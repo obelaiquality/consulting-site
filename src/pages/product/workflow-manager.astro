@@ -43,9 +43,9 @@ const jsonLd = {
     <div class="container-x">
       <div class="max-w-3xl">
         <p class="label-dot">Workflow Manager <span class="pill pill-green ml-1">Live</span></p>
-        <h1 class="t-hero mt-6 max-w-[16ch]" data-split data-split-load>Corrective actions that actually close.</h1>
+        <h1 class="t-hero mt-6 max-w-[16ch]" data-split data-split-load>Corrective actions that close properly.</h1>
         <p class="t-lead mt-6">
-          Nonconformances, complaints, supplier deviations and change requests, each on a staged template with approvals, deadlines and an audit trail &mdash; not a spreadsheet someone forgets to update.
+          Nonconformances, complaints, supplier deviations and change requests each run on a staged template, with approvals, deadlines and an audit trail.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
           <a href="/contact#demo" class="btn btn-primary" data-magnetic>Book a demo</a>
@@ -63,8 +63,8 @@ const jsonLd = {
     <div class="container-x">
       <div class="max-w-xl mb-4" data-reveal>
         <p class="label-dot mb-4">Five templates, out of the box</p>
-        <h2 class="t-h2">Built for a quality manager, not a generic ticket.</h2>
-        <p class="t-body mt-4">Nonconformance, Change Management, Customer Complaint, Supplier Deviation and Action each ship with real stage-by-stage instructions, not placeholders.</p>
+        <h2 class="t-h2">Built for a quality manager's daily work.</h2>
+        <p class="t-body mt-4">Nonconformance, Change Management, Customer Complaint, Supplier Deviation and Action each ship with real, stage-by-stage instructions.</p>
       </div>
       <MockTemplatesList />
     </div>
@@ -87,7 +87,7 @@ const jsonLd = {
     <div class="container-x">
       <FeatureRow label="Every record" title="One view: stage, owner, due date, history.">
         <Fragment slot="text">
-          <p class="t-body">A record's meta strip shows exactly where it is &mdash; stage 3 of 6, who owns it, who's acting on it, and when it's due &mdash; with tabs for the full detail, the audit trail, the workflow and a PDF report.</p>
+          <p class="t-body">A record's meta strip shows exactly where it is: stage 3 of 6, who owns it, who's acting on it and when it's due. Tabs give the full detail, the audit trail, the workflow and a PDF report.</p>
         </Fragment>
         <Fragment slot="mock"><MockRecordDetail /></Fragment>
       </FeatureRow>
@@ -104,9 +104,9 @@ const jsonLd = {
         <Fragment slot="mock"><MockVerification /></Fragment>
       </FeatureRow>
 
-      <FeatureRow label="When a complaint is more" title="Escalate without starting over.">
+      <FeatureRow label="When a complaint is more" title="Escalating keeps the full history.">
         <Fragment slot="text">
-          <p class="t-body">A Customer Complaint that turns out to be a product or supplier issue escalates straight into a Nonconformance or a Supplier Deviation, carrying its history with it.</p>
+          <p class="t-body">A Customer Complaint can turn out to be a product or supplier issue. It escalates straight into a Nonconformance or a Supplier Deviation, carrying its history with it.</p>
         </Fragment>
         <Fragment slot="mock"><MockEscalation /></Fragment>
       </FeatureRow>
@@ -116,9 +116,9 @@ const jsonLd = {
   <!-- AI summaries -->
   <section class="section-y pt-0">
     <div class="container-x">
-      <FeatureRow label="AI, kept honest" title="A draft summary, not a decision." reverse>
+      <FeatureRow label="AI, kept honest" title="A draft your team edits and approves." reverse>
         <Fragment slot="text">
-          <p class="t-body">Stage and executive summaries are drafted from what's recorded on the record, including attachments. Your team edits and approves before it goes into a report &mdash; Obel MS never signs anything on its own.</p>
+          <p class="t-body">Stage and executive summaries are drafted from what's recorded on the record, including attachments. Your team edits and approves before it goes into a report. Obel MS never signs anything on its own.</p>
         </Fragment>
         <Fragment slot="mock"><MockAiSummary /></Fragment>
       </FeatureRow>
@@ -128,9 +128,9 @@ const jsonLd = {
   <!-- Notifications -->
   <section class="section-y pt-0">
     <div class="container-x">
-      <FeatureRow label="Nothing goes quiet" title="Overdue is checked hourly, not once a week.">
+      <FeatureRow label="Nothing goes quiet" title="Overdue records are checked every hour.">
         <Fragment slot="text">
-          <p class="t-body">An hourly job checks every record against its due date. Overdue and assignment events go out by email and to Teams, so a stalled corrective action gets noticed the same day.</p>
+          <p class="t-body">An hourly job checks every record against its due date. Overdue and assignment events go out by email and to Teams, so a stalled record gets noticed the same day.</p>
         </Fragment>
         <Fragment slot="mock">
           <MockDigest
@@ -150,7 +150,7 @@ const jsonLd = {
       <div class="max-w-2xl" data-reveal>
         <p class="label-dot mb-4">Reports</p>
         <h2 class="t-h2 max-w-[18ch]">See what's overdue, and whether the fixes worked.</h2>
-        <p class="t-body mt-4">Every record has a PDF report. Under Reports, the quality dashboard shows CAPA timeliness, verification effectiveness, severity mix, sources and hotspots, and the leadership view tracks overdue stages over time.</p>
+        <p class="t-body mt-4">Every record has a PDF report. Under Reports, the quality dashboard shows CAPA timeliness, verification effectiveness, severity mix, sources and hotspots. The leadership view tracks overdue stages over time.</p>
       </div>
     </div>
   </section>
@@ -162,7 +162,7 @@ const jsonLd = {
         <div class="lg:col-span-5">
           <p class="label-dot mb-4">What auditors see</p>
           <h2 class="t-h2 max-w-[16ch]">Every stage change, timestamped.</h2>
-          <p class="t-body mt-4">Each entry reads as who did what and when &mdash; stage advances, approvals, attachments, verification &mdash; downloadable as a PDF for the audit file.</p>
+          <p class="t-body mt-4">Each entry records who did what and when: stage advances, approvals, attachments and verification. Download it as a PDF for the audit file.</p>
         </div>
         <div class="lg:col-span-7">
           <MockAuditTrail />

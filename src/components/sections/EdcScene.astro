@@ -8,7 +8,7 @@ import AppWindow from '../mock/AppWindow.astro';
 
 const steps = [
   { title: 'Drop it in the Inbox', body: 'Drag in a supplier certificate, statement or spec as a digital PDF, one file or fifty.' },
-  { title: 'AI reads it for you', body: 'Obel MS pulls out the document type, supplier, product, certificate number and expiry date. You accept, edit or dismiss each suggestion.' },
+  { title: 'AI reads it for you', body: 'Obel MS pulls out the document type, supplier, product, certificate number and expiry date. You accept, edit or dismiss every suggestion it makes.' },
   { title: 'Approve it into the Register', body: 'One click moves the document from the Inbox into your controlled register, with the approval in the audit trail.' },
   { title: 'Filed, and watched', body: 'It files itself under Supplier, Manufacturer and Product. Obel MS watches the expiry date and warns your team before it lapses.' },
 ];
@@ -252,7 +252,7 @@ const inboxRows = [
           start: 'center center',
           end: '+=320%',
           pin: true,
-          scrub: 0.6,
+          scrub: 1,
         },
         onUpdate: () => {
           const t = tl.time();
@@ -290,7 +290,7 @@ const inboxRows = [
         .to(q('[data-tree="1"]'), { opacity: 1, height: 30, x: 0, stagger: 0.12, duration: 0.35 }, 7.05)
         .to(q('[data-tree="2"]'), { opacity: 1, height: 30, x: 0, duration: 0.35 }, 7.4)
         .to(q('[data-tree="3"]'), { opacity: 1, height: 30, x: 0, stagger: 0.15, duration: 0.35 }, 7.6)
-        .fromTo(q('[data-filed]'), { scale: 0.97 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' }, 7.8)
+        .fromTo(q('[data-filed]'), { scale: 0.97 }, { scale: 1, duration: 0.3, ease: 'power2.out' }, 7.8)
         .to(q('[data-expiry]'), { opacity: 1, y: 0, duration: 0.4 }, 8)
         .to(q('[data-rail]'), { scaleY: 1, ease: 'none', duration: 2 }, 6.4)
         .to({}, { duration: 0.6 });

@@ -12,15 +12,15 @@ const lite = plans.find((p) => p.id === 'lite')!;
   title="ISO 9001 Software South Africa Guide | Obel MS"
   description="What SA SMEs should check before buying ISO 9001 software: POPIA, ZAR pricing, local support hours, cloud hosting and data ownership."
   h1="ISO 9001 software in South Africa: what to look for"
-  answer="ISO 9001 software supports your quality management system; only a SANAS-accredited certification body can certify it. South African SMEs should check data residency and POPIA roles, ZAR pricing, local support hours, load-shedding-proof cloud hosting, and clear data export rights before choosing a vendor. Obel MS is hosted in Johannesburg on Google Cloud and priced in ZAR."
+  answer="ISO 9001 software supports your quality management system. Only a SANAS-accredited certification body can certify it. South African SMEs should check data residency and POPIA roles, ZAR pricing, local support hours, load-shedding-proof cloud hosting and clear data export rights before choosing a vendor. Obel MS is hosted in Johannesburg on Google Cloud and priced in ZAR."
   published="2026-09-26"
   updated="2026-09-26"
   readingMinutes={8}
   sources={[
-    { label: 'POPIA — Section 72, transfers of personal information outside the Republic', url: 'https://popia.co.za/section-72-transfers-of-personal-information-outside-republic/' },
-    { label: 'POPIA — Section 1, definitions (responsible party, operator)', url: 'https://popia.co.za/section-1-definitions/' },
-    { label: 'SANAS — South African National Accreditation System', url: 'https://www.sanas.co.za/' },
-    { label: 'Wikipedia — South African National Accreditation System', url: 'https://en.wikipedia.org/wiki/South_African_National_Accreditation_System' },
+    { label: 'POPIA, section 72: transfers of personal information outside the Republic', url: 'https://popia.co.za/section-72-transfers-of-personal-information-outside-republic/' },
+    { label: 'POPIA, section 1: definitions (responsible party, operator)', url: 'https://popia.co.za/section-1-definitions/' },
+    { label: 'SANAS (South African National Accreditation System)', url: 'https://www.sanas.co.za/' },
+    { label: 'Wikipedia: South African National Accreditation System', url: 'https://en.wikipedia.org/wiki/South_African_National_Accreditation_System' },
   ]}
   related={[
     { label: 'Security and hosting', href: '/security', note: 'Hosting, access control and POPIA in full' },
@@ -33,46 +33,45 @@ const lite = plans.find((p) => p.id === 'lite')!;
   faqs={[
     {
       q: 'Can a software company certify us to ISO 9001?',
-      a: 'No. Only a SANAS-accredited certification body can certify your organisation to ISO 9001 — accreditation and certification are things a body does to your management system, not something a software vendor can grant. Software like Obel MS supports the document control and audit trail your certification body will want to see, built around ISO 9001 clause 7.5, but it is never itself "ISO 9001 certified".',
+      a: 'No. Only a SANAS-accredited certification body can certify your organisation to ISO 9001. Certification is something a body does to your management system. Software like Obel MS supports the document control and audit trail your certification body will want to see, built around ISO 9001 clause 7.5. It is never itself "ISO 9001 certified".',
     },
     {
       q: 'Does POPIA require our data to stay inside South Africa?',
-      a: 'Not strictly. POPIA does not set a blanket rule that personal information must stay in South Africa, but section 72 does restrict transferring it to a third party in a foreign country unless a specific condition is met — for example the recipient is subject to an adequate level of protection, or the data subject has consented. Hosting with a South African provider like Obel MS avoids that question for the records you keep with us.',
+      a: 'Not strictly. POPIA does not set a blanket rule that personal information must stay in South Africa. Section 72 does restrict transferring it to a third party in a foreign country unless a specific condition is met, for example that the recipient offers an adequate level of protection, or the data subject has consented. Hosting with a South African provider like Obel MS avoids that question for the records you keep with us.',
     },
     {
       q: 'What is the difference between a "responsible party" and an "operator" under POPIA?',
-      a: 'The responsible party is whoever decides why personal information is collected and how it will be used — for your quality records, that is your organisation. An operator processes personal information on the responsible party\'s behalf, under a contract, without setting its own purpose for the data. For documents and records you put in Obel MS, we act as operator; you remain the responsible party.',
+      a: 'The responsible party is whoever decides why personal information is collected and how it will be used. For your quality records, that is your organisation. An operator processes personal information on the responsible party\'s behalf, under a contract, without setting its own purpose for the data. For documents and records you put in Obel MS, we act as operator. You remain the responsible party.',
     },
     {
       q: 'Can we export our data if we switch vendors?',
-      a: 'That is a fair question to put to any vendor before you sign, not just Obel MS. Ask specifically whether a full export of documents, metadata, versions and the audit trail is included at no extra cost, and in what format. A vendor who cannot answer this clearly is asking you to accept lock-in.',
+      a: 'Ask any vendor this before you sign, including us. Ask specifically whether a full export of documents, metadata, versions and the audit trail is included at no extra cost, and in what format. A vendor who cannot answer clearly is asking you to accept lock-in.',
     },
     {
       q: 'Does Obel MS support single sign-on or electronic signatures?',
-      a: 'Not yet. Single sign-on (Microsoft Entra ID or Google) and multi-factor authentication are on our roadmap and listed as not yet available on our security page. Approvals in Workflow Manager are recorded, named and timestamped in the audit trail, which is not the same as a formal electronic signature — ask any vendor to be precise about which of the two they actually offer.',
+      a: 'Not yet. Single sign-on (Microsoft Entra ID or Google) and multi-factor authentication are on our roadmap and listed as not yet available on our security page. Approvals in Workflow Manager are recorded, named and timestamped in the audit trail. That is not the same as a formal electronic signature, so ask any vendor which of the two they offer.',
     },
     {
       q: 'What support hours can we expect from a South African vendor?',
-      a: 'This varies by vendor and plan, so always ask for a written response-time commitment, not just "we offer support". Obel MS states response times per plan on its pricing page, and being based in South Africa means support runs in your working hours and time zone, without waiting out an overnight gap to a different continent.',
+      a: 'This varies by vendor and plan. Always ask for a written response-time commitment rather than a general promise of support. Obel MS states response times per plan on its pricing page. Being based in South Africa means support runs in your working hours and time zone, with no overnight gap to a different continent.',
     },
   ]}
 >
   <h2>What's the difference between certifying your QMS and buying ISO 9001 software?</h2>
   <p>
-    A certification body audits your organisation and, if you meet the standard, issues an ISO 9001
-    certificate — that is a judgement about your management system, made by an accredited third party.
+    A certification body audits your organisation. If you meet the standard, it issues an ISO 9001
+    certificate, a judgement about your management system made by an accredited third party.
     Software supports your management system by controlling documents, tracking approvals and keeping an
-    audit trail; it is never itself "ISO 9001 certified", because certification applies to organisations,
-    not tools.
+    audit trail. It is never itself "ISO 9001 certified", because certification applies to organisations.
   </p>
   <p>
     In South Africa, look for a certification body that is <strong>SANAS-accredited</strong>. SANAS, the
     South African National Accreditation System, accredits certification bodies for quality management
     systems and other schemes, so a SANAS-accredited certificate carries a documented chain of trust from
-    SANAS to the certification body to your organisation. A consultant can help you prepare for that audit;
-    software like Obel MS gives your certification body the document control and audit trail evidence it
-    will ask for, built around ISO 9001 clause 7.5 — but the certificate itself always comes from the
-    accredited body, never from a software vendor.
+    SANAS to the certification body to your organisation. A consultant can help you prepare for that audit.
+    Software like Obel MS gives your certification body the document control and audit trail evidence it
+    will ask for, built around ISO 9001 clause 7.5. The certificate itself always comes from the
+    accredited body.
   </p>
   <div class="table-wrap">
     <table>
@@ -90,30 +89,29 @@ const lite = plans.find((p) => p.id === 'lite')!;
     </table>
   </div>
   <p>
-    Worth knowing before you start comparing options: many of the South African search results for "ISO
-    9001 software" are actually certification consultancies advertising audit and certification services,
-    not software vendors. Both are useful, but they solve different problems — a consultancy helps you get
-    certified; software runs your document control day to day, before and after the audit. Ask early which
-    one you're actually talking to.
+    Many of the South African search results for "ISO 9001 software" are certification
+    consultancies advertising audit and certification services. They solve a different problem from
+    software. A consultancy helps you get certified. Software runs your document control day to day,
+    before and after the audit. Ask early which one you are talking to.
   </p>
 
   <h2>What should a South African SME check about data residency and POPIA?</h2>
   <p>
     POPIA does not flatly require your data to stay inside South Africa, but it does put conditions on
     moving personal information to a third party abroad, and it makes you accountable either way. Before
-    choosing ISO 9001 software, ask where the servers actually are and who is legally responsible for what.
+    choosing ISO 9001 software, ask where the servers are and who is legally responsible for what.
   </p>
   <p>
     Under POPIA, the <strong>responsible party</strong> is whoever decides why personal information is
-    collected and how it is processed — for your supplier records and quality documents, that's your own
+    collected and how it is processed. For your supplier records and quality documents, that is your own
     organisation. An <strong>operator</strong> processes that information on your behalf under contract,
-    without setting its own purpose for it — that's the role a hosted QMS vendor plays for the records you
-    put into their system. Ask any vendor to state, in writing, which role it plays.
+    without setting its own purpose for it. That is the role a hosted QMS vendor plays for the records you
+    put into its system. Ask any vendor to state, in writing, which role it plays.
   </p>
   <p>
     <strong>Cross-border transfer</strong> is the specific POPIA question that matters most when your
     vendor's servers are outside South Africa. Section 72 restricts transferring personal information about
-    a data subject to a third party in a foreign country unless one of several conditions is met — most
+    a data subject to a third party in a foreign country unless one of several conditions is met, most
     commonly that the recipient is subject to a law, binding rules or an agreement providing an adequate
     level of protection similar to POPIA's own, or that the data subject has consented to the transfer.
     Hosting with a South African provider sidesteps that question entirely for data that never leaves the
@@ -121,8 +119,8 @@ const lite = plans.find((p) => p.id === 'lite')!;
   </p>
   <p>
     In practice, ask a vendor two direct questions: which country is your data physically stored in, and
-    who else — subcontractors, subprocessors, a parent company abroad — might ever touch it? A vendor that
-    can't answer both without checking is one you should ask again before you sign, not after.
+    who else, such as subcontractors, subprocessors or a parent company abroad, might ever touch it? A
+    vendor that can't answer both without checking should be asked again, well before you sign.
   </p>
 
   <h2>What else should you check before choosing ISO 9001 software in South Africa?</h2>
@@ -140,8 +138,8 @@ const lite = plans.find((p) => p.id === 'lite')!;
       </thead>
       <tbody>
         <tr><td>Pricing in ZAR</td><td>Avoids budgeting against a currency that moves against you month to month</td></tr>
-        <tr><td>Local support hours</td><td>Support that runs in South African working hours, not an overnight gap to another continent</td></tr>
-        <tr><td>Cloud hosting</td><td>Being honest about what this means: your team only needs an internet connection, not a server room or a generator plan for your own infrastructure</td></tr>
+        <tr><td>Local support hours</td><td>Support that runs in South African working hours</td></tr>
+        <tr><td>Cloud hosting</td><td>Your team needs an internet connection. No server room or generator plan of your own required</td></tr>
         <tr><td>Data export and ownership</td><td>A written commitment that you can export documents, metadata and audit history if you leave</td></tr>
         <tr><td>Audit trail</td><td>A record of who approved what, and when, that your certification body can review directly</td></tr>
         <tr><td>Operator role and DPA</td><td>A data processing agreement that states the vendor's role and obligations under POPIA</td></tr>
@@ -149,11 +147,11 @@ const lite = plans.find((p) => p.id === 'lite')!;
     </table>
   </div>
   <p>
-    On <strong>cloud hosting and load-shedding</strong>: the honest answer is that moving to a hosted system
-    doesn't make load-shedding disappear — it moves the uptime problem from your own server room to your
-    vendor's infrastructure and your team's internet connection. What it does remove is your dependency on
-    a single office's power and a single physical server; your team can reach a cloud-hosted system from
-    anywhere with a connection, which a locally-installed system tied to one building cannot offer.
+    On <strong>cloud hosting and load-shedding</strong>, moving to a hosted system doesn't make
+    load-shedding disappear. It moves the uptime problem from your own server room to your vendor's
+    infrastructure and your team's internet connection. What it does remove is your dependency on a single
+    office's power and a single physical server. Your team can reach a cloud-hosted system from anywhere
+    with a connection, which a locally-installed system tied to one building cannot offer.
   </p>
 
   <h2>How does Obel MS fit these checks?</h2>
@@ -161,17 +159,16 @@ const lite = plans.find((p) => p.id === 'lite')!;
     Obel MS is hosted on Google Cloud in {site.region}, priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
     month (about {fmt(lite.price.USD, 'USD')}) excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
     See the full <a href="/pricing">pricing page</a> for every plan. For the documents and records you put
-    into Obel MS, we act as operator under POPIA; you remain the responsible party, and a data processing
+    into Obel MS, we act as operator under POPIA. You remain the responsible party, and a data processing
     agreement is available on request. Full detail on hosting, access control and what's still on our
     roadmap is on the <a href="/security">security and hosting page</a>.
   </p>
   <p>
-    To be precise about what Obel MS does not claim: Obel MS is not ISO 9001 certified, and no software
-    can be — only your organisation's QMS is certified, by an accredited body such as a SANAS-accredited
-    certification body. Obel MS also does not currently support single sign-on or multi-factor
-    authentication; both are listed as not yet available on the security page. Approvals in{' '}
-    <a href="/product/workflow-manager">Workflow Manager</a> are recorded in a full audit trail rather than
-    issued as formal electronic signatures.
+    Obel MS is not ISO 9001 certified, and no software can be. Only your organisation's QMS is certified,
+    by an accredited body such as a SANAS-accredited certification body. Obel MS also does not currently
+    support single sign-on or multi-factor authentication. Both are listed as not yet available on the
+    security page. Approvals in <a href="/product/workflow-manager">Workflow Manager</a> are recorded in
+    a full audit trail rather than issued as formal electronic signatures.
   </p>
   <div class="table-wrap">
     <table>
@@ -184,10 +181,10 @@ const lite = plans.find((p) => p.id === 'lite')!;
       <tbody>
         <tr><td>Data location</td><td>{site.region}</td></tr>
         <tr><td>Pricing</td><td>ZAR and USD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
-        <tr><td>POPIA role</td><td>Operator for your documents and records; data processing agreement on request</td></tr>
+        <tr><td>POPIA role</td><td>Operator for your documents and records, data processing agreement on request</td></tr>
         <tr><td>Support</td><td>Response times stated per plan on the pricing page</td></tr>
-        <tr><td>Data export</td><td>Full export of documents, metadata and audit trail — confirm current terms with us directly</td></tr>
-        <tr><td>Single sign-on, MFA, electronic signatures</td><td>Not yet available — on the roadmap, see the <a href="/security">security page</a></td></tr>
+        <tr><td>Data export</td><td>Full export of documents, metadata and audit trail, confirmed on request</td></tr>
+        <tr><td>Single sign-on, MFA, electronic signatures</td><td>Not yet available. On the roadmap, see the <a href="/security">security page</a></td></tr>
       </tbody>
     </table>
   </div>
@@ -205,13 +202,12 @@ const lite = plans.find((p) => p.id === 'lite')!;
     <li>What are your support hours, and where is your support team based?</li>
     <li>Can we export our full document set, metadata and audit trail if we leave, at no extra cost?</li>
     <li>Does your audit trail show who approved what, and when, in a format our certification body can review?</li>
-    <li>Do you support single sign-on, multi-factor authentication or electronic signatures — and if not, what's the honest alternative?</li>
-    <li>Are you claiming ISO 9001 certification for your software, and if so, ask them to explain how — because no software can hold one.</li>
+    <li>Do you support single sign-on, multi-factor authentication or electronic signatures? If not, what is the alternative?</li>
+    <li>Are you claiming ISO 9001 certification for your software? No software can hold one, so ask them to explain how.</li>
   </ul>
   <p>
-    None of these questions are unreasonable to ask, and a vendor that's actually built for South African
-    SMEs should be able to answer every one without escalating to a sales engineer. Where a vendor hedges —
-    on hosting location, on data export, or on what "ISO 9001 software" actually means — treat that as the
-    answer.
+    None of these questions are unreasonable to ask. A vendor built for South African SMEs should answer
+    every one without escalating to a sales engineer. If a vendor hedges on hosting location, data export
+    or what "ISO 9001 software" means, treat that as an answer in itself.
   </p>
 </GuideLayout>

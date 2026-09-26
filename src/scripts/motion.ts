@@ -7,7 +7,7 @@
  *   data-reveal-group           children with [data-reveal] stagger in together
  *   data-split                  headline split into masked lines, revealed on load/enter
  *   data-count="1490"           number counts up once (data-prefix / data-suffix / data-decimals)
- *   data-magnetic               element pulls slightly toward the pointer (fine pointers only)
+ *   data-magnetic               retired (no-op); kept so older markup stays valid
  *   data-parallax="0.15"        element drifts vertically with scroll (fraction of section height)
  */
 import { gsap } from 'gsap';
@@ -34,7 +34,8 @@ export function onReady(fn: () => void) {
 
 function initLenis() {
   if (reduced) return;
-  lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+  // lerp 0.1 is the documented smooth-without-lag setting: gentle, never floaty.
+  lenis = new Lenis({ lerp: 0.1, smoothWheel: true, wheelMultiplier: 0.9 });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis?.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -67,9 +68,9 @@ function initSplits() {
     gsap.to(inners, {
       yPercent: 0,
       y: 0,
-      duration: 1.1,
-      ease: 'expo.out',
-      stagger: 0.085,
+      duration: 0.95,
+      ease: 'power3.out',
+      stagger: 0.07,
       delay: onLoad ? 0.15 : 0,
       scrollTrigger: onLoad ? undefined : { trigger: el, start: 'top 85%', once: true },
     });
@@ -85,9 +86,9 @@ function initReveals() {
     gsap.to(items, {
       opacity: 1,
       y: 0,
-      duration: 0.9,
-      ease: 'expo.out',
-      stagger: Number(group.dataset.revealGroup) || 0.08,
+      duration: 0.8,
+      ease: 'power2.out',
+      stagger: Number(group.dataset.revealGroup) || 0.06,
       scrollTrigger: { trigger: group, start: 'top 82%', once: true },
     });
   });
@@ -96,8 +97,8 @@ function initReveals() {
     gsap.to(el, {
       opacity: 1,
       y: 0,
-      duration: 0.9,
-      ease: 'expo.out',
+      duration: 0.8,
+      ease: 'power2.out',
       delay: Number(el.dataset.revealDelay) || 0,
       scrollTrigger: { trigger: el, start: 'top 88%', once: true },
     });
@@ -116,27 +117,18 @@ function initCounts() {
     el.textContent = fmt(0);
     gsap.to(obj, {
       v: end,
-      duration: 1.6,
-      ease: 'expo.out',
+      duration: 1.4,
+      ease: 'power2.out',
       onUpdate: () => { el.textContent = fmt(obj.v); },
       scrollTrigger: { trigger: el, start: 'top 90%', once: true },
     });
   });
 }
 
+/* Magnetic hover is retired: it reads as a gimmick and fights a calm brand.
+   The data-magnetic attribute is kept as a no-op so markup can stay unchanged. */
 function initMagnetic() {
-  if (reduced || !finePointer) return;
-  document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((el) => {
-    const strength = Number(el.dataset.magnetic) || 0.25;
-    const xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'expo.out' });
-    const yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'expo.out' });
-    el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect();
-      xTo((e.clientX - (r.left + r.width / 2)) * strength);
-      yTo((e.clientY - (r.top + r.height / 2)) * strength);
-    });
-    el.addEventListener('pointerleave', () => { xTo(0); yTo(0); });
-  });
+  /* no-op */
 }
 
 function initParallax() {

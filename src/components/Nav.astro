@@ -74,7 +74,7 @@ const isActive = (href?: string) => !!href && (path === href || (href !== '/' &&
 </header>
 
 <style>
-  .site-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; background: rgb(17 17 16 / 0.92); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid var(--color-night-line); transition: background-color .4s var(--ease-out), transform .5s var(--ease-out); }
+  .site-nav { position: fixed; inset: 0 0 auto 0; z-index: 50; background: rgb(17 17 16 / 0.92); backdrop-filter: saturate(140%) blur(14px); -webkit-backdrop-filter: saturate(140%) blur(14px); border-bottom: 1px solid var(--color-night-line); transition: background-color .4s var(--ease-calm), transform .3s var(--ease-calm); }
   .site-nav.is-hidden { transform: translateY(-100%); }
   .nav-inner { height: var(--nav-h); display: flex; align-items: center; gap: 1.25rem; }
   .logo-tile { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: #000; border: 1px solid #2f2f2c; }
@@ -115,8 +115,8 @@ const isActive = (href?: string) => !!href && (path === href || (href !== '/' &&
     requestAnimationFrame(() => {
       const y = window.scrollY;
       const menuOpen = btn?.getAttribute('aria-expanded') === 'true';
-      navEl?.classList.toggle('is-hidden', !menuOpen && y > 240 && y > lastY + 4);
-      if (y < lastY - 4 || y < 240) navEl?.classList.remove('is-hidden');
+      navEl?.classList.toggle('is-hidden', !menuOpen && y > 400 && y > lastY + 8);
+      if (y < lastY - 8 || y < 400) navEl?.classList.remove('is-hidden');
       lastY = y;
       ticking = false;
     });

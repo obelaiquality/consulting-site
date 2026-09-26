@@ -12,7 +12,7 @@ const prefixes = [
 const faqs = [
   {
     q: 'How do I write an ISO 9001 document control procedure?',
-    a: 'Start from the outcome clause 7.5.3 asks for, not a blank page: decide how documents are identified and numbered, who reviews and approves them, how they’re issued and revised, and how obsolete versions are removed from use. The worked example on this page covers each of those sections in plain language you can adapt.',
+    a: 'Start from the outcome clause 7.5.3 asks for: decide how documents are identified and numbered, who reviews and approves them, how they’re issued and revised, and how obsolete versions are removed from use. The worked example on this page covers each of those sections in plain language you can adapt.',
   },
   {
     q: 'What should an ISO 9001 document control procedure example include?',
@@ -20,11 +20,11 @@ const faqs = [
   },
   {
     q: 'Do I need to number every document?',
-    a: 'You need a way to uniquely identify each document and tell its current version from a previous one — a numbering and revision scheme is the simplest way to do that consistently. It doesn’t need to be elaborate; a short prefix by document type plus a sequence number and a revision number, like QP-001 Rev 3, is enough for most small companies.',
+    a: 'You need a way to uniquely identify each document and tell its current version from a previous one. A numbering and revision scheme is the simplest way to do that consistently. It doesn’t need to be elaborate. A short prefix by document type plus a sequence number and a revision number, like QP-001 Rev 3, is enough for most small companies.',
   },
   {
     q: 'How do you prevent unintended use of obsolete documents?',
-    a: 'Remove the previous version from anywhere it’s actively used as soon as the new one is issued — take down the printed copy, replace the file on the shared drive, or, in a system like Obel MS, let approval automatically supersede the old version. Keep the obsolete version on file for your retention period, but mark it clearly as no longer current.',
+    a: 'Remove the previous version from anywhere it’s actively used as soon as the new one is issued. Take down the printed copy, replace the file on the shared drive, or, in a system like Obel MS, let approval automatically supersede the old version. Keep the obsolete version on file for your retention period, but mark it clearly as no longer current.',
   },
   {
     q: 'Do supplier certificates count as external documents under ISO 9001?',
@@ -32,7 +32,7 @@ const faqs = [
   },
   {
     q: 'How long should you keep superseded document versions?',
-    a: 'ISO 9001 doesn’t set a fixed retention period, in either the 2015 or 2026 edition — it asks you to decide one and follow it. Many small companies keep at least the previous two or three revisions, or the last few years, whichever is more useful for tracing what was in effect when something happened. State the period in your procedure and apply it consistently.',
+    a: 'ISO 9001 doesn’t set a fixed retention period, in either the 2015 or 2026 edition. It asks you to decide one and follow it. Many small companies keep at least the previous two or three revisions, or the last few years, whichever is more useful for tracing what was in effect when something happened. State the period in your procedure and apply it consistently.',
   },
 ];
 ---
@@ -45,11 +45,11 @@ const faqs = [
   updated="2026-09-26"
   readingMinutes={9}
   sources={[
-    { label: 'ISO 9001:2015 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/62085.html' },
-    { label: 'ISO — the ISO 9000 family of quality management standards', url: 'https://www.iso.org/iso-9001-quality-management.html' },
-    { label: 'ISO 9001:2026 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/88464.html' },
-    { label: 'ISO/TC 176 — Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
-    { label: 'BSI — ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
+    { label: 'ISO 9001:2015 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/62085.html' },
+    { label: 'ISO, the ISO 9000 family of quality management standards', url: 'https://www.iso.org/iso-9001-quality-management.html' },
+    { label: 'ISO 9001:2026 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/88464.html' },
+    { label: 'ISO/TC 176, Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
+    { label: 'BSI, ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
   ]}
   related={[
     { label: 'ISO 9001 document control requirements', href: '/guides/iso-9001-document-control', note: 'What clause 7.5 asks for, in plain words' },
@@ -64,10 +64,10 @@ const faqs = [
   <h2>Do you need a documented procedure for document control?</h2>
   <p>
     No. ISO 9001:2015 dropped "control of documents" from its list of mandatory documented procedures, and ISO 9001:2026, the
-    standard&rsquo;s sixth edition published in September 2026, carries this forward unchanged &mdash; so nothing in either
+    standard&rsquo;s sixth edition published in September 2026, carries this forward unchanged, so nothing in either
     current edition forces you to write one. What clause 7.5.3 does require is the outcome: documented information
     that&rsquo;s properly identified, reviewed, approved, controlled and eventually disposed of. Most small and mid-sized
-    companies write a short procedure anyway, not because an auditor demands it, but because it&rsquo;s the fastest way to get
+    companies write a short procedure anyway. It&rsquo;s the fastest way to get
     everyone doing document control the same way, and the easiest thing to hand an auditor who asks how it works.
   </p>
   <p>
@@ -81,14 +81,14 @@ const faqs = [
     A complete procedure answers a small, fixed set of questions: who&rsquo;s responsible, how documents are identified, how
     they move from draft to approved, how people access the current version, how changes happen, how you handle documents you
     didn&rsquo;t write yourself, what happens to old versions, and how long records are kept. The worked example below covers
-    each of those in order, written for a fictional small manufacturer &mdash; adapt the names, numbers and reviewers to your
+    each of those in order, written for a fictional small manufacturer. Adapt the names, numbers and reviewers to your
     own business, but the structure will fit most companies preparing for a first ISO 9001 certification or tidying up before an
     audit.
   </p>
 
   <h2>A worked example: document control procedure</h2>
   <p>
-    <em>This is an example, not a template to copy verbatim. Replace the job titles, numbering scheme and retention periods
+    <em>This is an example. Replace the job titles, numbering scheme and retention periods
     with your own before you use it.</em>
   </p>
 
@@ -106,18 +106,18 @@ const faqs = [
 
   <h3>3. Responsibilities</h3>
   <ul>
-    <li><strong>Document owner</strong> &mdash; drafts and maintains the document, and initiates any revision.</li>
-    <li><strong>Reviewer</strong> &mdash; a person competent in the subject matter, checks the document is technically correct and workable before approval.</li>
-    <li><strong>Approver</strong> &mdash; typically the quality manager or department head, signs off the document before release.</li>
-    <li><strong>Quality manager</strong> &mdash; maintains the document register, the numbering scheme and the external document list, and confirms obsolete versions are withdrawn.</li>
+    <li><strong>Document owner</strong>: drafts and maintains the document, and initiates any revision.</li>
+    <li><strong>Reviewer</strong>: a person competent in the subject matter, checks the document is technically correct and workable before approval.</li>
+    <li><strong>Approver</strong>: typically the quality manager or department head, signs off the document before release.</li>
+    <li><strong>Quality manager</strong>: maintains the document register, the numbering scheme and the external document list, and confirms obsolete versions are withdrawn.</li>
   </ul>
 
   <h3>4. Definitions</h3>
   <ul>
-    <li><strong>Controlled document</strong> &mdash; a document managed through this procedure, with one current, approved version.</li>
-    <li><strong>Uncontrolled copy</strong> &mdash; a copy, such as a printout, that is not automatically updated when the source document changes.</li>
-    <li><strong>External document</strong> &mdash; documented information [Company Name] relies on but did not author, such as a standard, a customer specification or a supplier certificate.</li>
-    <li><strong>Obsolete document</strong> &mdash; a document or version that has been superseded and is no longer valid for use.</li>
+    <li><strong>Controlled document</strong>: a document managed through this procedure, with one current, approved version.</li>
+    <li><strong>Uncontrolled copy</strong>: a copy, such as a printout, that is not automatically updated when the source document changes.</li>
+    <li><strong>External document</strong>: documented information [Company Name] relies on but did not author, such as a standard, a customer specification or a supplier certificate.</li>
+    <li><strong>Obsolete document</strong>: a document or version that has been superseded and is no longer valid for use.</li>
   </ul>
 
   <h3>5. Document identification and numbering</h3>
@@ -151,23 +151,23 @@ const faqs = [
   </p>
   <p>
     Keep the scheme small enough that people can read a reference and understand it without looking anything up. A five-person
-    company rarely needs more than three or four prefixes; adding a new one for every department or process usually creates more
+    company rarely needs more than three or four prefixes. Adding a new one for every department or process usually creates more
     confusion than it solves. If you already run a numbering scheme, whatever it is, this procedure only needs to describe it
-    accurately &mdash; there&rsquo;s no requirement to match the example above.
+    accurately. There&rsquo;s no requirement to match the example above.
   </p>
 
   <h3>6. Creation and review</h3>
   <p>
     The document owner drafts the document using the standard template for its type, and gives it a working title and a
     provisional reference number. Before it goes for approval, a reviewer with relevant competence checks it for technical
-    accuracy, clarity and fit with how the work is actually done &mdash; a procedure nobody can follow in practice is a finding
-    waiting to happen, not a controlled document.
+    accuracy, clarity and fit with how the work is done. A procedure nobody can follow in practice is a finding
+    waiting to happen.
   </p>
 
   <h3>7. Approval</h3>
   <p>
     The approver named for that document type reviews it for suitability and adequacy and signs off, recording their name and
-    the date. A document has no standing under this procedure until it has been approved; draft versions are marked "Draft" and
+    the date. A document has no standing under this procedure until it has been approved. Draft versions are marked "Draft" and
     are not issued for use.
   </p>
 
@@ -219,14 +219,14 @@ const faqs = [
   <h2>How do you adapt this example for your own company?</h2>
   <p>
     Replace every bracketed placeholder with your own detail, keep the section order (an auditor who has seen dozens of these
-    procedures will recognise the shape), and cut anything that doesn&rsquo;t apply to how you actually work &mdash; a five-person
+    procedures will recognise the shape), and cut anything that doesn&rsquo;t apply to how you work. A five-person
     company rarely needs a separate reviewer and approver for every document type. The one thing worth keeping no matter how you
     trim it is a clear answer to the two questions an audit always comes back to: how do you know this is the current version,
     and how do you know the old one is out of use. See our <a href="/guides/iso-9001-document-control">guide to ISO 9001 document
     control requirements</a> for how each section above maps back to clause 7.5.
   </p>
   <p>
-    It&rsquo;s worth reviewing the procedure itself once a year, or whenever it stops matching how you actually work &mdash; a
+    It&rsquo;s worth reviewing the procedure itself once a year, or whenever it stops matching how you work. A
     procedure that describes a process nobody follows any more is its own kind of nonconformance. Treat that review the same way
     you&rsquo;d treat a revision to any other document: someone owns it, someone checks it, and the change goes through approval
     before it becomes the new current version.
@@ -235,7 +235,7 @@ const faqs = [
     If keeping a numbering scheme, register and approval history current in a spreadsheet has started to feel like a second job,
     <a href="/product/external-document-control">External Document Control</a> runs the identification, approval, issue and
     version-control steps above for documents of external origin automatically. The same discipline for your own procedures and
-    forms is coming with <a href="/product/internal-document-control">Internal Document Control</a>; join the waitlist there or
+    forms is coming with <a href="/product/internal-document-control">Internal Document Control</a>. Join the waitlist there, or
     <a href="/pricing">see what's available today</a>.
   </p>
 </GuideLayout>

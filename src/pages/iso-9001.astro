@@ -18,7 +18,7 @@ const rows: Row[] = [
   },
   {
     clause: '7.5.1',
-    requires: 'Maintain the documented information your QMS needs — both what the standard requires and what you decide you need.',
+    requires: 'Maintain the documented information your QMS needs, both what the standard requires and what you decide you need.',
     support: 'The EDC Register holds supplier certificates, specifications and statements. Workflow Manager records (Nonconformance, Change Management, Customer Complaint, Supplier Deviation, Action) hold the rest.',
     module: 'EDC and WFM',
   },
@@ -35,25 +35,25 @@ const rows: Row[] = [
     module: 'Platform',
   },
   {
-    clause: '7.5.3.2 — distribution, access, retrieval',
+    clause: '7.5.3.2: distribution, access, retrieval',
     requires: 'Control how documented information is distributed, accessed, retrieved and used.',
     support: 'The Register and Folder views give role-based access and retrieval today. Distribution with read-and-acknowledge tracking is planned with Internal Document Control.',
     module: 'Planned with IDC',
   },
   {
-    clause: '7.5.3.2 — version control',
+    clause: '7.5.3.2: version control',
     requires: 'Control changes to documented information, such as version control.',
     support: '"Upload New Version" keeps full version history in EDC. Workflow Manager templates version as "New version" or "Copy", so a change never overwrites what auditors relied on.',
     module: 'EDC and WFM',
   },
   {
-    clause: '7.5.3.2 — retention and disposition',
+    clause: '7.5.3.2: retention and disposition',
     requires: 'Set retention periods and disposition for documented information.',
-    support: 'Document Status is computed automatically — Active, Expiring soon, Expired, or No expiry set — and documents move to Archive with an unarchive path, not a delete.',
+    support: 'Document Status is computed automatically: Active, Expiring soon, Expired, or No expiry set. Documents move to Archive, and you can unarchive them again.',
     module: 'EDC',
   },
   {
-    clause: '7.5.3 — documents of external origin',
+    clause: '7.5.3: documents of external origin',
     requires: 'Identify and control documented information of external origin that your QMS needs.',
     support: 'Documents auto-file into a Supplier → Manufacturer → Product folder tree as soon as they’re approved, so external certificates and specs stay organised without manual filing.',
     module: 'EDC',
@@ -73,12 +73,12 @@ const rows: Row[] = [
   {
     clause: '9.2',
     requires: 'Keep records as evidence of your internal audit programme and its results.',
-    support: 'Internal audit findings are raised as Nonconformance records — the NC Source field includes Internal Audit — so they run through the same stages and audit trail as any other finding.',
+    support: 'Internal audit findings are raised as Nonconformance records. The NC Source field includes Internal Audit, so they run through the same stages and audit trail as any other finding.',
     module: 'WFM',
   },
   {
     clause: '9.3',
-    requires: 'Feed relevant information — audit results, nonconformities, process performance — into management review.',
+    requires: 'Feed relevant information into management review: audit results, nonconformities and process performance.',
     support: 'Every record has a Report tab with a PDF, and AI stage and executive summaries give a quick brief to take into a management review meeting.',
     module: 'WFM',
   },
@@ -91,10 +91,10 @@ const rows: Row[] = [
 ];
 
 const own = [
-  'Your quality policy and quality objectives — Obel MS stores the records; it doesn’t set them.',
-  'Management review meetings — Obel MS gives you the inputs (records, reports, trends), not the meeting.',
-  'Training and competence records for your people.',
-  'The internal audits themselves — Obel MS records the findings, not the audit.',
+  'Obel MS stores your quality policy and quality objectives as records. You write them.',
+  'Obel MS supplies the inputs for your management review meetings: records, reports and trends. You hold the meeting.',
+  'You keep training and competence records for your people.',
+  'Obel MS records the findings from your internal audits. Your team carries out the audits.',
 ];
 
 const moduleClass: Record<Row['module'], string> = {
@@ -107,7 +107,7 @@ const moduleClass: Record<Row['module'], string> = {
 ---
 
 <BaseLayout
-  title="ISO 9001 Clause 7.5 Mapped to Software | Obel MS"
+  title="ISO 9001 clause 7.5 mapped to software | Obel MS"
   description="What ISO 9001 clause 7.5 and related clauses require for documented information, mapped to what Obel MS does for you and what stays yours."
   breadcrumbs={[{ name: 'ISO 9001 clause map', href: '/iso-9001' }]}
 >
@@ -119,9 +119,9 @@ const moduleClass: Record<Row['module'], string> = {
           What ISO 9001 asks for, and where Obel MS does it.
         </h1>
         <p class="t-lead mt-6">
-          No software is ISO 9001 certified — organisations are, by an accredited certification body.
-          What Obel MS does is give you the document control and workflow structure that clause 7.5 and
-          its neighbours ask for, so the evidence is there when your auditor asks for it.
+          No software is ISO 9001 certified. Organisations are, through an accredited certification body.
+          Obel MS gives you the document control and workflow structure that clause 7.5 and
+          its neighbours ask for, so the evidence is ready when your auditor asks for it.
         </p>
         <p class="t-body mt-4">
           ISO 9001:2026 was published on 16 September 2026. The clause numbers below apply to both editions:
@@ -156,7 +156,7 @@ const moduleClass: Record<Row['module'], string> = {
       <div class="mt-24 max-w-[46rem]" data-reveal-group>
         <h2 class="t-h3" data-reveal>What you still own</h2>
         <p class="t-body mt-3" data-reveal>
-          A QMS is more than software. These stay with your organisation — Obel MS supports them, it doesn’t replace them.
+          A QMS is more than software. Obel MS supports the tasks below. Your organisation still does them.
         </p>
         <ul class="mt-6 flex flex-col gap-3">
           {own.map((item) => (

@@ -4,13 +4,13 @@ import GuideLayout from '../../layouts/GuideLayout.astro';
 const failureModes = [
   {
     mode: 'Correction only, no corrective action',
-    why: 'The immediate problem gets fixed — the bad batch is scrapped, the wrong label is replaced — but nobody asks why it happened, so the same nonconformance turns up again next month.',
-    avoid: 'Treat correction and corrective action as two separate, required steps, not one. Closing the immediate issue doesn’t close the record.',
+    why: 'The immediate problem gets fixed (the bad batch is scrapped, the wrong label is replaced), but nobody asks why it happened, so the same nonconformance turns up again next month.',
+    avoid: 'Treat correction and corrective action as two separate, required steps. Closing the immediate issue doesn’t close the record.',
   },
   {
     mode: 'Root cause stops at "human error"',
-    why: 'It’s the fastest answer, and it’s rarely the real one. It also leads nowhere — you can’t design a system fix around "someone should try harder."',
-    avoid: 'Push past the first answer with a method like 5 Whys or a fishbone diagram until you reach something you can actually change: a process, a check, a piece of training.',
+    why: 'It’s the fastest answer, and it’s rarely the real one. It also leads nowhere, because you can’t design a system fix around "someone should try harder."',
+    avoid: 'Push past the first answer with a method like 5 Whys or a fishbone diagram until you reach something you can change: a process, a check, a piece of training.',
   },
   {
     mode: 'No severity assessment',
@@ -19,8 +19,8 @@ const failureModes = [
   },
   {
     mode: 'Verification skipped or rubber-stamped',
-    why: 'The corrective action is marked complete the day it’s implemented, before there’s been time to see whether it actually worked.',
-    avoid: 'Set a real verification date in the future, check the evidence — not just that the action happened — and record the outcome as effective or not.',
+    why: 'The corrective action is marked complete the day it’s implemented, before there’s been time to see whether it worked.',
+    avoid: 'Set a real verification date in the future. Check the evidence that the action worked, such as repeat inspection results. Record the outcome as effective or not.',
   },
   {
     mode: 'The record lives in someone’s inbox',
@@ -32,27 +32,27 @@ const failureModes = [
 const faqs = [
   {
     q: 'What’s the difference between a nonconformance and a CAPA?',
-    a: 'A nonconformance is the finding itself — a product, process or document that doesn’t meet requirements. CAPA (corrective and preventive action) is the term for the response process: correcting the immediate problem, working out the root cause, and putting an action in place to stop it recurring. One is the event; the other is what you do about it.',
+    a: 'A nonconformance is the finding itself: a product, process or document that doesn’t meet requirements. CAPA (corrective and preventive action) is the term for the response process: correcting the immediate problem, working out the root cause, and putting an action in place to stop it recurring. One is the event. The other is what you do about it.',
   },
   {
     q: 'What is the difference between correction and corrective action?',
-    a: 'A correction fixes the specific problem in front of you right now, such as reworking a batch or replacing a mislabelled carton. A corrective action addresses why the problem happened, so it doesn’t come back — for example retraining a shift, updating a work instruction, or changing an inspection step. ISO 9001 clause 10.2 expects both, not just the first.',
+    a: 'A correction fixes the specific problem in front of you right now, such as reworking a batch or replacing a mislabelled carton. A corrective action addresses why the problem happened, so it doesn’t come back, for example by retraining a shift, updating a work instruction, or changing an inspection step. ISO 9001 clause 10.2 expects both steps.',
   },
   {
     q: 'How do I close a nonconformance?',
-    a: 'Record it, correct the immediate issue, investigate and rate its severity, find the root cause, put a corrective action in place, then verify — after enough time has passed — that the action actually worked. Only close the record once verification confirms the fix held, not when the corrective action was first implemented.',
+    a: 'Record it, correct the immediate issue, investigate and rate its severity, find the root cause, and put a corrective action in place. After enough time has passed, verify that the action worked. Only close the record once verification confirms the fix held.',
   },
   {
     q: 'Is a spreadsheet good enough for tracking nonconformances, or do I need software?',
-    a: 'A spreadsheet can work while you have a handful of open records and one person tracking them. It tends to break down once you need approvals from more than one role, reminders for overdue verification dates, or a clean audit trail to hand an auditor — at that point, purpose-built CAPA software removes the manual chasing.',
+    a: 'A spreadsheet can work while you have a handful of open records and one person tracking them. It tends to break down once you need approvals from more than one role, reminders for overdue verification dates, or a clean audit trail to hand an auditor. At that point, purpose-built CAPA software removes the manual chasing.',
   },
   {
     q: 'Does ISO 9001:2015 still require preventive action?',
-    a: 'Not as a separate clause, and this hasn’t changed in ISO 9001:2026 either. The 2015 revision replaced the old "preventive action" clause with risk-based thinking built into planning throughout the standard, and the 2026 edition keeps that approach, splitting risk and opportunity into separate parts of clause 6.1. Corrective action, for problems that have already happened, is still very much required under clause 10.2 in both editions.',
+    a: 'Not as a separate clause, and this hasn’t changed in ISO 9001:2026 either. The 2015 revision replaced the old "preventive action" clause with risk-based thinking built into planning throughout the standard, and the 2026 edition keeps that approach, splitting risk and opportunity into separate parts of clause 6.1. Corrective action, for problems that have already happened, is still required under clause 10.2 in both editions.',
   },
   {
     q: 'What CAPA software works for a small business?',
-    a: 'Look for something scoped to how a small quality team actually works: configurable stages, approvals by job title rather than a named person, effectiveness verification with a due date, and an audit trail you can hand an auditor — without the multi-year implementation project that enterprise eQMS platforms require.',
+    a: 'Look for something scoped to how a small quality team works: configurable stages, approvals by job title rather than a named person, effectiveness verification with a due date, and an audit trail you can hand an auditor. Skip the multi-year implementation project that enterprise eQMS platforms require.',
   },
 ];
 ---
@@ -60,16 +60,16 @@ const faqs = [
   title="Nonconformance and Corrective Action Process"
   description="Clause 10.2 in plain words, correction vs corrective action, a lean 6-step CAPA process, root-cause methods, and how to close a nonconformance."
   h1="Nonconformance and corrective action for small companies"
-  answer="A nonconformance is anything that doesn't meet requirements. ISO 9001 clause 10.2 asks you to correct it, decide whether corrective action is needed, find the root cause, act on it, and verify the action worked before you close the record. A lean six-step process, correction through verification, covers this without enterprise-scale overhead."
+  answer="A nonconformance is anything that doesn't meet requirements. ISO 9001 clause 10.2 asks you to correct it, decide whether corrective action is needed, find the root cause, act on it, and verify the action worked before you close the record. A lean six-step process, correction through verification, is enough for a small quality team."
   published="2026-09-26"
   updated="2026-09-26"
   readingMinutes={9}
   sources={[
-    { label: 'ISO 9001:2015 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/62085.html' },
-    { label: 'ISO 9001:2026 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/88464.html' },
-    { label: 'ISO — the ISO 9000 family of quality management standards', url: 'https://www.iso.org/iso-9001-quality-management.html' },
-    { label: 'ISO/TC 176 — Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
-    { label: 'BSI — ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
+    { label: 'ISO 9001:2015 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/62085.html' },
+    { label: 'ISO 9001:2026 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/88464.html' },
+    { label: 'ISO, the ISO 9000 family of quality management standards', url: 'https://www.iso.org/iso-9001-quality-management.html' },
+    { label: 'ISO/TC 176, Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
+    { label: 'BSI, ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
   ]}
   related={[
     { label: 'ISO 9001 document control requirements', href: '/guides/iso-9001-document-control' },
@@ -83,34 +83,34 @@ const faqs = [
 >
   <h2>What&rsquo;s the difference between a correction, a corrective action and preventive action?</h2>
   <p>
-    A <strong>nonconformance</strong> is anything that doesn&rsquo;t meet a requirement &mdash; a wrong label, an out-of-spec
-    result, a missed step in a process. A <strong>correction</strong> deals with that specific instance: you rework the batch,
+    A <strong>nonconformance</strong> is anything that doesn&rsquo;t meet a requirement, such as a wrong label, an out-of-spec
+    result, or a missed step in a process. A <strong>correction</strong> deals with that specific instance: you rework the batch,
     replace the carton, redo the inspection. A <strong>corrective action</strong> goes further and addresses why it happened, so
-    the same nonconformance doesn&rsquo;t turn up again next month. Doing the first without the second is the single most common
-    way a CAPA (corrective and preventive action) process falls short.
+    the same nonconformance doesn&rsquo;t turn up again next month. Doing the correction but skipping the corrective action is
+    the single most common way a CAPA (corrective and preventive action) process falls short.
   </p>
   <p>
     Take a mislabelled carton as an example. Pulling the wrong cartons off the line and relabelling them correctly is the
-    correction &mdash; it fixes today&rsquo;s problem. Working out that the label rolls for two similar products were stored next
-    to each other, and moving them apart or adding a barcode check at the labelling station, is the corrective action &mdash; it
+    correction. It fixes today&rsquo;s problem. Working out that the label rolls for two similar products were stored next
+    to each other, and moving them apart or adding a barcode check at the labelling station, is the corrective action. It
     stops the same mix-up happening again next week.
   </p>
   <p>
     Preventive action, as its own separate clause, no longer exists in ISO 9001:2015, and ISO 9001:2026, the sixth edition
     published in September 2026, doesn&rsquo;t bring it back. Both editions replace it with risk-based thinking woven into
-    planning throughout the QMS &mdash; you&rsquo;re expected to think about risks and opportunities before something goes
+    planning throughout the QMS. You&rsquo;re expected to think about risks and opportunities before something goes
     wrong, rather than run a bolt-on "preventive action" process after the fact. ISO 9001:2026 goes a step further and splits
     risk and opportunity into separate parts of clause 6.1, so opportunity-spotting gets its own explicit attention rather than
     riding along with risk. In practice, many small teams still find it useful to ask, once a corrective action is in place,
-    whether the same root cause could show up anywhere else in the business &mdash; that forward-looking check is where
+    whether the same root cause could show up anywhere else in the business. That forward-looking check is where
     preventive thinking still earns its place, even without a clause named after it.
   </p>
 
-  <h2>What does ISO 9001 clause 10.2 actually require?</h2>
+  <h2>What does ISO 9001 clause 10.2 require?</h2>
   <p>
     Clause 10.2, nonconformity and corrective action, sets out what to do when something doesn&rsquo;t meet requirements,
     including a complaint. React to the nonconformity: correct it, and deal with the consequences. Then evaluate whether
-    corrective action is needed to stop it happening again &mdash; reviewing and analysing the nonconformity, working out its
+    corrective action is needed to stop it happening again. This means reviewing and analysing the nonconformity, working out its
     cause, and checking whether similar nonconformities exist or could occur elsewhere. If action is needed, implement it, review
     how effective it was, and update risks and the QMS itself if the nonconformity revealed something you&rsquo;d missed. Finally,
     keep documented information as evidence of the nonconformity, the actions taken, and the results. This requirement is
@@ -119,55 +119,55 @@ const faqs = [
   </p>
   <p>
     Two things in that list are easy to skip under time pressure: deciding whether the same cause could turn up somewhere else,
-    and reviewing whether the action actually worked. Both are explicit requirements, not optional extras.
+    and reviewing whether the action worked. Both are explicit requirements.
   </p>
   <p>
     The documented information clause 10.2 asks for is exactly what an auditor samples during a corrective action review: the
     original finding, what was done immediately, what the investigation found, what action was taken and who approved it, and
     the result of checking it later. A record that&rsquo;s missing any one of those pieces reads, to an auditor, as a step that
-    was skipped rather than one that just wasn&rsquo;t written down &mdash; the same discipline our <a
+    was skipped rather than one that wasn&rsquo;t written down. The same discipline our <a
     href="/guides/iso-9001-document-control">guide to document control requirements</a> covers for clause 7.5 applies here too.
   </p>
 
   <h2>What&rsquo;s a lean six-step process for closing a nonconformance?</h2>
   <p>
-    You don&rsquo;t need a heavyweight system to satisfy clause 10.2 &mdash; you need a process that reliably covers each of its
+    You don&rsquo;t need a heavyweight system to satisfy clause 10.2. You need a process that reliably covers each of its
     steps, in order, every time. A workable version looks like this:
   </p>
   <ol>
-    <li><strong>Report &amp; record</strong> &mdash; anyone raises the nonconformance, with enough detail to describe what happened and where.</li>
-    <li><strong>Immediate correction</strong> &mdash; the specific problem is contained: stock quarantined, a batch held, a wrong document withdrawn.</li>
-    <li><strong>Investigation &amp; severity assessment</strong> &mdash; someone competent looks into what happened and rates how serious it is, which decides how much scrutiny the rest of the process gets.</li>
-    <li><strong>Root cause analysis</strong> &mdash; the real cause is identified, not just the immediate trigger.</li>
-    <li><strong>Corrective &amp; preventive action</strong> &mdash; an action is agreed and implemented to address the root cause, and approved by someone with the authority to sign it off.</li>
-    <li><strong>Verification</strong> &mdash; after enough time has passed for the action to prove itself, someone checks the evidence and confirms whether it worked.</li>
+    <li><strong>Report &amp; record</strong>: anyone raises the nonconformance, with enough detail to describe what happened and where.</li>
+    <li><strong>Immediate correction</strong>: the specific problem is contained, for example stock quarantined, a batch held, or a wrong document withdrawn.</li>
+    <li><strong>Investigation &amp; severity assessment</strong>: someone competent looks into what happened and rates how serious it is, which decides how much scrutiny the rest of the process gets.</li>
+    <li><strong>Root cause analysis</strong>: the real cause is identified, beyond the immediate trigger.</li>
+    <li><strong>Corrective &amp; preventive action</strong>: an action is agreed and implemented to address the root cause, and approved by someone with the authority to sign it off.</li>
+    <li><strong>Verification</strong>: after enough time has passed for the action to prove itself, someone checks the evidence and confirms whether it worked.</li>
   </ol>
   <p>
-    The record only closes at the end of step six, not when the corrective action is first put in place. A nonconformance
-    marked "closed" the same day the fix went live hasn&rsquo;t actually been verified &mdash; it&rsquo;s been assumed.
+    The record only closes at the end of step six. A nonconformance
+    marked "closed" the same day the fix went live has been assumed effective. It hasn&rsquo;t been verified.
   </p>
   <p>
     Not every nonconformance needs the same weight behind it. A minor labelling slip caught before it left the building might
     move through all six steps in a day, with a light-touch investigation and a short verification window. A nonconformance
     that reached a customer, or points to a systemic issue such as a supplier consistently missing spec, deserves a proper
-    investigation, a named approver, and a longer verification period before you&rsquo;re confident it&rsquo;s actually fixed.
+    investigation, a named approver, and a longer verification period before you&rsquo;re confident it&rsquo;s fixed.
     Rating severity at step three is what lets you make that call consistently, instead of case by case.
   </p>
 
   <h2>Which root-cause methods should you use?</h2>
   <p>
-    You don&rsquo;t need a different method for every nonconformance &mdash; two simple techniques cover most small-company
-    cases, and you can reach for something heavier, like an 8D report or an FMEA, when a nonconformance is genuinely complex or
+    You don&rsquo;t need a different method for every nonconformance. Two simple techniques cover most small-company
+    cases, and you can reach for something heavier, like an 8D report or an FMEA, when a nonconformance is complex or
     high-risk.
   </p>
   <ul>
     <li>
-      <strong>5 Whys</strong> &mdash; ask "why" repeatedly, starting from the nonconformance itself, until you reach a cause you
-      can actually act on. "The carton was mislabelled" leads to "why" the operator picked the wrong label, "why" the labels
+      <strong>5 Whys</strong>: ask "why" repeatedly, starting from the nonconformance itself, until you reach a cause you
+      can act on. "The carton was mislabelled" leads to "why" the operator picked the wrong label, "why" the labels
       weren&rsquo;t clearly separated at the workstation, and so on, until the answer is a system issue rather than a person.
     </li>
     <li>
-      <strong>Fishbone (Ishikawa) diagram</strong> &mdash; useful when a nonconformance could have more than one contributing
+      <strong>Fishbone (Ishikawa) diagram</strong>: useful when a nonconformance could have more than one contributing
       cause. You sort possible causes into categories such as people, process, equipment and materials, which helps a group
       spot a cause that a single "why" chain might miss.
     </li>
@@ -175,25 +175,25 @@ const faqs = [
 
   <h2>How do you verify a corrective action worked, and close the nonconformance?</h2>
   <p>
-    Set a verification date that gives the action time to prove itself &mdash; immediately checking whether a retrained
-    operator makes the same mistake again tells you nothing useful; checking a month or a quarter later does. When that date
+    Set a verification date that gives the action time to prove itself. Checking immediately whether a retrained
+    operator makes the same mistake again tells you nothing useful. Checking a month or a quarter later does. When that date
     arrives, look at real evidence: has the same nonconformance, or the same root cause, occurred again anywhere it could have?
     If it hasn&rsquo;t, mark the action effective and close the record. If it has, mark it ineffective, and go back to root
     cause analysis rather than closing the record anyway.
   </p>
   <p>
-    This step is what separates a CAPA process that actually reduces repeat problems from one that just generates paperwork.
+    This step separates a CAPA process that reduces repeat problems from one that only produces paperwork.
     Skipping it, or treating it as a formality, is the fastest way to end up fixing the same nonconformance every quarter.
   </p>
   <p>
-    In the mislabelled-carton example above, verification isn&rsquo;t "did we move the label rolls" &mdash; that&rsquo;s just
-    confirming the action happened. It&rsquo;s checking, a month or a quarter later, that no mislabelled carton has turned up
-    since, which tells you the actual root cause was addressed rather than just one visible symptom of it.
+    In the mislabelled-carton example above, "did we move the label rolls" only confirms the action happened. Verification
+    means checking, a month or a quarter later, that no mislabelled carton has turned up since, which tells you the root
+    cause was addressed rather than a visible symptom of it.
   </p>
 
   <h2>What are the most common ways a CAPA process fails?</h2>
   <p>
-    Most CAPA problems auditors find aren&rsquo;t about the process design &mdash; they&rsquo;re about steps that quietly get
+    Most CAPA problems auditors find aren&rsquo;t about the process design. They&rsquo;re about steps that quietly get
     skipped under time pressure. The table below covers the ones that show up most often in a small quality team.
   </p>
   <div class="table-wrap">
@@ -222,12 +222,12 @@ const faqs = [
     <a href="/product/workflow-manager">Workflow Manager</a> runs the six-step process above as a standard Nonconformance
     template, alongside Change Management, Customer Complaint, Supplier Deviation and Action templates, so a customer
     complaint that turns out to need a full root-cause investigation can be escalated straight into a Nonconformance record
-    rather than started again from scratch. Approvals are routed by job title &mdash; to whoever holds "Quality Manager," for
-    example &mdash; rather than a named person who might be on leave when a record needs signing off.
+    rather than started again from scratch. Approvals are routed by job title (to whoever holds "Quality Manager," for
+    example) rather than a named person who might be on leave when a record needs signing off.
   </p>
   <p>
     Effectiveness verification is a distinct step with its own due date, closed out with Mark Effective or Mark Ineffective, so
-    a record can&rsquo;t be closed before it&rsquo;s actually been checked. Every stage change, approval and comment is captured
+    a record can&rsquo;t be closed before it&rsquo;s been checked. Every stage change, approval and comment is captured
     in a full audit trail, which you can download as a PDF for an auditor. See <a href="/product/workflow-manager">Workflow
     Manager</a> for the full set of templates, or <a href="/pricing">check pricing</a> to see what&rsquo;s included on each plan.
   </p>

@@ -16,13 +16,13 @@ function fmt(n: number, cur: Currency): string {
   updated="2026-09-26"
   readingMinutes={7}
   sources={[
-    { label: 'Greenlight Guru — Quality pricing', url: 'https://www.greenlight.guru/quality-pricing' },
-    { label: 'SimplerQMS — Pricing', url: 'https://simplerqms.com/pricing/' },
-    { label: 'Effivity — pricing (per user, per day)', url: 'https://www.effivity.com/' },
-    { label: 'Isolocity — Pricing', url: 'https://isolocity.com/pricing/' },
-    { label: 'isoTracker — Pricing and payment', url: 'https://www.isotracker.com/pricing-and-payment/' },
-    { label: 'Qualio — Pricing (quote-only)', url: 'https://www.qualio.com/pricing' },
-    { label: 'MasterControl — Pricing (quote-only)', url: 'https://www.mastercontrol.com/pricing/' },
+    { label: 'Greenlight Guru: quality pricing', url: 'https://www.greenlight.guru/quality-pricing' },
+    { label: 'SimplerQMS: pricing', url: 'https://simplerqms.com/pricing/' },
+    { label: 'Effivity: pricing (per user, per day)', url: 'https://www.effivity.com/' },
+    { label: 'Isolocity: pricing', url: 'https://isolocity.com/pricing/' },
+    { label: 'isoTracker: pricing and payment', url: 'https://www.isotracker.com/pricing-and-payment/' },
+    { label: 'Qualio: pricing (quote-only)', url: 'https://www.qualio.com/pricing' },
+    { label: 'MasterControl: pricing (quote-only)', url: 'https://www.mastercontrol.com/pricing/' },
   ]}
   related={[
     { label: 'Pricing', href: '/pricing', note: 'Full Obel MS plans and add-ons' },
@@ -39,7 +39,7 @@ function fmt(n: number, cur: Currency): string {
     },
     {
       q: 'Do QMS software prices include implementation?',
-      a: 'Rarely, for enterprise platforms. Qualio and MasterControl quote implementation separately, and it can run into tens of thousands of dollars on top of the subscription. SimplerQMS is an exception and bundles implementation into its listed price. Obel MS shows any onboarding fee upfront next to the plan — none on the entry Lite plan, a fixed fee on Essentials and Professional — so there is no separate implementation project to fund.',
+      a: 'Rarely, for enterprise platforms. Qualio and MasterControl quote implementation separately, and it can run into tens of thousands of dollars on top of the subscription. SimplerQMS is an exception and bundles implementation into its listed price. Obel MS shows any onboarding fee upfront next to the plan: none on the entry Lite plan, a fixed fee on Essentials and Professional. There is no separate implementation project to fund.',
     },
     {
       q: 'Why do some vendors not publish a price at all?',
@@ -47,7 +47,7 @@ function fmt(n: number, cur: Currency): string {
     },
     {
       q: 'Do I have to sign a long-term contract for QMS software?',
-      a: 'It depends on the vendor. Some self-serve tools bill month to month; Obel MS prices are billed annually, with a month-to-month option available at 15% more. Ask whether the headline price assumes an annual commitment, and what the month-to-month price would be if you needed more flexibility.',
+      a: 'It depends on the vendor. Some self-serve tools bill month to month. Obel MS prices are billed annually, with a month-to-month option available at 15% more. Ask whether the headline price assumes an annual commitment, and what the month-to-month price would be if you needed more flexibility.',
     },
     {
       q: 'Does the listed price include VAT?',
@@ -93,8 +93,8 @@ function fmt(n: number, cur: Currency): string {
         <tr>
           <td><a href="https://www.isotracker.com/pricing-and-payment/" rel="noopener" target="_blank">isoTracker</a></td>
           <td>SME self-serve</td>
-          <td>Configurable calculator by seats and modules — no flat listed price</td>
-          <td>—</td>
+          <td>Configurable calculator by seats and modules, no flat listed price</td>
+          <td>N/A</td>
         </tr>
         <tr>
           <td><a href="https://www.greenlight.guru/quality-pricing" rel="noopener" target="_blank">Greenlight Guru</a></td>
@@ -115,59 +115,59 @@ function fmt(n: number, cur: Currency): string {
           </td>
           <td>Enterprise eQMS</td>
           <td>Quote-only, no public price</td>
-          <td>—</td>
+          <td>N/A</td>
         </tr>
       </tbody>
     </table>
   </div>
   <p>
     ZAR figures are approximate, converted at an indicative September 2026 rate of about R18.50 to the US
-    dollar — check a current rate before using these numbers for budgeting. isoTracker is included to show a
+    dollar. Check a current rate before using these numbers for budgeting. isoTracker is included to show a
     different pricing model: a per-seat, per-module calculator rather than a single headline figure, with
     training, upgrades, backups and email support bundled in at every tier.
   </p>
 
   <h2>Why is it hard to compare QMS software prices directly?</h2>
   <p>
-    Vendors price by different units — per named user, per concurrent user, per module, or by a flat tier —
-    so a "$X/month" headline from one vendor rarely means the same thing as another's. Work out your real
-    number of editors, viewers and the modules you actually need before comparing quotes, or you'll compare
-    figures that describe different-sized deployments.
+    Vendors price by different units: per named user, per concurrent user, per module, or by a flat tier.
+    So a "$X/month" headline from one vendor rarely means the same thing as another's. Work out your real
+    number of editors, viewers and the modules you need before comparing quotes, or you'll compare
+    figures that describe differently sized deployments.
   </p>
   <p>
     Per-user pricing (Effivity, Isolocity) rewards a small team and punishes growth: add ten users and the
     bill scales with them. Tiered pricing (Obel MS, and the entry level of most enterprise platforms) caps
     what you pay at a set number of editors, which is easier to budget against but can force an early
     upgrade if you cross the line. Many quality managers only start comparing prices seriously in the weeks
-    before an audit, which is exactly the wrong time to be discovering that a "starting from" figure excludes
-    implementation, training and a six-figure onboarding project — ask for the fully-loaded number, not the
-    headline, as early as you can.
+    before an audit. That is the wrong time to discover that a "starting from" figure excludes
+    implementation, training and a six-figure onboarding project. Ask for the fully loaded number as early
+    as you can.
   </p>
 
   <h2>What drives the cost of QMS software?</h2>
   <p>
     Seven factors move the price more than anything else: how many people need to log in, which modules
     you switch on, where the software runs, whether it needs formal validation, how much setup work your
-    data needs, whether you're migrating from spreadsheets or another system, and what level of support
-    you expect. Ask a vendor to price against your real numbers on each one, not a generic "starting from" figure.
+    data needs, the migration effort from spreadsheets or another system, and what level of support
+    you expect. Ask a vendor to price against your real numbers on each one.
   </p>
   <ul>
     <li><strong>Users and seats.</strong> Named-editor pricing (Effivity, Isolocity) scales with headcount. Tiered pricing caps the editor count per plan and often includes unlimited read-only viewers instead.</li>
     <li><strong>Modules.</strong> Document control alone costs less than document control plus CAPA, nonconformance, change management and complaint workflows bundled together.</li>
-    <li><strong>Hosting vs on-premise.</strong> A hosted (SaaS) system folds infrastructure, patching and uptime into the subscription. An on-premise or self-hosted system shifts that cost — and the IT effort — onto you.</li>
-    <li><strong>Validation.</strong> Life-science and medical-device buyers often need IQ/OQ/PQ-style validation documentation. Some vendors price it in (SimplerQMS); others charge it as a separate project (Qualio's implementation fee).</li>
-    <li><strong>Implementation.</strong> Configuring templates, roles, approval routes and folder structures to match how your business actually works.</li>
+    <li><strong>Hosting vs on-premise.</strong> A hosted (SaaS) system folds infrastructure, patching and uptime into the subscription. An on-premise or self-hosted system shifts that cost, and the IT effort, onto you.</li>
+    <li><strong>Validation.</strong> Life-science and medical-device buyers often need IQ/OQ/PQ-style validation documentation. Some vendors price it in (SimplerQMS), others charge it as a separate project (Qualio's implementation fee).</li>
+    <li><strong>Implementation.</strong> Configuring templates, roles, approval routes and folder structures to match how your business works.</li>
     <li><strong>Migration.</strong> Moving existing registers, spreadsheets and document history in without losing version history or audit evidence.</li>
-    <li><strong>Training and support.</strong> Self-serve tools bundle basic training; enterprise vendors often charge separately, or gate faster support behind a higher tier.</li>
+    <li><strong>Training and support.</strong> Self-serve tools bundle basic training. Enterprise vendors often charge separately, or gate faster support behind a higher tier.</li>
   </ul>
 
   <h2>What hidden costs should you budget for?</h2>
   <p>
     The listed price rarely is the final price. Enterprise eQMS vendors in particular treat implementation,
-    validation and training as separate line items rather than folding them into the subscription — that's
+    validation and training as separate line items rather than folding them into the subscription. That's
     how a "$12,000/year" headline turns into tens of thousands more before you've logged your first
-    document. Ask specifically about the items below before you sign, because they are the ones most likely
-    to turn up on an invoice you didn't expect.
+    document. Ask about the items below before you sign. They are the ones most likely to turn up on an
+    invoice you didn't expect.
   </p>
   <div class="table-wrap">
     <table>
@@ -185,7 +185,7 @@ function fmt(n: number, cur: Currency): string {
         <tr><td>Support tier upsells</td><td>Is email-only support standard, with faster response times reserved for a higher plan?</td></tr>
         <tr><td>Data migration</td><td>Is importing your existing registers and spreadsheets included, or a separate line item?</td></tr>
         <tr><td>Exit and export</td><td>Can you export your full document set, metadata and audit trail on request, at no extra cost, if you leave?</td></tr>
-        <tr><td>Currency and VAT</td><td>Is the quoted price VAT-inclusive, and in which currency will you actually be billed?</td></tr>
+        <tr><td>Currency and VAT</td><td>Is the quoted price VAT-inclusive, and in which currency will you be billed?</td></tr>
       </tbody>
     </table>
   </div>
@@ -217,7 +217,7 @@ function fmt(n: number, cur: Currency): string {
             <td>{p.status === 'waitlist' && 'From '}{fmt(p.price.USD, 'USD')}</td>
             <td>
               {p.setup.ZAR > 0
-                ? `${fmt(p.setup.ZAR, 'ZAR')} (${fmt(p.setup.USD, 'USD')}) — ${p.setup.label}`
+                ? `${fmt(p.setup.ZAR, 'ZAR')} (${fmt(p.setup.USD, 'USD')}): ${p.setup.label}`
                 : p.setup.label}
             </td>
             <td>{p.users}</td>
@@ -227,7 +227,7 @@ function fmt(n: number, cur: Currency): string {
     </table>
   </div>
   <p>
-    These are Obel MS's own prices, not third-party estimates. See the full <a href="/pricing">pricing page</a>
+    These are Obel MS's own prices. See the full <a href="/pricing">pricing page</a>
     for a feature-by-feature breakdown of each plan, plus add-ons for extra users, storage and AI usage.
   </p>
 
@@ -237,20 +237,20 @@ function fmt(n: number, cur: Currency): string {
     for written answers before you compare their number to anyone else's.
   </p>
   <ul>
-    <li>Is the headline price per user, per company, or tiered — and what happens as our team grows?</li>
+    <li>Is the headline price per user, per company, or tiered? What happens as our team grows?</li>
     <li>Does the price include implementation, validation and training, or are those separate projects?</li>
     <li>Is there a setup or onboarding fee, and is it once-off or recurring?</li>
     <li>What support is included, and what response time can we expect in writing?</li>
     <li>Where is our data hosted, and who can access it?</li>
     <li>Can we get a full export of our documents, metadata and audit trail if we leave?</li>
-    <li>Is the quote VAT-inclusive, and in what currency will we actually be billed?</li>
+    <li>Is the quote VAT-inclusive, and in what currency will we be billed?</li>
     <li>Is there a minimum contract term, and what's the cost of leaving early?</li>
     <li>Are there limits on storage, users or automated processing, and what do overages cost?</li>
   </ul>
   <p>
     Write the answers down next to each vendor's headline price. Once implementation, VAT, currency and
     contract length are accounted for, the real gap between a cheap self-serve tool and a mid-tier hosted
-    system is usually smaller than the sticker price suggests — and the gap to an enterprise eQMS platform
-    is usually larger.
+    system is usually smaller than the sticker price suggests. The gap to an enterprise eQMS platform is
+    usually larger.
   </p>
 </GuideLayout>

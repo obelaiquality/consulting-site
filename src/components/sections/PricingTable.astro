@@ -3,7 +3,7 @@
  * Pricing table. Currency (ZAR | USD) is a real segmented control; prices and setup fees update
  * in place with a quick vertical roll. Every number comes from src/data/site.ts.
  * Billing (Annual | Monthly, +15%) is a second segmented control.
- * Plans with status "waitlist" (Validated) show "From" pricing, a Coming 2027 badge and a waitlist CTA.
+ * A plan with status "waitlist" would show "From" pricing, a badge and a waitlist CTA (none today).
  */
 import { plans, pricingTerms, type Currency } from '../../data/site';
 
@@ -51,7 +51,7 @@ const priceData = plans.map((p) => ({
     </div>
   )}
 
-  <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-4 md:items-start" data-reveal-group>
+  <div class="grid gap-5 md:grid-cols-3 md:items-start" data-reveal-group>
     {plans.map((p) => (
       <div
         class:list={['plan-card', p.featured ? 'plan-featured' : 'card', { 'plan-waitlist': p.status === 'waitlist' }]}
@@ -115,7 +115,7 @@ const priceData = plans.map((p) => ({
 
   <div class="mt-10 max-w-[64ch] space-y-2">
     <p class="text-[14px] text-muted">
-      Every plan is hosted on Google Cloud in Johannesburg, with daily backups, updates and support included. {pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa.
+      Every plan is hosted on Google Cloud in Johannesburg, with daily backups, updates and support included. {pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa. {pricingTerms.aiNote}
     </p>
     {!compact && (
       <p class="text-[13px] text-muted">

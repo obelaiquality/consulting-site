@@ -12,8 +12,8 @@ import { wfmTemplates } from '../../data/demo';
   <div class="container-x"><div class="tr-head">
     <h2 id="tr-heading" class="t-h2 text-night-fg">Five templates, ready on day one</h2>
     <p class="tr-lead">
-      Start with proven templates for the processes ISO 9001 auditors ask about. Change any stage,
-      deadline or approver in the template designer.
+      Start with five templates built for the processes ISO 9001 auditors ask about. Change any
+      stage, deadline or approver in the template designer.
     </p></div>
   </div>
 
@@ -40,7 +40,7 @@ import { wfmTemplates } from '../../data/demo';
                   ))}
                 </ol>
                 {t.code === 'CC-001' && (
-                  <p class="tr-panel-footer">Can escalate to Nonconformance or Supplier Deviation.</p>
+                  <p class="tr-panel-footer">It can escalate to a Nonconformance or a Supplier Deviation.</p>
                 )}
               </article>
             );
@@ -125,7 +125,7 @@ import { wfmTemplates } from '../../data/demo';
           trigger: section,
           start: 'top top',
           end: () => `+=${Math.max(track.scrollWidth - scroller.clientWidth, 1)}`,
-          scrub: 0.6,
+          scrub: 1,
           pin: true,
           invalidateOnRefresh: true,
         },

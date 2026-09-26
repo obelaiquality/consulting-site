@@ -9,7 +9,7 @@ import { plans, site, addons, services, pricingTerms, discounts } from '../data/
 type Cell = true | false | string;
 interface CompareRow {
   label: string;
-  values: [Cell, Cell, Cell, Cell];
+  values: [Cell, Cell, Cell];
 }
 interface CompareGroup {
   name: string;
@@ -22,42 +22,41 @@ const compareGroups: CompareGroup[] = [
   {
     name: 'Documents',
     rows: [
-      { label: 'External Document Control', values: [true, true, true, true] },
-      { label: 'Expiry alerts by email and Teams', values: [true, true, true, true] },
-      { label: 'Auto-filed Supplier, Manufacturer and Product folders', values: [true, true, true, true] },
-      { label: 'Audit trail and document versioning', values: [true, true, true, true] },
-      { label: 'AI metadata extraction (digital PDFs)', values: ['100 a month', '300 a month', '1,000 a month', 'Agreed'] },
-      { label: 'Document storage', values: ['10 GB', '25 GB', '100 GB', 'Agreed'] },
+      { label: 'External Document Control', values: [true, true, true] },
+      { label: 'Expiry alerts by email and Teams', values: [true, true, true] },
+      { label: 'Auto-filed Supplier, Manufacturer and Product folders', values: [true, true, true] },
+      { label: 'Audit trail and document versioning', values: [true, true, true] },
+      { label: 'AI metadata extraction (digital PDFs)', values: ['Fair use', 'Fair use', 'Fair use'] },
+      { label: 'Document storage', values: ['10 GB', '25 GB', '100 GB'] },
+      { label: 'Scanned-document reading (OCR)', values: ['In testing', 'In testing', 'In testing'] },
     ],
   },
   {
     name: 'Workflows',
     rows: [
-      { label: 'Workflow Manager', values: [false, false, true, true] },
-      { label: 'Nonconformance, CAPA, change, complaint and deviation templates', values: [false, false, true, true] },
-      { label: 'Approvals routed by job title', values: [false, false, true, true] },
-      { label: 'Effectiveness verification and PDF record reports', values: [false, false, true, true] },
-      { label: 'AI stage and executive summaries', values: [false, false, true, true] },
-      { label: 'AI assistant with a usage cap', values: [false, false, 'Coming soon', 'Coming soon'] },
+      { label: 'Workflow Manager', values: [false, false, true] },
+      { label: 'Nonconformance, CAPA, change, complaint and deviation templates', values: [false, false, true] },
+      { label: 'Approvals routed by job title', values: [false, false, true] },
+      { label: 'Effectiveness verification and PDF record reports', values: [false, false, true] },
+      { label: 'AI stage and executive summaries', values: [false, false, true] },
+      { label: 'AI assistant with a usage cap', values: [false, false, 'Coming soon'] },
     ],
   },
   {
     name: 'Platform',
     rows: [
-      { label: 'Named users', values: ['3', '10', '30', 'Agreed'] },
-      { label: 'Read-only viewers', values: ['Unlimited', 'Unlimited', 'Unlimited', 'Unlimited'] },
-      { label: 'Hosted on Google Cloud in Johannesburg', values: [true, true, true, true] },
-      { label: 'Daily backups, encrypted at rest and in transit', values: [true, true, true, true] },
-      { label: 'Dedicated environment, HA database, UAT copy, release hold', values: [false, false, false, true] },
+      { label: 'Named users', values: ['3', '10', '30'] },
+      { label: 'Read-only viewers', values: ['Unlimited', 'Unlimited', 'Unlimited'] },
+      { label: 'Hosted on Google Cloud in Johannesburg', values: [true, true, true] },
+      { label: 'Daily backups, encrypted at rest and in transit', values: [true, true, true] },
     ],
   },
   {
     name: 'Service',
     rows: [
-      { label: 'Support', values: ['Email, 5 business days', 'Email, 2 business days', 'Next business day', 'Named contact'] },
-      { label: 'Quarterly 1-hour review call', values: [false, false, true, true] },
-      { label: 'Quality agreement', values: [false, false, false, true] },
-      { label: 'Once-off onboarding', values: ['None', 'R6,500', 'R15,000', 'Agreed'] },
+      { label: 'Support', values: ['Email, 5 business days', 'Email, 2 business days', 'Next business day'] },
+      { label: 'Quarterly 1-hour review call', values: [false, false, true] },
+      { label: 'Once-off onboarding', values: ['None', 'R6,500', 'R15,000'] },
     ],
   },
 ];
@@ -82,7 +81,7 @@ const jsonLd = {
 ---
 
 <BaseLayout
-  title="ISO 9001 QMS Software Pricing | Obel MS"
+  title="ISO 9001 QMS software pricing | Obel MS"
   description="Hosted ISO 9001 document control from R1,490 a month excl. VAT. Workflow Manager from R7,950. Hosted in Johannesburg, support included."
   breadcrumbs={[{ name: 'Pricing', href: '/pricing' }]}
   jsonLd={jsonLd}
@@ -93,7 +92,7 @@ const jsonLd = {
         Simple pricing. Hosting and support included.
       </h1>
       <p class="t-lead mt-6" data-reveal>
-        Three plans on sale today, and a validated plan for regulated teams in 2027. Hosting, backups, updates and support are in every plan. All ZAR prices exclude 15% VAT.
+        Three plans for teams of different sizes. Hosting, backups, updates and support are in every plan. All ZAR prices exclude 15% VAT.
       </p>
     </div>
   </section>
@@ -109,7 +108,7 @@ const jsonLd = {
       <h2 id="compare-heading" class="t-h2 max-w-[20ch]" data-reveal>Compare plans in detail</h2>
       <div class="compare-scroll mt-10">
         <table class="compare-table">
-          <caption class="sr-only">Feature comparison across Lite, Essentials, Professional and Validated</caption>
+          <caption class="sr-only">Feature comparison across Lite, Essentials and Professional</caption>
           <thead>
             <tr>
               <th scope="col" class="compare-feature-col">Feature</th>
@@ -182,6 +181,7 @@ const jsonLd = {
           ))}
         </dl>
         <p class="text-[13px] text-muted mt-6">{pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa. {pricingTerms.availability}</p>
+        <p class="text-[13px] text-muted mt-2">{pricingTerms.aiNote} {pricingTerms.fairUse}</p>
       </div>
     </div>
   </section>

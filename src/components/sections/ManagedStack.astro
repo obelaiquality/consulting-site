@@ -2,7 +2,8 @@
 /*
  * "We run it. You use it." — the managed-service pitch, using `managed` from data/site.ts.
  * Left: sticky heading block. Right: cards that stack via position:sticky with increasing
- * top offsets; on desktop each card scales down and dims as the next one arrives (GSAP scrub).
+ * top offsets; on desktop each card scales down a little as the next one arrives (GSAP scrub).
+ * Cards stay fully opaque so nothing shows through the stack.
  * Mobile: plain stacked list, no sticky, no scrub.
  */
 import { managed } from '../../data/site';
@@ -12,7 +13,7 @@ import { managed } from '../../data/site';
     <div class="managed-grid">
       <div class="managed-head">
         <h2 id="managed-heading" class="t-h2">We run it. You use it.</h2>
-        <p class="t-lead mt-4">Obel MS is a managed service. Your monthly fee covers the software, the hosting and the people who keep it healthy.</p>
+        <p class="t-lead mt-4">Obel MS is a managed service that we run for you. Your monthly fee covers the software, the hosting and the people who keep it healthy.</p>
       </div>
 
       <div class="managed-cards">
@@ -104,10 +105,9 @@ import { managed } from '../../data/site';
         const next = cards[i + 1];
         if (!next) return;
         gsap.to(card, {
-          scale: 0.94,
-          opacity: 0.55,
+          scale: 0.95,
           ease: 'none',
-          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: 0.6 },
+          scrollTrigger: { trigger: next, start: 'top bottom', end: 'top top', scrub: 1 },
         });
       });
     });

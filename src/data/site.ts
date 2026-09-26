@@ -4,9 +4,9 @@ export const site = {
   name: 'Obel MS',
   company: 'Obel AI & Quality',
   url: 'https://obel-ai.com',
-  tagline: 'Hosted ISO 9001 document control and workflow management.',
+  tagline: 'The calm way to ISO 9001 certification.',
   description:
-    'Hosted ISO 9001 document control and CAPA workflows for SMEs. Supplier certificates, expiry alerts and audit trail, hosted in South Africa, from R1,490 a month.',
+    'Hosted ISO 9001 software for growing teams: document control, corrective actions and audit trail, ready for your certification audit. From R1,490 a month.',
   email: 'chat@obel-ai.com',
   demoMailto:
     'mailto:chat@obel-ai.com?subject=Obel%20MS%20demo%20request&body=Hi%20Obel%20team%2C%0A%0AI%27d%20like%20a%20demo%20of%20Obel%20MS.%0A%0ACompany%3A%0ARole%3A%0ATeam%20size%3A%0AStandards%20we%20work%20to%3A%0A',
@@ -56,13 +56,15 @@ export const pricingTerms = {
   contract: 'Billed annually. Month-to-month costs 15% more.',
   monthlyUplift: 0.15,
   availability: '99.5% availability target, best effort.',
+  aiNote: 'AI metadata extraction is included on every plan and module, under fair use. It reads digital PDFs today. Reading scanned documents (OCR), including bilingual English and Chinese supplier documents, is in testing.',
+  fairUse: 'Fair use is up to 1,000 pages a month on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, we agree a volume plan with you.',
 };
 
 export const plans = [
   {
     id: 'lite',
     name: 'Lite',
-    status: 'live' as const,
+    status: 'live' as 'live' | 'waitlist',
     blurb: 'Supplier certificates under control, for small teams.',
     price: { ZAR: 1490, USD: 95 },
     setup: { ZAR: 0, USD: 0, label: 'No setup fee' },
@@ -73,7 +75,7 @@ export const plans = [
       'External Document Control',
       'Expiry alerts by email and Teams',
       'Full audit trail and document versioning',
-      'AI metadata extraction for digital PDFs, 100 documents a month',
+      'AI metadata extraction from digital PDFs, included under fair use',
       '10 GB document storage',
       'Email support within 5 business days',
       '14-day trial on a demo workspace',
@@ -82,8 +84,8 @@ export const plans = [
   {
     id: 'essentials',
     name: 'Essentials',
-    status: 'live' as const,
-    blurb: 'More people, more documents, faster support.',
+    status: 'live' as 'live' | 'waitlist',
+    blurb: 'More users and documents, with faster support.',
     price: { ZAR: 3950, USD: 250 },
     setup: { ZAR: 6500, USD: 420, label: 'guided onboarding: import of up to 200 documents and 2 remote training sessions' },
     users: '10 named users, unlimited read-only viewers',
@@ -92,7 +94,6 @@ export const plans = [
     features: [
       'Everything in Lite',
       '10 named users',
-      'AI metadata extraction, 300 documents a month',
       '25 GB document storage',
       'Email support within 2 business days',
       'Guided onboarding and training',
@@ -101,7 +102,7 @@ export const plans = [
   {
     id: 'professional',
     name: 'Professional',
-    status: 'live' as const,
+    status: 'live' as 'live' | 'waitlist',
     blurb: 'Documents and the workflows around them.',
     price: { ZAR: 7950, USD: 520 },
     setup: { ZAR: 15000, USD: 980, label: 'onboarding: up to 5 workflow templates configured and migration of up to 1,000 documents' },
@@ -114,28 +115,9 @@ export const plans = [
       'Approvals routed by job title and effectiveness verification',
       'AI stage and executive summaries',
       'AI assistant with a monthly usage cap (coming soon)',
-      'AI metadata extraction, 1,000 documents a month',
       '100 GB document storage',
       'Next-business-day support',
       'A 1-hour review call every quarter',
-    ],
-  },
-  {
-    id: 'validated',
-    name: 'Validated (GxP)',
-    status: 'waitlist' as const,
-    blurb: 'For regulated teams. Join the waitlist for 2027.',
-    price: { ZAR: 24500, USD: 1590 },
-    setup: { ZAR: 0, USD: 0, label: 'Setup agreed per project' },
-    users: 'Agreed per client',
-    featured: false,
-    cta: 'Join the waitlist',
-    features: [
-      'Everything in Professional',
-      'Own dedicated environment',
-      'High-availability database',
-      'A UAT copy and a release hold',
-      'Quality agreement',
     ],
   },
 ] as const;
@@ -149,7 +131,6 @@ export const discounts = [
 export const addons = [
   { name: 'Extra 5 users', price: { ZAR: 750, USD: 49 }, unit: 'a month' },
   { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 23 }, unit: 'a month' },
-  { name: 'Extra 1,000 AI documents', price: { ZAR: 350, USD: 23 }, unit: 'a month' },
 ];
 
 export const services = [
@@ -160,10 +141,10 @@ export const services = [
 ];
 
 export const managed = [
-  { title: 'Hosting', body: 'We run Obel MS on Google Cloud in Johannesburg. No servers, no installs, no IT tickets.' },
+  { title: 'Hosting', body: 'We run Obel MS on Google Cloud in Johannesburg. We manage the servers, installs and IT tickets, so you don’t have to.' },
   { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
-  { title: 'Updates', body: 'New features and security patches land without downtime windows you have to plan.' },
-  { title: 'Migration', body: 'We import your existing registers and spreadsheets so you start with history, not a blank page.' },
-  { title: 'Support', body: 'Real quality people, not a ticket bot. We speak ISO 9001 as well as we speak software.' },
+  { title: 'Updates', body: 'New features and security patches roll out automatically, and you don’t need to schedule downtime.' },
+  { title: 'Migration', body: 'We import your existing registers and spreadsheets, so you start with your document history already in place.' },
+  { title: 'Support', body: 'Quality consultants answer your questions, and we speak ISO 9001 as well as we speak software.' },
   { title: 'Monitoring', body: 'Uptime, errors and storage are watched around the clock, so you hear from us first.' },
 ];

@@ -3,32 +3,32 @@ import GuideLayout from '../../layouts/GuideLayout.astro';
 
 const requirementTable = [
   {
-    clause: '7.5.2 — creating and updating',
+    clause: '7.5.2 (creating and updating)',
     control: 'Give every document a title, a unique reference number, a revision or date, and an author. Route it for review and approval before anyone uses it.',
     evidence: 'A document register or log showing who wrote it, who approved it, and when.',
   },
   {
-    clause: '7.5.3.1 — availability and suitability',
-    control: 'Keep the current, approved version where the people who need it can reach it, in a format they can actually open.',
+    clause: '7.5.3.1 (availability and suitability)',
+    control: 'Keep the current, approved version where the people who need it can reach it, in a format they can open.',
     evidence: 'A sample staff member finding the right document at their workstation in under a minute.',
   },
   {
-    clause: '7.5.3.1 — protection',
+    clause: '7.5.3.1 (protection)',
     control: 'Restrict who can edit or delete a document, and keep a record of changes.',
     evidence: 'User permissions or access records, plus a change history for a sampled document.',
   },
   {
-    clause: '7.5.3.2 — control of changes',
+    clause: '7.5.3.2 (control of changes)',
     control: 'Keep the previous version on file when you issue a new one, so nobody can point to a superseded copy as current.',
     evidence: 'Version history for a document that has been revised, with the old version marked as no longer current.',
   },
   {
-    clause: '7.5.3.2 — retention and disposition',
+    clause: '7.5.3.2 (retention and disposition)',
     control: 'Decide, and follow, how long you keep each type of document and record, and what happens to it afterwards.',
     evidence: 'A retention rule you can point to, and a document or record whose age matches it.',
   },
   {
-    clause: '7.5.3.2 — documents of external origin',
+    clause: '7.5.3.2 (documents of external origin)',
     control: 'Identify documents you did not write, such as standards, supplier certificates and customer specifications, and control them the same way as your own.',
     evidence: 'A list of external documents in use, each with a current version and an owner.',
   },
@@ -45,14 +45,14 @@ const faqs = [
   },
   {
     q: 'Is a document control procedure mandatory in ISO 9001:2015?',
-    a: 'No, and this hasn’t changed in ISO 9001:2026 either. Neither edition lists a documented procedure for document control among its mandatory documents. Clause 7.5.3 still requires you to control documented information; most organisations write a short procedure anyway because it makes that control easier to run consistently and easier to show an auditor.',
+    a: 'No, and this hasn’t changed in ISO 9001:2026 either. Neither edition lists a documented procedure for document control among its mandatory documents. Clause 7.5.3 still requires you to control documented information. Most organisations write a short procedure anyway because it makes that control easier to run consistently and easier to show an auditor.',
   },
   {
     q: 'What is a controlled document?',
     a: 'A controlled document is one that is managed through a defined process: identified, reviewed, approved, issued in a known current version, and withdrawn from use once superseded. An uncontrolled document is a copy taken outside that process, such as a printout, which can quietly go out of date without anyone noticing.',
   },
   {
-    q: 'What documents does ISO 9001:2015 actually require?',
+    q: 'What documents does ISO 9001:2015 require?',
     a: 'The standard requires far fewer named documents than older versions. It asks for a documented scope, a quality policy and objectives, and a handful of specific records such as evidence of monitoring and measurement, internal audits, and management review, plus whatever else your organisation determines it needs to run the QMS effectively.',
   },
   {
@@ -70,12 +70,12 @@ const faqs = [
   updated="2026-09-26"
   readingMinutes={10}
   sources={[
-    { label: 'ISO 9001:2015 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/62085.html' },
-    { label: 'ISO 9001:2026 — Quality management systems, Requirements', url: 'https://www.iso.org/standard/88464.html' },
-    { label: 'ISO/TC 176/SC 2 — news and updates on ISO 9001', url: 'https://committee.iso.org/sites/tc176sc2/home/news/content-left-area/news-and-updates/news-1.html' },
-    { label: 'ISO/TC 176 — Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
-    { label: 'BSI — ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
-    { label: 'SANAS — South African National Accreditation System', url: 'https://www.sanas.co.za/' },
+    { label: 'ISO 9001:2015 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/62085.html' },
+    { label: 'ISO 9001:2026 (Quality management systems, Requirements)', url: 'https://www.iso.org/standard/88464.html' },
+    { label: 'ISO/TC 176/SC 2, news and updates on ISO 9001', url: 'https://committee.iso.org/sites/tc176sc2/home/news/content-left-area/news-and-updates/news-1.html' },
+    { label: 'ISO/TC 176, Quality management and quality assurance', url: 'https://www.iso.org/committee/53882.html' },
+    { label: 'BSI, ISO 9001 quality management', url: 'https://www.bsigroup.com/en-GB/iso-9001-quality-management/' },
+    { label: 'SANAS, South African National Accreditation System', url: 'https://www.sanas.co.za/' },
   ]}
   related={[
     { label: 'ISO 9001 clause map', href: '/iso-9001', note: 'Every clause 7.5 requirement mapped to Obel MS' },
@@ -89,80 +89,80 @@ const faqs = [
 >
   <h2>What is documented information, and how is it different from a record?</h2>
   <p>
-    Documented information is ISO 9001:2015&rsquo;s single term for anything you have to write down and control for your quality
-    management system (QMS) to work. It covers two things people used to talk about separately: documents and records. A
-    <strong>document</strong> tells people what to do &mdash; a procedure, a specification, a drawing. A <strong>record</strong> proves
-    what actually happened &mdash; a completed inspection form, a signed-off approval, a calibration certificate.
+    Documented information is ISO 9001:2015&rsquo;s single term for anything you write down and control so your quality
+    management system (QMS) works. It covers two things people used to talk about separately: documents and records. A
+    <strong>document</strong> tells people what to do, such as a procedure, a specification or a drawing. A <strong>record</strong> proves
+    what happened, such as a completed inspection form, a signed-off approval or a calibration certificate.
   </p>
   <p>
     ISO 9001:2015 uses two different verbs on purpose. You <strong>maintain</strong> a document: you keep it current, and you
     expect it to change as your process changes. You <strong>retain</strong> a record: once it&rsquo;s created, it
-    shouldn&rsquo;t change, because it&rsquo;s evidence of a point in time. Mixing the two up is a common source of confusion
-    &mdash; editing a record after the fact is a finding waiting to happen, while never updating a document that everyone has
-    quietly stopped following is another. ISO 9001:2026 keeps the same underlying idea but drops the two separate verbs, using
-    a single phrase &mdash; documented information being "available" as the document or the evidence needs &mdash; throughout
-    the standard instead. It&rsquo;s a wording change, not a new requirement: you still keep documents current and records
-    unaltered, the standard just describes both with one term now.
+    shouldn&rsquo;t change, because it&rsquo;s evidence of a point in time. Mixing the two up causes real problems. Editing a
+    record after the fact is a finding waiting to happen. Never updating a document that everyone has quietly stopped
+    following is another. ISO 9001:2026 keeps the same underlying idea but drops the two separate verbs. It uses one phrase
+    throughout the standard instead: documented information being "available" as the document or the evidence needs.
+    It&rsquo;s a wording change. You still keep documents current and records unaltered. The standard
+    now describes both with one term.
   </p>
 
-  <h2>What does clause 7.5 actually require?</h2>
+  <h2>What does clause 7.5 require?</h2>
   <p>
     Clause 7.5 has three parts, and each asks for something distinct. Read together, they describe a full lifecycle: decide what
     you need, create and approve it properly, then keep it under control for as long as it&rsquo;s in use. Clause 7.5 keeps its
     numbering and this same three-part shape in both ISO 9001:2015 and ISO 9001:2026, so everything below applies to whichever
     edition your organisation is certified to.
   </p>
-  <h3>7.5.1 &mdash; general</h3>
+  <h3>7.5.1: general</h3>
   <p>
     You must maintain the documented information the standard explicitly asks for, plus whatever documented information your own
     organisation decides it needs for the QMS to be effective. How much that is scales with your size, the complexity of your
-    processes and the competence of your people &mdash; a five-person business and a 200-person one will land on very different
-    amounts of paperwork, and that&rsquo;s by design, not a loophole.
+    processes and the competence of your people. A five-person business and a 200-person one will land on different
+    amounts of paperwork, and that&rsquo;s by design.
   </p>
-  <h3>7.5.2 &mdash; creating and updating</h3>
+  <h3>7.5.2: creating and updating</h3>
   <p>
-    When you create or change a document, identify it properly &mdash; a title, a reference number, a date or revision, and an
-    author &mdash; and put it in a suitable format, whether that&rsquo;s a PDF, a printed sheet on a wall, or a page in a system.
+    When you create or change a document, identify it properly with a title, a reference number, a date or revision, and an
+    author, and put it in a suitable format, whether that&rsquo;s a PDF, a printed sheet on a wall, or a page in a system.
     Then review and approve it for suitability and adequacy before anyone relies on it. Skipping the approval step is one of the
     most common shortcuts small teams take, and one of the easiest for an auditor to catch.
   </p>
-  <h3>7.5.3 &mdash; control of documented information</h3>
+  <h3>7.5.3: control of documented information</h3>
   <p>
-    Once a document exists, you have to keep controlling it: make sure it&rsquo;s available and suitable for use where and when
+    Once a document exists, you have to keep controlling it. Make sure it&rsquo;s available and suitable for use where and when
     it&rsquo;s needed, and adequately protected from loss of confidentiality, improper use or loss of integrity. Clause 7.5.3.2
-    lists the specific activities this covers: distribution, access, retrieval and use; storage and preservation, including
-    keeping it legible; control of changes, such as version control; and retention and disposition &mdash; how long you keep it,
-    and what happens to it after that.
+    lists the specific activities this covers: distribution, access, retrieval and use, and storage and preservation,
+    including keeping it legible. It also covers control of changes, such as version control, and retention and disposition,
+    meaning how long you keep it and what happens to it after that.
   </p>
 
   <h2>What&rsquo;s the difference between a controlled and an uncontrolled document?</h2>
   <p>
     A controlled document is managed through a defined process from creation to retirement: someone owns it, changes go through
     review and approval, and there is always one current version that people can point to. An uncontrolled document is a copy
-    that has stepped outside that process &mdash; most often a printout, a saved PDF on someone&rsquo;s desktop, or an email
-    attachment &mdash; that can go out of date without anyone knowing, because nothing links it back to the controlled original.
+    that has stepped outside that process (most often a printout, a saved PDF on someone&rsquo;s desktop, or an email
+    attachment) and can go out of date without anyone knowing, because nothing links it back to the controlled original.
   </p>
   <p>
     You don&rsquo;t have to ban printing. Many organisations mark printed copies "uncontrolled when printed" so it&rsquo;s clear
-    they may not reflect the current version. What matters to an auditor is whether people are actually working from something
-    current, not whether a piece of paper technically left the system.
+    they may not reflect the current version. What matters to an auditor is whether people are working from something
+    current.
   </p>
 
   <h2>What does the document lifecycle look like in practice?</h2>
   <p>
-    Clause 7.5 doesn&rsquo;t hand you a named lifecycle, but almost every working document control system ends up running the
-    same sequence of stages:
+    Clause 7.5 doesn&rsquo;t hand you a named lifecycle, but almost every working document control system runs the
+    same sequence of stages.
   </p>
   <ol>
-    <li><strong>Create</strong> &mdash; someone drafts the document and gives it an identity: title, number, revision.</li>
-    <li><strong>Review</strong> &mdash; a competent person checks it&rsquo;s technically correct and fit for its purpose.</li>
-    <li><strong>Approve</strong> &mdash; an authorised person signs it off before it goes live.</li>
-    <li><strong>Issue</strong> &mdash; the approved version is made available to the people who need it, and any old version is withdrawn from active use.</li>
-    <li><strong>Revise</strong> &mdash; when something changes, the document goes back through review and approval as a new version, with the previous one kept on file.</li>
-    <li><strong>Archive</strong> &mdash; once a document is no longer in use, it&rsquo;s retained for whatever period you&rsquo;ve set, then disposed of.</li>
+    <li><strong>Create</strong>: someone drafts the document and gives it an identity: title, number, revision.</li>
+    <li><strong>Review</strong>: a competent person checks it&rsquo;s technically correct and fit for its purpose.</li>
+    <li><strong>Approve</strong>: an authorised person signs it off before it goes live.</li>
+    <li><strong>Issue</strong>: the approved version is made available to the people who need it, and any old version is withdrawn from active use.</li>
+    <li><strong>Revise</strong>: when something changes, the document goes back through review and approval as a new version, with the previous one kept on file.</li>
+    <li><strong>Archive</strong>: once a document is no longer in use, it&rsquo;s retained for whatever period you&rsquo;ve set, then disposed of.</li>
   </ol>
   <p>
-    Most document control failures happen at the joins between these stages &mdash; a revision that skips review, or an old
+    Most document control failures happen at the joins between these stages: a revision that skips review, or an old
     version that never gets withdrawn from a shared drive. A system that enforces the sequence, rather than relying on someone
     remembering it, removes most of that risk.
   </p>
@@ -175,8 +175,8 @@ const faqs = [
     supplier certificates such as certificates of analysis, safety data sheets and statements.
   </p>
   <p>
-    The control principle is the same as for your own documents &mdash; know which version you&rsquo;re relying on, and know when
-    it changes &mdash; but the mechanism is different, because you don&rsquo;t control the source. In practice that usually means
+    The control principle is the same as for your own documents: know which version you&rsquo;re relying on, and know when
+    it changes. The mechanism is different, because you don&rsquo;t control the source. In practice that usually means
     a register of external documents, an owner for each one, and a way of noticing when a certificate is about to expire or a
     standard is revised. See our guide on <a href="/guides/document-control-procedure">building a document control procedure</a>
     for a worked example that covers external documents specifically.
@@ -186,7 +186,7 @@ const faqs = [
   <p>
     No. Unlike the 2008 version of the standard, ISO 9001:2015 doesn&rsquo;t name "control of documents" as one of the mandatory
     documented procedures, and ISO 9001:2026 carries this forward unchanged. What&rsquo;s mandatory is the outcome in clause
-    7.5.3, not a specific procedure describing how you get there. Most organisations write a short procedure anyway, because
+    7.5.3. Most organisations write a short procedure anyway, because
     it&rsquo;s the easiest way to make sure everyone follows the same steps and to answer an auditor&rsquo;s questions
     consistently.
   </p>
@@ -222,9 +222,9 @@ const faqs = [
     </table>
   </div>
   <p>
-    The most common findings come from the gap between what a procedure says and what actually happens: a printed copy on a wall
+    The most common findings come from the gap between what a procedure says and what happens: a printed copy on a wall
     that&rsquo;s two revisions behind the system, a supplier certificate nobody noticed had expired, or a document that was
-    changed without going back through approval. None of these need a bigger system to fix &mdash; they need the lifecycle above
+    changed without going back through approval. None of these need a bigger system to fix. They need the lifecycle above
     to run the same way every time, for every document.
   </p>
 
@@ -236,7 +236,7 @@ const faqs = [
     around 30 September 2029, so nothing on this page stops applying because a new edition exists.
   </p>
   <p>
-    If your organisation is already certified to ISO 9001:2015, you don&rsquo;t need to act immediately &mdash; certification
+    If your organisation is already certified to ISO 9001:2015, you don&rsquo;t need to act immediately. Certification
     bodies will confirm their own transition timelines as they become accredited to audit the 2026 edition. If you&rsquo;re
     starting your first certification now, ask your certification body which edition they&rsquo;re auditing against, since both
     are current at the same time during the transition window.
@@ -247,12 +247,12 @@ const faqs = [
     <a href="/product/external-document-control">External Document Control</a> is built directly around clause 7.5.3.2: you
     upload a supplier certificate or standard, accept, edit or dismiss the AI-suggested metadata, then approve it, which moves it
     into the Register with status Validated. Every document is auto-filed into a Supplier &rarr; Manufacturer &rarr; Product
-    folder, and its status &mdash; Active, Expiring soon, Expired, or No expiry set &mdash; is worked out automatically, so an
+    folder, and its status (Active, Expiring soon, Expired, or No expiry set) is worked out automatically, so an
     expired certificate doesn&rsquo;t sit unnoticed until an audit finds it. Every upload, approval and new version is recorded
     in a full audit trail.
   </p>
   <p>
-    Internal Document Control, for the SOPs, policies and work instructions you write yourself, is coming soon &mdash; today
+    Internal Document Control, for the SOPs, policies and work instructions you write yourself, is coming soon. Today,
     that part of your document lifecycle still needs to live somewhere else. See the
     <a href="/product/internal-document-control">Internal Document Control</a> page to join the waitlist, or
     <a href="/pricing">check pricing</a> for what&rsquo;s available now.
