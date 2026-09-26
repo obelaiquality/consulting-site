@@ -11,6 +11,7 @@ Obel MS is a hosted quality management system for SMEs. Obel AI & Quality hosts 
 - **The pitch:** ISO 9001 document control without the enterprise price. You do not run any servers, installs or IT tickets.
 - **Pricing and plan facts** live in `src/data/site.ts`. Import them from there and never hard-code prices.
 - **Demo data** lives in `src/data/demo.ts`. It uses fictional suppliers and people only.
+- **Never copy names or data from the app repo, its fixtures, its redesign mock-ups or the research notes.** Those contain real client documents, suppliers, manufacturers and products. Every supplier, manufacturer, product, certificate number, lot and person on the site must be synthetic. Use `demo.ts` or invent new names in the same obviously fictional style, for example Northwind Ingredients, Kestrel Packaging or Silverleaf Botanics.
 
 ## 2. Stack and project layout
 

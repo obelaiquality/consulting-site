@@ -1,0 +1,51 @@
+---
+/* Reusable email + Teams notification mock. Used for EDC expiry digests and WFM overdue checks. */
+interface Props {
+  emailSubject: string;
+  emailLine: string;
+  teamsTitle: string;
+  teamsLine: string;
+  class?: string;
+}
+const { emailSubject, emailLine, teamsTitle, teamsLine, class: cls = '' } = Astro.props;
+---
+<div class:list={['digest-wrap', cls]} aria-hidden="true">
+  <div class="digest-card">
+    <div class="digest-head">
+      <span class="digest-icon digest-icon-mail">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3.5" width="12" height="9" rx="1.5" /><path d="m2.5 4.5 5.5 4 5.5-4" /></svg>
+      </span>
+      <div>
+        <p class="digest-label">Email digest</p>
+        <p class="digest-subject">{emailSubject}</p>
+      </div>
+    </div>
+    <p class="digest-body">{emailLine}</p>
+  </div>
+  <div class="digest-card">
+    <div class="digest-head">
+      <span class="digest-icon digest-icon-teams">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="2.5" width="11" height="11" rx="2.5" /><path d="M5.5 6h5M5.5 8.5h5M5.5 11h3" /></svg>
+      </span>
+      <div>
+        <p class="digest-label">Microsoft Teams</p>
+        <p class="digest-subject">{teamsTitle}</p>
+      </div>
+    </div>
+    <p class="digest-body">{teamsLine}</p>
+  </div>
+</div>
+
+<style>
+  .digest-wrap { display: grid; gap: 14px; sm:grid-template-columns: 1fr 1fr; }
+  @media (min-width: 640px) { .digest-wrap { grid-template-columns: 1fr 1fr; } }
+  .digest-card { border-radius: 14px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-soft); padding: 16px 18px; }
+  .digest-head { display: flex; align-items: center; gap: 10px; }
+  .digest-icon { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; }
+  .digest-icon-mail { background: var(--color-blue-bg); color: var(--color-blue-text); }
+  .digest-icon-teams { background: var(--color-surface-2); color: var(--color-ink); }
+  .digest-icon svg { width: 15px; height: 15px; }
+  .digest-label { font-size: 11px; color: var(--color-muted); }
+  .digest-subject { font-size: 12.5px; font-weight: 600; color: var(--color-ink); }
+  .digest-body { margin-top: 10px; font-size: 12px; color: var(--color-muted); line-height: 1.5; }
+</style>

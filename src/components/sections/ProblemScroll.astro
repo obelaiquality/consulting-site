@@ -1,0 +1,61 @@
+---
+/*
+ * "The problem" statement on paper background. One large Syne paragraph whose words fill
+ * from dim to ink as the section scrolls through the viewport, then a small muted line
+ * naming what Obel MS does about it. No other decoration — see docs/BUILD-SPEC.md section 4.
+ */
+---
+<section class="problem-scroll section-y" aria-labelledby="problem-heading">
+  <div class="container-x">
+    <p id="problem-heading" class="problem-text" data-problem-text>
+      Supplier certificates live in someone's inbox. Specs sit on a shared drive. Approvals happen in email threads. Then the auditor asks for the current version.
+    </p>
+    <p class="problem-sub t-body mt-8">
+      Obel MS puts every controlled document and every approval in one place, with a record of who did what and when.
+    </p>
+  </div>
+</section>
+
+<style>
+  .problem-scroll { background: var(--color-bg); }
+  .problem-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2rem, 4.6vw, 3.6rem);
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    max-width: 22ch;
+    color: var(--color-ink);
+  }
+  /* Reduced motion / no-JS fallback: text is simply ink, no per-word span needed. */
+  .problem-text :global(.word) { color: #c9c9c2; }
+</style>
+
+<script>
+  import { onReady, gsap, SplitText, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const el = document.querySelector<HTMLElement>('[data-problem-text]');
+    if (!el) return;
+
+    if (reduced) {
+      // Final state only: no split, no scrub. Content stays complete and readable.
+      return;
+    }
+
+    const split = new SplitText(el, { type: 'words', wordsClass: 'word' });
+    gsap.set(split.words, { color: '#c9c9c2' });
+
+    gsap.to(split.words, {
+      color: '#111110',
+      stagger: 0.5,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 75%',
+        end: 'bottom 45%',
+        scrub: 0.6,
+      },
+    });
+  });
+</script>

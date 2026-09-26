@@ -1,0 +1,235 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, plans } from '../data/site';
+
+const planParam = Astro.url.searchParams.get('plan');
+console.log('DEBUG contact.astro Astro.url =', Astro.url.href, 'planParam=', JSON.stringify(planParam));
+const planOptions = [
+  ...plans.map((p) => ({ id: p.id, name: p.name })),
+  { id: 'not-sure', name: 'Not sure yet' },
+];
+const validPlanIds = planOptions.map((p) => p.id);
+const preselectedPlan = planParam && validPlanIds.includes(planParam) ? planParam : 'not-sure';
+
+const teamSizes = ['1–10', '11–50', '51–200', '200+'];
+const standards = ['ISO 9001', 'ISO 13485', 'FSSC 22000', 'BRCGS', 'Other'];
+
+const steps = [
+  { n: '1', title: 'Tell us where you are', body: 'This form: your team size, the standards you work to, and what’s slowing you down right now.' },
+  { n: '2', title: 'We reply to confirm a time', body: 'A real person from Obel, usually within one working day. No scheduling bot.' },
+  { n: '3', title: 'A 20-minute walkthrough', body: 'We show External Document Control and Workflow Manager against your own kind of documents, not a generic slide deck.' },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Book a 20-minute demo of Obel MS, or get in touch about consulting, implementation and audit prep."
+>
+  <section id="demo" class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="max-w-[42rem]">
+        <p class="label-dot mb-6">Book a demo</p>
+        <h1 class="t-h2" data-split data-split-load>Book a demo</h1>
+        <p class="t-lead mt-6">
+          Tell us a little about your team and we’ll reply directly to set up a 20-minute walkthrough
+          of Obel MS — no sales queue, no calendar link that never has a slot.
+        </p>
+      </div>
+
+      <div class="mt-16 grid gap-14 lg:grid-cols-12 lg:gap-10">
+        <div class="lg:col-span-7">
+          <form id="demo-form" novalidate>
+            <div class="form-grid">
+              <div class="field">
+                <label for="f-name">Full name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="err-name" />
+                <p id="err-name" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-email">Work email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="err-email" />
+                <p id="err-email" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-company">Company</label>
+                <input id="f-company" name="company" type="text" autocomplete="organization" required aria-describedby="err-company" />
+                <p id="err-company" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-role">Your role</label>
+                <input id="f-role" name="role" type="text" autocomplete="organization-title" placeholder="e.g. Quality Manager" required aria-describedby="err-role" />
+                <p id="err-role" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-team-size">Team size</label>
+                <select id="f-team-size" name="teamSize" autocomplete="off" required aria-describedby="err-team-size">
+                  <option value="" selected disabled>Select team size</option>
+                  {teamSizes.map((t) => <option value={t}>{t}</option>)}
+                </select>
+                <p id="err-team-size" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field">
+                <label for="f-standards">Standards you work to</label>
+                <select id="f-standards" name="standards" autocomplete="off" required aria-describedby="err-standards">
+                  <option value="" selected disabled>Select a standard</option>
+                  {standards.map((s) => <option value={s}>{s}</option>)}
+                </select>
+                <p id="err-standards" class="field-error" role="alert"></p>
+              </div>
+
+              <div class="field field-full">
+                <label for="f-plan">Plan you’re interested in</label>
+                <select id="f-plan" name="plan" autocomplete="off">
+                  {planOptions.map((p) => <option value={p.id} selected={p.id === preselectedPlan}>{p.name}</option>)}
+                </select>
+              </div>
+
+              <div class="field field-full">
+                <label for="f-message">What would you like us to know? <span class="optional">Optional</span></label>
+                <textarea id="f-message" name="message" rows="4" placeholder="What are you currently using, and what’s not working about it?"></textarea>
+              </div>
+            </div>
+
+            <div class="mt-8 flex flex-col gap-4">
+              <button type="submit" class="btn btn-primary w-fit" data-magnetic>Send demo request</button>
+              <p id="form-status" class="text-[14px] text-muted" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="rail">
+            <h2 class="t-h3">What happens in the demo</h2>
+            <ol class="mt-6 flex flex-col gap-6">
+              {steps.map((s) => (
+                <li class="flex gap-4">
+                  <span class="step-n tnum">{s.n}</span>
+                  <div>
+                    <p class="text-[15px] font-medium text-ink">{s.title}</p>
+                    <p class="mt-1 text-[14px] leading-relaxed text-muted">{s.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <div class="mt-8 border-t border-line pt-6">
+              <p class="text-[14px] text-muted">Prefer email directly?</p>
+              <a href={`mailto:${site.email}`} class="link-u text-[15px] text-ink font-medium">{site.email}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+  .field-full { grid-column: 1 / -1; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label { font-size: 13px; font-weight: 500; color: var(--color-ink); }
+  .field .optional { font-weight: 400; color: var(--color-muted); }
+  .field input, .field select, .field textarea {
+    font-size: 16px; line-height: 1.4; color: var(--color-ink);
+    background: var(--color-surface); border: 1px solid var(--color-line); border-radius: var(--radius-md);
+    padding: 0.7rem 0.85rem; width: 100%; min-height: 44px;
+    transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out);
+  }
+  .field textarea { min-height: 110px; resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(17 17 16 / 0.08);
+  }
+  .field.has-error input, .field.has-error select, .field.has-error textarea { border-color: var(--color-red); }
+  .field-error { font-size: 13px; color: var(--color-red); min-height: 1em; }
+
+  .rail { border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); padding: 1.75rem; }
+  .step-n { display: grid; place-items: center; width: 26px; height: 26px; flex-shrink: 0; border-radius: 999px; border: 1px solid var(--color-line); font-size: 12px; font-weight: 600; color: var(--color-muted); }
+</style>
+
+<script>
+  type FieldKey = 'name' | 'email' | 'company' | 'role' | 'teamSize' | 'standards';
+
+  const form = document.getElementById('demo-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  if (form && status) {
+    const requiredFields: FieldKey[] = ['name', 'email', 'company', 'role', 'teamSize', 'standards'];
+    const touched = new Set<FieldKey>();
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function fieldEl(key: FieldKey) {
+      return form!.elements.namedItem(key) as HTMLInputElement | HTMLSelectElement | null;
+    }
+    function errorEl(key: FieldKey) {
+      return document.getElementById(`err-${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`);
+    }
+    function validate(key: FieldKey): string {
+      const el = fieldEl(key);
+      const value = (el?.value || '').trim();
+      if (!value) return 'This field is required.';
+      if (key === 'email' && !emailRe.test(value)) return 'Enter a valid email address.';
+      return '';
+    }
+    function paint(key: FieldKey) {
+      if (!touched.has(key)) return;
+      const el = fieldEl(key);
+      const err = errorEl(key);
+      const wrap = el?.closest('.field');
+      const msg = validate(key);
+      if (err) err.textContent = msg;
+      wrap?.classList.toggle('has-error', !!msg);
+    }
+
+    requiredFields.forEach((key) => {
+      const el = fieldEl(key);
+      if (!el) return;
+      const mark = () => { touched.add(key); paint(key); };
+      el.addEventListener('input', mark);
+      el.addEventListener('blur', mark);
+      el.addEventListener('change', mark);
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let firstInvalid: HTMLElement | null = null;
+      for (const key of requiredFields) {
+        touched.add(key);
+        paint(key);
+        const msg = validate(key);
+        if (msg && !firstInvalid) firstInvalid = fieldEl(key) as HTMLElement;
+      }
+      if (firstInvalid) {
+        firstInvalid.focus();
+        status.textContent = 'Check the highlighted fields and try again.';
+        return;
+      }
+
+      const data = new FormData(form);
+      const get = (k: string) => (data.get(k) as string) || '';
+      const planLabel = (form.elements.namedItem('plan') as HTMLSelectElement)?.selectedOptions[0]?.text || 'Not sure yet';
+
+      const subject = `Obel MS demo request — ${get('company')}`;
+      const bodyLines = [
+        `Name: ${get('name')}`,
+        `Work email: ${get('email')}`,
+        `Company: ${get('company')}`,
+        `Role: ${get('role')}`,
+        `Team size: ${get('teamSize')}`,
+        `Standards: ${get('standards')}`,
+        `Plan of interest: ${planLabel}`,
+        '',
+        'Message:',
+        get('message') || '(none)',
+      ];
+      const mailto = `mailto:chat@obel-ai.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+      window.location.href = mailto;
+      status.textContent = 'Your email app should open with the request ready to send.';
+    });
+  }
+</script>

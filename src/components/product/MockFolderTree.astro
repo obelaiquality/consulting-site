@@ -1,0 +1,113 @@
+---
+/*
+ * Signature scroll moment for the EDC page: the EDC Folder tree (Supplier -> Manufacturer ->
+ * Product -> files), auto-filed from Register metadata. Expand All / Collapse All are real
+ * buttons. On scroll into view the tree expands level by level, once, then one file row
+ * flashes green as "just filed". Final state (no animation) when JS is off or motion is reduced.
+ */
+import AppWindow from '../mock/AppWindow.astro';
+import TreeNode from './TreeNode.astro';
+import { edcTree } from '../../data/demo';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<div class:list={[cls]}>
+  <AppWindow title="External Document Control" tabs={['Inbox', 'EDC Register', 'EDC Folder', 'Archive']} activeTab={2}>
+    <div class="folder-toolbar" aria-hidden="true">
+      <div class="flex items-center gap-2">
+        <button type="button" class="mock-btn" data-tree-expand-all>Expand All</button>
+        <button type="button" class="mock-btn" data-tree-collapse-all>Collapse All</button>
+      </div>
+      <div class="flex items-center gap-4 ml-auto">
+        <span class="legend-chip"><span class="legend-dot legend-dot-grey"></span>Empty folder</span>
+        <span class="legend-chip"><span class="legend-dot legend-dot-amber"></span>Unregistered file</span>
+        <span class="pill pill-grey">Admin</span>
+      </div>
+    </div>
+    <div class="folder-tree" data-folder-tree>
+      <ul class="tree-root">
+        {edcTree.map((supplier, i) => <TreeNode node={supplier} depth={0} index={i} parentId="s" />)}
+      </ul>
+    </div>
+  </AppWindow>
+</div>
+
+<style>
+  .folder-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 12px; border-bottom: 1px solid var(--color-line); }
+  .mock-btn { display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11.5px; font-weight: 500; color: var(--color-ink); transition: border-color 0.2s, background-color 0.2s; }
+  @media (hover: hover) and (pointer: fine) { .mock-btn:hover { border-color: var(--color-line-hover); background: var(--color-surface-2); } }
+  .legend-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--color-muted); }
+  .legend-dot { width: 7px; height: 7px; border-radius: 999px; }
+  .legend-dot-grey { background: var(--color-dim); }
+  .legend-dot-amber { background: var(--color-amber); }
+  .folder-tree { border: 1px solid var(--color-line); border-radius: 10px; background: #fff; padding: 10px 10px; max-height: 420px; overflow-y: auto; }
+  .tree-root { display: flex; flex-direction: column; gap: 1px; }
+</style>
+
+<script>
+  import { onReady, gsap, ScrollTrigger, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const root = document.querySelector<HTMLElement>('[data-folder-tree]');
+    if (!root) return;
+
+    const branchDepth = (d: number) => Array.from(root.querySelectorAll<HTMLElement>(`[data-tree-branch][data-branch-depth='${d}']`));
+    const allBranches = () => Array.from(root.querySelectorAll<HTMLElement>('[data-tree-branch]'));
+    const allToggles = () => Array.from(root.querySelectorAll<HTMLButtonElement>('[data-tree-toggle]'));
+
+    const syncToggles = () => {
+      allToggles().forEach((btn) => {
+        const id = btn.dataset.treeToggle;
+        const branch = root.querySelector(`[data-tree-branch='${id}']`);
+        btn.setAttribute('aria-expanded', String(!!branch?.classList.contains('is-open')));
+      });
+    };
+
+    const expandAll = () => { allBranches().forEach((b) => b.classList.add('is-open')); syncToggles(); };
+    const collapseAll = () => { allBranches().forEach((b) => b.classList.remove('is-open')); syncToggles(); };
+
+    document.querySelector('[data-tree-expand-all]')?.addEventListener('click', expandAll);
+    document.querySelector('[data-tree-collapse-all]')?.addEventListener('click', collapseAll);
+
+    allToggles().forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.treeToggle;
+        const branch = root.querySelector(`[data-tree-branch='${id}']`);
+        const open = branch?.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(!!open));
+      });
+    });
+
+    if (reduced) {
+      expandAll();
+      return;
+    }
+
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline();
+        const d0 = branchDepth(0);
+        const d1 = branchDepth(1);
+        const d2 = branchDepth(2);
+        d0.forEach((b, i) => tl.call(() => b.classList.add('is-open'), [], i * 0.12));
+        const t1 = d0.length * 0.12 + 0.2;
+        d1.forEach((b, i) => tl.call(() => b.classList.add('is-open'), [], t1 + i * 0.09));
+        const t2 = t1 + d1.length * 0.09 + 0.2;
+        d2.forEach((b, i) => tl.call(() => b.classList.add('is-open'), [], t2 + i * 0.07));
+        const t3 = t2 + d2.length * 0.07 + 0.35;
+        tl.call(() => {
+          syncToggles();
+          const rows = root.querySelectorAll<HTMLElement>('[data-file-row]');
+          const target = rows[Math.min(2, rows.length - 1)];
+          if (target) {
+            target.classList.add('just-filed');
+            setTimeout(() => target.classList.remove('just-filed'), 1400);
+          }
+        }, [], t3);
+      },
+    });
+  });
+</script>

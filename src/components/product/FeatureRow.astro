@@ -1,0 +1,25 @@
+---
+/*
+ * Alternating text/mock row used by product feature-detail sections.
+ * Pass reverse to put the mock on the left and text on the right.
+ */
+interface Props {
+  label?: string;
+  title: string;
+  reverse?: boolean;
+  class?: string;
+}
+const { label, title, reverse = false, class: cls = '' } = Astro.props;
+---
+<div class:list={['grid lg:grid-cols-12 gap-x-10 gap-y-8 lg:items-center', cls]}>
+  <div class:list={['lg:col-span-5', reverse ? 'lg:order-2' : '']}>
+    {label && <p class="label-dot mb-4">{label}</p>}
+    <h3 class="t-h3 max-w-[22ch]">{title}</h3>
+    <div class="mt-4 space-y-3">
+      <slot name="text" />
+    </div>
+  </div>
+  <div class:list={['lg:col-span-7', reverse ? 'lg:order-1' : '']}>
+    <slot name="mock" />
+  </div>
+</div>

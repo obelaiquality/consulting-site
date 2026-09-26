@@ -1,0 +1,264 @@
+---
+/*
+ * Workflow Manager signature scene. Dark section: the page crosses from paper to night as a
+ * 30vh "curtain" spacer at the top of the section scrolls past (background-color + text-color
+ * scrub, the one non-transform/opacity GSAP exception the build spec allows).
+ *
+ * Left: sticky text rail (desktop). Right: a pinned vertical stage diagram of the Nonconformance
+ * template (6 stages, data straight from demo.ts) with a record card and a growing audit trail,
+ * driven by one master scrubbed timeline. Default markup renders the *completed* end state, so
+ * no-JS, reduced-motion and mobile (no pin) all read as a correct, finished record out of the box;
+ * JS only resets to stage one and re-plays the story on desktop scroll.
+ */
+import { wfmTemplates, wfmRecords, auditTrail } from '../../data/demo';
+
+const template = wfmTemplates.find((t) => t.code === 'NC-001')!;
+const record = wfmRecords.find((r) => r.code === 'wf2609140007')!;
+const approvalSet = new Set(template.approvals);
+---
+
+<section class="wf-scene bg-night" data-workflow-scene aria-labelledby="wf-heading">
+  <div class="wf-curtain" data-wf-curtain aria-hidden="true"></div>
+
+  <div class="container-x">
+    <div class="wf-grid">
+      <div class="wf-rail-col">
+        <h2 id="wf-heading" class="t-h2 wf-heading" data-wf-heading>
+          Every nonconformance, change and complaint, closed properly.
+        </h2>
+        <p class="wf-lead" data-wf-lead>
+          Workflow Manager runs your corrective-action process the same way every time: the right
+          stages, the right approver, a deadline on each step, and an effectiveness check at the
+          end.
+        </p>
+      </div>
+
+      <div class="wf-stage-col">
+        <div class="wf-pin" data-wf-pin aria-hidden="true">
+          <div class="wf-diagram" data-wf-diagram>
+            {
+              template.stages.map((stage, i) => (
+                <div class="wf-row">
+                  <div class="wf-rail">
+                    {i < template.stages.length - 1 && (
+                      <svg class="wf-rail-connector" viewBox="0 0 2 100" preserveAspectRatio="none" data-wf-connector-svg>
+                        <line class="wf-rail-base" x1="1" y1="0" x2="1" y2="100" pathLength="100" />
+                        <line class="wf-rail-progress" x1="1" y1="0" x2="1" y2="100" pathLength="100" />
+                      </svg>
+                    )}
+                    <svg class="wf-dot" viewBox="0 0 24 24" data-wf-node data-state="completed">
+                      <circle class="wf-dot-glow" cx="12" cy="12" r="10.5" />
+                      <circle class="wf-dot-circle" cx="12" cy="12" r="8" />
+                      <path class="wf-dot-check" d="M7.5 12.3l2.8 2.8 6-6" />
+                    </svg>
+                  </div>
+                  <div class="wf-label">
+                    <div class="wf-label-top">
+                      <p class="wf-stage-name">{stage}</p>
+                      {approvalSet.has(i) && <span class="wf-tag">Approval</span>}
+                    </div>
+                    {approvalSet.has(i) && (
+                      <div class="wf-chip" data-approval-chip>
+                        Approved by Aisha Patel, Quality Manager
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+
+          <div class="wf-card">
+            <div class="wf-card-top">
+              <span class="wf-card-code tnum">{record.code}</span>
+              <span class="wf-card-divider"></span>
+              <span class="wf-card-template">{template.name}</span>
+              <span class="wf-card-divider"></span>
+              <span class="wf-card-title">{record.title}</span>
+            </div>
+            <div class="wf-card-bottom">
+              <span class="wf-card-stage tnum" data-stage-text>Stage 6 of 6</span>
+              <span class="pill pill-grey" data-status-pill>Completed</span>
+            </div>
+            <div class="wf-result" data-result-chip>Mark Effective</div>
+          </div>
+
+          <ul class="wf-audit" data-audit-list>
+            {
+              auditTrail.map((entry, i) => (
+                <li class="wf-audit-row" data-audit-row={i}>
+                  <p class="wf-audit-line">
+                    <b>{entry.actor}</b> {entry.action}
+                    {entry.detail ? `: ${entry.detail}` : ''}
+                  </p>
+                  <p class="wf-audit-date tnum">{entry.at}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wf-scene { position: relative; color: var(--color-night-fg); }
+  .wf-curtain { height: 30vh; }
+
+  .wf-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; padding-block: 2rem 8rem; }
+  @media (min-width: 1024px) {
+    .wf-grid { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
+  }
+
+  .wf-rail-col { max-width: 34rem; }
+  @media (min-width: 1024px) {
+    .wf-rail-col { position: sticky; top: calc(var(--nav-h) + 3rem); }
+  }
+  .wf-heading { color: var(--color-night-fg); }
+  .wf-lead { margin-top: 1.5rem; font-size: clamp(1.05rem, 1.35vw, 1.25rem); line-height: 1.55; color: var(--color-night-muted); max-width: 34rem; }
+
+  /* ---------- Stage diagram ---------- */
+  .wf-pin { display: flex; flex-direction: column; gap: 2.5rem; }
+  .wf-diagram { display: flex; flex-direction: column; }
+  .wf-row { display: grid; grid-template-columns: 24px 1fr; column-gap: 20px; padding-bottom: 40px; }
+  .wf-row:last-child { padding-bottom: 0; }
+
+  .wf-rail { position: relative; display: flex; justify-content: center; }
+  .wf-rail-connector { position: absolute; top: 25px; left: 50%; transform: translateX(-50%); width: 2px; height: 40px; overflow: visible; }
+  .wf-rail-base { stroke: var(--color-night-line); stroke-width: 2; }
+  .wf-rail-progress { stroke: var(--color-green-bright); stroke-width: 2; stroke-dasharray: 100; stroke-dashoffset: 0; }
+
+  .wf-dot { width: 24px; height: 24px; flex: none; }
+  .wf-dot-glow { fill: none; stroke: var(--color-green-bright); stroke-width: 1.4; opacity: 0; }
+  .wf-dot-circle { fill: transparent; stroke: var(--color-night-line); stroke-width: 1.6; transition: fill 0.25s var(--ease-out), stroke 0.25s var(--ease-out); }
+  .wf-dot-check { fill: none; stroke: var(--color-night); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transition: opacity 0.2s var(--ease-out); }
+  .wf-dot[data-state='current'] .wf-dot-glow { opacity: 0.6; }
+  .wf-dot[data-state='current'] .wf-dot-circle { stroke: var(--color-green-bright); }
+  .wf-dot[data-state='completed'] .wf-dot-circle { fill: var(--color-green-bright); stroke: var(--color-green-bright); }
+  .wf-dot[data-state='completed'] .wf-dot-check { opacity: 1; stroke: var(--color-night); }
+
+  .wf-label { padding-top: 1px; }
+  .wf-label-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .wf-stage-name { font-size: 15.5px; font-weight: 500; letter-spacing: -0.005em; color: var(--color-night-fg); }
+  .wf-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 999px; border: 1px solid var(--color-night-line); font-size: 10.5px; font-weight: 600; color: var(--color-night-muted); }
+  .wf-chip { margin-top: 8px; display: inline-flex; align-items: center; gap: 7px; height: 26px; padding: 0 10px; border-radius: 999px; background: var(--color-green-bg); color: var(--color-green); font-size: 12px; font-weight: 500; opacity: 1; }
+  .wf-chip::before { content: ''; width: 5px; height: 5px; border-radius: 999px; background: var(--color-green); }
+
+  /* ---------- Record card ---------- */
+  .wf-card { background: var(--color-night-2); border: 1px solid var(--color-night-line); border-radius: 12px; padding: 18px 20px; }
+  .wf-card-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--color-night-line); }
+  .wf-card-code { font-size: 13px; font-weight: 600; color: var(--color-night-fg); }
+  .wf-card-divider { width: 1px; height: 12px; background: var(--color-night-line); }
+  .wf-card-template { font-size: 13px; color: var(--color-night-muted); }
+  .wf-card-title { font-size: 13px; color: var(--color-night-muted); }
+  .wf-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; }
+  .wf-card-stage { font-size: 13px; color: var(--color-night-muted); }
+  .wf-result { margin-top: 14px; display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 8px; background: var(--color-green); color: #fff; font-size: 12.5px; font-weight: 600; opacity: 1; }
+
+  /* ---------- Audit trail ---------- */
+  .wf-audit { display: flex; flex-direction: column; gap: 14px; }
+  .wf-audit-row { padding-top: 14px; border-top: 1px solid var(--color-night-line); opacity: 1; }
+  .wf-audit-row:first-child { border-top: 0; padding-top: 0; }
+  .wf-audit-line { font-size: 13.5px; line-height: 1.5; color: var(--color-night-fg); }
+  .wf-audit-line b { font-weight: 600; }
+  .wf-audit-date { margin-top: 2px; font-size: 11.5px; color: var(--color-night-muted); }
+</style>
+
+<script>
+  import { onReady, gsap, ScrollTrigger, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const section = document.querySelector<HTMLElement>('[data-workflow-scene]');
+    const curtain = document.querySelector<HTMLElement>('[data-wf-curtain]');
+    const heading = document.querySelector<HTMLElement>('[data-wf-heading]');
+    const lead = document.querySelector<HTMLElement>('[data-wf-lead]');
+    if (!section || !curtain || !heading || !lead) return;
+    if (reduced) return;
+
+    // Curtain: background + heading/lead colour scrub from paper to night, over the curtain's
+    // own 30vh of scroll. Colour is an explicitly-allowed GSAP scrub target here (see ProblemScroll).
+    gsap.set(section, { backgroundColor: '#f8f8f6' });
+    gsap.set(heading, { color: '#111110' });
+    gsap.set(lead, { color: '#78786e' });
+    gsap.timeline({
+      scrollTrigger: { trigger: curtain, start: 'top bottom', end: 'bottom top', scrub: 0.6 },
+    })
+      .fromTo(section, { backgroundColor: '#f8f8f6' }, { backgroundColor: '#111110', ease: 'none' }, 0)
+      .fromTo(heading, { color: '#111110' }, { color: '#f0f0ec', ease: 'none' }, 0)
+      .fromTo(lead, { color: '#78786e' }, { color: '#9a9a92', ease: 'none' }, 0);
+
+    // Pinned stage narrative: desktop only.
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 1024px)', () => {
+      const pinEl = document.querySelector<HTMLElement>('[data-wf-pin]');
+      const nodes = gsap.utils.toArray<SVGElement>('[data-wf-node]');
+      const connectors = gsap.utils.toArray<SVGLineElement>('.wf-rail-progress');
+      const chips = gsap.utils.toArray<HTMLElement>('[data-approval-chip]');
+      const stageText = document.querySelector<HTMLElement>('[data-stage-text]');
+      const statusPill = document.querySelector<HTMLElement>('[data-status-pill]');
+      const resultChip = document.querySelector<HTMLElement>('[data-result-chip]');
+      const auditRows = gsap.utils.toArray<HTMLElement>('[data-audit-row]');
+      if (!pinEl || !stageText || !statusPill || !resultChip || nodes.length !== 6) return;
+
+      const total = 12;
+      const segment = total / nodes.length;
+
+      const render = (t: number) => {
+        const idx = Math.min(5, Math.floor(t / segment));
+        nodes.forEach((node, i) => {
+          const state = i < idx ? 'completed' : i === idx ? 'current' : 'pending';
+          if (node.getAttribute('data-state') !== state) node.setAttribute('data-state', state);
+        });
+        stageText.textContent = `Stage ${Math.min(6, idx + 1)} of 6`;
+        let label = 'Active';
+        let cls = 'pill-green';
+        if (idx === 2 || idx === 4) { label = 'Pending Approval'; cls = 'pill-amber'; }
+        else if (idx === 5) { label = 'Awaiting Verification'; cls = 'pill-blue'; }
+        if (t >= total - 0.001) { label = 'Completed'; cls = 'pill-grey'; }
+        statusPill.textContent = label;
+        statusPill.className = `pill ${cls}`;
+      };
+
+      // Reset to the opening state; JS owns this section only from here on.
+      gsap.set(connectors, { attr: { 'stroke-dashoffset': 100 } });
+      gsap.set(chips, { opacity: 0, scale: 0.96 });
+      gsap.set(resultChip, { opacity: 0, scale: 0.96 });
+      gsap.set(auditRows, { opacity: 0, y: 8 });
+      if (auditRows[0]) gsap.set(auditRows[0], { opacity: 1, y: 0 });
+      render(0);
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'none' },
+        onUpdate: () => render(tl.progress() * total),
+        scrollTrigger: { trigger: pinEl, start: 'top top', end: '+=250%', scrub: 0.6, pin: true },
+      });
+
+      connectors.forEach((line, i) => {
+        tl.fromTo(line, { attr: { 'stroke-dashoffset': 100 } }, { attr: { 'stroke-dashoffset': 0 }, duration: segment }, i * segment);
+      });
+      if (chips[0]) tl.fromTo(chips[0], { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.2, ease: 'power2.out' }, 5.6);
+      if (chips[1]) tl.fromTo(chips[1], { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.2, ease: 'power2.out' }, 9.6);
+
+      const auditTimes = [0, 1.5, 4.2, 4.8, 5.2, 5.8, 7, 9.8];
+      auditRows.forEach((row, i) => {
+        if (i === 0) return;
+        tl.fromTo(row, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' }, auditTimes[i] ?? i * segment);
+      });
+
+      tl.fromTo(resultChip, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power2.out' }, total - 0.3);
+
+      return () => {
+        // matchMedia revert: restore the static completed markup for the fallback breakpoints.
+        gsap.set(connectors, { attr: { 'stroke-dashoffset': 0 } });
+        gsap.set(chips, { opacity: 1, scale: 1 });
+        gsap.set(resultChip, { opacity: 1, scale: 1 });
+        gsap.set(auditRows, { opacity: 1, y: 0 });
+        nodes.forEach((node) => node.setAttribute('data-state', 'completed'));
+        stageText.textContent = 'Stage 6 of 6';
+        statusPill.textContent = 'Completed';
+        statusPill.className = 'pill pill-grey';
+      };
+    });
+  });
+</script>

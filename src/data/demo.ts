@@ -7,35 +7,35 @@
 export type Tone = 'green' | 'amber' | 'red' | 'blue' | 'grey';
 
 export const edcDocs = [
-  { file: 'FSSC22000 - Karoo Botanicals.pdf', title: 'FSSC 22000 - Dried Herbs - Karoo Botanicals', type: 'FSSC 22000', product: 'Dried Rosemary', supplier: 'Karoo Botanicals', manufacturer: 'Karoo Botanicals', statement: '', cert: 'FSSC-104882', expiry: '2027-03-14', status: 'Active', tone: 'green' as Tone },
-  { file: 'Statement - Vegan - Citric Acid.pdf', title: 'Statement - Vegan - Citric Acid - Meridian', type: 'Statement', product: 'Citric Acid', supplier: 'Meridian Ingredients', manufacturer: 'Weifang Ensign', statement: 'Vegan, Vegetarian', cert: '', expiry: '2026-10-09', status: 'Expiring soon', tone: 'amber' as Tone },
-  { file: 'TDS - Garlic Powder - Umhlanga.pdf', title: 'TDS (Technical Data Sheet) - Garlic Powder', type: 'TDS', product: 'Dehydrated Garlic Powder', supplier: 'Umhlanga Spice Co.', manufacturer: 'Umhlanga Spice Co.', statement: '', cert: 'TDS-DGP-07', expiry: '2027-06-30', status: 'Active', tone: 'green' as Tone },
-  { file: 'Halal Certificate 2026.pdf', title: 'Halal Certificate - Ascorbic Acid - Meridian', type: 'Halal Certificate', product: 'Ascorbic Acid', supplier: 'Meridian Ingredients', manufacturer: 'Zhengzhou Ruipu', statement: 'Halal', cert: 'SANHA-22817', expiry: '2026-09-18', status: 'Expired', tone: 'red' as Tone },
-  { file: 'Statement - Non-GMO - Maltol.pdf', title: 'Statement - Non-GMO - Ethyl Maltol', type: 'Statement', product: 'Ethyl Maltol', supplier: 'Meridian Ingredients', manufacturer: 'Anhui Jinhe', statement: 'Non-GMO', cert: '', expiry: '2027-01-22', status: 'Active', tone: 'green' as Tone },
-  { file: 'ISO 9001 Cert - Blue Crane.pdf', title: 'ISO 9001:2015 Certificate - Blue Crane Packaging', type: 'ISO 9001', product: 'PET Jars 500 ml', supplier: 'Blue Crane Packaging', manufacturer: 'Blue Crane Packaging', statement: '', cert: 'QMS-SA-3310', expiry: '2028-02-01', status: 'Active', tone: 'green' as Tone },
-  { file: 'Allergen Statement - Yeast.pdf', title: 'Statement - Allergen - Nutritional Yeast', type: 'Statement', product: 'Nutritional Yeast Flakes', supplier: 'Karoo Botanicals', manufacturer: 'Angel Yeast', statement: 'Allergen-free', cert: '', expiry: '', status: 'No expiry set', tone: 'grey' as Tone },
-  { file: 'COA - Lot 24-118.pdf', title: 'Certificate of Analysis - Spice Oleoresins', type: 'COA', product: 'Spice Oleoresins', supplier: 'Umhlanga Spice Co.', manufacturer: 'Umhlanga Spice Co.', statement: '', cert: 'COA-24-118', expiry: '2027-04-11', status: 'Active', tone: 'green' as Tone },
+  { file: 'FSSC22000 - Silverleaf Botanics.pdf', title: 'FSSC 22000 - Botanical Extracts - Silverleaf Botanics', type: 'FSSC 22000', product: 'Rosemary Extract', supplier: 'Silverleaf Botanics', manufacturer: 'Silverleaf Botanics', statement: '', cert: 'FSC-55210', expiry: '2027-03-14', status: 'Active', tone: 'green' as Tone },
+  { file: 'Statement - Vegan - Xanthan Gum.pdf', title: 'Statement - Vegan - Xanthan Gum - Meridian', type: 'Statement', product: 'Xanthan Gum', supplier: 'Northwind Ingredients', manufacturer: 'Harbourline Chemicals', statement: 'Vegan, Vegetarian', cert: '', expiry: '2026-10-09', status: 'Expiring soon', tone: 'amber' as Tone },
+  { file: 'TDS - Cocoa Powder - Umhlanga.pdf', title: 'TDS (Technical Data Sheet) - Cocoa Powder', type: 'TDS', product: 'Cocoa Powder 10/12', supplier: 'Tamarind & Vale', manufacturer: 'Tamarind & Vale', statement: '', cert: 'TDS-CP-112', expiry: '2027-06-30', status: 'Active', tone: 'green' as Tone },
+  { file: 'Halal Certificate 2026.pdf', title: 'Halal Certificate - Sunflower Lecithin - Meridian', type: 'Halal Certificate', product: 'Sunflower Lecithin', supplier: 'Northwind Ingredients', manufacturer: 'Aurelia Biotech', statement: 'Halal', cert: 'HAL-60417', expiry: '2026-09-18', status: 'Expired', tone: 'red' as Tone },
+  { file: 'Statement - Non-GMO - Pea Protein.pdf', title: 'Statement - Non-GMO - Pea Protein 80', type: 'Statement', product: 'Pea Protein 80', supplier: 'Northwind Ingredients', manufacturer: 'Brightwater Mills', statement: 'Non-GMO', cert: '', expiry: '2027-01-22', status: 'Active', tone: 'green' as Tone },
+  { file: 'ISO 9001 Cert - Blue Crane.pdf', title: 'ISO 9001:2015 Certificate - Kestrel Packaging', type: 'ISO 9001', product: 'Glass Jars 250 ml', supplier: 'Kestrel Packaging', manufacturer: 'Kestrel Packaging', statement: '', cert: 'QMS-4471', expiry: '2028-02-01', status: 'Active', tone: 'green' as Tone },
+  { file: 'Allergen Statement - Oat Fibre.pdf', title: 'Statement - Allergen - Oat Fibre', type: 'Statement', product: 'Oat Fibre 200', supplier: 'Silverleaf Botanics', manufacturer: 'Olsen Fermentation', statement: 'Allergen-free', cert: '', expiry: '', status: 'No expiry set', tone: 'grey' as Tone },
+  { file: 'COA - Lot 26-044.pdf', title: 'Certificate of Analysis - Vanilla Extract', type: 'COA', product: 'Vanilla Extract', supplier: 'Tamarind & Vale', manufacturer: 'Tamarind & Vale', statement: '', cert: 'COA-26-044', expiry: '2027-04-11', status: 'Active', tone: 'green' as Tone },
 ];
 
 /* EDC record statuses: Inbox -> Validated (Approve) | Rejected | Archived. Document Status (computed): Active, Expiring soon (<=30 days), Expired, No expiry set.
    EDC Folder: Supplier -> Manufacturer -> Product -> document, auto-filed from register metadata. */
 export const edcTree = [
-  { name: 'Karoo Botanicals', count: 6, children: [
-    { name: 'Karoo Botanicals', count: 4, children: [
-      { name: 'Dried Rosemary', count: 2, files: ['FSSC 22000 - Dried Herbs - Karoo Botanicals', 'Certificate of Analysis - Rosemary - Lot 24-091'] },
-      { name: 'Dried Thyme', count: 2, files: ['Specification - Dried Thyme', 'Statement - Vegan - Dried Thyme'] },
+  { name: 'Silverleaf Botanics', count: 6, children: [
+    { name: 'Silverleaf Botanics', count: 4, children: [
+      { name: 'Rosemary Extract', count: 2, files: ['FSSC 22000 - Botanical Extracts - Silverleaf Botanics', 'Certificate of Analysis - Rosemary - Lot 26-017'] },
+      { name: 'Thyme Extract', count: 2, files: ['Specification - Thyme Extract', 'Statement - Vegan - Thyme Extract'] },
     ] },
-    { name: 'Angel Yeast', count: 2, children: [
-      { name: 'Nutritional Yeast Flakes', count: 2, files: ['Statement - Allergen - Nutritional Yeast', 'TDS - Nutritional Yeast Flakes'] },
-    ] },
-  ] },
-  { name: 'Meridian Ingredients', count: 11, children: [
-    { name: 'Weifang Ensign', count: 3, children: [
-      { name: 'Citric Acid', count: 3, files: ['Statement - Vegan - Citric Acid - Meridian', 'COA - Citric Acid - Lot 7781', 'Halal Certificate - Citric Acid'] },
+    { name: 'Olsen Fermentation', count: 2, children: [
+      { name: 'Oat Fibre 200', count: 2, files: ['Statement - Allergen - Oat Fibre', 'TDS - Oat Fibre 200'] },
     ] },
   ] },
-  { name: 'Umhlanga Spice Co.', count: 5, children: [] },
-  { name: 'Blue Crane Packaging', count: 0, children: [] },
+  { name: 'Northwind Ingredients', count: 11, children: [
+    { name: 'Harbourline Chemicals', count: 3, children: [
+      { name: 'Xanthan Gum', count: 3, files: ['Statement - Vegan - Xanthan Gum - Meridian', 'COA - Xanthan Gum - Lot 3390', 'Halal Certificate - Xanthan Gum'] },
+    ] },
+  ] },
+  { name: 'Tamarind & Vale', count: 5, children: [] },
+  { name: 'Kestrel Packaging', count: 0, children: [] },
 ];
 
 export const wfmTemplates = [

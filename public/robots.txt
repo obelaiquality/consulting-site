@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://obel-ai.com/sitemap-index.xml

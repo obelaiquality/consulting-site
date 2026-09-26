@@ -1,0 +1,299 @@
+---
+/*
+ * Home signature moment: one supplier certificate travels Upload -> AI Suggestions -> Approve -> EDC Folder.
+ * Desktop (and motion allowed): the stage pins and a scrubbed timeline drives the app mock through four states.
+ * Mobile or reduced motion: the four states render as a simple stacked sequence.
+ */
+import AppWindow from '../mock/AppWindow.astro';
+
+const steps = [
+  { title: 'Drop it in the Inbox', body: 'Drag in a supplier certificate, statement or spec. Any PDF works, one file or fifty.' },
+  { title: 'AI reads it for you', body: 'Obel MS pulls out the document type, supplier, product, certificate number and expiry date. You accept, edit or dismiss each suggestion.' },
+  { title: 'Approve it into the Register', body: 'One click moves the document from the Inbox into your controlled register, with the approval in the audit trail.' },
+  { title: 'Filed, and watched', body: 'It files itself under Supplier, Manufacturer and Product. Obel MS watches the expiry date and warns your team before it lapses.' },
+];
+const aiFields = [
+  ['Document Type', 'Halal Certificate'],
+  ['Supplier', 'Northwind Ingredients'],
+  ['Manufacturer', 'Aurelia Biotech'],
+  ['Product', 'Sunflower Lecithin'],
+  ['Certificate No.', 'HAL-71382'],
+  ['Expiration Date', '2027-09-18'],
+];
+const inboxRows = [
+  ['COA - Xanthan Gum - Lot 3390.pdf', 'Done', 'green'],
+  ['Spec - Glass Jars 250 ml.pdf', 'Done', 'green'],
+];
+---
+<section class="edc-scene relative pt-[clamp(1.5rem,4vw,3.5rem)] pb-[var(--section-y)]" data-edc-scene aria-labelledby="edc-scene-title">
+  <div class="container-x">
+    <div class="max-w-[46rem]">
+      <p class="label-dot">External Document Control</p>
+      <h2 id="edc-scene-title" class="t-h2 mt-5" data-split>Drop in a certificate. It files itself.</h2>
+    </div>
+
+    <div class="scene-grid mt-14 lg:mt-20" data-edc-pin>
+      <!-- Step rail -->
+      <ol class="scene-steps" data-edc-steps>
+        <span class="rail" aria-hidden="true"><span class="rail-fill" data-edc-rail></span></span>
+        {steps.map((s, i) => (
+          <li class:list={['scene-step', { 'is-on': i === 0 }]} data-edc-step={i}>
+            <span class="step-num tnum" aria-hidden="true">{i + 1}</span>
+            <div>
+              <h3 class="step-title">{s.title}</h3>
+              <p class="step-body">{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <!-- Product stage -->
+      <div class="scene-stage" aria-hidden="true">
+        <AppWindow title="External Document Control" tabs={['Inbox', 'EDC Register', 'EDC Folder', 'Archive']} activeTab={0} class="scene-window">
+          <div class="scene-canvas">
+
+            <!-- Layer 1: Inbox + AI suggestions -->
+            <div class="layer layer-inbox" data-layer="inbox">
+              <div class="flex items-center gap-1.5 mb-3">
+                <span class="mbtn mbtn-green">Upload</span>
+                <span class="mbtn">AI Metadata</span>
+                <span class="mbtn">View</span>
+                <span class="mbtn" data-approve-btn>Approve</span>
+                <span class="mbtn hidden xl:inline-flex">Archive</span>
+              </div>
+              <div class="mtable">
+                <div class="mrow mhead"><span></span><span>Original Filename</span><span>AI</span></div>
+                {inboxRows.map(([f, s, t]) => (
+                  <div class="mrow"><span class="mcheck"></span><span class="truncate">{f}</span><span><span class={`pill pill-${t}`}>{s}</span></span></div>
+                ))}
+                <div class="mrow mrow-new" data-new-row>
+                  <span class="mcheck" data-new-check></span>
+                  <span class="truncate text-ink font-medium">Halal Certificate 2026 - Sunflower Lecithin.pdf</span>
+                  <span class="ocr">
+                    <span class="pill pill-blue ocr-proc" data-ocr-proc>Processing</span>
+                    <span class="pill pill-green ocr-done" data-ocr-done>Done</span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="ai-panel" data-ai-panel>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-[12.5px] font-semibold text-ink">AI Suggestions</p>
+                    <p class="text-[11px] text-muted">Review extracted metadata before accepting</p>
+                  </div>
+                  <span class="pill pill-green">6 fields</span>
+                </div>
+                <dl class="mt-3 grid gap-1.5">
+                  {aiFields.map(([k, v]) => (
+                    <div class="ai-row" data-ai-row>
+                      <dt>{k}</dt>
+                      <dd class="tnum">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div class="mt-3 flex gap-1.5">
+                  <span class="mbtn mbtn-green" data-accept>Accept</span>
+                  <span class="mbtn">Edit</span>
+                  <span class="mbtn">Dismiss</span>
+                </div>
+              </div>
+
+              <!-- The incoming file card -->
+              <div class="drop-card" data-drop-card>
+                <span class="pdf">PDF</span>
+                <div class="min-w-0">
+                  <p class="text-[12px] font-medium text-ink truncate">Halal Certificate 2026 - Sunflower Lecithin.pdf</p>
+                  <p class="text-[11px] text-muted tnum">412 KB</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Layer 2: Register -->
+            <div class="layer layer-register" data-layer="register">
+              <div class="flex items-center justify-between mb-3">
+                <span class="h-7 w-[200px] rounded-md border border-line bg-surface text-[11px] text-muted flex items-center px-3">Filters</span>
+                <div class="flex gap-1.5"><span class="mbtn mbtn-green">View</span><span class="mbtn">Show in Folder</span></div>
+              </div>
+              <div class="mtable">
+                <div class="mrow rrow mhead"><span>Document Title</span><span>Supplier</span><span>Expiration Date</span><span>Document Status</span></div>
+                <div class="mrow rrow mrow-hl" data-reg-new>
+                  <span class="truncate text-ink font-medium">Halal Certificate - Sunflower Lecithin</span><span class="truncate">Northwind Ingredients</span><span class="tnum">2027-09-18</span><span><span class="pill pill-green">Active</span></span>
+                </div>
+                <div class="mrow rrow"><span class="truncate text-ink">Statement - Vegan - Xanthan Gum</span><span class="truncate">Northwind Ingredients</span><span class="tnum">2026-10-09</span><span><span class="pill pill-amber">Expiring soon</span></span></div>
+                <div class="mrow rrow"><span class="truncate text-ink">FSSC 22000 - Botanical Extracts</span><span class="truncate">Silverleaf Botanics</span><span class="tnum">2027-03-14</span><span><span class="pill pill-green">Active</span></span></div>
+                <div class="mrow rrow"><span class="truncate text-ink">Halal Certificate - Sunflower Lecithin (2025)</span><span class="truncate">Northwind Ingredients</span><span class="tnum">2026-09-18</span><span><span class="pill pill-red">Expired</span></span></div>
+              </div>
+            </div>
+
+            <!-- Layer 3: Folder tree -->
+            <div class="layer layer-folder" data-layer="folder">
+              <div class="flex items-center gap-2 mb-3 text-[11px]">
+                <span class="mbtn">Expand All</span><span class="mbtn">Collapse All</span>
+                <span class="flex items-center gap-1.5 text-muted ml-2"><i class="size-1.5 rounded-full bg-dim"></i>Empty folder</span>
+                <span class="flex items-center gap-1.5 text-muted"><i class="size-1.5 rounded-full bg-amber"></i>Unregistered file</span>
+                <span class="ml-auto h-6 px-2.5 rounded-full border border-line text-muted inline-flex items-center">Admin</span>
+              </div>
+              <div class="tree">
+                <div class="trow"><span class="chev"></span><span class="fold"></span><span>Silverleaf Botanics</span><span class="cnt tnum">6 files</span></div>
+                <div class="trow open" data-tree="0"><span class="chev"></span><span class="fold"></span><span class="text-ink font-medium">Northwind Ingredients</span><span class="cnt tnum">12 files</span></div>
+                <div class="trow open l1" data-tree="1"><span class="chev"></span><span class="fold"></span><span>Harbourline Chemicals</span><span class="cnt tnum">3 files</span></div>
+                <div class="trow open l1" data-tree="1"><span class="chev"></span><span class="fold"></span><span class="text-ink font-medium">Aurelia Biotech</span><span class="cnt tnum">2 files</span></div>
+                <div class="trow open l2" data-tree="2"><span class="chev"></span><span class="fold"></span><span class="text-ink font-medium">Sunflower Lecithin</span><span class="cnt tnum">2 files</span></div>
+                <div class="trow l3" data-tree="3"><span class="doc"></span><span>Statement - Vegetarian - Sunflower Lecithin</span></div>
+                <div class="trow l3 trow-new" data-tree="3" data-filed><span class="doc"></span><span class="text-ink font-medium">Halal Certificate - Sunflower Lecithin</span><span class="filed-tag">Filed just now</span></div>
+                <div class="trow"><span class="chev"></span><span class="fold"></span><span>Tamarind & Vale</span><span class="cnt tnum">5 files</span></div>
+                <div class="trow"><span class="chev"></span><span class="fold fold-empty"></span><span class="text-muted">Kestrel Packaging</span><span class="cnt">(empty)</span></div>
+              </div>
+              <div class="expiry-note" data-expiry>
+                <span class="pill pill-green">Active</span>
+                <span class="text-[11.5px] text-muted">Expires <span class="text-ink tnum">2027-09-18</span>. Your team gets the digest 30 days before.</span>
+              </div>
+            </div>
+          </div>
+        </AppWindow>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scene-grid { display: grid; gap: 3rem; }
+  @media (min-width: 1024px) { .scene-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4rem; align-items: center; min-height: calc(100vh - var(--nav-h) - 80px); } }
+
+  .scene-steps { position: relative; display: grid; gap: 2rem; padding-left: 2.75rem; }
+  .rail { position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: var(--color-line); }
+  .rail-fill { position: absolute; inset: 0; background: var(--color-ink); transform-origin: top; transform: scaleY(0); }
+  .scene-step { position: relative; display: grid; transition: opacity .35s var(--ease-out); }
+  .step-num { position: absolute; left: -2.75rem; top: 0; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 99px; background: var(--color-bg); border: 1px solid var(--color-line); font-size: 12px; font-weight: 600; color: var(--color-muted); transition: background-color .3s var(--ease-out), color .3s var(--ease-out), border-color .3s var(--ease-out); }
+  .step-title { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; }
+  .step-body { margin-top: .5rem; color: var(--color-muted); font-size: 15.5px; line-height: 1.6; max-width: 30rem; }
+  .scene-step.is-on .step-num { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-night-fg); }
+  .scene-step.is-done .step-num { background: var(--color-green); border-color: var(--color-green); color: #fff; }
+
+  .scene-canvas { position: relative; min-height: 430px; }
+  .layer { position: absolute; inset: 0; }
+  .layer-register, .layer-folder { opacity: 0; visibility: hidden; }
+
+  .mbtn { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; color: var(--color-muted); white-space: nowrap; }
+  .mbtn-green { background: var(--color-green); border-color: var(--color-green); color: #fff; font-weight: 600; }
+  .mtable { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
+  .mrow { display: grid; grid-template-columns: 22px minmax(0, 1fr) 96px; gap: 12px; align-items: center; height: 38px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); }
+  .rrow { grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) 92px 104px; }
+  .mhead { height: 32px; border-top: 0; background: var(--color-surface-2); font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .mcheck { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid #cfcfca; transition: background-color .2s, border-color .2s; }
+  .mrow-new .mcheck.is-checked { background: var(--color-green); border-color: var(--color-green); }
+  .mrow-hl { background: rgb(220 252 231 / .5); box-shadow: inset 3px 0 0 var(--color-green); }
+  .ocr { position: relative; display: block; height: 22px; }
+  .ocr .pill { position: absolute; left: 0; top: 0; }
+  .ocr-done { opacity: 0; }
+
+  .ai-panel { position: absolute; right: 12px; top: 64px; width: min(330px, 62%); padding: 14px; border-radius: 12px; background: #fff; border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); }
+  .ai-row { display: grid; grid-template-columns: 104px 1fr; gap: 10px; font-size: 11.5px; padding: 5px 8px; border-radius: 6px; background: var(--color-surface-2); }
+  .ai-row dt { color: var(--color-muted); }
+  .ai-row dd { color: var(--color-ink); font-weight: 500; }
+
+  .drop-card { position: absolute; left: 12%; top: 40%; width: 290px; display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 10px; background: #fff; border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); }
+  .pdf { display: grid; place-items: center; flex: none; width: 30px; height: 36px; border-radius: 4px; background: var(--color-red-bg); color: var(--color-red-text); font-size: 9px; font-weight: 700; border: 1px solid var(--color-red-border); }
+
+  .tree { border: 1px solid var(--color-line); border-radius: 8px; background: #fff; padding: 6px 0; font-size: 11.5px; }
+  .trow { display: flex; align-items: center; gap: 8px; height: 30px; padding: 0 12px; color: var(--color-muted); overflow: hidden; }
+  .trow.l1 { padding-left: 32px; } .trow.l2 { padding-left: 52px; } .trow.l3 { padding-left: 74px; }
+  .cnt { margin-left: auto; font-size: 10.5px; color: var(--color-dim); }
+  .chev { width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(-45deg); opacity: .6; transition: transform .25s var(--ease-out); }
+  .trow.open > .chev { transform: rotate(45deg); }
+  .fold { width: 14px; height: 11px; border: 1.5px solid #9a9a92; border-radius: 2px 3px 3px 3px; position: relative; }
+  .fold::before { content: ''; position: absolute; left: -1.5px; top: -4px; width: 6px; height: 3px; border: 1.5px solid #9a9a92; border-bottom: 0; border-radius: 2px 2px 0 0; }
+  .fold-empty { border-color: #c9c9c2; } .fold-empty::before { border-color: #c9c9c2; }
+  .doc { width: 11px; height: 13px; border: 1.5px solid #9a9a92; border-radius: 2px; }
+  .trow-new { background: rgb(220 252 231 / .55); box-shadow: inset 3px 0 0 var(--color-green); }
+  .filed-tag { margin-left: auto; font-size: 10.5px; color: var(--color-green); font-weight: 600; }
+  .expiry-note { margin-top: 12px; display: flex; align-items: center; gap: 10px; }
+
+  /* Static (mobile / reduced motion): stack the three layers as a sequence. */
+  .edc-scene:not(.is-pinned) .scene-canvas { min-height: 0; display: grid; gap: 22px; }
+  .edc-scene:not(.is-pinned) .layer { position: relative; inset: auto; opacity: 1; visibility: visible; }
+  .edc-scene:not(.is-pinned) .ai-panel { position: relative; top: auto; width: auto; margin-top: 14px; box-shadow: none; }
+  .edc-scene:not(.is-pinned) .drop-card { display: none; }
+  .edc-scene:not(.is-pinned) .ocr-proc { opacity: 0; } .edc-scene:not(.is-pinned) .ocr-done { opacity: 1; }
+  @media (max-width: 640px) { .rrow { grid-template-columns: minmax(0, 1.6fr) 104px; } .rrow > :nth-child(2), .rrow > :nth-child(3) { display: none; } }
+</style>
+
+<script>
+  import { onReady, gsap, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const root = document.querySelector<HTMLElement>('[data-edc-scene]');
+    if (!root || reduced) return;
+    const mm = gsap.matchMedia();
+    mm.add('(min-width: 1024px)', () => {
+      root.classList.add('is-pinned');
+      const q = gsap.utils.selector(root);
+      const steps = q('[data-edc-step]') as HTMLElement[];
+      const tabs = q('[data-aw-tab]') as HTMLElement[];
+      const setStep = (n: number) => {
+        steps.forEach((s, i) => { s.classList.toggle('is-on', i === n); s.classList.toggle('is-done', i < n); s.style.opacity = i > n ? '0.45' : '1'; });
+      };
+      setStep(0);
+
+      gsap.set(q('[data-new-row]'), { opacity: 0, y: -8 });
+      gsap.set(q('[data-ai-panel]'), { opacity: 0, x: 24, scale: 0.97 });
+      gsap.set(q('[data-ai-row]'), { opacity: 0, x: 8 });
+      gsap.set(q('[data-drop-card]'), { opacity: 0, x: 160, y: -120, rotate: 6 });
+      gsap.set(q('[data-tree]'), { opacity: 0, height: 0, x: -6 });
+      gsap.set(q('[data-expiry]'), { opacity: 0, y: 6 });
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+        scrollTrigger: {
+          trigger: q('[data-edc-pin]')[0],
+          start: 'center center',
+          end: '+=320%',
+          pin: true,
+          scrub: 0.6,
+        },
+        onUpdate: () => {
+          const t = tl.time();
+          setStep(t < 2 ? 0 : t < 4.2 ? 1 : t < 6.4 ? 2 : 3);
+          const tab = t < 4.8 ? 0 : t < 6.4 ? 1 : 2;
+          tabs.forEach((el, i) => el.classList.toggle('on', i === tab));
+        },
+      });
+
+      // Step 1: the file drops into the Inbox.
+      tl.to(q('[data-drop-card]'), { opacity: 1, x: 0, y: 0, rotate: -2, duration: 1 })
+        .to(q('[data-drop-card]'), { y: 70, x: 40, scale: 0.9, opacity: 0, rotate: 0, duration: 0.6 }, '+=0.2')
+        .to(q('[data-new-row]'), { opacity: 1, y: 0, duration: 0.5 }, '<0.25')
+        .to(q('[data-rail]'), { scaleY: 0.25, ease: 'none', duration: 1.6 }, 0)
+      // Step 2: AI reads it.
+        .to(q('[data-ocr-proc]'), { opacity: 0, duration: 0.3 }, 2)
+        .to(q('[data-ocr-done]'), { opacity: 1, duration: 0.3 }, '<')
+        .to(q('[data-ai-panel]'), { opacity: 1, x: 0, scale: 1, duration: 0.7 }, '<0.1')
+        .to(q('[data-ai-row]'), { opacity: 1, x: 0, stagger: 0.18, duration: 0.4 }, '<0.3')
+        .to(q('[data-rail]'), { scaleY: 0.5, ease: 'none', duration: 1.8 }, 2)
+      // Step 3: Accept + Approve, switch to the Register.
+        .to(q('[data-accept]'), { scale: 0.95, duration: 0.15, yoyo: true, repeat: 1 }, 4)
+        .to(q('[data-new-check]'), { backgroundColor: '#166534', borderColor: '#166534', duration: 0.2 }, 4.3)
+        .to(q('[data-ai-panel]'), { opacity: 0, x: 24, duration: 0.4 }, 4.5)
+        .to(q('[data-layer="inbox"]'), { opacity: 0, y: -10, duration: 0.5 }, 4.8)
+        .set(q('[data-layer="register"]'), { visibility: 'visible' }, 4.8)
+        .fromTo(q('[data-layer="register"]'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.6 }, 4.9)
+        .fromTo(q('[data-reg-new]'), { backgroundColor: 'rgba(220,252,231,0)' }, { backgroundColor: 'rgba(220,252,231,0.5)', duration: 0.6 }, 5.3)
+        .to(q('[data-rail]'), { scaleY: 0.75, ease: 'none', duration: 1.8 }, 4)
+      // Step 4: into the folder tree.
+        .to(q('[data-layer="register"]'), { opacity: 0, y: -10, duration: 0.5 }, 6.4)
+        .set(q('[data-layer="folder"]'), { visibility: 'visible' }, 6.4)
+        .fromTo(q('[data-layer="folder"]'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, 6.5)
+        .to(q('[data-tree="0"]'), { opacity: 1, height: 30, x: 0, duration: 0.35 }, 6.8)
+        .to(q('[data-tree="1"]'), { opacity: 1, height: 30, x: 0, stagger: 0.12, duration: 0.35 }, 7.05)
+        .to(q('[data-tree="2"]'), { opacity: 1, height: 30, x: 0, duration: 0.35 }, 7.4)
+        .to(q('[data-tree="3"]'), { opacity: 1, height: 30, x: 0, stagger: 0.15, duration: 0.35 }, 7.6)
+        .fromTo(q('[data-filed]'), { scale: 0.97 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' }, 7.8)
+        .to(q('[data-expiry]'), { opacity: 1, y: 0, duration: 0.4 }, 8)
+        .to(q('[data-rail]'), { scaleY: 1, ease: 'none', duration: 2 }, 6.4)
+        .to({}, { duration: 0.6 });
+
+      return () => { root.classList.remove('is-pinned'); };
+    });
+  });
+</script>

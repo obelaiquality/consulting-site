@@ -4,7 +4,7 @@ import { edcDocs } from '../../data/demo';
 import { site } from '../../data/site';
 const rows = edcDocs.slice(0, 7);
 ---
-<section class="hero relative overflow-hidden pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
+<section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
   <div aria-hidden="true" class="hero-bg paper-grid"></div>
 
   <div class="container-x relative">
@@ -74,7 +74,7 @@ const rows = edcDocs.slice(0, 7);
           </span>
           <div>
             <p class="text-[12px] font-semibold text-ink leading-tight">Expires in 14 days</p>
-            <p class="text-[11px] text-muted leading-tight">Vegan statement for Citric Acid</p>
+            <p class="text-[11px] text-muted leading-tight">Vegan statement for Xanthan Gum</p>
           </div>
         </div>
         <p class="mt-2.5 text-[11px] text-muted">Flagged in today's expiry digest by email and Teams.</p>
@@ -84,10 +84,10 @@ const rows = edcDocs.slice(0, 7);
         <p class="text-[11px] font-medium text-muted">AI Suggestions</p>
         <div class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px]">
           <span class="text-muted">Type</span><span class="text-ink">Halal Certificate</span>
-          <span class="text-muted">Cert. No.</span><span class="text-ink tnum">SANHA-22817</span>
+          <span class="text-muted">Cert. No.</span><span class="text-ink tnum">HAL-60417</span>
           <span class="text-muted">Expiry</span><span class="text-ink tnum">2027-09-18</span>
         </div>
-        <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-green"><span class="size-1.5 rounded-full bg-green"></span>Filed to Meridian › Zhengzhou Ruipu › Ascorbic Acid</div>
+        <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-green"><span class="size-1.5 rounded-full bg-green"></span>Filed to Meridian › Aurelia Biotech › Sunflower Lecithin</div>
       </div>
 
       <div class="callout callout-c" data-callout aria-hidden="true">
@@ -120,10 +120,10 @@ const rows = edcDocs.slice(0, 7);
   .mt-check { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid #cfcfca; }
 
   .callout { position: absolute; z-index: 2; padding: 12px 14px; border-radius: 12px; background: rgb(255 255 255 / .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); }
-  .callout-a { width: 250px; right: -2.5%; top: 26%; }
-  .callout-b { width: 260px; left: -3.5%; top: 52%; }
-  .callout-c { width: 200px; right: 7%; bottom: -34px; }
-  @media (max-width: 1100px) { .callout-a { right: 1%; } .callout-b { left: 1%; } }
+  .callout-a { width: 250px; right: 9%; top: -34px; }
+  .callout-b { width: 270px; left: 5%; bottom: -70px; }
+  .callout-c { width: 210px; right: 12%; bottom: -40px; }
+  @media (max-width: 1100px) { .callout-b { left: 1%; } }
   @media (max-width: 767px) { .callout { display: none; } }
 </style>
 
