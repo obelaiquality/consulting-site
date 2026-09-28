@@ -79,7 +79,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'What AI features do you use, and is our data used to train AI models?',
-    a: 'AI metadata extraction and record summaries use OpenAI models through the API, only for organisations that consent. Under OpenAI’s API terms, API data is not used for model training. If you cannot consent, choose the no-external-AI option: extraction then runs on our own servers in South Africa, with fewer fields suggested correctly.',
+    a: 'AI metadata extraction and record summaries use OpenAI models through the API, only for organisations that consent. Under OpenAI’s API terms, API data is not used for model training. If you cannot consent, a no-external-AI option is available on request. It uses local extraction on our own servers in South Africa and fills fewer fields correctly.',
     tags: ['security'],
   },
   {

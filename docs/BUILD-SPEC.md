@@ -135,7 +135,7 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 
 **Updates (28 Sep 2026, OCR measured by Obel Cloud):**
 - You may say: AI metadata extraction and OCR are included on every plan, with a monthly page allowance (1,000 / 3,000 / 10,000). Digital PDFs are read directly. Scanned supplier documents in Latin-script languages are read with OCR. The AI suggests metadata (document type, dates, lot or batch numbers, certificate numbers) and a person confirms it in the Inbox. Documents are stored in South Africa.
-- Disclose the third-party model provider (OpenAI) in the security and data-handling wording, not as a headline, and offer the no-external-AI option (local extraction, fewer fields correct).
+- Disclose the third-party model provider (OpenAI) in the security and data-handling wording, not as a headline, and offer the no-external-AI option as "available on request" (local extraction, fewer fields correct). It is a deployment-wide setting today, not a per-tenant or self-service toggle; change the wording only when Obel Cloud confirms the per-tenant setting is merged.
 - Support time and onboarding hours are capped (see `pricingTerms.support` and the plan setup labels). The internal margin note lives outside this public repo.
 - You may say: encrypted at rest and in transit, and "99.5% availability target, best effort".
 - The AI chat assistant may appear only as "coming soon".
