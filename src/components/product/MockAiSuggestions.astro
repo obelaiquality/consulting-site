@@ -1,0 +1,54 @@
+---
+/*
+ * Real UI: Inbox "AI Metadata" -> OcrStatusPill (Done) -> AI Suggestions panel, Accept/Edit/Dismiss.
+ * Fields match the extraction pipeline (core/ai_helpers.py -> gpt-4o-mini).
+ */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const fields = [
+  { label: 'Document Type', value: 'Halal Certificate' },
+  { label: 'Supplier', value: 'Northwind Ingredients' },
+  { label: 'Manufacturer', value: 'Aurelia Biotech' },
+  { label: 'Product', value: 'Sunflower Lecithin' },
+  { label: 'Certificate No.', value: 'HAL-60417', num: true },
+  { label: 'Issue Date', value: '18.09.2025', num: true },
+  { label: 'Expiration Date', value: '18.09.2026', num: true },
+];
+---
+<div class:list={['ai-card', cls]} aria-hidden="true">
+  <div class="ai-head">
+    <div>
+      <p class="ai-title">AI Suggestions</p>
+      <p class="ai-sub">Review extracted metadata before accepting</p>
+    </div>
+    <span class="pill pill-green">Done</span>
+  </div>
+  <dl class="ai-fields">
+    {fields.map((f) => (
+      <div class="ai-field">
+        <dt>{f.label}</dt>
+        <dd class:list={{ tnum: f.num }}>{f.value}</dd>
+      </div>
+    ))}
+  </dl>
+  <div class="ai-actions">
+    <span class="ai-btn ai-btn-primary">Accept</span>
+    <span class="ai-btn">Edit</span>
+    <span class="ai-btn ai-btn-ghost">Dismiss</span>
+  </div>
+</div>
+
+<style>
+  .ai-card { border-radius: 16px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); padding: 20px 22px 22px; font-family: var(--font-sans); }
+  .ai-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--color-line); }
+  .ai-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; color: var(--color-ink); }
+  .ai-sub { margin-top: 2px; font-size: 12.5px; color: var(--color-muted); }
+  .ai-fields { margin-top: 14px; display: grid; grid-template-columns: auto 1fr; gap: 10px 18px; }
+  .ai-field { display: contents; }
+  .ai-field dt { font-size: 12px; color: var(--color-muted); }
+  .ai-field dd { font-size: 13px; color: var(--color-ink); font-weight: 500; text-align: right; }
+  .ai-actions { margin-top: 18px; display: flex; gap: 8px; }
+  .ai-btn { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 14px; border-radius: 7px; border: 1px solid var(--color-line); font-size: 12.5px; font-weight: 500; color: var(--color-ink); background: #fff; }
+  .ai-btn-primary { background: var(--color-ink); color: var(--color-night-fg); border-color: var(--color-ink); }
+  .ai-btn-ghost { color: var(--color-muted); }
+</style>

@@ -1,0 +1,26 @@
+---
+/* AI-generated stage and executive summaries: honest framing — draft, editable, not autonomous. */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<div class:list={['sum-card', cls]} aria-hidden="true">
+  <div class="sum-head">
+    <p class="sum-title">AI stage summary</p>
+    <span class="sum-regen">
+      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2.5 7a4.5 4.5 0 0 1 7.6-3.2M11.5 7a4.5 4.5 0 0 1-7.6 3.2" /><path d="M9.6 2.8v1.6H8M4.4 11.2V9.6H6" /></svg>
+      Regenerate
+    </span>
+  </div>
+  <p class="sum-body">Cartons from batch 24-118 were mislabelled with the wrong allergen statement. 48 units were quarantined at dispatch. Root cause and corrective action are still open; verification is due after closure.</p>
+  <p class="sum-note">Draft summaries are built from the record and its attachments. Your team edits and approves before it goes into the report.</p>
+</div>
+
+<style>
+  .sum-card { border-radius: 14px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-soft); padding: 16px 18px; }
+  .sum-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .sum-title { font-size: 12.5px; font-weight: 600; color: var(--color-ink); }
+  .sum-regen { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-muted); }
+  .sum-regen svg { width: 12px; height: 12px; }
+  .sum-body { margin-top: 10px; font-size: 12.5px; color: var(--color-ink); line-height: 1.6; }
+  .sum-note { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--color-line); font-size: 11.5px; color: var(--color-muted); line-height: 1.5; }
+</style>

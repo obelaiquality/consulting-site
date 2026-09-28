@@ -1,0 +1,254 @@
+---
+/*
+ * Pricing table. Currency (ZAR | USD) is a real segmented control; prices and setup fees update
+ * in place with a quick vertical roll. Every number comes from src/data/site.ts.
+ * Billing (Annual | Monthly, +15%) is a second segmented control.
+ * A plan with status "waitlist" would show "From" pricing, a badge and a waitlist CTA (none today).
+ */
+import { plans, pricingTerms, type Currency } from '../../data/site';
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+
+function fmt(n: number, cur: Currency): string {
+  return (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
+}
+/** Month-to-month price: annual price plus the uplift, rounded to R5 / $1. */
+const monthly = (n: number, cur: Currency) => (cur === 'ZAR' ? Math.round((n * (1 + pricingTerms.monthlyUplift)) / 5) * 5 : Math.round(n * (1 + pricingTerms.monthlyUplift)));
+const setupText = (p: (typeof plans)[number], cur: Currency) =>
+  p.setup[cur] > 0 ? `Plus ${fmt(p.setup[cur], cur)} once for ${p.setup.label}.` : `${p.setup.label}.`;
+
+const priceData = plans.map((p) => ({
+  id: p.id,
+  ZAR: { annual: fmt(p.price.ZAR, 'ZAR'), monthly: fmt(monthly(p.price.ZAR, 'ZAR'), 'ZAR'), setup: setupText(p, 'ZAR') },
+  USD: { annual: fmt(p.price.USD, 'USD'), monthly: fmt(monthly(p.price.USD, 'USD'), 'USD'), setup: setupText(p, 'USD') },
+}));
+---
+
+<div class="pricing-table" data-pricing-table data-plans={JSON.stringify(priceData)}>
+  {!compact && (
+    <div class="controls flex flex-wrap items-center gap-x-8 gap-y-4 mb-10">
+      <div class="flex items-center gap-3">
+        <span class="text-[13px] text-muted">Billing</span>
+        <div class="switch-group" role="group" aria-label="Billing" data-switch="billing">
+          <span class="switch-thumb" data-thumb aria-hidden="true"></span>
+          <button type="button" class="switch-btn" data-billing="annual" aria-pressed="true">Annual</button>
+          <button type="button" class="switch-btn" data-billing="monthly" aria-pressed="false">Monthly</button>
+        </div>
+        <span class="switch-note">Monthly is 15% more</span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="text-[13px] text-muted">Currency</span>
+        <div class="switch-group" role="group" aria-label="Currency" data-switch="currency">
+          <span class="switch-thumb" data-thumb aria-hidden="true"></span>
+          <button type="button" class="switch-btn" data-currency="ZAR" aria-pressed="true">ZAR</button>
+          <button type="button" class="switch-btn" data-currency="USD" aria-pressed="false">USD</button>
+        </div>
+      </div>
+      <p class="text-[13px] text-muted">{pricingTerms.vatNote} {pricingTerms.contract}</p>
+    </div>
+  )}
+
+  <div class="grid gap-5 md:grid-cols-3 md:items-start" data-reveal-group>
+    {plans.map((p) => (
+      <div
+        class:list={['plan-card', p.featured ? 'plan-featured' : 'card', { 'plan-waitlist': p.status === 'waitlist' }]}
+        data-plan={p.id}
+        data-reveal
+      >
+        <div class:list={['flex h-full flex-col p-7', p.featured ? 'md:py-9' : 'md:py-8']}>
+          <div class="flex items-center justify-between gap-3">
+            <h3 class="t-h3">{p.name}</h3>
+            {p.status === 'waitlist' && <span class="pill pill-grey">Coming 2027</span>}
+            
+          </div>
+          <p class:list={['mt-2 text-[14px] leading-relaxed', p.featured ? 'text-night-muted' : 'text-muted']}>
+            {p.blurb}
+          </p>
+
+          <div class="mt-6 flex items-baseline gap-1.5">
+            {p.status === 'waitlist' && <span class="text-[15px] text-muted">From</span>}
+            <span class="price-roll" data-price-roll>
+              <span class="price-num t-num tnum" data-price-num>{fmt(p.price.ZAR, 'ZAR')}</span>
+            </span>
+            <span class:list={['text-[15px]', p.featured ? 'text-night-muted' : 'text-muted']}>/month</span>
+          </div>
+          <p class:list={['mt-1.5 text-[12.5px]', p.featured ? 'text-night-muted' : 'text-muted']} data-price-note>
+            {setupText(p, 'ZAR')}
+          </p>
+          <p class:list={['mt-4 text-[13px]', p.featured ? 'text-night-muted' : 'text-muted']}>{p.users}</p>
+
+          <a
+            href={`/contact?plan=${p.id}#demo`}
+            class:list={['btn mt-6 w-full', p.featured ? 'btn-light' : 'btn-ghost']}
+          >
+            {p.cta}
+          </a>
+
+          <ul class="mt-7 space-y-3">
+            {(compact ? p.features.slice(0, 5) : p.features).map((f) => (
+              <li class="flex items-start gap-2.5 text-[14px] leading-snug">
+                <svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  aria-hidden="true"
+                  class:list={['check-icon mt-0.5 shrink-0', p.featured ? 'text-green-bright' : 'text-ink']}
+                >
+                  <path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class={p.featured ? 'text-night-muted' : 'text-muted'}>{f}</span>
+              </li>
+            ))}
+          </ul>
+
+          {compact && (
+            <a href="/pricing" class="link-u mt-6 text-[14px] font-medium text-ink">
+              Compare plans in detail
+            </a>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="mt-10 max-w-[64ch] space-y-2">
+    <p class="text-[14px] text-muted">
+      Every plan is hosted on Google Cloud in Johannesburg, with daily backups, updates and support included. {pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa. {pricingTerms.aiNote}
+    </p>
+    {!compact && (
+      <p class="text-[13px] text-muted">
+        Enterprise QMS platforms often cost R200,000 a year or more, before setup.
+      </p>
+    )}
+  </div>
+</div>
+
+<style>
+  .check-icon { width: 14px; height: 14px; }
+
+  .switch-group {
+    position: relative;
+    display: inline-flex;
+    padding: 4px;
+    border-radius: 999px;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-line);
+  }
+  .switch-thumb {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    border-radius: 999px;
+    background: var(--color-ink);
+    transition: transform 200ms var(--ease-out);
+  }
+  .switch-btn {
+    position: relative;
+    z-index: 1;
+    min-height: 44px;
+    padding-inline: 18px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-muted);
+    transition: color 200ms var(--ease-out);
+  }
+  .switch-btn[aria-pressed='true'] { color: var(--color-night-fg); }
+  .switch-note { font-size: 12.5px; color: var(--color-green); font-weight: 500; }
+
+  .plan-card { border-radius: var(--radius-lg); }
+  .plan-waitlist { background: transparent; border-style: dashed; }
+  .plan-featured {
+    background: var(--color-night);
+    color: var(--color-night-fg);
+    border: 1px solid var(--color-night-line);
+    box-shadow: var(--shadow-window);
+  }
+
+  .price-roll { position: relative; display: inline-block; overflow: hidden; line-height: 1; }
+  .price-num { display: block; font-size: clamp(1.9rem, 2.6vw, 2.35rem); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .switch-thumb { transition: none; }
+  }
+</style>
+
+<script>
+  import { onReady, gsap, reduced } from '../../scripts/motion';
+
+  interface PlanPrice {
+    id: string;
+    ZAR: { annual: string; monthly: string; setup: string };
+    USD: { annual: string; monthly: string; setup: string };
+  }
+
+  onReady(() => {
+    const root = document.querySelector<HTMLElement>('[data-pricing-table]');
+    if (!root) return;
+
+    let plansData: PlanPrice[] = [];
+    try {
+      plansData = JSON.parse(root.dataset.plans || '[]');
+    } catch {
+      return;
+    }
+
+    function updateRoll(el: HTMLElement, text: string) {
+      const current = el.querySelector<HTMLElement>('[data-price-num]');
+      if (!current || current.textContent === text) return;
+      if (reduced) {
+        current.textContent = text;
+        return;
+      }
+      el.style.height = `${current.offsetHeight}px`;
+      current.removeAttribute('data-price-num');
+      const next = current.cloneNode(true) as HTMLElement;
+      next.textContent = text;
+      next.setAttribute('data-price-num', '');
+      el.appendChild(next);
+      current.style.position = 'absolute';
+      current.style.inset = '0';
+      next.style.position = 'absolute';
+      next.style.inset = '0';
+      gsap.set(next, { yPercent: 100, opacity: 0 });
+      gsap.to(current, { yPercent: -100, opacity: 0, duration: 0.22, ease: 'power2.out', onComplete: () => current.remove() });
+      gsap.to(next, {
+        yPercent: 0, opacity: 1, duration: 0.22, ease: 'power2.out',
+        onComplete: () => { next.style.position = ''; next.style.inset = ''; el.style.height = ''; },
+      });
+    }
+
+    let billing: 'annual' | 'monthly' = 'annual';
+    let currency: 'ZAR' | 'USD' = 'ZAR';
+    const render = () => {
+      plansData.forEach((p) => {
+        const card = root.querySelector<HTMLElement>(`[data-plan="${p.id}"]`);
+        if (!card) return;
+        const roll = card.querySelector<HTMLElement>('[data-price-roll]');
+        const note = card.querySelector<HTMLElement>('[data-price-note]');
+        if (roll) updateRoll(roll, p[currency][billing]);
+        if (note) note.textContent = p[currency].setup;
+      });
+    };
+    const wire = (name: 'billing' | 'currency', onChange: (v: string) => void) => {
+      const group = root.querySelector<HTMLElement>(`[data-switch="${name}"]`);
+      if (!group) return;
+      const thumb = group.querySelector<HTMLElement>('[data-thumb]');
+      const buttons = Array.from(group.querySelectorAll<HTMLButtonElement>('.switch-btn'));
+      buttons.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+          buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+          if (thumb) thumb.style.transform = `translateX(${i * 100}%)`;
+          onChange(btn.dataset[name] || '');
+          render();
+        });
+      });
+    };
+    wire('billing', (v) => { billing = v === 'monthly' ? 'monthly' : 'annual'; });
+    wire('currency', (v) => { currency = v === 'USD' ? 'USD' : 'ZAR'; });
+  });
+</script>

@@ -1,0 +1,51 @@
+---
+/*
+ * Closing CTA band. Ink surface, centred Syne line, a subtle oversized pillar mark
+ * drifting behind the text on scroll (data-parallax, see scripts/motion.ts).
+ */
+import Logo from '../ui/Logo.astro';
+---
+
+<section class="cta-band relative overflow-hidden bg-night text-center" aria-labelledby="cta-heading">
+  <div class="cta-mark" data-parallax="0.08" aria-hidden="true">
+    <Logo mark class="h-full w-full" label="" />
+  </div>
+
+  <div class="container-x relative">
+    <h2 id="cta-heading" class="t-hero text-night-fg mx-auto max-w-[16ch]" data-split>
+      Get audit-ready this quarter.
+    </h2>
+    <p class="cta-lead mx-auto mt-6" data-reveal>
+      Book a 20-minute demo and see External Document Control and Workflow Manager on your own documents.
+    </p>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-4" data-reveal>
+      <a href="/contact#demo" class="btn btn-light" data-magnetic>Book a demo</a>
+      <a href="/pricing" class="btn btn-night-ghost">See pricing</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band { padding-block: clamp(4.5rem, 14vw, 160px); }
+
+  .cta-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: clamp(460px, 62vw, 920px);
+    aspect-ratio: 97 / 230;
+    transform: translate(-50%, -50%);
+    color: var(--color-night-3);
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 0;
+    will-change: transform;
+  }
+
+  .cta-lead {
+    max-width: 42ch;
+    font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+    line-height: 1.55;
+    color: var(--color-night-muted);
+  }
+</style>

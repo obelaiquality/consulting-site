@@ -1,0 +1,169 @@
+---
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeatureRow from '../../components/product/FeatureRow.astro';
+import ProductCta from '../../components/product/ProductCta.astro';
+import ScreenFrame from '../../components/mock/ScreenFrame.astro';
+import MockTemplatesList from '../../components/product/MockTemplatesList.astro';
+import MockAiSummary from '../../components/product/MockAiSummary.astro';
+import MockDigest from '../../components/product/MockDigest.astro';
+import recordsImg from '../../assets/app/wfm-records-my.png';
+import detailsImg from '../../assets/app/wfm-record-details.png';
+import verifyImg from '../../assets/app/wfm-record-verification.png';
+import reportImg from '../../assets/app/wfm-record-report.png';
+import designerImg from '../../assets/app/wfm-template-designer.png';
+import reportsImg from '../../assets/app/reports-wfm.png';
+import { site, plans } from '../../data/site';
+
+const professional = plans.find((p) => p.id === 'professional')!;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Obel MS Workflow Manager',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: 'Standard workflow templates for nonconformance, CAPA, change control, audits and document review, with staged approvals, effectiveness verification and a full audit trail.',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'ZAR',
+    price: String(professional.price.ZAR),
+    lowPrice: String(professional.price.ZAR),
+    url: `${site.url}/pricing`,
+  },
+};
+---
+<BaseLayout
+  title="CAPA and Nonconformance Software | Obel MS"
+  description="Nonconformance, CAPA, change control, audit and document review workflows with approvals, effectiveness checks and a full audit trail. Built for small teams."
+  breadcrumbs={[{ name: 'Workflow Manager', href: '/product/workflow-manager' }]}
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="pt-[calc(var(--nav-h)+clamp(3rem,8vw,6rem))] pb-4">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="label-dot is-live">Workflow Manager</p>
+        <h1 class="t-hero mt-6 max-w-[16ch]" data-split data-split-load>Corrective actions that close properly.</h1>
+        <p class="t-lead mt-6 max-w-[40rem]">
+          Each nonconformance, CAPA, audit, change and document review runs on a staged template. Every stage has a deadline, an owner and, where it matters, an approval.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
+          <a href="/contact#demo" class="btn btn-primary">Book a demo</a>
+          <a href="/pricing" class="btn btn-ghost">See pricing</a>
+        </div>
+      </div>
+      <div class="mt-14 md:mt-20" data-reveal>
+        <ScreenFrame src={recordsImg} alt="Workflow Manager records list with audit, nonconformance and CAPA records at different stages" crop={0.543} top={0.34} eager sizes="(min-width: 1280px) 1200px, 100vw" />
+        <p class="wm-caption">A real Obel MS screen with example data.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Five templates -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="grid lg:grid-cols-12 gap-x-10 gap-y-10">
+        <div class="lg:col-span-5" data-reveal>
+          <p class="label-dot mb-4">Five templates on day one</p>
+          <h2 class="t-h2 max-w-[16ch]">Start with the processes auditors ask about.</h2>
+          <p class="t-body mt-4">Nonconformance, CAPA, Audit, Change Control and Document Review each come with stages, deadlines and instructions for every stage. Four of them end with an effectiveness check.</p>
+        </div>
+        <div class="lg:col-span-7">
+          <MockTemplatesList />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Template designer -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="max-w-xl mb-10" data-reveal>
+        <p class="label-dot mb-4">The template designer</p>
+        <h2 class="t-h2">Make each template fit how you work.</h2>
+        <p class="t-body mt-4">Add or reorder stages, write the instructions, set a deadline and choose who approves. You can also build your own templates from a blank page.</p>
+      </div>
+      <div data-reveal>
+        <ScreenFrame src={designerImg} alt="The template designer, with each stage's deadline, instructions and approval settings" crop={0.72} sizes="(min-width: 1280px) 1200px, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Record detail and verification -->
+  <section class="section-y pt-0">
+    <div class="container-x space-y-20 lg:space-y-28">
+      <FeatureRow label="Every record" title="Stage, owner, due date and history in one place.">
+        <Fragment slot="text">
+          <p class="t-body">The header shows the template, the current stage, the owner, the agent and the due date. The tabs hold the record details, the audit trail, the workflow and a PDF report.</p>
+          <p class="t-body">When a stage needs sign-off, the approver sees Approve and Reject, and adds a comment.</p>
+        </Fragment>
+        <Fragment slot="mock"><ScreenFrame src={detailsImg} alt="A nonconformance record waiting for approval, with the stage header, the entries and the Approve and Reject buttons" crop={0.72} /></Fragment>
+      </FeatureRow>
+
+      <FeatureRow label="Closing the loop" title="Check that the fix worked." reverse>
+        <Fragment slot="text">
+          <p class="t-body">After the corrective action, the record waits for its verification date. The verifier reviews the evidence and marks the action Effective or Ineffective. An ineffective result reopens the record.</p>
+        </Fragment>
+        <Fragment slot="mock"><ScreenFrame src={verifyImg} alt="A record in its verification stage, with the Mark Effective and Mark Ineffective outcome" crop={0.72} /></Fragment>
+      </FeatureRow>
+
+      <FeatureRow label="AI drafts, people approve" title="Summaries your team edits and approves.">
+        <Fragment slot="text">
+          <p class="t-body">Obel MS drafts stage and executive summaries from what is on the record, including attachments. Your team edits and approves each summary before it goes into a report.</p>
+        </Fragment>
+        <Fragment slot="mock"><MockAiSummary /></Fragment>
+      </FeatureRow>
+
+      <FeatureRow label="Deadlines" title="Overdue records are checked every hour." reverse>
+        <Fragment slot="text">
+          <p class="t-body">An hourly job checks every record against its due date. Overdue and assignment notices go out by email and to Microsoft Teams, so a stalled record gets attention the same day.</p>
+        </Fragment>
+        <Fragment slot="mock">
+          <MockDigest
+            emailSubject="Obel-MS | Workflow Manager | Overdue Records"
+            emailLine="wf2609020011 is 2 days overdue at stage 2 of 6 (Root Cause Analysis)."
+            teamsTitle="QMS Alert: Overdue Records"
+            teamsLine="Posted to your quality channel with the record code, stage and days overdue."
+          />
+        </Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <!-- Reports -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="max-w-2xl mb-10" data-reveal>
+        <p class="label-dot mb-4">Reports</p>
+        <h2 class="t-h2 max-w-[20ch]">See what is overdue, and whether the fixes worked.</h2>
+        <p class="t-body mt-4">The quality dashboard shows CAPA timeliness, verification effectiveness, severity, sources and hotspots. The leadership view tracks overdue stages over time.</p>
+      </div>
+      <div data-reveal>
+        <ScreenFrame src={reportsImg} alt="The Workflow Manager quality dashboard with timeliness, effectiveness and severity charts" crop={0.72} sizes="(min-width: 1280px) 1200px, 100vw" />
+      </div>
+    </div>
+  </section>
+
+  <!-- What auditors see -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <FeatureRow label="What auditors see" title="A report for every record.">
+        <Fragment slot="text">
+          <p class="t-body">Each record has a report with its details, references, executive summary, entries, approvals and verification. Download it as a PDF for the audit file. The audit trail logs each stage change, approval, entry and attachment with its date and time.</p>
+        </Fragment>
+        <Fragment slot="mock"><ScreenFrame src={reportImg} alt="The report of a nonconformance record, with its main details, references and executive summary" crop={0.72} /></Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <RelatedGuides slugs={['capa-and-nonconformance', 'iso-9001-2026-changes', 'spreadsheets-vs-qms-software']} />
+  <ProductCta
+    title="Give corrective actions a place to close."
+    body={`Workflow Manager is part of the Professional plan, from R${professional.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. We help you migrate your open registers.`}
+  />
+</BaseLayout>
+
+<style>
+  .wm-caption { margin-top: 0.9rem; font-size: 13px; color: var(--color-dim); text-align: center; }
+</style>

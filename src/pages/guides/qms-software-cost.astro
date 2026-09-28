@@ -1,0 +1,256 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+import { plans, pricingTerms, type Currency } from '../../data/site';
+
+function fmt(n: number, cur: Currency): string {
+  return (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
+}
+---
+
+<GuideLayout
+  title="QMS Software Cost: 2026 Pricing Guide | Obel MS"
+  description="Typical QMS and document control software prices for SMEs and enterprise teams, in USD and ZAR, what drives the cost, and Obel MS's own pricing."
+  h1="How much does QMS software cost?"
+  answer="SME self-serve QMS tools typically run from about $30 to $220 per user a month depending on seats and modules, while enterprise eQMS platforms start around $12,000 to $17,500 a year, and some, like Qualio and MasterControl, are quote-only. Obel MS plans start at R1,490 (about $95) a month excluding VAT, billed annually."
+  published="2026-09-26"
+  updated="2026-09-26"
+  readingMinutes={7}
+  sources={[
+    { label: 'Greenlight Guru: quality pricing', url: 'https://www.greenlight.guru/quality-pricing' },
+    { label: 'SimplerQMS: pricing', url: 'https://simplerqms.com/pricing/' },
+    { label: 'Effivity: pricing (per user, per day)', url: 'https://www.effivity.com/' },
+    { label: 'Isolocity: pricing', url: 'https://isolocity.com/pricing/' },
+    { label: 'isoTracker: pricing and payment', url: 'https://www.isotracker.com/pricing-and-payment/' },
+    { label: 'Qualio: pricing (quote-only)', url: 'https://www.qualio.com/pricing' },
+    { label: 'MasterControl: pricing (quote-only)', url: 'https://www.mastercontrol.com/pricing/' },
+  ]}
+  related={[
+    { label: 'Pricing', href: '/pricing', note: 'Full Obel MS plans and add-ons' },
+    { label: 'Security and hosting', href: '/security', note: 'Where Obel MS runs, and what we commit to' },
+    { label: 'External Document Control', href: '/product/external-document-control', note: 'Supplier certificates, AI-read and auto-filed' },
+    { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Nonconformance, CAPA and approvals' },
+    { label: 'ISO 9001 software in South Africa', href: '/guides/iso-9001-software-south-africa', note: 'What South African SMEs should check' },
+    { label: 'Book a demo', href: '/contact#demo' },
+  ]}
+  faqs={[
+    {
+      q: 'Is QMS software priced per user or per company?',
+      a: 'Both models exist. Self-serve tools such as Effivity and Isolocity charge per named user a month, which adds up as your team grows. Obel MS and some enterprise platforms price by tier instead, with a set number of users included and unlimited read-only viewers, so the bill does not climb with every new colleague who just needs to view a document.',
+    },
+    {
+      q: 'Do QMS software prices include implementation?',
+      a: 'Rarely, for enterprise platforms. Qualio and MasterControl quote implementation separately, and it can run into tens of thousands of dollars on top of the subscription. SimplerQMS is an exception and bundles implementation into its listed price. Obel MS shows any onboarding fee upfront next to the plan: none on the entry Lite plan, a fixed fee on Essentials and Professional. There is no separate implementation project to fund.',
+    },
+    {
+      q: 'Why do some vendors not publish a price at all?',
+      a: 'Qualio and MasterControl both direct buyers to "request a quote" rather than listing figures, which is typical for life-science-grade eQMS sold through a sales-led process. If a vendor will not state even a starting price, budget for a longer sales cycle and ask early what a like-for-like deployment for your team size would cost.',
+    },
+    {
+      q: 'Do I have to sign a long-term contract for QMS software?',
+      a: 'It depends on the vendor. Some self-serve tools bill month to month. Obel MS prices are billed annually, with a month-to-month option available at 15% more. Ask whether the headline price assumes an annual commitment, and what the month-to-month price would be if you needed more flexibility.',
+    },
+    {
+      q: 'Does the listed price include VAT?',
+      a: 'Not always, and this is easy to miss when comparing quotes. Obel MS prices are shown excluding 15% VAT, in line with standard South African B2B pricing practice. Always ask a vendor to confirm whether a quoted figure is VAT-inclusive before you compare it to another quote.',
+    },
+    {
+      q: 'What happens if I need more users, storage or AI usage later?',
+      a: 'Most vendors sell add-ons rather than forcing you onto the next tier. Obel MS, for example, sells extra users, extra storage and extra AI-processed documents by the month, so a temporary spike in supplier certificates does not mean upgrading your whole plan.',
+    },
+  ]}
+>
+  <h2>How much does QMS software cost?</h2>
+  <p>
+    QMS software prices fall into two clear bands. Self-serve tools built for a single quality manager
+    typically run from roughly $30 to $220 a month per user, billed by named seat. Enterprise eQMS platforms
+    aimed at regulated manufacturing and life sciences start at $12,000 to $17,500 a year and climb from
+    there, often with a separate implementation project on top. Figures below are publicly listed or commonly
+    reported, checked in September 2026, with the source next to each one.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Vendor</th>
+          <th>Segment</th>
+          <th>Price (USD)</th>
+          <th>Price (ZAR, approx.)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><a href="https://www.effivity.com/" rel="noopener" target="_blank">Effivity</a></td>
+          <td>SME self-serve</td>
+          <td>Listed at $1/user/day (~$30/user/month)</td>
+          <td>~R555/user/month</td>
+        </tr>
+        <tr>
+          <td><a href="https://isolocity.com/pricing/" rel="noopener" target="_blank">Isolocity</a></td>
+          <td>SME self-serve</td>
+          <td>Listed at $220/user/month (full user, billed annually)</td>
+          <td>~R4,070/user/month</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.isotracker.com/pricing-and-payment/" rel="noopener" target="_blank">isoTracker</a></td>
+          <td>SME self-serve</td>
+          <td>Configurable calculator by seats and modules, no flat listed price</td>
+          <td>N/A</td>
+        </tr>
+        <tr>
+          <td><a href="https://www.greenlight.guru/quality-pricing" rel="noopener" target="_blank">Greenlight Guru</a></td>
+          <td>Enterprise eQMS</td>
+          <td>Listed at $12,000/year and up (eQMS packages)</td>
+          <td>~R222,000/year</td>
+        </tr>
+        <tr>
+          <td><a href="https://simplerqms.com/pricing/" rel="noopener" target="_blank">SimplerQMS</a></td>
+          <td>Enterprise eQMS</td>
+          <td>Listed at $17,500/year (Starter, up to 15 users)</td>
+          <td>~R323,750/year</td>
+        </tr>
+        <tr>
+          <td>
+            <a href="https://www.qualio.com/pricing" rel="noopener" target="_blank">Qualio</a> /
+            <a href="https://www.mastercontrol.com/pricing/" rel="noopener" target="_blank">MasterControl</a>
+          </td>
+          <td>Enterprise eQMS</td>
+          <td>Quote-only, no public price</td>
+          <td>N/A</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    ZAR figures are approximate, converted at an indicative September 2026 rate of about R18.50 to the US
+    dollar. Check a current rate before using these numbers for budgeting. isoTracker is included to show a
+    different pricing model: a per-seat, per-module calculator rather than a single headline figure, with
+    training, upgrades, backups and email support bundled in at every tier.
+  </p>
+
+  <h2>Why is it hard to compare QMS software prices directly?</h2>
+  <p>
+    Vendors price by different units: per named user, per concurrent user, per module, or by a flat tier.
+    So a "$X/month" headline from one vendor rarely means the same thing as another's. Work out your real
+    number of editors, viewers and the modules you need before comparing quotes, or you'll compare
+    figures that describe differently sized deployments.
+  </p>
+  <p>
+    Per-user pricing (Effivity, Isolocity) rewards a small team and punishes growth: add ten users and the
+    bill scales with them. Tiered pricing (Obel MS, and the entry level of most enterprise platforms) caps
+    what you pay at a set number of editors, which is easier to budget against but can force an early
+    upgrade if you cross the line. Many quality managers only start comparing prices seriously in the weeks
+    before an audit. That is the wrong time to discover that a "starting from" figure excludes
+    implementation, training and a six-figure onboarding project. Ask for the fully loaded number as early
+    as you can.
+  </p>
+
+  <h2>What drives the cost of QMS software?</h2>
+  <p>
+    Seven factors move the price more than anything else: how many people need to log in, which modules
+    you switch on, where the software runs, whether it needs formal validation, how much setup work your
+    data needs, the migration effort from spreadsheets or another system, and what level of support
+    you expect. Ask a vendor to price against your real numbers on each one.
+  </p>
+  <ul>
+    <li><strong>Users and seats.</strong> Named-editor pricing (Effivity, Isolocity) scales with headcount. Tiered pricing caps the editor count per plan and often includes unlimited read-only viewers instead.</li>
+    <li><strong>Modules.</strong> Document control alone costs less than document control plus CAPA, nonconformance, change control, audit and document review workflows bundled together.</li>
+    <li><strong>Hosting vs on-premise.</strong> A hosted (SaaS) system folds infrastructure, patching and uptime into the subscription. An on-premise or self-hosted system shifts that cost, and the IT effort, onto you.</li>
+    <li><strong>Validation.</strong> Life-science and medical-device buyers often need IQ/OQ/PQ-style validation documentation. Some vendors price it in (SimplerQMS), others charge it as a separate project (Qualio's implementation fee).</li>
+    <li><strong>Implementation.</strong> Configuring templates, roles, approval routes and folder structures to match how your business works.</li>
+    <li><strong>Migration.</strong> Moving existing registers, spreadsheets and document history in without losing version history or audit evidence.</li>
+    <li><strong>Training and support.</strong> Self-serve tools bundle basic training. Enterprise vendors often charge separately, or gate faster support behind a higher tier.</li>
+  </ul>
+
+  <h2>What hidden costs should you budget for?</h2>
+  <p>
+    The listed price rarely is the final price. Enterprise eQMS vendors in particular treat implementation,
+    validation and training as separate line items rather than folding them into the subscription. That's
+    how a "$12,000/year" headline turns into tens of thousands more before you've logged your first
+    document. Ask about the items below before you sign. They are the ones most likely to turn up on an
+    invoice you didn't expect.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Hidden cost</th>
+          <th>What to ask</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Setup or onboarding fee</td><td>Is it once-off, and is it waived on an annual commitment?</td></tr>
+        <tr><td>Storage overages</td><td>What happens once you exceed the included storage, and what does extra storage cost per month?</td></tr>
+        <tr><td>Per-module add-ons</td><td>Which modules are included in the headline price, and which are priced separately?</td></tr>
+        <tr><td>AI or automation usage caps</td><td>Is there a monthly limit on AI-processed documents or automated steps, and what does going over cost?</td></tr>
+        <tr><td>Support tier upsells</td><td>Is email-only support standard, with faster response times reserved for a higher plan?</td></tr>
+        <tr><td>Data migration</td><td>Is importing your existing registers and spreadsheets included, or a separate line item?</td></tr>
+        <tr><td>Exit and export</td><td>Can you export your full document set, metadata and audit trail on request, at no extra cost, if you leave?</td></tr>
+        <tr><td>Currency and VAT</td><td>Is the quoted price VAT-inclusive, and in which currency will you be billed?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>How much does Obel MS cost?</h2>
+  <p>
+    Obel MS prices are published on this site rather than quote-gated. Every plan runs in its own hosted
+    environment in South Africa with daily backups and updates included. {pricingTerms.vatNote} {pricingTerms.contract}
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Plan</th>
+          <th>Price (ZAR/month)</th>
+          <th>Price (USD/month)</th>
+          <th>Setup fee</th>
+          <th>Users</th>
+        </tr>
+      </thead>
+      <tbody>
+        {plans.map((p) => (
+          <tr>
+            <td>
+              {p.name}
+              {p.status === 'waitlist' && <span class="pill pill-grey" style="margin-left:8px">Waitlist, 2027</span>}
+            </td>
+            <td>{p.status === 'waitlist' && 'From '}{fmt(p.price.ZAR, 'ZAR')}</td>
+            <td>{p.status === 'waitlist' && 'From '}{fmt(p.price.USD, 'USD')}</td>
+            <td>
+              {p.setup.ZAR > 0
+                ? `${fmt(p.setup.ZAR, 'ZAR')} (${fmt(p.setup.USD, 'USD')}): ${p.setup.label}`
+                : p.setup.label}
+            </td>
+            <td>{p.users}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p>
+    These are Obel MS's own prices. See the full <a href="/pricing">pricing page</a>
+    for a feature-by-feature breakdown of each plan, plus add-ons for extra users, storage and AI usage.
+  </p>
+
+  <h2>What should you ask a vendor before you sign?</h2>
+  <p>
+    A short checklist catches most of the surprises. Send this list to any vendor you're evaluating and ask
+    for written answers before you compare their number to anyone else's.
+  </p>
+  <ul>
+    <li>Is the headline price per user, per company, or tiered? What happens as our team grows?</li>
+    <li>Does the price include implementation, validation and training, or are those separate projects?</li>
+    <li>Is there a setup or onboarding fee, and is it once-off or recurring?</li>
+    <li>What support is included, and what response time can we expect in writing?</li>
+    <li>Where is our data hosted, and who can access it?</li>
+    <li>Can we get a full export of our documents, metadata and audit trail if we leave?</li>
+    <li>Is the quote VAT-inclusive, and in what currency will we be billed?</li>
+    <li>Is there a minimum contract term, and what's the cost of leaving early?</li>
+    <li>Are there limits on storage, users or automated processing, and what do overages cost?</li>
+  </ul>
+  <p>
+    Write the answers down next to each vendor's headline price. Once implementation, VAT, currency and
+    contract length are accounted for, the real gap between a cheap self-serve tool and a mid-tier hosted
+    system is usually smaller than the sticker price suggests. The gap to an enterprise eQMS platform is
+    usually larger.
+  </p>
+</GuideLayout>

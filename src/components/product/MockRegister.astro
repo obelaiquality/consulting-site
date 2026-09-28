@@ -1,0 +1,66 @@
+---
+/* EDC Register grid mock: Original Filename, Document Title, Document Type, Product, Supplier,
+   Manufacturer, Certificate No., Expiration Date, Status, Document Status. */
+import AppWindow from '../mock/AppWindow.astro';
+import { edcDocs } from '../../data/demo';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const rows = edcDocs;
+---
+<div class:list={[cls]}>
+  <AppWindow title="External Document Control" tabs={['Inbox', 'EDC Register', 'EDC Folder', 'Archive']} activeTab={1}>
+    <div class="reg-toolbar" aria-hidden="true">
+      <div class="flex-1 h-8 rounded-md border border-line bg-surface flex items-center px-3 text-[11px] text-muted max-w-[220px]">
+        <svg class="size-3 mr-2 opacity-60" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5" /><path d="m10.5 10.5 3 3" /></svg>
+        Filters
+      </div>
+      <div class="flex gap-1.5">
+        <span class="mock-btn">View</span>
+        <span class="mock-btn">Show in Folder</span>
+        <span class="mock-btn">Archive</span>
+      </div>
+    </div>
+    <div class="reg-table" aria-hidden="true">
+      <div class="reg-row reg-head">
+        <span></span>
+        <span>Document Title</span>
+        <span class="hidden md:block">Type</span>
+        <span class="hidden lg:block">Product</span>
+        <span class="hidden sm:block">Supplier</span>
+        <span class="hidden xl:block">Certificate No.</span>
+        <span>Expiry</span>
+        <span>Status</span>
+        <span class="hidden lg:block">Document Status</span>
+      </div>
+      {rows.map((d) => (
+        <div class="reg-row">
+          <span class="reg-check"></span>
+          <span class="truncate text-ink">{d.title}</span>
+          <span class="hidden md:block truncate">{d.type}</span>
+          <span class="hidden lg:block truncate">{d.product}</span>
+          <span class="hidden sm:block truncate">{d.supplier}</span>
+          <span class="hidden xl:block truncate tnum">{d.cert || '-'}</span>
+          <span class="tnum">{d.expiry || '-'}</span>
+          <span><span class="pill pill-green">Validated</span></span>
+          <span class="hidden lg:block"><span class={`pill pill-${d.tone}`}>{d.status}</span></span>
+        </div>
+      ))}
+    </div>
+    <p class="reg-pagination" aria-hidden="true">Showing 1&ndash;8 of 1,413 (page 1 of 177)</p>
+  </AppWindow>
+</div>
+
+<style>
+  .reg-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+  .mock-btn { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; color: var(--color-muted); }
+  .reg-table { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
+  .reg-row { display: grid; grid-template-columns: 20px minmax(0, 2.2fr) minmax(0, 1fr) 100px; align-items: center; gap: 12px; height: 36px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); }
+  .reg-row:first-child { border-top: 0; }
+  @media (min-width: 640px) { .reg-row { grid-template-columns: 20px minmax(0, 2.2fr) minmax(0, 1.1fr) minmax(0, 1fr) 100px; } }
+  @media (min-width: 768px) { .reg-row { grid-template-columns: 20px minmax(0, 2.2fr) minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1fr) 100px; } }
+  @media (min-width: 1024px) { .reg-row { grid-template-columns: 20px minmax(0, 2.2fr) minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 1fr) 100px 100px; } }
+  @media (min-width: 1280px) { .reg-row { grid-template-columns: 20px minmax(0, 2.2fr) minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 0.9fr) minmax(0, 1fr) 100px 120px; } }
+  .reg-head { height: 32px; background: var(--color-surface-2); font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+  .reg-check { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid #cfcfca; }
+  .reg-pagination { margin-top: 10px; text-align: center; font-size: 11px; color: var(--color-dim); }
+</style>

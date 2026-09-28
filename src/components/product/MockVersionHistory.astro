@@ -1,0 +1,43 @@
+---
+/* "Upload New Version" modal: version history list + Run OCR checkbox, real product wording. */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const versions = [
+  { v: 3, date: '25.09.2026', by: 'Pieter van Wyk', size: '412 KB', current: true },
+  { v: 2, date: '11.03.2026', by: 'Thandi Mokoena', size: '398 KB', current: false },
+  { v: 1, date: '14.02.2025', by: 'Pieter van Wyk', size: '380 KB', current: false },
+];
+---
+<div class:list={['vh-card', cls]} aria-hidden="true">
+  <p class="vh-title">Upload New Version</p>
+  <p class="vh-hint">Uploading a new version will keep the current file as a version-history entry.</p>
+  <div class="vh-drop">Drop a file, or click to browse</div>
+  <label class="vh-check"><input type="checkbox" checked disabled />Run OCR on new version</label>
+  <p class="vh-sub">Version history</p>
+  <ul class="vh-list">
+    {versions.map((v) => (
+      <li class="vh-row">
+        <span class="vh-v">v{v.v}</span>
+        <span class="vh-date tnum">{v.date}</span>
+        <span class="vh-by truncate">{v.by}</span>
+        <span class="vh-size tnum">{v.size}</span>
+        {v.current ? <span class="pill pill-green">Current</span> : <span class="vh-view">View</span>}
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .vh-card { border-radius: 16px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); padding: 20px 22px 22px; }
+  .vh-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--color-ink); }
+  .vh-hint { margin-top: 4px; font-size: 12px; color: var(--color-muted); max-width: 40ch; }
+  .vh-drop { margin-top: 14px; height: 56px; border: 1.5px dashed var(--color-line); border-radius: 10px; display: grid; place-items: center; font-size: 12px; color: var(--color-dim); }
+  .vh-check { margin-top: 12px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--color-muted); }
+  .vh-check input { accent-color: var(--color-green); }
+  .vh-sub { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--color-line); font-size: 12px; font-weight: 600; color: var(--color-ink); }
+  .vh-list { margin-top: 8px; display: flex; flex-direction: column; }
+  .vh-row { display: grid; grid-template-columns: 28px 90px 1fr 64px 64px; align-items: center; gap: 10px; height: 34px; font-size: 12px; color: var(--color-muted); border-top: 1px solid #ebebea; }
+  .vh-row:first-child { border-top: 0; }
+  .vh-v { font-weight: 600; color: var(--color-ink); }
+  .vh-view { color: var(--color-ink); font-weight: 500; text-align: right; }
+</style>

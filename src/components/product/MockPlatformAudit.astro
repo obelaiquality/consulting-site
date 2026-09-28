@@ -1,0 +1,43 @@
+---
+/* "What auditors see" for EDC: the platform audit log (timestamp, user, event, details) —
+   every approval, supersede, archive and expiry digest is recorded, filterable and exportable. */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const rows = [
+  { at: '2026-09-26 08:14', user: 'thandi.mokoena', event: 'doc_approve', detail: 'Approved FSSC 22000 - Botanical Extracts - Silverleaf Botanics' },
+  { at: '2026-09-25 16:47', user: 'pieter.vanwyk', event: 'edc_supersede', detail: 'Uploaded new version (v3) of ISO 9001:2015 Certificate - Kestrel Packaging' },
+  { at: '2026-09-25 11:02', user: 'system', event: 'edc_expiry_notification', detail: 'Sent expiry digest email: 2 documents expiring within 30 days' },
+  { at: '2026-09-24 09:31', user: 'aisha.patel', event: 'doc_archive', detail: 'Archived Halal Certificate - Sunflower Lecithin (expired 18.09.2026)' },
+];
+---
+<div class:list={['pa-card', cls]} aria-hidden="true">
+  <div class="pa-head">
+    <p class="pa-title">Audit trail</p>
+    <span class="pa-export">Export CSV</span>
+  </div>
+  <div class="pa-table">
+    <div class="pa-row pa-row-head">
+      <span>Timestamp</span><span>User</span><span>Event</span><span>Details</span>
+    </div>
+    {rows.map((r) => (
+      <div class="pa-row">
+        <span class="tnum">{r.at}</span>
+        <span class="truncate">{r.user}</span>
+        <span class="truncate">{r.event}</span>
+        <span class="truncate">{r.detail}</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .pa-card { border-radius: 16px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); padding: 18px 20px 20px; }
+  .pa-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; border-bottom: 1px solid var(--color-line); }
+  .pa-title { font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--color-ink); }
+  .pa-export { font-size: 11.5px; color: var(--color-muted); border: 1px solid var(--color-line); border-radius: 6px; padding: 5px 10px; }
+  .pa-table { margin-top: 6px; font-size: 11px; }
+  .pa-row { display: grid; grid-template-columns: 118px 100px 1fr 1.6fr; gap: 10px; padding: 8px 0; border-top: 1px solid #ebebea; color: var(--color-muted); align-items: center; }
+  .pa-row:first-child { border-top: 0; }
+  .pa-row-head { font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; font-size: 9.5px; color: var(--color-dim); }
+  .pa-row:not(.pa-row-head) span:last-child { color: var(--color-ink); }
+</style>

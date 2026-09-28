@@ -1,0 +1,44 @@
+---
+/*
+ * Small closing CTA block, owned by the product pages (do not import components/sections/CtaBand).
+ * Dark ink surface, centred — the one place on a product page centre text is allowed.
+ */
+import { site } from '../../data/site';
+interface Props {
+  title: string;
+  body: string;
+  primaryLabel?: string;
+  primaryHref?: string;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+const {
+  title,
+  body,
+  primaryLabel = 'Book a demo',
+  primaryHref = '/contact#demo',
+  secondaryLabel = 'See pricing',
+  secondaryHref = '/pricing',
+} = Astro.props;
+---
+<section class="section-y">
+  <div class="container-x">
+    <div class="cta-card" data-reveal>
+      <p class="t-h2 max-w-[20ch] mx-auto">{title}</p>
+      <p class="t-lead mt-4 mx-auto text-night-muted max-w-[38ch]">{body}</p>
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+        <a href={primaryHref} class="btn btn-light" data-magnetic>{primaryLabel}</a>
+        <a href={secondaryHref} class="btn btn-night-ghost">{secondaryLabel}</a>
+      </div>
+      <p class="mt-6 text-[13px] text-night-muted">
+        Or email <a href={`mailto:${site.email}`} class="link-u text-night-fg">{site.email}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-card { position: relative; overflow: hidden; border-radius: 24px; background: var(--color-night); padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 3rem); text-align: center; color: var(--color-night-fg); }
+  .cta-card::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(rgb(255 255 255 / 0.07) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 0%, transparent 75%); pointer-events: none; }
+  .cta-card > * { position: relative; }
+</style>

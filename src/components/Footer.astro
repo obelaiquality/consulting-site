@@ -1,0 +1,66 @@
+---
+import Logo from './ui/Logo.astro';
+import { site } from '../data/site';
+import { guides } from '../data/guides';
+const year = new Date().getFullYear();
+const cols = [
+  { title: 'Product', links: [
+    { label: 'External Document Control', href: '/product/external-document-control' },
+    { label: 'Workflow Manager', href: '/product/workflow-manager' },
+    { label: 'Internal Document Control', href: '/product/internal-document-control', soon: true },
+    { label: 'Pricing', href: '/pricing' },
+  ] },
+  { title: 'Compliance', links: [
+    { label: 'ISO 9001 clause map', href: '/iso-9001' },
+    { label: 'Security & hosting', href: '/security' },
+    { label: 'Privacy (POPIA)', href: '/legal/privacy' },
+  ] },
+  { title: 'Guides', links: [
+    ...guides.slice(0, 4).map((g) => ({ label: g.title.split(':')[0], href: `/guides/${g.slug}` })),
+    { label: 'All guides', href: '/guides' },
+  ] },
+  { title: 'Company', links: [
+    { label: 'About Obel', href: '/about' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Book a demo', href: '/contact#demo' },
+  ] },
+];
+---
+<footer class="relative overflow-hidden bg-night text-night-muted">
+  <div class="container-x pt-20 pb-10">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-5 flex flex-col gap-6">
+        <a href="/" class="text-night-fg w-fit" aria-label="Obel MS home"><Logo class="h-6 w-auto" /></a>
+        <p class="max-w-sm text-[15px] leading-relaxed">
+          Hosted document control and workflow management for ISO 9001 teams. Built and run by {site.company}, quality consultants who write software.
+        </p>
+        <a href={`mailto:${site.email}`} class="link-u w-fit text-night-fg text-[15px]">{site.email}</a>
+      </div>
+      <div class="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-8">
+        {cols.map((c) => (
+          <div>
+            <p class="t-eyebrow !text-night-muted/70 mb-4">{c.title}</p>
+            <ul class="flex flex-col gap-3 text-[14.5px]">
+              {c.links.map((l) => (
+                <li>
+                  <a href={l.href} class="inline-flex items-center gap-2 text-night-fg/80 hover:text-night-fg transition-colors">
+                    {l.label}
+                    {'soon' in l && l.soon && <span class="text-[10px] uppercase tracking-[0.12em] text-night-muted border border-night-line rounded-full px-1.5 py-px">Soon</span>}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="mt-20 flex flex-col-reverse gap-4 border-t border-night-line pt-8 text-[13px] sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.company}. Obel MS supports ISO 9001 compliance. Certification is issued to organisations.</p>
+      <p class="flex items-center gap-2"><span class="size-1.5 rounded-full bg-green-bright shadow-[0_0_0_3px_rgb(34_197_94/0.15)]"></span> Hosted on Google Cloud in Johannesburg</p>
+    </div>
+  </div>
+  <div aria-hidden="true" class="pointer-events-none select-none text-night-3 -mb-[3.2vw] px-[var(--gutter)]">
+    <Logo class="w-full h-auto" label="" />
+  </div>
+</footer>

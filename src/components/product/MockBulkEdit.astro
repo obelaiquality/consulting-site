@@ -1,0 +1,57 @@
+---
+/* "Bulk Edit Folder Metadata" panel: tri-state Keep different values / Set all to / Clear,
+   per field, so selected documents file into the correct Supplier -> Manufacturer -> Product folder. */
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const fields = [
+  { label: 'Supplier', state: 'set', value: 'Northwind Ingredients' },
+  { label: 'Manufacturer', state: 'keep', value: '' },
+  { label: 'Product', state: 'clear', value: '' },
+];
+---
+<div class:list={['be-card', cls]} aria-hidden="true">
+  <p class="be-title">Bulk Edit Folder Metadata</p>
+  <p class="be-hint">Standardise supplier, manufacturer and product fields across selected documents so they file into the correct folders.</p>
+  <div class="be-fields">
+    {fields.map((f) => (
+      <div class="be-field">
+        <p class="be-label">{f.label}</p>
+        <div class="be-radios">
+          <span class:list={['be-radio', { on: f.state === 'keep' }]}>
+            <span class="be-dot"></span>Keep different values
+          </span>
+          <span class:list={['be-radio', { on: f.state === 'set' }]}>
+            <span class="be-dot"></span>Set all to: {f.state === 'set' && <span class="be-value tnum">{f.value}</span>}
+          </span>
+          <span class:list={['be-radio', { on: f.state === 'clear' }]}>
+            <span class="be-dot"></span>Clear
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="be-actions">
+    <span class="be-btn be-btn-primary">Apply to 12 documents</span>
+    <span class="be-btn">Cancel</span>
+  </div>
+</div>
+
+<style>
+  .be-card { border-radius: 16px; background: var(--color-surface); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); padding: 20px 22px 22px; }
+  .be-title { font-family: var(--font-display); font-weight: 700; font-size: 16px; color: var(--color-ink); }
+  .be-hint { margin-top: 4px; font-size: 12px; color: var(--color-muted); max-width: 48ch; }
+  .be-fields { margin-top: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .be-field { padding-top: 12px; border-top: 1px solid #ebebea; }
+  .be-field:first-child { padding-top: 0; border-top: 0; }
+  .be-label { font-size: 12px; font-weight: 600; color: var(--color-ink); margin-bottom: 8px; }
+  .be-radios { display: flex; flex-wrap: wrap; gap: 16px; }
+  .be-radio { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; color: var(--color-muted); }
+  .be-radio.on { color: var(--color-ink); font-weight: 500; }
+  .be-dot { width: 13px; height: 13px; border-radius: 999px; border: 1.5px solid var(--color-line); flex-shrink: 0; position: relative; }
+  .be-radio.on .be-dot { border-color: var(--color-ink); }
+  .be-radio.on .be-dot::after { content: ''; position: absolute; inset: 2.5px; border-radius: 999px; background: var(--color-ink); }
+  .be-value { padding: 2px 8px; border-radius: 5px; background: var(--color-surface-2); border: 1px solid var(--color-line); }
+  .be-actions { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--color-line); display: flex; gap: 8px; }
+  .be-btn { display: inline-flex; align-items: center; justify-content: center; height: 32px; padding: 0 14px; border-radius: 7px; border: 1px solid var(--color-line); font-size: 12.5px; font-weight: 500; color: var(--color-ink); background: #fff; }
+  .be-btn-primary { background: var(--color-ink); color: var(--color-night-fg); border-color: var(--color-ink); }
+</style>

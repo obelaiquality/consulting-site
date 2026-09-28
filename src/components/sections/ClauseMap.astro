@@ -1,0 +1,158 @@
+---
+/*
+ * "Built around ISO 9001 clause 7.5" — an interactive row list mapping clause language to
+ * shipped Obel MS features. Rows, not cards. Single motion: one data-reveal-group stagger.
+ * Hover (fine pointers only): surface tint + a 2px green left rule that scales in.
+ */
+interface Row {
+  clause: string;
+  requirement: string;
+  coverage: string;
+  modules: ('EDC' | 'WFM')[];
+}
+
+const rows: Row[] = [
+  {
+    clause: '7.5.2',
+    requirement: 'Creating and updating: identification, review and approval before release.',
+    coverage: 'Approve moves a document from the Inbox into the Register, status Validated. WFM routes approvals by job title.',
+    modules: ['EDC', 'WFM'],
+  },
+  {
+    clause: '7.5.3.1',
+    requirement: 'Availability and protection: suitable for use, protected from loss or misuse.',
+    coverage: 'One register, role-based access across four roles, and archive instead of delete.',
+    modules: ['EDC'],
+  },
+  {
+    clause: '7.5.3.2',
+    requirement: 'Distribution, access and retrieval.',
+    coverage: 'The EDC Folder auto-files by Supplier → Manufacturer → Product. You can find anything with filters or the ⌘K command palette.',
+    modules: ['EDC'],
+  },
+  {
+    clause: '7.5.3.2',
+    requirement: 'Control of changes and version control.',
+    coverage: 'Upload New Version keeps the full version history against every document.',
+    modules: ['EDC'],
+  },
+  {
+    clause: '7.5.3.2',
+    requirement: 'Retention and disposition.',
+    coverage: 'Archive and Unarchive, plus an audit log of every change made.',
+    modules: ['EDC'],
+  },
+  {
+    clause: '7.5.3',
+    requirement: 'Documents of external origin.',
+    coverage: 'EDC handles documents of external origin, such as supplier certificates, statements and specs, each with expiry tracking.',
+    modules: ['EDC'],
+  },
+  {
+    clause: '8.4',
+    requirement: 'Control of externally provided processes, products and services.',
+    coverage: 'Supplier certificates in EDC with expiry tracking, and a Nonconformance or CAPA record in Workflow Manager when a supplier falls short.',
+    modules: ['EDC', 'WFM'],
+  },
+  {
+    clause: '10.2',
+    requirement: 'Nonconformity and corrective action.',
+    coverage: 'A Nonconformance template with root cause analysis, CAPA and effectiveness verification.',
+    modules: ['WFM'],
+  },
+  {
+    clause: '7.5.3 / 9.x',
+    requirement: 'Evidence, for internal audit and management review.',
+    coverage: "Every record's audit trail lists the actor, action and timestamp, and exports as a PDF.",
+    modules: ['EDC', 'WFM'],
+  },
+];
+---
+<section class="clause-map section-y" aria-labelledby="clause-heading">
+  <div class="container-x">
+    <div class="max-w-[52rem]">
+      <h2 id="clause-heading" class="t-h2">Built around ISO 9001 clause 7.5</h2>
+      <p class="t-lead mt-4">Obel MS supports ISO 9001 compliance, giving you the controls an auditor looks for and the evidence to show them.</p>
+    </div>
+
+    <div class="clause-rows mt-14" data-reveal-group="0.05">
+      <div class="clause-row clause-row-head" aria-hidden="true">
+        <span>Clause</span>
+        <span>Requirement</span>
+        <span>How Obel MS covers it</span>
+        <span></span>
+      </div>
+      {rows.map((row) => (
+        <div class="clause-row" data-reveal>
+          <span class="clause-num tnum">{row.clause}</span>
+          <p class="clause-req">{row.requirement}</p>
+          <p class="clause-cov">{row.coverage}</p>
+          <span class="clause-tags">
+            {row.modules.map((m) => <span class="pill pill-grey">{m}</span>)}
+          </span>
+        </div>
+      ))}
+    </div>
+
+    <p class="clause-footnote mt-10">Obel MS supports ISO 9001 compliance. Certification is issued to organisations by accredited bodies.</p>
+  </div>
+</section>
+
+<style>
+  .clause-rows { border-top: 1px solid var(--color-line); }
+  .clause-row-head { display: none; }
+
+  .clause-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 22px 4px 22px 20px;
+    border-bottom: 1px solid var(--color-line);
+    transition: background-color 0.15s var(--ease-out);
+  }
+  .clause-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--color-green);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.15s var(--ease-out);
+  }
+
+  .clause-num { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -0.02em; color: var(--color-ink); }
+  .clause-req { font-size: 14px; color: var(--color-ink); font-weight: 500; max-width: 34ch; }
+  .clause-cov { font-size: 14px; line-height: 1.55; color: var(--color-muted); max-width: 44ch; }
+  .clause-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+  @media (min-width: 900px) {
+    .clause-row-head {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr) minmax(0, 1.3fr) 116px;
+      gap: 24px;
+      padding: 0 4px 14px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--color-dim);
+    }
+    .clause-row {
+      grid-template-columns: 92px minmax(0, 1fr) minmax(0, 1.3fr) 116px;
+      gap: 24px;
+      align-items: center;
+      padding: 26px 4px 26px 20px;
+    }
+    .clause-tags { justify-content: flex-end; }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .clause-row:hover { background: var(--color-surface); }
+    .clause-row:hover::before { transform: scaleY(1); }
+  }
+
+  .clause-footnote { font-size: 13px; color: var(--color-muted); max-width: 48ch; }
+</style>

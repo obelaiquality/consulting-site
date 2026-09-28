@@ -1,0 +1,121 @@
+---
+/*
+ * Home-page teaser for Internal Document Control (not shipped yet). The register preview
+ * uses generic, fictional SOP titles only — no real client, supplier or product names,
+ * per docs/BUILD-SPEC.md section 1 (see also src/data/demo.ts).
+ */
+import AppWindow from '../mock/AppWindow.astro';
+
+const sopRows = [
+  { code: 'SOP-QA-001', title: 'Document Control Procedure', rev: 'Rev 4' },
+  { code: 'SOP-QA-014', title: 'Supplier Approval Procedure', rev: 'Rev 2' },
+  { code: 'SOP-HR-005', title: 'Induction and Training Procedure', rev: 'Rev 6' },
+  { code: 'SOP-QA-022', title: 'Internal Audit Procedure', rev: 'Rev 3' },
+  { code: 'SOP-OPS-009', title: 'Nonconformance Handling Procedure', rev: 'Rev 5' },
+];
+---
+
+<section class="idc-teaser section-y" aria-labelledby="idc-heading">
+  <div class="container-x grid gap-x-14 gap-y-12 lg:grid-cols-2 lg:items-center">
+    <div data-reveal-group>
+      <p class="label-dot" data-reveal>In development</p>
+      <h2 id="idc-heading" class="t-h2 mt-4 max-w-[14ch]" data-reveal>
+        Your SOPs and work instructions, next.
+      </h2>
+      <p class="t-lead mt-5" data-reveal>
+        Internal Document Control brings drafting, review, approval, periodic review and controlled issue of your own procedures into the same system.
+      </p>
+
+      <form class="idc-waitlist mt-8" data-idc-teaser-form novalidate data-reveal>
+        <label for="idc-email" class="t-label mb-2 block">Get notified when it&rsquo;s ready</label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <input
+            id="idc-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            placeholder="you@company.com"
+            class="idc-input"
+          />
+          <button type="submit" class="btn btn-primary shrink-0">Join the waitlist</button>
+        </div>
+        <p class="mt-3 text-[13px] text-muted" data-teaser-note role="status" aria-live="polite">We don&rsquo;t have a release date yet. We&rsquo;ll email you the moment it is ready.</p>
+        <div class="lead-fb" data-teaser-fb hidden></div>
+      </form>
+    </div>
+
+    <div class="idc-preview relative" data-reveal>
+      <AppWindow title="Internal Document Control" tabs={['Drafts', 'In Review', 'Effective', 'Obsolete']} activeTab={2}>
+        <div class="idc-table" aria-hidden="true">
+          <div class="idc-row idc-head">
+            <span>Code</span><span>Title</span><span>Revision</span>
+          </div>
+          {sopRows.map((r) => (
+            <div class="idc-row">
+              <span class="tnum">{r.code}</span>
+              <span class="truncate">{r.title}</span>
+              <span class="tnum">{r.rev}</span>
+            </div>
+          ))}
+        </div>
+      </AppWindow>
+      <div class="idc-badge">
+        <span class="pill pill-grey idc-pill">Coming soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .idc-table {
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    font-size: 12px;
+    filter: grayscale(1);
+    opacity: 0.55;
+  }
+  .idc-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 70px;
+    align-items: center;
+    gap: 12px;
+    height: 38px;
+    padding: 0 14px;
+    border-top: 1px solid #ebebea;
+    color: var(--color-muted);
+  }
+  .idc-row:first-child { border-top: 0; }
+  .idc-head {
+    height: 32px;
+    background: var(--color-surface-2);
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .idc-preview { isolation: isolate; }
+  .idc-badge { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+  .idc-pill { height: 34px; padding: 0 18px; font-size: 13px; background: var(--color-surface); box-shadow: var(--shadow-lift); }
+
+  .idc-input {
+    flex: 1;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 10px;
+    border: 1px solid var(--color-line);
+    background: var(--color-surface);
+    font-size: 16px;
+    color: var(--color-ink);
+  }
+  .idc-input:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
+</style>
+
+<script>
+  import { wireWaitlist } from '../../scripts/lead';
+  const form = document.querySelector<HTMLFormElement>('[data-idc-teaser-form]');
+  if (form) wireWaitlist(form, form.querySelector('[data-teaser-note]'), form.querySelector('[data-teaser-fb]'));
+</script>

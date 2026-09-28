@@ -1,0 +1,105 @@
+---
+/*
+ * Accordion FAQ. Zero-JS accessible (<details>/<summary>), smooth open via a CSS
+ * grid-rows 0fr -> 1fr trick on a content wrapper so it works with or without JS.
+ * Two columns on desktop: sticky heading on the left, questions on the right.
+ */
+import { faqs, type FaqTag } from '../../data/faq';
+
+interface Props {
+  tags?: FaqTag[];
+  heading?: string;
+  withSchema?: boolean;
+}
+const { tags, heading = 'Frequently asked questions', withSchema = false } = Astro.props;
+
+const items = tags && tags.length > 0 ? faqs.filter((f) => f.tags.some((t) => tags.includes(t))) : faqs;
+
+const jsonLd = withSchema
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: items.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
+---
+
+<section class="faq section-y" aria-labelledby="faq-heading">
+  <div class="container-x">
+    <div class="faq-grid">
+      <div class="faq-head">
+        <h2 id="faq-heading" class="t-h2" data-reveal>{heading}</h2>
+      </div>
+      <div class="faq-list">
+        {items.map((item) => (
+          <details class="faq-item">
+            <summary class="faq-summary">
+              <span class="t-label">{item.q}</span>
+              <span class="faq-icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq-content">
+              <div class="faq-content-inner">
+                <p class="t-body pb-6">{item.a}</p>
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+<style>
+  .faq-grid {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+  @media (min-width: 1024px) {
+    .faq-grid { grid-template-columns: 320px 1fr; }
+    .faq-head { position: sticky; top: calc(var(--nav-h) + 2.5rem); align-self: start; }
+  }
+
+  .faq-list { border-top: 1px solid var(--color-line); }
+  .faq-item { border-bottom: 1px solid var(--color-line); }
+
+  .faq-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq-summary::-webkit-details-marker { display: none; }
+  .faq-summary:focus-visible { outline: 2px solid var(--color-green); outline-offset: 4px; border-radius: 4px; }
+
+  .faq-icon { position: relative; width: 16px; height: 16px; flex: none; transition: transform 300ms var(--ease-out); }
+  .faq-icon::before,
+  .faq-icon::after { content: ''; position: absolute; background: var(--color-ink); border-radius: 1px; }
+  .faq-icon::before { left: 0; right: 0; top: 50%; height: 1.5px; transform: translateY(-50%); }
+  .faq-icon::after { top: 0; bottom: 0; left: 50%; width: 1.5px; transform: translateX(-50%); }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); }
+
+  /* Grid-rows trick: author styles always beat the UA "display:none when closed" rule,
+     so this animates smoothly with no JS. Falls back to an instant show if a browser
+     doesn't support ::details-content or the grid-rows transition. */
+  .faq-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms var(--ease-out);
+  }
+  .faq-item[open] .faq-content { grid-template-rows: 1fr; }
+  .faq-content-inner { overflow: hidden; min-height: 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-content { transition: none; }
+    .faq-icon { transition: none; }
+  }
+</style>

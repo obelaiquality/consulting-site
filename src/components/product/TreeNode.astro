@@ -1,0 +1,90 @@
+---
+/*
+ * One recursive row of the EDC Folder tree: Supplier (depth 0) -> Manufacturer (depth 1) ->
+ * Product (depth 2) -> files. Used by MockFolderTree.astro. Recurses via Astro.self.
+ */
+interface TreeChild {
+  name: string;
+  count: number;
+  children?: TreeChild[];
+  files?: string[];
+}
+interface Props {
+  node: TreeChild;
+  depth: number;
+  index: number;
+  parentId: string;
+}
+const { node, depth, index, parentId } = Astro.props;
+const id = `${parentId}-${index}`;
+const hasChildren = !!(node.children && node.children.length);
+const hasFiles = !!(node.files && node.files.length);
+const expandable = hasChildren || hasFiles;
+const isEmpty = node.count === 0 && !expandable;
+---
+<li class="tree-node" data-depth={depth}>
+  <div class="tree-row" data-tree-row>
+    {expandable ? (
+      <button class="tree-toggle" type="button" aria-expanded="false" data-tree-toggle={id} aria-label={`Toggle ${node.name}`}>
+        <svg class="tree-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 2.5 4 3.5-4 3.5" /></svg>
+      </button>
+    ) : (
+      <span class="tree-toggle tree-toggle-static" aria-hidden="true"></span>
+    )}
+    <span class="tree-icon" aria-hidden="true">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 4.5a1 1 0 0 1 1-1h3.2l1.2 1.5H13a1 1 0 0 1 1 1v6.5a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-8Z" /></svg>
+    </span>
+    <span class="tree-name">{node.name}</span>
+    <span class:list={['tree-count', 'tnum', { 'tree-count-empty': isEmpty }]}>
+      {isEmpty ? '(empty)' : expandable ? `${node.count} file${node.count === 1 ? '' : 's'}` : `${node.count} file${node.count === 1 ? '' : 's'}`}
+    </span>
+  </div>
+
+  {expandable && (
+    <div class="tree-branch" data-tree-collapsible data-tree-branch={id} data-branch-depth={depth}>
+      <div class="tree-branch-inner">
+        <ul class="tree-children">
+          {hasChildren && node.children!.map((child: TreeChild, i: number) => <Astro.self node={child} depth={depth + 1} index={i} parentId={id} />)}
+          {hasFiles &&
+            node.files!.map((f: string, i: number) => (
+              <li class="tree-node" data-depth={depth + 1}>
+                <div class="tree-row tree-row-file" data-tree-row data-file-row={`${id}-f${i}`}>
+                  <span class="tree-toggle tree-toggle-static" aria-hidden="true"></span>
+                  <span class="tree-icon tree-icon-file" aria-hidden="true">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4.5 2h5L12 4.5V13a1 1 0 0 1-1 1H4.5a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1Z" /><path d="M9.5 2v2.5H12" /></svg>
+                  </span>
+                  <span class="tree-name tree-name-file">{f}</span>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
+    </div>
+  )}
+</li>
+
+<style>
+  .tree-node { list-style: none; }
+  .tree-row { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 8px; border-radius: 7px; font-size: 12.5px; color: var(--color-ink); }
+  .tree-row:hover { background: var(--color-surface-2); }
+  .tree-toggle { display: grid; place-items: center; width: 18px; height: 18px; flex-shrink: 0; color: var(--color-muted); border-radius: 4px; }
+  .tree-toggle:not(.tree-toggle-static):hover { background: var(--color-surface-3); }
+  .tree-chevron { width: 9px; height: 9px; transition: transform 0.2s var(--ease-out); }
+  .tree-toggle[aria-expanded='true'] .tree-chevron { transform: rotate(90deg); }
+  .tree-icon { display: grid; place-items: center; width: 16px; height: 16px; flex-shrink: 0; color: var(--color-muted); }
+  .tree-icon svg { width: 14px; height: 14px; }
+  .tree-icon-file { color: var(--color-dim); }
+  .tree-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+  .tree-name-file { font-weight: 400; color: var(--color-muted); }
+  .tree-count { font-size: 11px; color: var(--color-dim); flex-shrink: 0; }
+  .tree-count-empty { font-style: italic; }
+  .tree-row-file.just-filed { background: var(--color-green-bg); box-shadow: inset 3px 0 0 var(--color-green); transition: background-color 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
+
+  .tree-branch { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.2s var(--ease-out); }
+  .tree-branch-inner { overflow: hidden; min-height: 0; }
+  :global(html.js) .tree-branch[data-tree-collapsible] { grid-template-rows: 0fr; }
+  :global(html.js) .tree-branch[data-tree-collapsible].is-open { grid-template-rows: 1fr; }
+
+  .tree-children { padding-left: 22px; border-left: 1px solid var(--color-line); margin-left: 8px; }
+  [data-depth='0'] > .tree-row .tree-name { font-family: var(--font-display); font-weight: 600; }
+</style>

@@ -1,0 +1,160 @@
+---
+import GuideLayout from '../../layouts/GuideLayout.astro';
+
+const sources = [
+  { label: 'ISO 9001:2026: quality management systems, requirements (ISO)', url: 'https://www.iso.org/standard/88464.html' },
+  { label: 'ISO 9001:2015: quality management systems, requirements (ISO, valid to 2029)', url: 'https://www.iso.org/standard/62085.html' },
+  { label: 'The Global Food Safety Initiative (GFSI)', url: 'https://mygfsi.com/' },
+  { label: 'BRCGS (Global Supply Chain Assurance)', url: 'https://www.brcgs.com/' },
+  { label: 'Quality management principles (ISO)', url: 'https://www.iso.org/publication/PUB100080.html' },
+];
+
+const related = [
+  { label: 'External Document Control', href: '/product/external-document-control', note: 'AI-read certificates, auto-filed by supplier' },
+  { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Nonconformance and CAPA workflows for supplier issues' },
+  { label: 'Control of external documents', href: '/guides/control-of-external-documents', note: 'The ISO 9001 clause behind this' },
+  { label: 'Pricing', href: '/pricing', note: 'From R1,490 a month, no setup fee' },
+];
+
+const faqs = [
+  {
+    q: 'How do I track supplier certificate and expiry dates automatically?',
+    a: "Upload each certificate once into a system that reads the document, records the expiry date against the supplier and product, and computes a status such as Active, Expiring soon or Expired. That removes the manual step of someone re-checking a spreadsheet, and means a digest can go out before a certificate lapses rather than after.",
+  },
+  {
+    q: 'What tools help manage supplier audits and certifications?',
+    a: 'A supplier certificate register is the core tool, whether it is a spreadsheet, a shared drive with a tracking sheet, or dedicated software. What matters more than the tool is that every certificate has an owner, an expiry or review date, and a defined action for what happens when one lapses. Most generic supplier-management tools are built for procurement rather than ISO 9001 document control specifically.',
+  },
+  {
+    q: 'Do supplier certificates count as external documents under ISO 9001?',
+    a: 'Yes. A certificate of analysis, certificate of conformance, safety data sheet or accreditation certificate that a supplier issues about their own product is a document of external origin under clause 7.5.3.2, once your organisation has determined it is necessary for your quality system.',
+  },
+  {
+    q: 'How do I manage supplier certificates without a dedicated system?',
+    a: 'Keep one register, and a spreadsheet is enough to start, listing every certificate, its issuer, its expiry date and its owner, and review it on a fixed schedule such as monthly. The risk sits in relying on someone remembering to check it. A calendar reminder tied to the review closes that gap.',
+  },
+  {
+    q: 'What counts as a supplier compliance document?',
+    a: 'Any document a supplier gives you to demonstrate their product or process meets a requirement: certificates of analysis, certificates of conformance, safety data sheets, halal or kosher certificates, allergen and GMO statements, calibration certificates, and their own ISO 9001, FSSC 22000 or BRCGS certification.',
+  },
+];
+---
+<GuideLayout
+  title="Supplier certificate expiry tracking | Obel MS"
+  description="A practical process for collecting supplier certificates, tracking expiry dates, sending reminders, and what to do when one lapses before an audit."
+  h1="How to track supplier certificates and expiry dates"
+  answer="Supplier certificate tracking means collecting the certificates your suppliers hold, recording their expiry dates against the right supplier and product, and reminding an owner before they lapse. A spreadsheet works for a handful of suppliers. Beyond that, dedicated software earns its keep by computing status and sending reminders without anyone checking a calendar."
+  published="2026-09-26"
+  updated="2026-09-26"
+  readingMinutes={8}
+  sources={sources}
+  related={related}
+  faqs={faqs}
+>
+  <h2>Which supplier certificates should you track?</h2>
+  <p>
+    Which certificates you need depends on your sector, but most SMEs end up tracking a similar core set. Each one is a document of external origin under <a href="/guides/control-of-external-documents">ISO 9001 clause 7.5.3.2</a>, and most also feed clause 8.4, verifying what a supplier provides before you rely on it.
+  </p>
+  <ul>
+    <li><strong>Management system certificates</strong>: your supplier's own ISO 9001 certificate, issued to either ISO 9001:2015 or ISO 9001:2026 (both valid during the transition to the newer edition), or a food-safety scheme certificate such as FSSC 22000 or a <a href="https://www.brcgs.com/" rel="noopener" target="_blank">BRCGS</a> standard, benchmarked by the <a href="https://mygfsi.com/" rel="noopener" target="_blank">Global Food Safety Initiative</a>.</li>
+    <li><strong>Religious or dietary certifications</strong>: halal and kosher certificates, where relevant to your product.</li>
+    <li><strong>Certificates of analysis (COA)</strong>, confirming a specific batch or lot meets a stated specification.</li>
+    <li><strong>Allergen and GMO statements</strong>, confirming what a raw material does or doesn't contain.</li>
+    <li><strong>Specifications</strong> the supplier issues for their own product or material.</li>
+    <li><strong>Safety data sheets (SDS)</strong> and calibration certificates for supplied equipment or instruments.</li>
+  </ul>
+  <p>
+    Not every certificate needs the same level of scrutiny. A management system certificate from an accredited body carries more weight than a self-declared statement, and it's reasonable to check the accreditation itself. A body like <a href="https://www.sanas.co.za/" rel="noopener" target="_blank">SANAS</a> in South Africa maintains a public register of who it accredits.
+  </p>
+  <p>
+    A worked example: a food manufacturer buying from three suppliers, Northwind Ingredients for a flavour compound, Kestrel Packaging for retort pouches, and Silverleaf Botanics for a plant extract, would typically hold a certificate of analysis per batch from Northwind, a certificate of conformance for the pouch specification from Kestrel, and a combined certificate of analysis and allergen statement from Silverleaf. Each supplier carries a different document type and a different renewal rhythm, which is exactly why a single register beats trying to remember each supplier's pattern from memory.
+  </p>
+
+  <h2>How do you collect certificates from suppliers?</h2>
+  <p>
+    Build collection into onboarding rather than chasing it later: ask a new supplier for their current certificates before you place a first order, and set an expectation in your supplier agreement that renewed certificates are sent to you automatically.
+  </p>
+  <p>
+    In practice, most SMEs still end up chasing at least some suppliers by email as certificates approach expiry. Keep the request specific, naming the certificate and the date it's due to expire, rather than a general "please send your latest paperwork," which is easy for a busy supplier contact to ignore or misread.
+  </p>
+  <p>
+    Larger or higher-risk suppliers are worth a scheduled annual check even if nothing has visibly lapsed: ask them to confirm nothing has changed since their last certificate, since a supplier can quietly drop an accreditation, change a manufacturing site, or reformulate a product without necessarily telling every customer. Smaller or lower-risk suppliers can usually be managed on an exception basis, chased only when a certificate is due.
+  </p>
+
+  <h2>How do you record and check an expiry date?</h2>
+  <p>
+    Record four things for every certificate: the supplier and product it applies to, who issued it, the expiry or review date, and where the current version is filed. Check the date against the document itself. Issue dates and expiry dates on certificates are sometimes transposed or left blank, and catching that on receipt is far cheaper than catching it at audit.
+  </p>
+  <p>
+    Where a certificate has no expiry date printed on it, such as many safety data sheets, set a periodic review date instead so someone still confirms it hasn't been superseded by a newer version.
+  </p>
+  <p>
+    It also helps to record the certificate against the specific product or batch it covers, rather than the supplier generically. A single supplier can hold several certificates that apply to different products or even different manufacturing sites. Treating them as one blanket "Northwind Ingredients certificate" in your register makes it easy to miss that the certificate covering the product you buy has lapsed while an unrelated one is still current.
+  </p>
+
+  <h2>How do reminders work, and who should get them?</h2>
+  <p>
+    A reminder is only useful if it reaches someone who can act on it, with enough lead time to act. Thirty days before expiry is a common default: long enough to chase a supplier for a renewed certificate, short enough that the reminder still feels relevant when it arrives.
+  </p>
+  <p>
+    Send the reminder to a named owner, and repeat it if the certificate is still outstanding closer to the date. A single reminder sent once and forgotten is one of the most common ways a certificate lapses unnoticed.
+  </p>
+  <p>
+    Decide in advance what a reminder is for: is it a prompt to chase the supplier, or a prompt to stop using the material until a renewed certificate arrives? Writing that down once, as part of your document control procedure, means the person who gets the reminder at nine o'clock on a busy Friday doesn't have to work out the right response from scratch.
+  </p>
+
+  <h2>What do you do when a certificate lapses?</h2>
+  <p>
+    Treat a lapsed supplier certificate as a supplier issue and a paperwork gap: hold or flag any stock received against that certificate, contact the supplier for a renewed version, and record what happened so it's visible at your next review. If the lapse points to a wider problem with the supplier, such as a certification they've let go or a specification they've quietly changed, that's a case for a formal <strong>Nonconformance</strong> record, which routes an investigation and a CAPA through to sign-off. See how <a href="/product/workflow-manager">Workflow Manager</a> handles that with its standard Nonconformance template.
+  </p>
+  <p>
+    For example, if Kestrel Packaging's certificate of conformance for a pouch specification lapses and the renewed version shows a changed material, that's a question of whether the change affects your product. It deserves the same investigation-and-close discipline as any other supplier issue, recorded properly rather than settled with a quiet note that "the paperwork's sorted now."
+  </p>
+
+  <h2>Spreadsheet vs shared drive vs dedicated software</h2>
+  <p>
+    All three can technically hold the same information. What differs is how much of the checking is still a person's job, and how much the system does for you.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>Expiry reminders</th>
+          <th>Version control</th>
+          <th>Audit trail</th>
+          <th>Typical failure mode</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Spreadsheet</td>
+          <td>Manual. Someone must open it and check dates</td>
+          <td>None, the latest save overwrites the last</td>
+          <td>None beyond a file-modified date</td>
+          <td>Nobody checks it until an audit is booked</td>
+        </tr>
+        <tr>
+          <td>Shared drive with folders</td>
+          <td>None built in</td>
+          <td>Whoever named the file last decides which version is current</td>
+          <td>None, folder structure only shows what exists</td>
+          <td>An old certificate sits alongside the new one with no way to tell which is current</td>
+        </tr>
+        <tr>
+          <td>Dedicated software</td>
+          <td>Automatic, computed from the stored expiry date</td>
+          <td>Version history kept when a certificate is replaced</td>
+          <td>Every upload, approval and status change recorded</td>
+          <td>Requires a monthly fee and a short setup step</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    A spreadsheet or shared drive is a reasonable choice while you have a handful of suppliers and one person doing the checking. See our <a href="/guides/spreadsheets-vs-qms-software">honest comparison of spreadsheets and QMS software</a> for where that stops being true. Once you have dozens of suppliers, several editors, or an audit history to defend, the manual checking step is the thing most likely to fail quietly.
+  </p>
+  <p>
+    Obel MS's <a href="/product/external-document-control">External Document Control</a> module is built for this specific job: upload a certificate, let AI Suggestions read the supplier, product and dates, approve it into the register, and let Document Status and the expiry digest do the checking from then on. See <a href="/pricing">pricing</a> for what's included from the Starter plan.
+  </p>
+</GuideLayout>

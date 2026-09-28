@@ -1,0 +1,195 @@
+---
+import RelatedGuides from '../components/RelatedGuides.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Row {
+  clause: string;
+  requires: string;
+  support: string;
+  module: 'EDC' | 'WFM' | 'Platform' | 'EDC and WFM' | 'Planned with IDC';
+}
+
+const rows: Row[] = [
+  {
+    clause: '4.4',
+    requires: 'Determine the processes your quality management system needs, and how they interact.',
+    support: 'External Document Control and Workflow Manager give those processes a home: a register for documents, templates for recurring workflows, and an audit trail across both.',
+    module: 'EDC and WFM',
+  },
+  {
+    clause: '7.5.1',
+    requires: 'Maintain the documented information your QMS needs, both what the standard requires and what you decide you need.',
+    support: 'The EDC Register holds supplier certificates, specifications and statements. Workflow Manager records (Nonconformance, CAPA, Audit, Change Control, Document Review) hold the rest.',
+    module: 'EDC and WFM',
+  },
+  {
+    clause: '7.5.2',
+    requires: 'Identify documents properly, and review and approve them for suitability before release.',
+    support: 'Upload a document, accept, edit or dismiss the AI-suggested metadata, then Approve. Approval moves it into the Register with status Validated.',
+    module: 'EDC',
+  },
+  {
+    clause: '7.5.3.1',
+    requires: 'Keep documented information available, suitable for use, and adequately protected.',
+    support: 'Four roles (Super Admin, Master Admin, Module Admin, Navigator) with module-scoped permissions, plus a full audit log of who changed what and when.',
+    module: 'Platform',
+  },
+  {
+    clause: '7.5.3.2: distribution, access, retrieval',
+    requires: 'Control how documented information is distributed, accessed, retrieved and used.',
+    support: 'The Register and Folder views give role-based access and retrieval today. Distribution with read-and-acknowledge tracking is planned with Internal Document Control.',
+    module: 'Planned with IDC',
+  },
+  {
+    clause: '7.5.3.2: version control',
+    requires: 'Control changes to documented information, such as version control.',
+    support: '"Upload New Version" keeps full version history in EDC. Workflow Manager templates version as "New version" or "Copy", so a change never overwrites what auditors relied on.',
+    module: 'EDC and WFM',
+  },
+  {
+    clause: '7.5.3.2: retention and disposition',
+    requires: 'Set retention periods and disposition for documented information.',
+    support: 'Document Status is computed automatically: Active, Expiring soon, Expired, or No expiry set. Documents move to Archive, and you can unarchive them again.',
+    module: 'EDC',
+  },
+  {
+    clause: '7.5.3: documents of external origin',
+    requires: 'Identify and control documented information of external origin that your QMS needs.',
+    support: 'Documents auto-file into a Supplier → Manufacturer → Product folder tree as soon as they’re approved, so external certificates and specs stay organised without manual filing.',
+    module: 'EDC',
+  },
+  {
+    clause: '8.4',
+    requires: 'Control externally provided processes, products and services, based on their effect on your QMS.',
+    support: 'Supplier certificates and specifications live in EDC with expiry tracking. A Nonconformance or CAPA record in Workflow Manager handles a supplier falling short.',
+    module: 'EDC and WFM',
+  },
+  {
+    clause: '8.7',
+    requires: 'Identify and control outputs that do not conform to requirements.',
+    support: 'The Nonconformance template routes a finding through five stages, including verification, with approvals assigned by job title.',
+    module: 'WFM',
+  },
+  {
+    clause: '9.2',
+    requires: 'Keep records as evidence of your internal audit programme and its results.',
+    support: 'Internal audit findings are raised as Nonconformance records. The NC Source field includes Internal Audit, so they run through the same stages and audit trail as any other finding.',
+    module: 'WFM',
+  },
+  {
+    clause: '9.3',
+    requires: 'Feed relevant information into management review: audit results, nonconformities and process performance.',
+    support: 'Every record has a Report tab with a PDF, and AI stage and executive summaries give a quick brief to take into a management review meeting.',
+    module: 'WFM',
+  },
+  {
+    clause: '10.2',
+    requires: 'React to nonconformity, evaluate the need for corrective action, and check that it worked.',
+    support: 'Nonconformance and CAPA records track cause and correction, and effectiveness verification closes the loop with Mark Effective or Mark Ineffective.',
+    module: 'WFM',
+  },
+];
+
+const own = [
+  'Obel MS stores your quality policy and quality objectives as records. You write them.',
+  'Obel MS supplies the inputs for your management review meetings: records, reports and trends. You hold the meeting.',
+  'You keep training and competence records for your people.',
+  'Obel MS records the findings from your internal audits. Your team carries out the audits.',
+];
+
+const moduleClass: Record<Row['module'], string> = {
+  EDC: 'pill-grey',
+  WFM: 'pill-grey',
+  Platform: 'pill-grey',
+  'EDC and WFM': 'pill-grey',
+  'Planned with IDC': 'pill-grey',
+};
+---
+
+<BaseLayout
+  title="ISO 9001 clause 7.5 mapped to software | Obel MS"
+  description="What ISO 9001 clause 7.5 and related clauses require for documented information, mapped to what Obel MS does for you and what stays yours."
+  breadcrumbs={[{ name: 'ISO 9001 clause map', href: '/iso-9001' }]}
+>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="max-w-[46rem]">
+        <p class="label-dot mb-6">ISO 9001:2015 and ISO 9001:2026 clause map</p>
+        <h1 class="t-h2" data-split data-split-load>
+          What ISO 9001 asks for, and where Obel MS does it.
+        </h1>
+        <p class="t-lead mt-6">
+          No software is ISO 9001 certified. Organisations are, through an accredited certification body.
+          Obel MS gives you the document control and workflow structure that clause 7.5 and
+          its neighbours ask for, so the evidence is ready when your auditor asks for it.
+        </p>
+        <p class="t-body mt-4">
+          ISO 9001:2026 was published on 16 September 2026. The clause numbers below apply to both editions:
+          clause 7.5 keeps its place and its intent. Certificates to ISO 9001:2015 stay valid through a
+          three-year transition. <a class="link-u text-ink" href="/guides/iso-9001-2026-changes">See what changed</a>.
+        </p>
+      </div>
+
+      <div class="mt-14 clause-scroll" role="region" aria-label="ISO 9001 clause map table, scrollable on small screens" tabindex="0">
+        <table class="clause-table">
+          <thead>
+            <tr>
+              <th scope="col" class="col-clause">Clause</th>
+              <th scope="col">What it requires</th>
+              <th scope="col">How Obel MS supports it</th>
+              <th scope="col" class="col-module">Module</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <th scope="row" class="col-clause tnum">{r.clause}</th>
+                <td>{r.requires}</td>
+                <td>{r.support}</td>
+                <td class="col-module"><span class={`pill ${moduleClass[r.module]}`}>{r.module}</span></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-24 max-w-[46rem]" data-reveal-group>
+        <h2 class="t-h3" data-reveal>What you still own</h2>
+        <p class="t-body mt-3" data-reveal>
+          A QMS is more than software. Obel MS supports the tasks below. Your organisation still does them.
+        </p>
+        <ul class="mt-6 flex flex-col gap-3">
+          {own.map((item) => (
+            <li class="flex gap-3 text-[15px] leading-relaxed text-muted" data-reveal>
+              <span class="mt-[9px] size-1.5 shrink-0 rounded-full bg-line-hover"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-20 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-10">
+        <a href="/contact#demo" class="btn btn-primary">Book a 20-minute demo</a>
+        <a href="/security" class="link-u text-[15px] text-ink">Read how we host and secure it</a>
+      </div>
+    </div>
+  </section>
+<RelatedGuides slugs={['iso-9001-2026-changes', 'iso-9001-document-control', 'document-control-procedure']} />
+  </BaseLayout>
+
+<style>
+  .clause-scroll { overflow-x: auto; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .clause-scroll:focus-visible { outline: 2px solid var(--color-green); outline-offset: 2px; }
+  .clause-table { width: 100%; min-width: 920px; border-collapse: separate; border-spacing: 0; font-size: 14px; }
+  .clause-table th, .clause-table td { text-align: left; padding: 14px 18px; vertical-align: top; border-bottom: 1px solid var(--color-line); }
+  .clause-table thead th { background: var(--color-surface-2); font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: 0.02em; color: var(--color-muted); white-space: nowrap; }
+  .clause-table tbody th { font-family: var(--font-sans); font-weight: 600; color: var(--color-ink); white-space: nowrap; }
+  .clause-table tbody td:nth-child(2), .clause-table tbody td:nth-child(3) { color: var(--color-muted); line-height: 1.55; max-width: 34ch; }
+  .clause-table tbody tr:last-child th, .clause-table tbody tr:last-child td { border-bottom: none; }
+  .col-clause { position: sticky; left: 0; z-index: 1; background: var(--color-surface); min-width: 15ch; }
+  .clause-table thead .col-clause { background: var(--color-surface-2); }
+  .col-module { white-space: nowrap; }
+  @media (min-width: 1024px) {
+    .clause-scroll { overflow-x: visible; }
+  }
+</style>

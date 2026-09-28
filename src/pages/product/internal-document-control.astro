@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCta from '../../components/product/ProductCta.astro';
+import MockIdcPreview from '../../components/product/MockIdcPreview.astro';
+import IdcWaitlistForm from '../../components/product/IdcWaitlistForm.astro';
+import { site, plans } from '../../data/site';
+
+const starter = plans.find((p) => p.id === 'lite')!;
+
+const planned = [
+  { title: 'Drafting', body: 'Write an SOP, policy or work instruction directly inside Obel MS.' },
+  { title: 'Review and approval routing', body: 'Send a draft for review and approval to the right job title before it becomes a controlled document.' },
+  { title: 'Revision control', body: 'Every edit becomes a new revision, with the prior one kept and viewable.' },
+  { title: 'Periodic review reminders', body: 'Documents come up for review on a schedule, instead of quietly going stale.' },
+  { title: 'Controlled issue', body: 'Know which revision is the current, approved one, and keep the rest out of circulation.' },
+  { title: 'Obsolete handling', body: 'Retire a document without deleting its history.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Obel MS Internal Document Control',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: 'Planned: drafting, review and approval routing, revision control, periodic review reminders, controlled issue and obsolete handling for SOPs, policies and work instructions.',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'ZAR',
+    price: String(starter.price.ZAR),
+    lowPrice: String(starter.price.ZAR),
+    url: `${site.url}/pricing`,
+  },
+};
+---
+<BaseLayout
+  title="Internal Document Control (coming soon) | Obel MS"
+  description="SOPs, policies and work instructions: drafting, approval routing, revision control and periodic review. Coming soon to Obel MS. Join the waitlist."
+  breadcrumbs={[{ name: 'Internal Document Control', href: '/product/internal-document-control' }]}
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="pt-[calc(var(--nav-h)+clamp(3rem,8vw,6rem))] pb-4">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="label-dot">Internal Document Control <span class="pill pill-grey ml-1">Coming soon</span></p>
+        <h1 class="t-hero mt-6 max-w-[18ch]" data-split data-split-load>Internal Document Control is coming.</h1>
+        <p class="t-lead mt-6">
+          SOPs, policies and work instructions are drafted, reviewed, approved and kept current. It works the same way External Document Control and Workflow Manager already do today.
+        </p>
+      </div>
+      <div class="mt-14 md:mt-16" data-reveal>
+        <MockIdcPreview />
+      </div>
+    </div>
+  </section>
+
+  <!-- Planned capabilities -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="max-w-xl mb-12" data-reveal>
+        <p class="label-dot mb-4">Planned features</p>
+        <h2 class="t-h2">What we're building next.</h2>
+        <p class="t-body mt-4">We'd rather tell you what's planned than dress up a screenshot. Nothing below is live yet, and we're not naming a date.</p>
+      </div>
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
+        {planned.map((p) => (
+          <li data-reveal>
+            <span class="pill pill-grey">Planned</span>
+            <h3 class="t-h3 mt-4 !text-[1.1rem]">{p.title}</h3>
+            <p class="t-body mt-2 !text-[13.5px]">{p.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="card max-w-2xl p-8 sm:p-10" data-reveal>
+        <p class="label-dot mb-4">Get notified</p>
+        <h2 class="t-h2 !text-[1.8rem]">Join the waitlist.</h2>
+        <p class="t-body mt-3">We will only email you about Internal Document Control opening for early access. We cannot give a date yet.</p>
+        <div class="mt-6">
+          <IdcWaitlistForm />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <ProductCta
+    title="Already need document control today?"
+    body="External Document Control and Workflow Manager are live now, and Internal Document Control is on the way."
+    primaryLabel="Book a demo"
+    primaryHref="/contact#demo"
+    secondaryLabel="See pricing"
+    secondaryHref="/pricing"
+  />
+</BaseLayout>

@@ -1,0 +1,57 @@
+name: Deploy site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # Tell Bing (which also feeds ChatGPT search and Copilot) and other IndexNow engines what changed.
+  # The key is public by design; it is served at https://obel-ai.com/a8516f76ccfbd500482fd028ba2ac12d.txt
+  indexnow:
+    needs: deploy
+    runs-on: ubuntu-latest
+    env:
+      INDEXNOW_KEY: a8516f76ccfbd500482fd028ba2ac12d
+    steps:
+      - name: Submit sitemap URLs to IndexNow
+        run: |
+          sleep 30
+          urls=$(curl -fsSL https://obel-ai.com/sitemap-0.xml | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's/<\/loc>//' | jq -R . | jq -s .)
+          echo "Submitting $(echo "$urls" | jq length) URLs"
+          jq -n --arg key "$INDEXNOW_KEY" --argjson urls "$urls" \
+            '{host: "obel-ai.com", key: $key, keyLocation: ("https://obel-ai.com/" + $key + ".txt"), urlList: $urls}' \
+            | curl -sS -o /dev/null -w "IndexNow HTTP %{http_code}\n" -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-

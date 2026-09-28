@@ -1,0 +1,122 @@
+---
+import RelatedGuides from '../components/RelatedGuides.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+
+interface Item { term: string; detail: string; }
+interface Group { title: string; items: Item[]; }
+
+const groups: Group[] = [
+  {
+    title: 'Hosting',
+    items: [
+      { term: 'Where your data lives', detail: `We host Obel MS on Google Cloud, ${site.region}. Your data stays in South Africa.` },
+      { term: 'Backups', detail: 'Daily backups of your database and documents. We test every restore to confirm it works.' },
+      { term: 'Encryption', detail: 'Your data is encrypted at rest and in transit.' },
+      { term: 'Availability', detail: 'We target 99.5% availability on a best-effort basis.' },
+      { term: 'Updates', detail: 'We apply new features and security patches while the service keeps running, so you never need to plan a downtime window.' },
+    ],
+  },
+  {
+    title: 'Access control',
+    items: [
+      { term: 'Roles', detail: 'Four roles: Super Admin, Master Admin, Module Admin and Navigator. They show as neutral pills, with no colour coding to decode.' },
+      { term: 'Permissions', detail: 'Access is module-scoped. A Module Admin for Workflow Manager doesn’t automatically get External Document Control, and vice versa.' },
+      { term: 'Audit trail', detail: 'Changes are recorded with who made them and when, so you can answer who approved something and on what date.' },
+    ],
+  },
+  {
+    title: 'AI features',
+    items: [
+      { term: 'What it does', detail: 'AI reads uploaded supplier documents to suggest metadata such as document type, dates, lot or batch numbers and certificate numbers. It reads digital PDFs directly and scanned Latin-script documents with OCR. It also drafts stage and executive summaries on Workflow Manager records.' },
+      { term: 'Where it runs', detail: 'OCR runs on our own servers in South Africa. Metadata extraction and summaries use the OpenAI API, a third-party model provider, only for organisations that consent. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
+      { term: 'No external AI', detail: 'A no-external-AI option is available on request for organisations that cannot consent. It uses local extraction on our own servers in South Africa, so no document text goes to a third-party model. It fills fewer fields correctly, so your team enters more by hand.' },
+      { term: 'Your control', detail: 'An admin can switch AI processing off entirely. Where it runs, a consent gate appears before it processes anything.' },
+      { term: 'Human in the loop', detail: 'Every AI suggestion is Accept, Edit or Dismiss. Nothing files itself without a person approving it.' },
+    ],
+  },
+  {
+    title: 'POPIA',
+    items: [
+      { term: 'Our role', detail: 'For the documents and records you put in Obel MS, we act as operator under POPIA. You remain the responsible party for your data.' },
+      { term: 'Data processing agreement', detail: `A data processing agreement is available on request. Get in touch at ${site.email}.` },
+    ],
+  },
+];
+
+const roadmap = [
+  { term: 'Single sign-on', detail: 'Sign in with Microsoft Entra ID or Google. Not yet available.' },
+  { term: 'Multi-factor authentication', detail: 'A second factor on top of your password. Not yet available.' },
+];
+---
+
+<BaseLayout
+  title="Security, hosting and POPIA | Obel MS"
+  description="Hosted on Google Cloud in Johannesburg, encrypted at rest and in transit, daily backups. How access, AI features and POPIA are handled."
+  breadcrumbs={[{ name: 'Security', href: '/security' }]}
+>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="max-w-[42rem]">
+        <p class="label-dot mb-6">Security and hosting</p>
+        <h1 class="t-h2" data-split data-split-load>Security and hosting</h1>
+        <p class="t-lead mt-6">
+          This is what we commit to, as the people who host, back up and run Obel MS for you. We state it
+          plainly, with no claims about controls we haven’t built yet.
+        </p>
+      </div>
+
+      <div class="mt-16 flex flex-col" data-reveal-group>
+        {groups.map((g) => (
+          <div class="def-group" data-reveal>
+            <h2 class="t-h3 def-group-title">{g.title}</h2>
+            <dl class="def-list">
+              {g.items.map((i) => (
+                <div class="def-row">
+                  <dt>{i.term}</dt>
+                  <dd>{i.detail}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+
+        <div class="def-group" data-reveal>
+          <h2 class="t-h3 def-group-title">On our roadmap</h2>
+          <p class="text-[14px] text-muted mb-2">These are not available today. We list them here so you know where things stand.</p>
+          <dl class="def-list">
+            {roadmap.map((i) => (
+              <div class="def-row">
+                <dt>{i.term}</dt>
+                <dd class="flex items-center gap-2 flex-wrap">
+                  <span>{i.detail.replace(' Not yet available.', '')}</span>
+                  <span class="pill pill-grey">Not yet available</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+
+      <div class="mt-20 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-10">
+        <a href="/contact#demo" class="btn btn-primary">Book a 20-minute demo</a>
+        <a href={`mailto:${site.email}`} class="link-u text-[15px] text-ink">Ask about the data processing agreement</a>
+      </div>
+    </div>
+  </section>
+<RelatedGuides slugs={['iso-9001-software-south-africa', 'qms-software-cost', 'spreadsheets-vs-qms-software']} />
+  </BaseLayout>
+
+<style>
+  .def-group { padding-block: 2.75rem; border-top: 1px solid var(--color-line); }
+  .def-group:first-child { border-top: 1px solid var(--color-line); }
+  .def-group-title { margin-bottom: 1.5rem; }
+  .def-list { display: flex; flex-direction: column; }
+  .def-row { display: grid; grid-template-columns: 1fr; gap: 0.4rem; padding-block: 1.1rem; border-top: 1px solid var(--color-line-soft); }
+  .def-row:first-child { border-top: none; }
+  .def-row dt { font-size: 13px; font-weight: 600; color: var(--color-ink); }
+  .def-row dd { font-size: 15px; line-height: 1.6; color: var(--color-muted); max-width: 46rem; }
+  @media (min-width: 768px) {
+    .def-row { grid-template-columns: 14rem 1fr; gap: 1.5rem; align-items: baseline; }
+  }
+</style>

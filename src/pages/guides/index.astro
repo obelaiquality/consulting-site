@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { guides } from '../../data/guides';
+import { site } from '../../data/site';
+
+const topics = ['Document control', 'Suppliers', 'Workflows', 'Buying guide'] as const;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ISO 9001 document control guides',
+  url: `${site.url}/guides`,
+  hasPart: guides.map((g) => ({ '@type': 'Article', headline: g.title, url: `${site.url}/guides/${g.slug}`, dateModified: g.updated })),
+};
+---
+<BaseLayout
+  title="ISO 9001 document control guides | Obel MS"
+  description="Plain-language guides to ISO 9001 document control, external documents, supplier certificates, CAPA, and what QMS software costs."
+  jsonLd={jsonLd}
+  breadcrumbs={[{ name: 'Guides', href: '/guides' }]}
+>
+  <section class="pt-[calc(var(--nav-h)+clamp(3rem,8vw,6rem))] pb-12">
+    <div class="container-x">
+      <h1 class="t-hero !text-[clamp(2.6rem,5.5vw,4.8rem)] max-w-[16ch]" data-split data-split-load>Guides for quality managers.</h1>
+      <p class="t-lead mt-6" data-reveal>
+        Straight answers about ISO 9001 document control, supplier certificates and corrective action. Written by quality consultants, kept current, and free to use.
+      </p>
+    </div>
+  </section>
+
+  {topics.map((topic) => {
+    const list = guides.filter((g) => g.topic === topic);
+    if (!list.length) return null;
+    return (
+      <section class="pb-16" aria-labelledby={`topic-${topic.replace(/\s+/g, '-').toLowerCase()}`}>
+        <div class="container-x">
+          <h2 id={`topic-${topic.replace(/\s+/g, '-').toLowerCase()}`} class="t-label text-muted">{topic}</h2>
+          <ul class="guide-list mt-4">
+            {list.map((g) => (
+              <li>
+                <a href={`/guides/${g.slug}`} class="guide-row">
+                  <span class="guide-title">{g.title}</span>
+                  <span class="guide-summary">{g.summary}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    );
+  })}
+</BaseLayout>
+
+<style>
+  .guide-list { border-top: 1px solid var(--color-line); }
+  .guide-row { display: grid; gap: 6px; padding: 22px 0; border-bottom: 1px solid var(--color-line); }
+  @media (min-width: 900px) { .guide-row { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 3rem; align-items: baseline; } }
+  .guide-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 1.7vw, 1.45rem); letter-spacing: -0.02em; line-height: 1.2; color: var(--color-ink); transition: transform .25s var(--ease-out); }
+  .guide-summary { font-size: 15px; line-height: 1.6; color: var(--color-muted); }
+  @media (hover: hover) and (pointer: fine) { .guide-row:hover .guide-title { transform: translateX(6px); } }
+</style>

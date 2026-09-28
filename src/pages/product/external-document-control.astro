@@ -1,0 +1,178 @@
+---
+import RelatedGuides from '../../components/RelatedGuides.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FeatureRow from '../../components/product/FeatureRow.astro';
+import ProductCta from '../../components/product/ProductCta.astro';
+import MockRegister from '../../components/product/MockRegister.astro';
+import MockAiSuggestions from '../../components/product/MockAiSuggestions.astro';
+import MockFolderTree from '../../components/product/MockFolderTree.astro';
+import MockVersionHistory from '../../components/product/MockVersionHistory.astro';
+import MockBulkEdit from '../../components/product/MockBulkEdit.astro';
+import MockDigest from '../../components/product/MockDigest.astro';
+import MockPlatformAudit from '../../components/product/MockPlatformAudit.astro';
+import { site, plans } from '../../data/site';
+
+const starter = plans.find((p) => p.id === 'lite')!;
+
+const steps = [
+  { title: 'Upload to the Inbox', body: 'Drop a supplier certificate, spec or statement into the Inbox. It accepts PDF, PNG or JPG, any file your auditor hands you.' },
+  { title: 'AI reads the document', body: 'Document type, supplier, manufacturer, product, certificate number and dates come back as suggestions in seconds.' },
+  { title: 'Approve into the Register', body: 'Accept, edit or dismiss each field, then approve. The document moves to the Register with status Validated.' },
+  { title: 'Auto-filed in the EDC Folder', body: 'No one drags a file into a folder. It lands under Supplier, then Manufacturer, then Product, from its own metadata.' },
+  { title: 'Expiry tracked from here on', body: 'Active, Expiring soon, Expired or No expiry set is computed for you, and a digest goes out before anything lapses.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Obel MS External Document Control',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  description: 'Upload, AI-assisted metadata extraction, approval and Supplier/Manufacturer/Product auto-filing for supplier certificates, specs and statements, with expiry tracking and alerts.',
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'ZAR',
+    price: String(starter.price.ZAR),
+    lowPrice: String(starter.price.ZAR),
+    url: `${site.url}/pricing`,
+  },
+};
+---
+<BaseLayout
+  title="External Document Control Software | Obel MS"
+  description="Supplier certificates and specs, AI-read and auto-filed by supplier, manufacturer and product, with expiry tracked for you. Hosted in South Africa."
+  breadcrumbs={[{ name: 'External Document Control', href: '/product/external-document-control' }]}
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="pt-[calc(var(--nav-h)+clamp(3rem,8vw,6rem))] pb-4">
+    <div class="container-x">
+      <div class="max-w-3xl">
+        <p class="label-dot">External Document Control <span class="pill pill-green ml-1">Live</span></p>
+        <h1 class="t-hero mt-6 max-w-[16ch]" data-split data-split-load>Every supplier certificate, current and on file.</h1>
+        <p class="t-lead mt-6">
+          Upload a certificate once. Obel MS reads it, files it under the right supplier and product, and tells you before it expires.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
+          <a href="/contact#demo" class="btn btn-primary" data-magnetic>Book a demo</a>
+          <a href="/pricing" class="btn btn-ghost">See pricing</a>
+        </div>
+      </div>
+      <div class="mt-14 md:mt-16" data-reveal>
+        <MockRegister />
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section-y">
+    <div class="container-x">
+      <div class="max-w-xl mb-12" data-reveal>
+        <p class="label-dot mb-4">How it works</p>
+        <h2 class="t-h2">An inbox that becomes an audit-ready register.</h2>
+      </div>
+      <ol class="grid md:grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-10">
+        {steps.map((s, i) => (
+          <li data-reveal>
+            <span class="t-num text-[2.4rem] text-dim leading-none">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="t-h3 mt-4 !text-[1.1rem]">{s.title}</h3>
+            <p class="t-body mt-2 !text-[13.5px]">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- AI Suggestions -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <FeatureRow label="Step 2" title="Fields read straight from the document.">
+        <Fragment slot="text">
+          <p class="t-body">Obel MS reads digital PDFs directly, and reads scanned documents in Latin-script languages with OCR. Document Type, Supplier, Manufacturer, Product, Certificate No., Issue Date and Expiration Date come back as suggestions you can accept, edit or dismiss.</p>
+          <p class="t-body">Nothing is written to the record until you approve it.</p>
+        </Fragment>
+        <Fragment slot="mock"><MockAiSuggestions /></Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <!-- Signature moment: EDC Folder tree -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="max-w-xl mb-10" data-reveal>
+        <p class="label-dot mb-4">The EDC Folder</p>
+        <h2 class="t-h2">Supplier, then manufacturer, then product.</h2>
+        <p class="t-body mt-4">Every approved document auto-files itself. The tree builds live from each record's own metadata, so nobody names a folder or drags a file.</p>
+      </div>
+      <MockFolderTree />
+    </div>
+  </section>
+
+  <!-- Version history -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <FeatureRow label="Keeping current" title="A new version, with the old one kept." reverse>
+        <Fragment slot="text">
+          <p class="t-body">Certificates get renewed. Upload the new one onto the same record, and the old file stays as a version-history entry.</p>
+          <p class="t-body">Every prior version stays viewable, with who uploaded it and when.</p>
+        </Fragment>
+        <Fragment slot="mock"><MockVersionHistory /></Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <!-- Bulk edit -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <FeatureRow label="Cleaning up a register" title="Fix twenty records in one pass.">
+        <Fragment slot="text">
+          <p class="t-body">Select a batch of documents and set supplier, manufacturer or product across all of them at once. Keep what already differs, set a value, or clear it.</p>
+          <p class="t-body">The folder tree re-files everything the moment you save.</p>
+        </Fragment>
+        <Fragment slot="mock"><MockBulkEdit /></Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <!-- Expiry tracked -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <FeatureRow label="Step 5" title="Nobody has to remember an expiry date." reverse>
+        <Fragment slot="text">
+          <p class="t-body">Document Status is computed for every record: Active, Expiring soon, Expired or No expiry set. The window defaults to 30 days and is configurable.</p>
+          <p class="t-body">A digest goes out by email and to Teams before anything lapses.</p>
+        </Fragment>
+        <Fragment slot="mock">
+          <MockDigest
+            emailSubject="Obel-MS | External Document Control | Document Expiry Digest"
+            emailLine="2 documents expiring within 30 days, 1 already expired. Sent once a day to your configured recipients."
+            teamsTitle="QMS Alert: Expiring Documents"
+            teamsLine="Posted to your quality channel with the document, certificate number and expiry date."
+          />
+        </Fragment>
+      </FeatureRow>
+    </div>
+  </section>
+
+  <!-- What auditors see -->
+  <section class="section-y pt-0">
+    <div class="container-x">
+      <div class="grid lg:grid-cols-12 gap-x-10 gap-y-8 lg:items-center">
+        <div class="lg:col-span-5">
+          <p class="label-dot mb-4">What auditors see</p>
+          <h2 class="t-h2 max-w-[16ch]">Who approved it, and when.</h2>
+          <p class="t-body mt-4">Every approval, new version, archive and expiry digest is logged to the audit trail, with a timestamp and who did it. Export it when it's audit day.</p>
+        </div>
+        <div class="lg:col-span-7">
+          <MockPlatformAudit />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <RelatedGuides slugs={['control-of-external-documents', 'supplier-certificate-tracking', 'iso-9001-document-control']} />
+  <ProductCta
+    title="Get your supplier certificates under control."
+    body={`From R${starter.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. Onboarding on Essentials and Professional includes an import of your existing documents.`}
+  />
+</BaseLayout>

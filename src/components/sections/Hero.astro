@@ -1,0 +1,148 @@
+---
+import AppWindow from '../mock/AppWindow.astro';
+import { edcDocs } from '../../data/demo';
+import { plans } from '../../data/site';
+const fromPrice = 'R' + Math.min(...plans.filter((p) => p.status === 'live').map((p) => p.price.ZAR)).toLocaleString('en-US');
+const rows = edcDocs.slice(0, 7);
+---
+<section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
+  <div aria-hidden="true" class="hero-bg paper-grid"></div>
+
+  <div class="container-x relative">
+    <div class="grid lg:grid-cols-12 gap-x-10 gap-y-8 items-end">
+      <div class="lg:col-span-9">
+        <a href="/guides/iso-9001-2026-changes" class="hero-badge" data-reveal>
+          <span class="size-1.5 rounded-full bg-green shadow-[0_0_0_3px_rgb(22_101_52/0.14)]"></span>
+          Ready for ISO 9001:2026. See what changed for document control
+        </a>
+        <h1 class="t-hero mt-7 max-w-[15ch]" data-split data-split-load>
+          The calm way to ISO&nbsp;9001 certification.
+        </h1>
+      </div>
+      <div class="lg:col-span-3 lg:pb-3">
+        <p class="text-[17px] leading-relaxed text-muted" data-reveal>
+          Obel MS keeps the documents, corrective actions and audit trail your certification body checks, current and in one place. We host it, maintain it and support it.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
+      <a href="/contact#demo" class="btn btn-primary" data-magnetic>Book a 20-minute demo</a>
+      <a href="/pricing" class="btn btn-ghost">See pricing</a>
+      <p class="text-[14px] text-muted">From <span class="text-ink font-medium tnum">{fromPrice}</span> a month, hosted and supported in South Africa.</p>
+    </div>
+
+    <!-- Product stage -->
+    <div class="hero-stage relative mt-16 md:mt-20 lg:mr-[calc(-1*var(--gutter)-6vw)]" data-hero-stage>
+      <div class="hero-tilt" data-hero-tilt>
+        <AppWindow title="External Document Control" tabs={['Inbox', 'EDC Register', 'EDC Folder', 'Archive']} activeTab={1}>
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <div class="flex-1 h-8 rounded-md border border-line bg-surface flex items-center px-3 text-[11px] text-muted max-w-[260px]">
+              <svg class="size-3 mr-2 opacity-60" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>
+              Filters
+            </div>
+            <div class="flex gap-1.5">
+              <span class="mock-btn mock-btn-green">View</span>
+              <span class="mock-btn hidden sm:inline-flex">Show in Folder</span>
+              <span class="mock-btn hidden md:inline-flex">Archive</span>
+            </div>
+          </div>
+          <div class="mock-table">
+            <div class="mt-row mt-head">
+              <span></span><span>Document Title</span><span class="hidden md:block">Document Type</span><span class="hidden lg:block">Product</span><span class="hidden sm:block">Supplier</span><span class="hidden xl:block">Certificate No.</span><span class="hidden sm:block">Expiration Date</span><span>Document Status</span>
+            </div>
+            {rows.map((d, i) => (
+              <div class:list={['mt-row', { 'mt-row-hl': i === 1 }]} data-hero-row={i}>
+                <span class="mt-check"></span>
+                <span class="truncate text-ink">{d.title}</span>
+                <span class="hidden md:block truncate">{d.type}</span>
+                <span class="hidden lg:block truncate">{d.product}</span>
+                <span class="hidden sm:block truncate">{d.supplier}</span>
+                <span class="hidden xl:block truncate tnum">{d.cert || '-'}</span>
+                <span class="tnum hidden sm:block">{d.expiry || '-'}</span>
+                <span><span class={`pill pill-${d.tone}`}>{d.status}</span></span>
+              </div>
+            ))}
+          </div>
+        </AppWindow>
+      </div>
+
+      <!-- Floating callouts (decorative; content repeats what the table shows). -->
+      <div class="callout callout-a" data-callout aria-hidden="true">
+        <div class="flex items-center gap-2">
+          <span class="size-7 rounded-lg bg-amber-bg border border-amber-border grid place-items-center text-amber">
+            <svg class="size-3.5" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5a4 4 0 0 0-4 4v2.2L2.8 11h10.4L12 8.7V6.5a4 4 0 0 0-4-4Z"/><path d="M6.5 13a1.6 1.6 0 0 0 3 0"/></svg>
+          </span>
+          <div>
+            <p class="text-[12px] font-semibold text-ink leading-tight">Expires in 14 days</p>
+            <p class="text-[11px] text-muted leading-tight">Vegan statement for Xanthan Gum</p>
+          </div>
+        </div>
+        <p class="mt-2.5 text-[11px] text-muted">Flagged in today's expiry digest by email and Teams.</p>
+      </div>
+
+      <div class="callout callout-b" data-callout aria-hidden="true">
+        <p class="text-[11px] font-medium text-muted">AI Suggestions</p>
+        <div class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px]">
+          <span class="text-muted">Type</span><span class="text-ink">Halal Certificate</span>
+          <span class="text-muted">Cert. No.</span><span class="text-ink tnum">HAL-60417</span>
+          <span class="text-muted">Expiry</span><span class="text-ink tnum">2027-09-18</span>
+        </div>
+        <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-green"><span class="size-1.5 rounded-full bg-green"></span>Filed to Meridian › Aurelia Biotech › Sunflower Lecithin</div>
+      </div>
+
+      <div class="callout callout-c" data-callout aria-hidden="true">
+        <p class="text-[11px] text-muted">Audit trail</p>
+        <p class="mt-1 text-[12px] text-ink"><b>Thandi Mokoena</b> approved stage</p>
+        <p class="tnum text-[10.5px] text-muted mt-0.5">2026-09-16 13:47</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero-bg { position: absolute; inset: 0; mask-image: radial-gradient(ellipse 60% 55% at 70% 20%, #000 10%, transparent 70%); opacity: .8; pointer-events: none; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 10px; height: 34px; padding: 0 14px 0 12px; border-radius: 999px; border: 1px solid var(--color-line); background: rgb(255 255 255 / .7); font-size: 13px; color: var(--color-muted); transition: border-color .3s, color .3s; }
+  .hero-badge:hover { border-color: var(--color-line-hover); color: var(--color-ink); }
+  .hero-stage { perspective: 2200px; }
+  .hero-tilt { transform-origin: 30% 0%; will-change: transform; }
+  .hero-stage::after { content: ''; position: absolute; left: 8%; right: 8%; bottom: -40px; height: 80px; background: radial-gradient(ellipse at center, rgb(17 17 16 / .22), transparent 70%); filter: blur(20px); z-index: -1; }
+
+  .mock-btn { display: inline-flex; align-items: center; height: 28px; padding: 0 11px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; color: var(--color-muted); }
+  .mock-btn-green { background: var(--color-green); border-color: var(--color-green); color: #fff; font-weight: 600; }
+  .mock-table { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
+  .mt-row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 112px; align-items: center; gap: 14px; height: 38px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); transition: background-color .4s; }
+  @media (min-width: 640px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }
+  @media (min-width: 768px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }
+  @media (min-width: 1024px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) 118px; } }
+  @media (min-width: 1280px) { .mt-row { grid-template-columns: 22px minmax(0, 2.4fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, .9fr) 118px; } }
+  .mt-head { height: 34px; border-top: 0; background: var(--color-surface-2); font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .mt-row-hl { background: rgb(254 243 199 / .45); box-shadow: inset 3px 0 0 #d97706; }
+  .mt-check { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid #cfcfca; }
+
+  .callout { position: absolute; z-index: 2; padding: 12px 14px; border-radius: 12px; background: rgb(255 255 255 / .92); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); }
+  .callout-a { width: 250px; right: 9%; top: -34px; }
+  .callout-b { width: 270px; left: 5%; bottom: -70px; }
+  .callout-c { width: 210px; right: 12%; bottom: -40px; }
+  @media (max-width: 1100px) { .callout-b { left: 1%; } }
+  @media (max-width: 767px) { .callout { display: none; } }
+</style>
+
+<script>
+  import { onReady, gsap, reduced } from '../../scripts/motion';
+  onReady(() => {
+    if (reduced) return;
+    const stage = document.querySelector('[data-hero-stage]');
+    const tilt = document.querySelector('[data-hero-tilt]');
+    if (!stage || !tilt) return;
+    // Window rises in on load, then flattens out of its tilt as it scrolls toward the viewer.
+    gsap.fromTo(tilt, { opacity: 0, y: 60 }, { opacity: 1, y: 0, duration: 1.3, ease: 'power3.out', delay: 0.5 });
+    gsap.fromTo(tilt, { rotateX: 22, scale: 0.94 }, {
+      rotateX: 0, scale: 1, ease: 'none',
+      scrollTrigger: { trigger: stage, start: 'top 95%', end: 'top 25%', scrub: 1 },
+    });
+    const callouts = gsap.utils.toArray<HTMLElement>('[data-callout]');
+    gsap.fromTo(callouts, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', stagger: 0.09, delay: 1.2 });
+    // Callouts settle once and stay still: one moving thing at a time.
+  });
+</script>

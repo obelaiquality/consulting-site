@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site } from '../data/site';
+---
+
+<BaseLayout
+  title="About Obel AI & Quality"
+  breadcrumbs={[{ name: 'About', href: '/about' }]}
+  description="Obel AI & Quality started as a quality and AI consultancy. Obel MS is the QMS we built after watching clients run theirs in spreadsheets."
+>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="max-w-[42rem]">
+        <p class="label-dot mb-6">About Obel</p>
+        <h1 class="t-h2" data-split data-split-load>Quality people who write software.</h1>
+      </div>
+
+      <div class="mt-14 max-w-[38rem] flex flex-col gap-6" data-reveal-group>
+        <p class="text-[17px] leading-relaxed text-muted" data-reveal>
+          {site.company} started as a quality and AI consultancy. We helped small and mid-sized companies
+          get ready for ISO 9001 and make sense of their data. We also automated the parts of their
+          operations that didn’t need a person doing them by hand.
+        </p>
+        <p class="text-[17px] leading-relaxed text-muted" data-reveal>
+          Client after client, the same problem showed up: a quality management system running in
+          spreadsheets, shared drives and email threads. Supplier certificates nobody could find on
+          the day an auditor asked for them. Document versions drifted apart. Nobody could prove which
+          approvals had happened.
+        </p>
+        <p class="text-[17px] leading-relaxed text-muted" data-reveal>
+          We built Obel MS to be the document control and workflow system we kept wishing our clients
+          already had. Now we offer it as a hosted service: we run it, back it up and maintain it, so
+          a quality manager can get on with quality work instead of IT work.
+        </p>
+        <p class="text-[17px] leading-relaxed text-muted" data-reveal>
+          Consulting is still what we do. If you need help implementing a QMS, preparing for
+          an audit or training your team, that work continues alongside the software, often using
+          Obel MS as the system it runs on.
+        </p>
+      </div>
+
+      <div class="mt-20 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-10">
+        <a href="/contact#demo" class="btn btn-primary">Book a 20-minute demo</a>
+        <a href="/contact" class="link-u text-[15px] text-ink">Talk to us about consulting</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,52 @@
+---
+/*
+ * A real product screenshot in a quiet browser frame.
+ * Images are imported from src/assets/app/ so Astro can emit responsive AVIF/WebP.
+ * The screenshot already contains the app's own top bar, so the frame adds only a thin chrome strip.
+ */
+import { Picture } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  url?: string;
+  class?: string;
+  eager?: boolean;
+  /** Crop to the top part of the screenshot, as a fraction of its height (0–1). */
+  crop?: number;
+  /** Start the crop this far down the screenshot, as a fraction of its height (0–1). */
+  top?: number;
+  sizes?: string;
+}
+const { src, alt, url = 'app.obel-ai.com', class: cls = '', eager = false, crop, top = 0, sizes = '(min-width: 1024px) 60vw, 100vw' } = Astro.props;
+const shift = top ? `margin-top: -${((top * src.height) / src.width) * 100}%` : '';
+const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.width} / ${src.height}`;
+---
+<figure class:list={['screen-frame', cls]}>
+  <div class="sf-chrome" aria-hidden="true">
+    <span class="sf-dots"><i></i><i></i><i></i></span>
+    <span class="sf-url">{url}</span>
+  </div>
+  <div class="sf-view" style={`aspect-ratio: ${ratio}`}>
+    <Picture
+      src={src}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={[720, 1080, 1440, 2160]}
+      sizes={sizes}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : 'auto'}
+      class="sf-img"
+      style={shift}
+    />
+  </div>
+</figure>
+
+<style>
+  .screen-frame { position: relative; margin: 0; border-radius: 14px; overflow: hidden; background: #111110; border: 1px solid rgb(17 17 16 / 0.16); box-shadow: var(--shadow-window); isolation: isolate; }
+  .sf-chrome { display: flex; align-items: center; gap: 12px; height: 28px; padding: 0 12px; background: #0b0b0a; }
+  .sf-dots { display: flex; gap: 6px; } .sf-dots i { width: 8px; height: 8px; border-radius: 99px; background: #2e2e2b; }
+  .sf-url { margin-inline: auto; transform: translateX(-22px); height: 17px; padding: 0 10px; border-radius: 6px; background: #1c1c1a; color: #7d7d75; font-size: 10.5px; line-height: 17px; }
+  .sf-view { position: relative; overflow: hidden; background: #f8f8f6; }
+  .sf-view :global(img), .sf-view :global(picture) { display: block; width: 100%; height: auto; }
+</style>
