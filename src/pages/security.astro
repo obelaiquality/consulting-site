@@ -28,8 +28,9 @@ const groups: Group[] = [
   {
     title: 'AI features',
     items: [
-      { term: 'What it does', detail: 'AI reads the text of uploaded digital PDFs to suggest metadata such as type, certificate number and expiry date on EDC uploads. It also drafts stage and executive summaries on Workflow Manager records.' },
-      { term: 'Where it runs', detail: 'Through the OpenAI API. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
+      { term: 'What it does', detail: 'AI reads uploaded supplier documents to suggest metadata such as document type, dates, lot or batch numbers and certificate numbers. It reads digital PDFs directly and scanned Latin-script documents with OCR. It also drafts stage and executive summaries on Workflow Manager records.' },
+      { term: 'Where it runs', detail: 'OCR runs on our own servers in South Africa. Metadata extraction and summaries use the OpenAI API, a third-party model provider, only for organisations that consent. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
+      { term: 'No external AI', detail: 'If your organisation cannot consent, extraction runs on our own servers in South Africa and no document text goes to a third-party model. It suggests fewer fields correctly, so your team enters more by hand.' },
       { term: 'Your control', detail: 'An admin can switch AI processing off entirely. Where it runs, a consent gate appears before it processes anything.' },
       { term: 'Human in the loop', detail: 'Every AI suggestion is Accept, Edit or Dismiss. Nothing files itself without a person approving it.' },
     ],

@@ -88,7 +88,7 @@ const jsonLd = {
     <div class="container-x">
       <FeatureRow label="Step 2" title="Fields read straight from the document.">
         <Fragment slot="text">
-          <p class="t-body">Obel MS reads the text of digital PDFs. Document Type, Supplier, Manufacturer, Product, Certificate No., Issue Date and Expiration Date come back as suggestions you can accept, edit or dismiss. Scanned images are not read automatically yet; you enter their details by hand.</p>
+          <p class="t-body">Obel MS reads digital PDFs directly, and reads scanned documents in Latin-script languages with OCR. Document Type, Supplier, Manufacturer, Product, Certificate No., Issue Date and Expiration Date come back as suggestions you can accept, edit or dismiss.</p>
           <p class="t-body">Nothing is written to the record until you approve it.</p>
         </Fragment>
         <Fragment slot="mock"><MockAiSuggestions /></Fragment>
@@ -173,6 +173,6 @@ const jsonLd = {
   <RelatedGuides slugs={['control-of-external-documents', 'supplier-certificate-tracking', 'iso-9001-document-control']} />
   <ProductCta
     title="Get your supplier certificates under control."
-    body={`From R${starter.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. We migrate your existing register for you.`}
+    body={`From R${starter.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. Onboarding on Essentials and Professional includes an import of your existing documents.`}
   />
 </BaseLayout>

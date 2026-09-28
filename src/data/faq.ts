@@ -29,7 +29,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Can you migrate our spreadsheets?',
-    a: 'Yes. As part of onboarding we import your existing registers and spreadsheets, so you start with your document and supplier history already in place.',
+    a: 'Yes. Onboarding on Essentials includes an import of up to 100 documents, and on Professional up to 250. We quote larger migrations at R1,250 an hour, so you start with your document and supplier history in place.',
     tags: ['general'],
   },
   {
@@ -49,7 +49,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Is there a setup fee?',
-    a: 'Lite has no setup fee. Essentials includes guided onboarding for a once-off R6,500 (import of up to 200 documents and two remote training sessions). Professional onboarding is a once-off R15,000 (up to five workflow templates configured and migration of up to 1,000 documents). All ZAR prices exclude 15% VAT.',
+    a: 'Lite has no setup fee. Essentials onboarding is a once-off R6,500 for up to 2.5 hours of our time: an import of up to 100 documents and a 90-minute remote training session. Professional onboarding is a once-off R15,000 for up to 5.5 hours: 2 workflow templates set up for you, an import of up to 250 documents and 2 remote training sessions. All ZAR prices exclude 15% VAT.',
     tags: ['pricing'],
   },
   {
@@ -79,12 +79,12 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'What AI features do you use, and is our data used to train AI models?',
-    a: 'AI metadata extraction on upload and record summaries use OpenAI models through the API, and your admin can switch them off. Under OpenAI’s API terms, API data is not used for model training.',
+    a: 'AI metadata extraction and record summaries use OpenAI models through the API, only for organisations that consent. Under OpenAI’s API terms, API data is not used for model training. If you cannot consent, choose the no-external-AI option: extraction then runs on our own servers in South Africa, with fewer fields suggested correctly.',
     tags: ['security'],
   },
   {
     q: 'Is AI metadata extraction included?',
-    a: 'Yes. AI metadata extraction is included on every plan and module, under fair use. It reads digital PDFs today, and reading scanned documents (OCR) is in testing. Fair use is up to 1,000 pages a month on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, we agree a volume plan with you.',
+    a: 'Yes. AI metadata extraction is included on every plan and module. Obel MS reads digital PDFs directly, and reads scanned supplier documents in Latin-script languages with OCR. The AI suggests fields such as document type, dates, lot or batch numbers and certificate numbers, and a person confirms them in the Inbox. Each plan includes a monthly allowance: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, you can move up a plan, or we agree a volume price with you.',
     tags: ['pricing', 'general'],
   },
   {

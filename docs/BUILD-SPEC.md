@@ -127,12 +127,16 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 
 **Service commitments (what Obel promises as the operator):**
 - Hosted on Google Cloud in Johannesburg (africa-south1).
-- Daily backups, updates, monitoring and migration of your existing registers.
+- Daily backups, updates and monitoring. Onboarding on Essentials and Professional includes a capped document import; larger migrations are quoted by the hour.
 - Support from quality consultants.
 
 **Updates (26 Sep 2026):**
-- Pricing is Rev B in `src/data/site.ts`: Lite, Essentials, Professional, and Validated (GxP) as a 2027 waitlist. Every ZAR price is shown excl. 15% VAT, billed annually, and month-to-month costs 15% more.
-- AI metadata extraction works on digital PDFs only. OCR of scanned images is off.
+- Pricing is Rev B in `src/data/site.ts`: Lite, Essentials and Professional. The Validated (GxP) tier was removed. Every ZAR price is shown excl. 15% VAT, billed annually, and month-to-month costs 15% more.
+
+**Updates (28 Sep 2026, OCR measured by Obel Cloud):**
+- You may say: AI metadata extraction and OCR are included on every plan, with a monthly page allowance (1,000 / 3,000 / 10,000). Digital PDFs are read directly. Scanned supplier documents in Latin-script languages are read with OCR. The AI suggests metadata (document type, dates, lot or batch numbers, certificate numbers) and a person confirms it in the Inbox. Documents are stored in South Africa.
+- Disclose the third-party model provider (OpenAI) in the security and data-handling wording, not as a headline, and offer the no-external-AI option (local extraction, fewer fields correct).
+- Support time and onboarding hours are capped (see `pricingTerms.support` and the plan setup labels). The internal margin note lives outside this public repo.
 - You may say: encrypted at rest and in transit, and "99.5% availability target, best effort".
 - The AI chat assistant may appear only as "coming soon".
 - ISO 9001:2026 was published on 16 September 2026, and clause 7.5 keeps its number. Write "ISO 9001" without a year, or name both editions. ISO 9001:2015 certificates stay valid through a three-year transition.
@@ -147,7 +151,8 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - Full-text search across all documents.
 - Multi-tenant architecture.
 - 21 CFR Part 11, e-signatures, "validated" or GxP compliance. The Validated plan is a waitlist only.
-- OCR of scanned documents, or 99.9% uptime.
+- OCR of Chinese or other non-Latin scripts, fully automatic or guaranteed field capture, or any accuracy percentage.
+- 99.9% uptime.
 - Uptime percentages, customer counts or testimonials.
 - IDC as available. It is "coming soon", with a waitlist.
 - Do not claim Customer Complaint, Supplier Deviation or Action templates, template codes, or escalation between records.
