@@ -252,8 +252,7 @@ export const subProcessors = {
   list: [
     { name: 'Google Cloud', purpose: 'Hosting of Obel-MS: application, database, document storage and backups', where: 'The region the customer chooses' },
     { name: 'Paddle', purpose: 'Payments, invoices and tax, as Merchant of Record for our orders', where: 'United Kingdom and United States' },
-    { name: 'Amazon Web Services (Simple Email Service)', purpose: 'Transactional email from Obel-MS, such as invitations and expiry alerts', where: 'The customer’s region where available' },
-    { name: 'Google Workspace', purpose: 'Our own email and documents, including support conversations', where: 'Global' },
+    { name: 'Google Workspace', purpose: 'Our own email and documents, including support conversations, and transactional email from Obel-MS, such as invitations, expiry alerts and billing notices', where: 'Global' },
     { name: 'Web3Forms', purpose: 'Delivery of the forms on this website', where: 'United States' },
     { name: 'OpenAI', purpose: 'AI metadata extraction and summaries, only for workspaces whose organisation chooses it', where: 'United States by default' },
   ],
