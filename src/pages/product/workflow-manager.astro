@@ -20,7 +20,7 @@ const professional = plans.find((p) => p.id === 'professional')!;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
-  name: 'Obel MS Workflow Manager',
+  name: 'Obel-MS Workflow Manager',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
   description: 'Standard workflow templates for nonconformance, CAPA, change control, audits and document review, with staged approvals, effectiveness verification and a full audit trail.',
@@ -34,7 +34,7 @@ const jsonLd = {
 };
 ---
 <BaseLayout
-  title="CAPA and Nonconformance Software | Obel MS"
+  title="CAPA and Nonconformance Software | Obel-MS"
   description="Nonconformance, CAPA, change control, audit and document review workflows with approvals, effectiveness checks and a full audit trail. Built for small teams."
   breadcrumbs={[{ name: 'Workflow Manager', href: '/product/workflow-manager' }]}
   jsonLd={jsonLd}
@@ -55,7 +55,7 @@ const jsonLd = {
       </div>
       <div class="mt-14 md:mt-20" data-reveal>
         <ScreenFrame src={recordsImg} alt="Workflow Manager records list with audit, nonconformance and CAPA records at different stages" crop={0.543} top={0.34} eager sizes="(min-width: 1280px) 1200px, 100vw" />
-        <p class="wm-caption">A real Obel MS screen with example data.</p>
+        <p class="wm-caption">A real Obel-MS screen with example data.</p>
       </div>
     </div>
   </section>
@@ -110,7 +110,7 @@ const jsonLd = {
 
       <FeatureRow label="AI drafts, people approve" title="Summaries your team edits and approves.">
         <Fragment slot="text">
-          <p class="t-body">Obel MS drafts stage and executive summaries from what is on the record, including attachments. Your team edits and approves each summary before it goes into a report.</p>
+          <p class="t-body">Obel-MS drafts stage and executive summaries from what is on the record, including attachments. Your team edits and approves each summary before it goes into a report.</p>
         </Fragment>
         <Fragment slot="mock"><MockAiSummary /></Fragment>
       </FeatureRow>

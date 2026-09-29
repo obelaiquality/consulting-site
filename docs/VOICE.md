@@ -1,19 +1,19 @@
 # Obel voice
 
-Obel is a team of quality consultants who write software. Our promise is the calm way to ISO 9001 certification. Obel MS makes it easier for a company to get certified and to stay certified. The company earns the certificate from its certification body; we never imply that Obel certifies anyone. We sound like the best auditor you have worked with: calm, exact, practical and on your side. We write the way a well-kept quality system reads. Everything is in its place, and nothing is there for show.
+Obel is a team of quality consultants who write software. Our promise is the calm way to ISO 9001 certification. Obel-MS makes it easier for a company to get certified and to stay certified. The company earns the certificate from its certification body; we never imply that Obel certifies anyone. We sound like the best auditor you have worked with: calm, exact, practical and on your side. We write the way a well-kept quality system reads. Everything is in its place, and nothing is there for show.
 
 ## The four traits
 
 1. **Calm.** We never rush the reader. There are no exclamation marks, no urgency tricks and no hype. Confidence comes from facts, not volume.
 2. **Exact.** We name the real thing: "supplier certificate", "expiry date", "corrective action", "Quality Manager". A number beats an adjective. "Expires in 14 days" beats "stay ahead of expiries".
 3. **Practical.** Every sentence helps a quality manager decide or act. We describe what happens, in the order it happens.
-4. **Honest.** We say what Obel MS does not do yet. We never inflate. Software supports ISO 9001; organisations get certified.
+4. **Honest.** We say what Obel-MS does not do yet. We never inflate. Software supports ISO 9001; organisations get certified.
 
 ## How it sounds
 
 | We write | We do not write |
 | --- | --- |
-| Obel MS files each certificate under its supplier, manufacturer and product. | Say goodbye to messy folders — Obel MS seamlessly organises everything. |
+| Obel-MS files each certificate under its supplier, manufacturer and product. | Say goodbye to messy folders — Obel-MS seamlessly organises everything. |
 | Your team gets an email and a Teams message 30 days before a certificate expires. | Never miss an expiry again! |
 | Hosting, backups and updates are included. | It's not just software, it's peace of mind. |
 | Workflow Manager closes a corrective action with an effectiveness check. | Unlock the power of streamlined CAPA. |

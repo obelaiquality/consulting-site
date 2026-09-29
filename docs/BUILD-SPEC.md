@@ -1,10 +1,10 @@
-# Obel MS marketing site: build spec
+# Obel-MS marketing site: build spec
 
 This file governs every contributor, human or agent. Read all of it before you write code.
 
 ## 1. What we sell
 
-Obel MS is a hosted quality management system for SMEs. Obel AI & Quality hosts it, maintains it and supports it for a monthly fee.
+Obel-MS is a hosted quality management system for SMEs. Obel AI & Quality hosts it, maintains it and supports it for a monthly fee.
 
 - **Live now:** External Document Control (EDC) and Workflow Manager (WFM).
 - **Coming soon:** Internal Document Control (IDC), for SOPs, policies and work instructions.

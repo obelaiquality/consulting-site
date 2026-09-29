@@ -13,13 +13,13 @@ export interface FaqItem {
 
 export const faqs: FaqItem[] = [
   {
-    q: 'Does Obel MS support ISO 9001:2026?',
-    a: 'Yes. ISO 9001:2026 was published on 16 September 2026 and keeps clause 7.5 on documented information, so the controls in Obel MS apply to both editions. Certificates to ISO 9001:2015 stay valid through a three-year transition, so you can move at the pace your certification body agrees.',
+    q: 'Does Obel-MS support ISO 9001:2026?',
+    a: 'Yes. ISO 9001:2026 was published on 16 September 2026 and keeps clause 7.5 on documented information, so the controls in Obel-MS apply to both editions. Certificates to ISO 9001:2015 stay valid through a three-year transition, so you can move at the pace your certification body agrees.',
     tags: ['iso', 'general'],
   },
   {
-    q: 'Is Obel MS ISO 9001 certified?',
-    a: 'No software can be ISO 9001 certified. Only your organisation’s quality management system can, through an accredited certification body. Obel MS is built around clause 7.5 (documented information), which is in both ISO 9001:2015 and the new ISO 9001:2026, to support that certification.',
+    q: 'Is Obel-MS ISO 9001 certified?',
+    a: 'No software can be ISO 9001 certified. Only your organisation’s quality management system can, through an accredited certification body. Obel-MS is built around clause 7.5 (documented information), which is in both ISO 9001:2015 and the new ISO 9001:2026, to support that certification.',
     tags: ['iso'],
   },
   {
@@ -59,7 +59,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Do we need our own IT team?',
-    a: 'No. Obel MS is hosted, so there’s nothing to install or maintain. You sign in and use it; we run the servers, backups and updates.',
+    a: 'No. Obel-MS is hosted, so there’s nothing to install or maintain. You sign in and use it; we run the servers, backups and updates.',
     tags: ['general'],
   },
   {
@@ -73,8 +73,8 @@ export const faqs: FaqItem[] = [
     tags: ['general'],
   },
   {
-    q: 'Does Obel MS work for ISO 13485 or GxP environments?',
-    a: 'Obel MS is built for ISO 9001 today. It does not yet support regulated GxP environments or ISO 13485 validation. If that is what you need, tell us about your requirements.',
+    q: 'Does Obel-MS work for ISO 13485 or GxP environments?',
+    a: 'Obel-MS is built for ISO 9001 today. It does not yet support regulated GxP environments or ISO 13485 validation. If that is what you need, tell us about your requirements.',
     tags: ['iso'],
   },
   {
@@ -84,7 +84,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Is AI metadata extraction included?',
-    a: 'Yes. AI metadata extraction is included on every plan and module. Obel MS reads digital PDFs directly, and reads scanned supplier documents in Latin-script languages with OCR. The AI suggests fields such as document type, dates, lot or batch numbers and certificate numbers, and a person confirms them in the Inbox. Each plan includes a monthly allowance: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, you can move up a plan, or we agree a volume price with you.',
+    a: 'Yes. AI metadata extraction is included on every plan and module. Obel-MS reads digital PDFs directly, and reads scanned supplier documents in Latin-script languages with OCR. The AI suggests fields such as document type, dates, lot or batch numbers and certificate numbers, and a person confirms them in the Inbox. Each plan includes a monthly allowance: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, you can move up a plan, or we agree a volume price with you.',
     tags: ['pricing', 'general'],
   },
   {

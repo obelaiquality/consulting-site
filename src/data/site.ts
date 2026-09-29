@@ -1,7 +1,7 @@
 /* Single source of truth for site-wide facts. Change prices, contact details and nav here only. */
 
 export const site = {
-  name: 'Obel MS',
+  name: 'Obel-MS',
   company: 'Obel AI & Quality',
   url: 'https://obel-ai.com',
   tagline: 'The calm way to ISO 9001 certification.',
@@ -56,7 +56,7 @@ export const pricingTerms = {
   contract: 'Billed annually. Month-to-month costs 15% more.',
   monthlyUplift: 0.15,
   availability: '99.5% availability target, best effort.',
-  aiNote: 'AI metadata extraction is included on every plan and module. Obel MS reads digital PDFs directly. It reads scanned supplier documents in Latin-script languages with optical character recognition (OCR). The AI suggests the metadata, and a person confirms it in the Inbox.',
+  aiNote: 'AI metadata extraction is included on every plan and module. Obel-MS reads digital PDFs directly. It reads scanned supplier documents in Latin-script languages with optical character recognition (OCR). The AI suggests the metadata, and a person confirms it in the Inbox.',
   fairUse: 'Each plan includes a monthly page allowance for AI extraction and OCR: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above the allowance, you can move up a plan, or we agree a volume price with you.',
   support: 'Support covers how-to questions and faults: up to 3 hours a year on Lite, 1 hour a month on Essentials and 2 hours a month on Professional, including the quarterly review call. Configuration and data work beyond that, including larger migrations, costs R1,250 an hour.',
 };
@@ -144,7 +144,7 @@ export const services = [
 ];
 
 export const managed = [
-  { title: 'Hosting', body: 'We run Obel MS on Google Cloud in Johannesburg. We manage the servers, installs and IT tickets, so you don’t have to.' },
+  { title: 'Hosting', body: 'We run Obel-MS on Google Cloud in Johannesburg. We manage the servers, installs and IT tickets, so you don’t have to.' },
   { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
   { title: 'Updates', body: 'New features and security patches roll out automatically, and you don’t need to schedule downtime.' },
   { title: 'Migration', body: 'Onboarding on Essentials and Professional includes an import of your existing documents. We quote larger migrations by the hour.' },

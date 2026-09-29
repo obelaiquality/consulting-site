@@ -1,6 +1,6 @@
 # obel-ai.com
 
-Marketing site for **Obel MS**, the hosted ISO 9001 document control and workflow system from Obel AI & Quality.
+Marketing site for **Obel-MS**, the hosted ISO 9001 document control and workflow system from Obel AI & Quality.
 
 ## Stack
 
