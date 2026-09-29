@@ -35,15 +35,15 @@ export const site = {
 export const hosting = {
   summary: 'Hosted on Google Cloud in the region you choose',
   regions: [
-    { name: 'South Africa', city: 'Johannesburg', id: 'africa-south1' },
-    { name: 'European Union', city: 'Belgium', id: 'europe-west1' },
-    { name: 'United Kingdom', city: 'London', id: 'europe-west2' },
-    { name: 'United States', city: 'Iowa', id: 'us-central1' },
-    { name: 'Australia', city: 'Sydney', id: 'australia-southeast1' },
+    { name: 'South Africa', label: 'South Africa (Johannesburg)', city: 'Johannesburg', id: 'africa-south1' },
+    { name: 'European Union', label: 'the European Union (Belgium)', city: 'Belgium', id: 'europe-west1' },
+    { name: 'United States', label: 'the United States (Iowa)', city: 'Iowa', id: 'us-central1' },
+    { name: 'Australia', label: 'Australia (Sydney)', city: 'Sydney', id: 'australia-southeast1' },
   ],
+  ukNote: 'UK workspaces are hosted in the EU region by default. The EU and the UK recognise each other’s data protection as adequate. In-country hosting in London is available on request.',
   more: 'Canada, Switzerland, Japan, South Korea, Singapore, India, Brazil, the Middle East and more than 30 other Google Cloud regions are available on request, with a one-off regional setup fee.',
 };
-export const hostingList = hosting.regions.map((r) => r.name).join(', ').replace(/, ([^,]*)$/, ' or $1');
+export const hostingList = hosting.regions.map((r) => r.label).join(', ').replace(/, ([^,]*)$/, ' or $1');
 
 export const nav = [
   {
@@ -70,10 +70,10 @@ export type Currency = (typeof currencyCodes)[number];
 export type Money = Record<Currency, number>;
 export const currencies: Record<Currency, { symbol: string; name: string; taxNote: string }> = {
   ZAR: { symbol: 'R', name: 'South African rand', taxNote: 'ZAR prices exclude 15% VAT.' },
-  USD: { symbol: '$', name: 'US dollar', taxNote: 'USD prices exclude sales tax, VAT or GST, which is added to the invoice where it applies.' },
+  USD: { symbol: '$', name: 'US dollar', taxNote: 'USD prices exclude any sales tax, VAT or GST.' },
   EUR: { symbol: '€', name: 'Euro', taxNote: 'EUR prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
   GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
-  AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST, which is added to the invoice where it applies.' },
+  AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST. Business customers account for any GST themselves.' },
 };
 export const fmtMoney = (n: number, cur: Currency) => currencies[cur].symbol + n.toLocaleString('en-US');
 /** Month-to-month price: annual price plus the uplift, rounded to R5 or to 1 in other currencies. */
@@ -90,6 +90,7 @@ export const monthlyOf = (n: number, cur: Currency, uplift = 0.15) =>
 export const pricingTerms = {
   vatNote: 'All ZAR prices exclude 15% VAT.',
   contract: 'Billed annually. Month-to-month costs 15% more.',
+  billing: 'Outside South Africa, we send an annual invoice in your currency, payable by bank transfer. Card payments may be charged in ZAR at the day’s exchange rate. Some countries need your local tax number on the invoice, such as a VAT number in the EU or UK, or a GSTIN in India.',
   monthlyUplift: 0.15,
   availability: '99.5% availability target, best effort.',
   aiNote: 'AI metadata extraction is included on every plan and module. Obel-MS reads digital PDFs directly. It reads scanned supplier documents in Latin-script languages with optical character recognition (OCR). The AI suggests the metadata, and a person confirms it in the Inbox.',
@@ -180,7 +181,7 @@ export const services = [
 ];
 
 export const managed = [
-  { title: 'Hosting', body: 'We run Obel-MS on Google Cloud in the region you choose, from Johannesburg to London, Iowa or Sydney. We manage the servers, installs and IT tickets, so you don’t have to.' },
+  { title: 'Hosting', body: 'We run Obel-MS on Google Cloud in the region you choose, from Johannesburg to Belgium, Iowa or Sydney. We manage the servers, installs and IT tickets, so you don’t have to.' },
   { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
   { title: 'Updates', body: 'New features and security patches roll out automatically, and you don’t need to schedule downtime.' },
   { title: 'Migration', body: 'Onboarding on Essentials and Professional includes an import of your existing documents. We quote larger migrations by the hour.' },

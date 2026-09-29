@@ -144,9 +144,10 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 
 **Updates (29 Sep 2026, global offering):**
 - The product name is **Obel-MS**, with the hyphen, everywhere.
-- Obel-MS is sold worldwide from the outset, with no default country. Say "hosted on Google Cloud in the region you choose". Standard regions: South Africa (Johannesburg), European Union (Belgium), United Kingdom (London), United States (Iowa), Australia (Sydney). Other Google Cloud regions are "available on request, with a one-off regional setup fee". Do not claim a region is already running.
+- Obel-MS is sold worldwide from the outset, with no default country. Say "hosted on Google Cloud in the region you choose". Standard regions: South Africa (Johannesburg), European Union (Belgium, which also hosts UK workspaces by default), United States (Iowa), Australia (Sydney). London is in-country hosting on request (Neil, 29 Sep; EU–UK adequacy renewed to 2031). Other Google Cloud regions are "available on request, with a one-off regional setup fee". Do not claim a region is already running.
 - Prices show in ZAR, USD, EUR, GBP or AUD. The browser picks the currency from the time zone (no network call). Change amounts in `src/data/site.ts` only; the margin check per currency and region lives in the private listing kit.
-- AI: OpenAI processes text in the United States by default. In-region processing (EU, UK, Canada, Australia, Japan, India, Singapore, South Korea) is "on request, approved by OpenAI per project". Never claim in-region AI as standard.
+- AI: OpenAI processes text in the United States by default. In-region AI processing is "available on request" for EU and UK workspaces only (per-tenant provider not built yet). Never list other countries, never claim in-country AI for South Africa, and never name a model.
+- Billing: we stay the seller of record. Outside South Africa we send an annual invoice in the customer's currency (bank transfer); card payments may be charged in ZAR. Do not say we add sales tax or GST.
 - On-site consulting outside South Africa is quoted with travel.
 
 **Never claim:**

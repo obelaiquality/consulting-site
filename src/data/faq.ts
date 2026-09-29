@@ -24,7 +24,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Where is our data hosted?',
-    a: 'On Google Cloud, in the region you choose. Our standard regions are South Africa (Johannesburg), the European Union (Belgium), the United Kingdom (London), the United States (Iowa) and Australia (Sydney). Other Google Cloud regions, such as Canada, Switzerland, India, Singapore, Japan or Brazil, are available on request. Your documents, records and backups stay in the region you choose.',
+    a: 'On Google Cloud, in the region you choose. Our standard regions are South Africa (Johannesburg), the European Union (Belgium), the United States (Iowa) and Australia (Sydney). UK workspaces are hosted in the EU region by default, and in-country hosting in London is available on request. Other Google Cloud regions, such as Canada, Switzerland, India, Singapore, Japan or Brazil, are available on request. Your documents, records and backups stay in the region you choose.',
     tags: ['security'],
   },
   {
@@ -85,6 +85,11 @@ export const faqs: FaqItem[] = [
   {
     q: 'Is AI metadata extraction included?',
     a: 'Yes. AI metadata extraction is included on every plan and module. Obel-MS reads digital PDFs directly, and reads scanned supplier documents in Latin-script languages with OCR. The AI suggests fields such as document type, dates, lot or batch numbers and certificate numbers, and a person confirms them in the Inbox. Each plan includes a monthly allowance: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above that, you can move up a plan, or we agree a volume price with you.',
+    tags: ['pricing', 'general'],
+  },
+  {
+    q: 'Do you sell outside South Africa?',
+    a: 'Yes. Obel-MS is sold worldwide to businesses, with prices in ZAR, USD, EUR, GBP and AUD, and hosting in the Google Cloud region you choose. Outside South Africa, we send an annual invoice in your currency. Some countries need your local tax number on the invoice, such as a VAT number in the EU or UK, or a GSTIN in India. For some countries we check the local tax rules first, so contact us.',
     tags: ['pricing', 'general'],
   },
   {
