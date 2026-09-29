@@ -1,67 +1,89 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import { site } from '../../data/site';
+/* Privacy notice. DRAFT pending legal review (see PR). Retention and sub-processor facts come from the cloud setup (29 Sep 2026). */
+import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
+import { site, legal, tbc, subProcessors } from '../../data/site';
 
-const sections = [
+const entity = tbc(legal.entity, 'Registered company name');
+const sections: LegalSection[] = [
   {
-    title: '1. What this notice covers',
-    body: `This notice covers ${site.url.replace('https://', '')}, the marketing website for Obel-MS. It doesn’t cover Obel-MS itself, the hosted product your organisation uses once you’re a customer. Use of the hosted product is governed by your service agreement and, where applicable, a customer data processing agreement. See section 7.`,
+    title: 'What this notice covers',
+    body: [
+      `This notice explains how ${entity} ("Obel", "we") handles personal information on ${site.url.replace('https://', '')} and, in summary, in Obel-MS, the hosted product.`,
+      'On this website, and for our own customer and billing records, we decide how personal information is used (we are the responsible party under POPIA and the controller under GDPR and UK GDPR). Inside a customer’s Obel-MS workspace, the customer decides, and we act for the customer as operator or processor (section 7).',
+    ],
   },
   {
-    title: '2. This site uses no analytics, tracking or cookies',
-    body: 'This site does not use analytics, advertising or tracking scripts, and it does not set cookies. It keeps one setting in your browser’s local storage: the currency you choose for prices (obel-currency). That setting stays on your device, is never sent to us, and you can clear it with your browser data. We don’t know who’s visiting or what they clicked before they reach us.',
+    title: 'This site uses no analytics, tracking or cookies',
+    body: 'This site does not use analytics, advertising or tracking scripts, and it does not set cookies. It keeps one setting in your browser’s local storage: the currency you choose for prices (obel-currency). That setting stays on your device, is never sent to us, and you can clear it with your browser data.',
   },
   {
-    title: '3. The contact form',
+    title: 'The forms on this site',
     body: site.web3formsKey
-      ? `When you send the "Book a demo", workspace request or waitlist form, the details you enter are delivered to ${site.email} through Web3Forms, a form-delivery service based in the United States, which acts as our processor and passes them on by email. We use them only to reply to your request and keep them no longer than needed for that. If sending fails, the page offers to open the request in your own email app instead.`
-      : `The "Book a demo" and waitlist forms do not store anything. When you press send, the page prepares an email to ${site.email} and offers to open it in your email app, Gmail or Outlook, or to copy it. We only receive what you choose to send us, the way any email works.`,
+      ? `When you send the "Book a demo", workspace request or waitlist form, the details you enter go to ${site.email} through Web3Forms, a form-delivery service in the United States that acts as our processor. We use them only to reply to your request and, if you become a customer, to set up your workspace. If sending fails, the page offers to open the request in your own email app instead.`
+      : `The forms on this site do not store anything. When you press send, the page prepares an email to ${site.email}, and we receive only what you choose to send.`,
   },
   {
-    title: '4. What we do with an email you send us',
-    body: `Anything you send us, a demo request, a question, a support message, is used to reply to you and, if you become a customer, to set up your account. We don’t sell or share it, and we keep it only as long as we reasonably need to for that purpose.`,
+    title: 'Why we use your information (legal basis)',
+    items: [
+      'To reply to your request or question: our legitimate interest in answering people who contact us, or steps you ask us to take before a contract.',
+      'To provide Obel-MS, bill for it and support it: the contract with your organisation.',
+      'To keep tax and accounting records: our legal obligations.',
+      'To keep the service and this website secure, for example through security logs: our legitimate interest in protecting them.',
+    ],
+    after: 'We do not use your information for automated decisions that have legal or similar effects on you, and we do not send marketing email without your consent.',
   },
   {
-    title: '5. Where your details are processed',
-    body: 'Form requests pass through Web3Forms in the United States on their way to our inbox. When online payment opens, Paddle, our reseller for subscriptions, processes billing details in the United Kingdom and the United States. We use these services only for the purposes above, under their own data protection terms.',
+    title: 'Who processes information for us',
+    body: 'We use these sub-processors. Each one processes personal information only for the purpose shown, under its own data protection terms:',
+    items: subProcessors.list.map((x) => `${x.name}: ${x.purpose} (${x.where}).`),
+    after: `The current list, with the date of the last change, is on our sub-processor page (/legal/sub-processors, last changed ${subProcessors.changed}). Where information goes to another country, we rely on the safeguards that the law requires, such as standard contractual clauses. If a customer's team sets up an integration, such as a webhook or Power Automate, Obel-MS sends the data they choose to the destination they choose; that destination is the customer's own processor, not ours.`,
   },
   {
-    title: '6. Your rights under POPIA',
-    body: 'Under the Protection of Personal Information Act, you can ask what personal information we hold about you, ask us to correct or delete it, object to how it’s used, and lodge a complaint with the Information Regulator. To exercise any of these, contact our Information Officer (section 7).',
+    title: 'How long we keep information',
+    items: [
+      `Requests sent through our forms: ${legal.leadRetentionMonths} months after our last contact with you, then deleted.`,
+      'Order, billing and accounting records: 7 years, as South African company and tax law requires. Paddle keeps its own records as Merchant of Record.',
+      `Customer workspace data: for as long as the subscription runs. After it ends, the customer has ${legal.exportDays} days to export it, and then we delete it from the live system.`,
+      `Backups: deleted data leaves our backups within ${legal.backupDays} days. Database backups keep 7 daily copies and 7 days of point-in-time recovery. Document storage keeps old versions and deleted files for up to 90 days.`,
+      'Logs: application logs 90 days; security audit logs 400 days.',
+    ],
   },
   {
-    title: '7. The hosted product is different',
-    body: 'If your organisation uses Obel-MS, a separate customer data processing agreement covers the documents, records and personal information your team puts into it. This notice does not cover that data. See our Security page for how we host and protect it, or ask us for a copy of the agreement.',
+    title: 'What we do with an email you send us',
+    body: 'We use what you send us, such as a demo request, a question or a support message, to reply to you and, if you become a customer, to set up and support your workspace. We do not sell or share it for marketing.',
   },
   {
-    title: '8. Contact / Information Officer',
-    body: `Our Information Officer for POPIA purposes is reachable at ${site.email}. Write to us there with any request or question about this notice.`,
+    title: 'Data inside Obel-MS',
+    body: [
+      'The documents, records and personal information that a customer’s team puts into Obel-MS belong to the customer. We process them only to provide the service, under the customer’s instructions and our Terms of Service. A data processing agreement is available on request.',
+      'The data stays in the Google Cloud region the customer chooses. External AI processing is off unless the customer chooses it for the workspace. If you are a user in a customer’s workspace, contact that organisation first about your information; we help them answer your request.',
+    ],
+  },
+  {
+    title: 'Your rights',
+    body: 'Under POPIA (South Africa), GDPR (European Union) and UK GDPR, you can ask what personal information we hold about you, ask us to correct or delete it, object to how we use it, and, where the law gives the right, ask for a copy in a portable format. You can also complain to a regulator:',
+    items: [
+      'South Africa: the Information Regulator, inforegulator.org.za, POPIAComplaints@inforegulator.org.za.',
+      'European Union: the data protection authority in your country.',
+      'United Kingdom: the Information Commissioner’s Office.',
+    ],
+  },
+  {
+    title: 'Children',
+    body: 'This website and Obel-MS are for businesses. They are not directed at children, and we do not knowingly collect information about children.',
+  },
+  {
+    title: 'Changes to this notice',
+    body: 'When we change this notice, we update the date at the top. If a change affects customers’ data in Obel-MS, we tell customers by email before it applies.',
+  },
+  {
+    title: 'Contact and Information Officer',
+    body: `Our Information Officer under POPIA is ${tbc(legal.informationOfficer, 'Information Officer')}, at ${tbc(legal.address, 'Registered address')}. Write to ${site.email} with any request or question about this notice. We reply within 30 days.`,
   },
 ];
 ---
-
-<BaseLayout title="Privacy notice" description="How the Obel-MS marketing site handles personal information, and your rights under POPIA.">
-  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
-    <div class="container-x">
-      <div class="max-w-[38rem]">
-        <p class="label-dot mb-6">Legal</p>
-        <h1 class="t-h2">Privacy notice</h1>
-        <p class="mt-4 text-[14px] text-muted tnum">Last updated 26 September 2026</p>
-      </div>
-
-      <div class="mt-14 max-w-[38rem] flex flex-col gap-10">
-        {sections.map((s) => (
-          <div>
-            <h2 class="t-h3 !text-[1.15rem]">{s.title}</h2>
-            <p class="mt-3 text-[15px] leading-relaxed text-muted">{s.body}</p>
-          </div>
-        ))}
-      </div>
-
-      <div class="mt-20 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-10">
-        <a href="/security" class="link-u text-[15px] text-ink">Security and hosting</a>
-        <a href={`mailto:${site.email}`} class="link-u text-[15px] text-ink">{site.email}</a>
-      </div>
-    </div>
-  </section>
-</BaseLayout>
+<LegalPage
+  title="Privacy notice"
+  description="How Obel handles personal information on obel-ai.com and in Obel-MS: forms, sub-processors, retention, hosting region, AI processing and your rights under POPIA, GDPR and UK GDPR."
+  sections={sections}
+/>

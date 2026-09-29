@@ -1,0 +1,41 @@
+---
+/* Refund Policy. DRAFT pending legal review (see PR). Consistent with the Paddle Buyer Terms (14-day right on the first payment). */
+import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
+import { site, legal } from '../../data/site';
+
+const sections: LegalSection[] = [
+  {
+    title: 'Who handles refunds',
+    body: 'Our online reseller Paddle.com is the Merchant of Record for all our orders, and Paddle handles returns and refunds. You can ask us or Paddle. We confirm the refund with Paddle, and Paddle pays it back to the payment method you used.',
+  },
+  {
+    title: `A full refund within ${legal.refundDays} days`,
+    body: `You can ask for a full refund of your first subscription payment within ${legal.refundDays} days of that payment. You do not need to give a reason. When we refund it, your subscription ends.`,
+  },
+  {
+    title: `After the first ${legal.refundDays} days`,
+    items: [
+      'You can cancel at any time. The cancellation takes effect at the end of the monthly or annual period you have paid for, and you keep access until then.',
+      'We do not refund part of a period that you have not used.',
+      'Renewal payments are not refundable, except where the law requires it or where we made an error, for example a charge after you cancelled.',
+    ],
+  },
+  {
+    title: 'Onboarding fees',
+    body: 'An onboarding fee is refundable in full if onboarding has not started. Onboarding starts when we begin the first import or hold the first training session. After that, the fee is not refundable.',
+  },
+  {
+    title: 'How to ask for a refund',
+    body: `Email ${site.email} with your company name and the order number from your receipt, or use the link in your Paddle receipt. Approved refunds are usually paid within 14 days of approval. The time for the money to reach your account depends on your bank.`,
+  },
+  {
+    title: 'Your statutory rights',
+    body: 'This policy does not reduce any right you have under the law of your country or under the Paddle Buyer Terms.',
+  },
+];
+---
+<LegalPage
+  title="Refund Policy"
+  description="How refunds work for an Obel-MS subscription: a full refund within 14 days of the first payment, cancellation at the end of the paid period, and onboarding fees."
+  sections={sections}
+/>

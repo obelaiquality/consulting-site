@@ -24,4 +24,8 @@ jobs:
         run: |
           if grep -rhoE '<script(\s[^>]*)?>' dist --include='*.html' | grep -vE 'src=|application/ld\+json' | grep -q .; then
             echo "Inline <script> found in dist"; exit 1; fi
+      - name: No legal placeholders left (fill `legal` in src/data/site.ts)
+        run: |
+          if grep -rl 'to be confirmed]' dist --include='*.html' | grep -q .; then
+            echo "Legal placeholders found:"; grep -rl 'to be confirmed]' dist --include='*.html'; exit 1; fi
       - run: npm audit --audit-level=high --omit=dev
