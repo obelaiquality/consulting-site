@@ -4,7 +4,7 @@
  * - H1, then a 40–60 word direct answer (props.answer), then the article body (slot).
  * - Visible "Updated" date that matches dateModified in the Article JSON-LD. Only change `updated`
  *   when the content really changes.
- * - Sources list (external authorities) and related Obel MS pages for internal linking.
+ * - Sources list (external authorities) and related Obel-MS pages for internal linking.
  * - Article + BreadcrumbList (+ FAQPage when faqs are passed) JSON-LD that mirrors visible content.
  */
 import BaseLayout from './BaseLayout.astro';
@@ -102,7 +102,7 @@ if (faqs.length) {
 
         <aside class="guide-aside" aria-label="Related">
           <div class="aside-inner">
-            <p class="t-label">See it in Obel MS</p>
+            <p class="t-label">See it in Obel-MS</p>
             <ul class="mt-4 flex flex-col gap-3">
               {related.map((r: { label: string; href: string; note?: string }) => (
                 <li>

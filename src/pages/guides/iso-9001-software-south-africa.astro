@@ -1,6 +1,6 @@
 ---
 import GuideLayout from '../../layouts/GuideLayout.astro';
-import { site, plans, pricingTerms, type Currency } from '../../data/site';
+import { plans, pricingTerms, type Currency } from '../../data/site';
 
 function fmt(n: number, cur: Currency): string {
   return (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
@@ -9,10 +9,10 @@ const lite = plans.find((p) => p.id === 'lite')!;
 ---
 
 <GuideLayout
-  title="ISO 9001 Software South Africa Guide | Obel MS"
+  title="ISO 9001 Software South Africa Guide | Obel-MS"
   description="What SA SMEs should check before buying ISO 9001 software: POPIA, ZAR pricing, local support hours, cloud hosting and data ownership."
   h1="ISO 9001 software in South Africa: what to look for"
-  answer="ISO 9001 software supports your quality management system. Only a SANAS-accredited certification body can certify it. South African SMEs should check data residency and POPIA roles, ZAR pricing, local support hours, load-shedding-proof cloud hosting and clear data export rights before choosing a vendor. Obel MS is hosted in Johannesburg on Google Cloud and priced in ZAR."
+  answer="ISO 9001 software supports your quality management system. Only a SANAS-accredited certification body can certify it. South African SMEs should check data residency and POPIA roles, ZAR pricing, local support hours, load-shedding-proof cloud hosting and clear data export rights before choosing a vendor. Obel-MS is hosted in Johannesburg on Google Cloud and priced in ZAR."
   published="2026-09-26"
   updated="2026-09-26"
   readingMinutes={8}
@@ -24,7 +24,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
   ]}
   related={[
     { label: 'Security and hosting', href: '/security', note: 'Hosting, access control and POPIA in full' },
-    { label: 'Pricing', href: '/pricing', note: 'Obel MS plans in ZAR and USD' },
+    { label: 'Pricing', href: '/pricing', note: 'Obel-MS plans in ZAR, USD, EUR, GBP and AUD' },
     { label: 'External Document Control', href: '/product/external-document-control', note: 'Supplier certificates, AI-read and auto-filed' },
     { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Nonconformance, CAPA and approvals' },
     { label: 'How much does QMS software cost?', href: '/guides/qms-software-cost', note: 'Price ranges and what drives them' },
@@ -33,27 +33,27 @@ const lite = plans.find((p) => p.id === 'lite')!;
   faqs={[
     {
       q: 'Can a software company certify us to ISO 9001?',
-      a: 'No. Only a SANAS-accredited certification body can certify your organisation to ISO 9001. Certification is something a body does to your management system. Software like Obel MS supports the document control and audit trail your certification body will want to see, built around ISO 9001 clause 7.5. It is never itself "ISO 9001 certified".',
+      a: 'No. Only a SANAS-accredited certification body can certify your organisation to ISO 9001. Certification is something a body does to your management system. Software like Obel-MS supports the document control and audit trail your certification body will want to see, built around ISO 9001 clause 7.5. It is never itself "ISO 9001 certified".',
     },
     {
       q: 'Does POPIA require our data to stay inside South Africa?',
-      a: 'Not strictly. POPIA does not set a blanket rule that personal information must stay in South Africa. Section 72 does restrict transferring it to a third party in a foreign country unless a specific condition is met, for example that the recipient offers an adequate level of protection, or the data subject has consented. Hosting with a South African provider like Obel MS avoids that question for the records you keep with us.',
+      a: 'Not strictly. POPIA does not set a blanket rule that personal information must stay in South Africa. Section 72 does restrict transferring it to a third party in a foreign country unless a specific condition is met, for example that the recipient offers an adequate level of protection, or the data subject has consented. Hosting with a South African provider like Obel-MS avoids that question for the records you keep with us.',
     },
     {
       q: 'What is the difference between a "responsible party" and an "operator" under POPIA?',
-      a: 'The responsible party is whoever decides why personal information is collected and how it will be used. For your quality records, that is your organisation. An operator processes personal information on the responsible party\'s behalf, under a contract, without setting its own purpose for the data. For documents and records you put in Obel MS, we act as operator. You remain the responsible party.',
+      a: 'The responsible party is whoever decides why personal information is collected and how it will be used. For your quality records, that is your organisation. An operator processes personal information on the responsible party\'s behalf, under a contract, without setting its own purpose for the data. For documents and records you put in Obel-MS, we act as operator. You remain the responsible party.',
     },
     {
       q: 'Can we export our data if we switch vendors?',
       a: 'Ask any vendor this before you sign, including us. Ask specifically whether a full export of documents, metadata, versions and the audit trail is included at no extra cost, and in what format. A vendor who cannot answer clearly is asking you to accept lock-in.',
     },
     {
-      q: 'Does Obel MS support single sign-on or electronic signatures?',
+      q: 'Does Obel-MS support single sign-on or electronic signatures?',
       a: 'Not yet. Single sign-on (Microsoft Entra ID or Google) and multi-factor authentication are on our roadmap and listed as not yet available on our security page. Approvals in Workflow Manager are recorded, named and timestamped in the audit trail. That is not the same as a formal electronic signature, so ask any vendor which of the two they offer.',
     },
     {
       q: 'What support hours can we expect from a South African vendor?',
-      a: 'This varies by vendor and plan. Always ask for a written response-time commitment rather than a general promise of support. Obel MS states response times per plan on its pricing page. Being based in South Africa means support runs in your working hours and time zone, with no overnight gap to a different continent.',
+      a: 'This varies by vendor and plan. Always ask for a written response-time commitment rather than a general promise of support. Obel-MS states response times per plan on its pricing page. Being based in South Africa means support runs in your working hours and time zone, with no overnight gap to a different continent.',
     },
   ]}
 >
@@ -69,7 +69,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
     South African National Accreditation System, accredits certification bodies for quality management
     systems and other schemes, so a SANAS-accredited certificate carries a documented chain of trust from
     SANAS to the certification body to your organisation. A consultant can help you prepare for that audit.
-    Software like Obel MS gives your certification body the document control and audit trail evidence it
+    Software like Obel-MS gives your certification body the document control and audit trail evidence it
     will ask for, built around ISO 9001 clause 7.5. The certificate itself always comes from the
     accredited body.
   </p>
@@ -154,18 +154,18 @@ const lite = plans.find((p) => p.id === 'lite')!;
     with a connection, which a locally-installed system tied to one building cannot offer.
   </p>
 
-  <h2>How does Obel MS fit these checks?</h2>
+  <h2>How does Obel-MS fit these checks?</h2>
   <p>
-    Obel MS is hosted on Google Cloud in {site.region}, priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
-    month (about {fmt(lite.price.USD, 'USD')}) excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
+    South African customers can host Obel-MS on Google Cloud in Johannesburg (africa-south1), so their data stays in South Africa. It is priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
+    month excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
     See the full <a href="/pricing">pricing page</a> for every plan. For the documents and records you put
-    into Obel MS, we act as operator under POPIA. You remain the responsible party, and a data processing
+    into Obel-MS, we act as operator under POPIA. You remain the responsible party, and a data processing
     agreement is available on request. Full detail on hosting, access control and what's still on our
     roadmap is on the <a href="/security">security and hosting page</a>.
   </p>
   <p>
-    Obel MS is not ISO 9001 certified, and no software can be. Only your organisation's QMS is certified,
-    by an accredited body such as a SANAS-accredited certification body. Obel MS also does not currently
+    Obel-MS is not ISO 9001 certified, and no software can be. Only your organisation's QMS is certified,
+    by an accredited body such as a SANAS-accredited certification body. Obel-MS also does not currently
     support single sign-on or multi-factor authentication. Both are listed as not yet available on the
     security page. Approvals in <a href="/product/workflow-manager">Workflow Manager</a> are recorded in
     a full audit trail rather than issued as formal electronic signatures.
@@ -175,12 +175,12 @@ const lite = plans.find((p) => p.id === 'lite')!;
       <thead>
         <tr>
           <th>Check</th>
-          <th>Obel MS</th>
+          <th>Obel-MS</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>Data location</td><td>{site.region}</td></tr>
-        <tr><td>Pricing</td><td>ZAR and USD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
+        <tr><td>Data location</td><td>Google Cloud Johannesburg (africa-south1), or another region you choose</td></tr>
+        <tr><td>Pricing</td><td>ZAR, USD, EUR, GBP and AUD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
         <tr><td>POPIA role</td><td>Operator for your documents and records, data processing agreement on request</td></tr>
         <tr><td>Support</td><td>Response times stated per plan on the pricing page</td></tr>
         <tr><td>Data export</td><td>Full export of documents, metadata and audit trail, confirmed on request</td></tr>

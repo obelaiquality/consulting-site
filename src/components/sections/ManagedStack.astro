@@ -13,7 +13,7 @@ import { managed } from '../../data/site';
     <div class="managed-grid">
       <div class="managed-head">
         <h2 id="managed-heading" class="t-h2">We run it. You use it.</h2>
-        <p class="t-lead mt-4">Obel MS is a managed service that we run for you. Your monthly fee covers the software, the hosting and the people who keep it healthy.</p>
+        <p class="t-lead mt-4">Obel-MS is a managed service that we run for you. Your monthly fee covers the software, the hosting and the people who keep it healthy.</p>
       </div>
 
       <div class="managed-cards">
@@ -27,7 +27,7 @@ import { managed } from '../../data/site';
 
               <div class="managed-indicator" aria-hidden="true">
                 {item.title === 'Hosting' && (
-                  <span class="pill pill-green">africa-south1</span>
+                  <span class="flex flex-wrap gap-1.5">{['africa-south1', 'europe-west1', 'europe-west2', 'us-central1', 'australia-southeast1'].map((r) => <span class="pill pill-green">{r}</span>)}</span>
                 )}
                 {item.title === 'Backups' && (
                   <div class="mi-ticks">

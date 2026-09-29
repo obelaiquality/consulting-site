@@ -1,8 +1,8 @@
 ---
-/* Obel MS lockup: two pillars + OBEL-MS wordmark, traced from obel-ms-saas/frontend/src/assets/obel-logo.svg.
+/* Obel-MS lockup: two pillars + OBEL-MS wordmark, traced from obel-ms-saas/frontend/src/assets/obel-logo.svg.
    Inherits color via currentColor. Set `mark` to render the pillars only. */
 interface Props { class?: string; mark?: boolean; word?: boolean; label?: string }
-const { class: cls = '', mark = false, word = false, label = 'Obel MS' } = Astro.props;
+const { class: cls = '', mark = false, word = false, label = 'Obel-MS' } = Astro.props;
 const vb = mark ? '130 125 97 230' : word ? '285 175 785 130' : '130 125 940 230';
 ---
 <svg class={cls} viewBox={vb} aria-hidden={label ? undefined : 'true'} role="img" aria-label={label} xmlns="http://www.w3.org/2000/svg" fill="currentColor">

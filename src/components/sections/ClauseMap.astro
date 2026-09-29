@@ -1,7 +1,7 @@
 ---
 /*
  * "Built around ISO 9001 clause 7.5" — an interactive row list mapping clause language to
- * shipped Obel MS features. Rows, not cards. Single motion: one data-reveal-group stagger.
+ * shipped Obel-MS features. Rows, not cards. Single motion: one data-reveal-group stagger.
  * Hover (fine pointers only): surface tint + a 2px green left rule that scales in.
  */
 interface Row {
@@ -72,14 +72,14 @@ const rows: Row[] = [
   <div class="container-x">
     <div class="max-w-[52rem]">
       <h2 id="clause-heading" class="t-h2">Built around ISO 9001 clause 7.5</h2>
-      <p class="t-lead mt-4">Obel MS supports ISO 9001 compliance, giving you the controls an auditor looks for and the evidence to show them.</p>
+      <p class="t-lead mt-4">Obel-MS supports ISO 9001 compliance, giving you the controls an auditor looks for and the evidence to show them.</p>
     </div>
 
     <div class="clause-rows mt-14" data-reveal-group="0.05">
       <div class="clause-row clause-row-head" aria-hidden="true">
         <span>Clause</span>
         <span>Requirement</span>
-        <span>How Obel MS covers it</span>
+        <span>How Obel-MS covers it</span>
         <span></span>
       </div>
       {rows.map((row) => (
@@ -94,7 +94,7 @@ const rows: Row[] = [
       ))}
     </div>
 
-    <p class="clause-footnote mt-10">Obel MS supports ISO 9001 compliance. Certification is issued to organisations by accredited bodies.</p>
+    <p class="clause-footnote mt-10">Obel-MS supports ISO 9001 compliance. Certification is issued to organisations by accredited bodies.</p>
   </div>
 </section>
 

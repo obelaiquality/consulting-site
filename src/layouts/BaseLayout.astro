@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { site } from '../data/site';
+import { currencyCodes, site } from '../data/site';
 
 interface Props {
   title?: string;
@@ -86,6 +86,30 @@ const ld = [org, webSite, ...(crumbs ? [crumbs] : []), ...(jsonLd ? (Array.isArr
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable site summary" />
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
     <!-- Mark JS early so reveal styles apply before paint; fail-safe shows content if the motion engine never boots. -->
+    <!-- Pick the price currency before paint: ?currency=, a saved choice, the time zone, then the browser language. No network call. -->
+    <script is:inline define:vars={{ codes: currencyCodes }}>
+      var pick = function () {
+        try { var q = (new URLSearchParams(location.search).get('currency') || '').toUpperCase(); if (codes.indexOf(q) > -1) { localStorage.setItem('obel-currency', q); return q; } } catch (e) {}
+        try { var s = localStorage.getItem('obel-currency'); if (codes.indexOf(s) > -1) return s; } catch (e) {}
+        var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+        if (/^Africa\/(Johannesburg|Maseru|Mbabane)$/.test(tz)) return 'ZAR';
+        if (/^Europe\/(London|Belfast|Guernsey|Isle_of_Man|Jersey)$/.test(tz)) return 'GBP';
+        if (/^(Europe\/|Atlantic\/(Canary|Madeira|Azores))/.test(tz)) return 'EUR';
+        if (/^Australia\//.test(tz)) return 'AUD';
+        if (tz) return 'USD';
+        var l = (navigator.language || '').toUpperCase();
+        if (/-ZA$/.test(l)) return 'ZAR'; if (/-GB$/.test(l)) return 'GBP'; if (/-AU$/.test(l)) return 'AUD';
+        if (/-(AT|BE|CY|DE|EE|ES|FI|FR|GR|HR|IE|IT|LT|LU|LV|MT|NL|PT|SI|SK)$/.test(l)) return 'EUR';
+        return 'ZAR';
+      };
+      document.documentElement.dataset.currency = pick();
+      window.__setCurrency = function (c) {
+        if (codes.indexOf(c) < 0) return;
+        document.documentElement.dataset.currency = c;
+        try { localStorage.setItem('obel-currency', c); } catch (e) {}
+        document.dispatchEvent(new CustomEvent('currencychange', { detail: c }));
+      };
+    </script>
     <script is:inline>
       document.documentElement.classList.add('js');
       setTimeout(function () { if (!window.__motion) document.documentElement.classList.remove('js'); }, 2500);

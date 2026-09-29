@@ -1,10 +1,10 @@
-# Obel MS marketing site: build spec
+# Obel-MS marketing site: build spec
 
 This file governs every contributor, human or agent. Read all of it before you write code.
 
 ## 1. What we sell
 
-Obel MS is a hosted quality management system for SMEs. Obel AI & Quality hosts it, maintains it and supports it for a monthly fee.
+Obel-MS is a hosted quality management system for SMEs. Obel AI & Quality hosts it, maintains it and supports it for a monthly fee.
 
 - **Live now:** External Document Control (EDC) and Workflow Manager (WFM).
 - **Coming soon:** Internal Document Control (IDC), for SOPs, policies and work instructions.
@@ -141,6 +141,13 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - The AI chat assistant may appear only as "coming soon".
 - ISO 9001:2026 was published on 16 September 2026, and clause 7.5 keeps its number. Write "ISO 9001" without a year, or name both editions. ISO 9001:2015 certificates stay valid through a three-year transition.
 - Guides live in `src/pages/guides/` and use `GuideLayout`, with an answer-first "In short" box, question-led H2s and cited sources. Register every guide in `src/data/guides.ts`. Change `updated` only when the content really changes.
+
+**Updates (29 Sep 2026, global offering):**
+- The product name is **Obel-MS**, with the hyphen, everywhere.
+- Obel-MS is sold worldwide from the outset, with no default country. Say "hosted on Google Cloud in the region you choose". Standard regions: South Africa (Johannesburg), European Union (Belgium), United Kingdom (London), United States (Iowa), Australia (Sydney). Other Google Cloud regions are "available on request, with a one-off regional setup fee". Do not claim a region is already running.
+- Prices show in ZAR, USD, EUR, GBP or AUD. The browser picks the currency from the time zone (no network call). Change amounts in `src/data/site.ts` only; the margin check per currency and region lives in the private listing kit.
+- AI: OpenAI processes text in the United States by default. In-region processing (EU, UK, Canada, Australia, Japan, India, Singapore, South Korea) is "on request, approved by OpenAI per project". Never claim in-region AI as standard.
+- On-site consulting outside South Africa is quoted with travel.
 
 **Never claim:**
 - That the software is "ISO 9001 certified" or "compliant". Say "supports ISO 9001 compliance" or "built around clause 7.5". Only organisations get certified.
