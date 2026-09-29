@@ -1,6 +1,6 @@
 # Checkout and provisioning contract
 
-Status: **not active.** `checkout.enabled` in `src/data/site.ts` is `false`. The site shows "coming soon" and sends workspace requests to the inbox. Version 1, 29 September 2026.
+Status: **not active.** `checkout.enabled` in `src/data/site.ts` is `false`. The site shows "coming soon" and sends workspace requests to the inbox. Version 1.1, 29 September 2026 (v1.1: provisioning trigger, replay window and launch checks corrected from Paddle's docs).
 
 This document is the agreement between the website (this repo) and the Obel-MS control plane (Obel Cloud, `obelaiquality/obel-ms-saas`). Change it only by agreement on both sides.
 
@@ -18,7 +18,7 @@ Fee: about 5% + USD 0.50 per transaction, plus a conversion margin when the paym
 
 **Phase 2 (optional):** Paystack for South African customers who want EFT or lower card fees in ZAR. The website adapter (`src/scripts/checkout.ts`) is written so a second provider can be added behind the same `openCheckout(order)` call, and the control plane must accept the same order fields from either provider.
 
-**To confirm before launch:** Paddle approves a South African seller, the payout currency, and ZAR as a transaction currency. See `obel-listing-kit/research/paddle-paystack-checkout.md`.
+**Checked (29 Sep 2026, Paddle docs):** South Africa is a supported seller country. ZAR, USD, EUR, GBP and AUD are payment currencies. Payouts are monthly by wire or Payoneer (USD 100 minimum); the payout currency for an SA account must be confirmed at onboarding. Paddle reviews the business and approves the website domain before live checkout.
 
 ## 2. Flow
 
@@ -28,7 +28,7 @@ Website (static)            Paddle                         Control plane (Google
 /checkout form
   builds OrderData  ──────▶ Checkout overlay
   (order_ref = UUID)         customer pays
-                             transaction.completed ───────▶ POST /v1/webhooks/paddle
+                             subscription.created ────────▶ POST /v1/webhooks/paddle
                                                             1. verify Paddle-Signature (HMAC-SHA256)
                                                             2. de-duplicate by event_id
                                                             3. load the transaction from the Paddle API
@@ -67,8 +67,8 @@ The website puts this object in `customData`. Paddle copies it to the transactio
 
 **Trust.** `customData` comes from the browser. Treat it as untrusted input.
 
-1. **Signature.** Verify `Paddle-Signature` (`ts` and `h1`) with HMAC-SHA256 over `ts:raw_body` and the endpoint secret. Reject a timestamp older than 5 minutes. Use the raw body, not re-serialised JSON.
-2. **Idempotency.** Store `event_id`. Return 200 for an event already processed. Paddle retries and does not guarantee order.
+1. **Signature.** Verify `Paddle-Signature` (`ts` and `h1`) with HMAC-SHA256 over `ts:raw_body` and the endpoint secret, with a timing-safe compare. Use Paddle's recommended timestamp tolerance (5 seconds; allow for clock skew only as far as Paddle's SDK does). Use the raw body, not re-serialised JSON.
+2. **Idempotency and order.** Store `event_id` and return 200 for an event already processed. Return 200 within 5 seconds and do the work asynchronously. Delivery is at least once (live: up to 60 retries over 3 days) and not ordered, so compare `occurred_at` and never let an older event overwrite newer state.
 3. **Source of truth.** Read the plan and the billing period from the **price IDs** on the transaction, never from `customData.plan`. Reject unknown price IDs.
 4. **Validation.** `region` in the allow-list, else state `manual_review`. Slug sanitised and made unique. Email syntax checked. Strings trimmed and length-limited. Unknown fields ignored.
 5. **Provisioning.** Create the tenant in the region cell, set plan limits (users, pages a month, storage), set the AI mode, create the admin user, send the set-password email. Record every step for the status API.
@@ -78,8 +78,8 @@ The website puts this object in `customData`. Paddle copies it to the transactio
 
 | Paddle event | Action |
 | --- | --- |
-| `transaction.completed` (first transaction of a subscription) | Provision. Set state `paid`, then `provisioning`, then `ready`. |
-| `transaction.completed` (renewal) | Record the payment. No provisioning. |
+| `subscription.created` | **Provision** (Paddle's recommended access trigger). It carries `custom_data` and the `transaction_id`. Set state `paid`, then `provisioning`, then `ready`. |
+| `transaction.paid` / `transaction.completed` | Record the payment (first and renewals). No provisioning. If it arrives before `subscription.created`, set state `paid` and wait. |
 | `subscription.updated` | Apply plan changes (upgrade or downgrade limits). |
 | `subscription.past_due` | Email the admin. Keep full access for 14 days. |
 | `subscription.canceled` | Read-only at the end of the period. Export window of 30 days, then delete by the retention policy. |
@@ -95,16 +95,17 @@ The website puts this object in `customData`. Paddle copies it to the transactio
 
 ## 6. Paddle catalogue
 
-- One product per plan. One recurring price per plan and billing period (6 prices), base currency USD, with currency overrides for ZAR, EUR, GBP and AUD that match `plans` in `src/data/site.ts` (monthly = annual + 15%).
-- One-time onboarding prices for Essentials and Professional, added to the first transaction.
+- One product per plan. One recurring price per plan and billing period (6 prices), base currency USD, with `unit_price_overrides` by country: ZAR for ZA, EUR for the eurozone countries, GBP for GB, AUD for AU, matching `plans` in `src/data/site.ts` (monthly = annual + 15%). Paddle picks the currency from the customer's country.
+- One-time onboarding prices for Essentials and Professional (`billing_cycle` null), added to the first transaction. They never enter renewals. Test this mix in the sandbox.
 - Prices exclude tax. Paddle adds tax where it applies, and applies the reverse charge when a business gives a valid VAT number.
 - Put the price IDs and the client-side token in `checkout` in `src/data/site.ts`. They are public by design.
 
 ## 7. Before `enabled: true`
 
 1. Paddle account approved; sandbox tested end to end (pay, webhook, provision, email, status page).
-2. Subscription terms published, and `checkout.termsUrl` set.
+2. Subscription terms and a refund policy published (Paddle requires Terms, Refund and Privacy pages before it approves the domain), and `checkout.termsUrl` set.
 3. Privacy notice updated for GDPR and for Paddle as a processor.
 4. At least one production region cell live, with the control plane deployed and monitored.
 5. Security review (OWASP) of the webhook endpoint, the status API and this website flow.
 6. Change the pricing billing line (`pricingTerms.billing`) to describe Paddle checkout.
+7. Add a "Manage billing" link to Paddle's hosted customer portal (invoices, card, cancel; magic-link login).
