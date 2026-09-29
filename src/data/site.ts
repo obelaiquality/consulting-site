@@ -209,7 +209,8 @@ export const checkout = {
   clientToken: '',
   /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
   statusApi: '',
-  termsUrl: '',
+  termsUrl: '/legal/terms',
+  refundUrl: '/legal/refund',
   termsVersion: '2026-09-29',
   /** One Paddle price per plan and billing period, with currency overrides that match `plans`. */
   prices: {
@@ -226,3 +227,21 @@ export const checkout = {
     { id: 'au', label: 'Australia (Sydney)' },
   ],
 };
+
+/*
+ * Legal pages (/legal/terms, /legal/refund, /legal/privacy). Draft pending legal review (29 Sep 2026).
+ * Empty fields render as a visible "[to be confirmed]" placeholder: fill them before merging.
+ */
+export const legal = {
+  entity: '',              // registered company name
+  regNo: '',               // company registration number
+  address: '',             // registered address
+  informationOfficer: '',  // POPIA Information Officer (name or role)
+  updated: '29 September 2026',
+  refundDays: 14,          // full refund window on the first payment
+  leadRetentionMonths: 12, // contact-form requests, after the last contact
+  exportDays: 30,          // after the subscription ends, before deletion
+  backupDays: 90,          // deleted data leaves backups within this time
+  availability: '99.5%',   // a target, not a guarantee (single-zone database at launch)
+};
+export const tbc = (v: string, label: string) => v || `[${label}: to be confirmed]`;

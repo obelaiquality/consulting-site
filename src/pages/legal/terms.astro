@@ -1,0 +1,128 @@
+---
+/* Terms of Service. DRAFT pending legal review (see PR). Facts come from site.ts (plans, hosting, legal). */
+import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
+import { site, legal, tbc, hosting } from '../../data/site';
+
+const entity = tbc(legal.entity, 'Registered company name');
+const sections: LegalSection[] = [
+  {
+    title: 'Who we are and what these terms cover',
+    body: [
+      `These terms are an agreement between ${entity}, registration number ${tbc(legal.regNo, 'Registration number')}, of ${tbc(legal.address, 'Registered address')} ("Obel", "we", "us"), and the organisation that subscribes to Obel-MS ("you").`,
+      'They apply when you subscribe online or sign an order form with us. If you accept them for an organisation, you confirm that you may bind that organisation. An order form that we both sign takes priority over these terms where the two differ.',
+    ],
+  },
+  {
+    title: 'The service',
+    body: [
+      'Obel-MS is a hosted quality management system. It includes External Document Control on every plan and Workflow Manager on the Professional plan. We host it, maintain it, back it up, update it and support it.',
+      'Obel-MS supports ISO 9001 compliance. Certification is issued to your organisation by an accredited certification body. We do not certify anyone and we do not guarantee a certification result.',
+    ],
+  },
+  {
+    title: 'Plans and limits',
+    body: 'Each plan has limits, which the pricing page shows at the time of your order:',
+    items: [
+      'named users, plus unlimited read-only viewers;',
+      'pages a month for AI metadata extraction and OCR;',
+      'document storage;',
+      'support time included.',
+    ],
+    after: 'When you reach the page limit in a month, Obel-MS still stores your documents, but AI extraction and OCR stop until the next month. You can move up a plan or ask us for a volume price. When you reach the storage limit, you can buy extra storage or move up a plan.',
+  },
+  {
+    title: 'Ordering and payment',
+    body: [
+      'Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.',
+      'Paddle charges you, collects any VAT, GST or sales tax, and sends your invoices. The Paddle Buyer Terms apply to your purchase in addition to these terms. Where we invoice you directly by agreement, you pay by bank transfer within the time on the invoice.',
+      'Prices exclude VAT, GST and sales tax.',
+    ],
+  },
+  {
+    title: 'Renewal, price changes and cancellation',
+    items: [
+      'Your subscription renews automatically at the end of each monthly or annual period until you cancel it.',
+      'You can cancel at any time in the billing portal or by email. The cancellation takes effect at the end of the period you have paid for.',
+      'We tell you about a price change at least 30 days before it applies. It applies from your next renewal.',
+      'Refunds follow our Refund Policy.',
+    ],
+  },
+  {
+    title: 'Onboarding',
+    body: 'The Essentials and Professional plans have a once-off onboarding fee. It covers the hours and the work shown on the pricing page, such as a document import and remote training sessions. It does not renew. Further work is charged at our remote consulting rate. The Refund Policy says when an onboarding fee is refundable.',
+  },
+  {
+    title: 'Your data',
+    body: [
+      'You own the documents, records and other data that you put in Obel-MS. We use them only to provide the service to you. We do not sell them.',
+      'For that data we act as your operator (POPIA) or processor (GDPR and UK GDPR), and you are the responsible party or controller. A data processing agreement (DPA) is available on request. We keep your data confidential and protect it with the measures described on our security page.',
+    ],
+  },
+  {
+    title: 'Hosting region',
+    body: [
+      `You choose the Google Cloud region for your workspace when you order. Our standard regions are ${hosting.regions.map((r) => `${r.name} (${r.city})`).join(', ').replace(/, ([^,]*)$/, ' and $1')}. UK workspaces use the EU region unless you ask for London. Other regions are available on request, with a one-off setup fee.`,
+      'Your documents, records and backups stay in that region. The sub-processors listed in our privacy notice can process some data elsewhere, for example to send email or, if you choose it, for AI processing.',
+    ],
+  },
+  {
+    title: 'AI processing',
+    body: [
+      'External AI processing is off unless you choose it for your workspace. If you choose it, document text goes to OpenAI through its API, and OpenAI processes it in the United States by default. You can switch it off at any time. Without it, extraction runs on our own servers in your hosting region.',
+      'AI suggestions can be wrong. A person in your team checks and approves each suggestion before it becomes part of a record. You stay responsible for the content of your records.',
+    ],
+  },
+  {
+    title: 'Availability and support',
+    body: `We aim for ${legal.availability} availability each month. This is a target, not a guarantee. We plan maintenance outside working hours where we can and tell you about it in advance. Support is by email, with the response times and the support time of your plan.`,
+  },
+  {
+    title: 'Acceptable use',
+    body: 'You and your users must not:',
+    items: [
+      'use Obel-MS for anything unlawful, or upload content that you have no right to use;',
+      'upload malware, or try to break, overload, probe or bypass the security of the service;',
+      'copy, resell or reverse-engineer the service, or give access to people outside your organisation except read-only viewers you invite;',
+      'share user accounts between people.',
+    ],
+    after: 'You are responsible for your users and for keeping their sign-in details safe.',
+  },
+  {
+    title: 'Suspension',
+    body: 'We can suspend access if a payment is more than 14 days late after we remind you, or if your use puts the service or other customers at risk. We tell you first unless the risk is urgent, and we restore access when the cause is fixed. Suspension does not delete your data.',
+  },
+  {
+    title: 'When the subscription ends',
+    body: `When your subscription ends, your workspace becomes read-only. You have ${legal.exportDays} days to export your data. After that we delete it from the live system, and it leaves our backups within ${legal.backupDays} days. We can export your data for you on request, at our remote consulting rate.`,
+  },
+  {
+    title: 'Warranties',
+    body: 'We provide the service with reasonable skill and care. Apart from that, and to the extent the law allows, we provide it as it is, without other warranties. We do not promise that it is free of errors or that it meets every requirement of your auditor.',
+  },
+  {
+    title: 'Liability',
+    body: [
+      'Our total liability under these terms is limited to the fees you paid for the service in the 12 months before the event that caused the claim.',
+      'We are not liable for indirect or consequential loss, or for loss of profit, revenue or goodwill. Nothing in these terms limits liability that the law does not allow to be limited, such as liability for fraud or wilful misconduct.',
+    ],
+  },
+  {
+    title: 'Changes to these terms',
+    body: 'We can change these terms. We tell you about an important change at least 30 days before it applies. If you do not agree, you can cancel before the change applies.',
+  },
+  {
+    title: 'Law',
+    body: 'The law of South Africa applies to these terms, and the courts of South Africa can hear disputes. Consumer protection law in your country still applies where it cannot be excluded by agreement.',
+  },
+  {
+    title: 'Contact',
+    body: `Questions about these terms: ${site.email}.`,
+  },
+];
+---
+<LegalPage
+  title="Terms of Service"
+  description="The terms for an Obel-MS subscription: plans, payment through Paddle, renewal, your data, hosting region, AI processing, availability and liability."
+  intro="These terms describe the Obel-MS subscription in plain language. Please read them before you subscribe."
+  sections={sections}
+/>
