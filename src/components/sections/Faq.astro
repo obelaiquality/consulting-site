@@ -5,6 +5,7 @@
  * Two columns on desktop: sticky heading on the left, questions on the right.
  */
 import { faqs, type FaqTag } from '../../data/faq';
+import { jsonLdString } from '../../data/site';
 
 interface Props {
   tags?: FaqTag[];
@@ -53,7 +54,7 @@ const jsonLd = withSchema
   </div>
 </section>
 
-{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+{jsonLd && <script type="application/ld+json" set:html={jsonLdString(jsonLd)} />}
 
 <style>
   .faq-grid {

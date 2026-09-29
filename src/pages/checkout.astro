@@ -1,0 +1,280 @@
+---
+/*
+ * Checkout (coming soon). The form collects what provisioning needs and opens the Paddle overlay
+ * when `checkout.enabled` is true. Until then it sends the same order to our inbox as a request,
+ * and we set the workspace up by hand. Contract: docs/CHECKOUT-CONTRACT.md.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Money from '../components/ui/Money.astro';
+import Captcha from '../components/ui/Captcha.astro';
+import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
+---
+<BaseLayout
+  title="Start your workspace | Obel-MS"
+  description="Choose a plan, a billing period and the Google Cloud region for your Obel-MS workspace."
+  noindex
+>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="soon-banner" role="status">
+        <span class="pill pill-amber">Coming soon</span>
+        <p>Online payment opens soon. Until then, send this form and we set up your workspace and send you an invoice, usually within one working day.</p>
+      </div>
+
+      <div class="mt-10 max-w-[42rem]">
+        <p class="label-dot mb-6">Start your workspace</p>
+        <h1 class="t-h2">Choose your plan and where your data lives.</h1>
+      </div>
+
+      <form id="co-form" class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-10" novalidate data-enabled={String(checkout.enabled)}>
+        <div class="lg:col-span-7 space-y-12">
+          <fieldset>
+            <legend class="co-legend">1. Plan</legend>
+            <div class="plan-pick">
+              {plans.map((p, i) => (
+                <label class="plan-opt">
+                  <input type="radio" name="plan" value={p.id} checked={i === 0} />
+                  <span class="plan-opt-body">
+                    <span class="plan-opt-name">{p.name}</span>
+                    <span class="plan-opt-price tnum" data-billing-scope="annual" data-plan-price><Money amount={p.price} monthly /> a month</span>
+                    <span class="plan-opt-users">{p.users.split(',')[0]}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="co-legend">2. Billing</legend>
+            <div class="seg">
+              <label><input type="radio" name="billing" value="annual" checked /> <span>Annual</span></label>
+              <label><input type="radio" name="billing" value="monthly" /> <span>Monthly, 15% more</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="co-legend">3. Your workspace</legend>
+            <div class="form-grid">
+              <div class="field field-full">
+                <label for="co-company">Company name</label>
+                <input id="co-company" name="company" type="text" autocomplete="organization" required maxlength="120" />
+                <p class="field-hint">Workspace ID: <span class="tnum" data-slug>your-company</span></p>
+                <p class="field-error" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="co-name">Admin full name</label>
+                <input id="co-name" name="admin_name" type="text" autocomplete="name" required maxlength="120" />
+                <p class="field-error" role="alert"></p>
+              </div>
+              <div class="field">
+                <label for="co-email">Admin work email</label>
+                <input id="co-email" name="admin_email" type="email" autocomplete="email" required maxlength="200" />
+                <p class="field-error" role="alert"></p>
+              </div>
+              <div class="field field-full">
+                <label for="co-region">Hosting region</label>
+                <select id="co-region" name="region" required>
+                  {checkout.regions.map((r) => <option value={r.id}>{r.label}</option>)}
+                </select>
+                <p class="field-hint">Need another Google Cloud region or in-country UK hosting? <a class="link-u" href="/contact#demo">Contact us</a>. A one-off regional setup fee applies.</p>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend class="co-legend">4. AI processing</legend>
+            <div class="stack-opts">
+              <label class="opt">
+                <input type="radio" name="ai_mode" value="openai" checked />
+                <span><strong>AI extraction with a third-party model provider.</strong> Document text goes to OpenAI through its API, and OpenAI processes it in the United States. It fills the most fields correctly. I consent to this for my organisation.</span>
+              </label>
+              <label class="opt">
+                <input type="radio" name="ai_mode" value="local" />
+                <span><strong>No external AI.</strong> Extraction runs on our own servers in your hosting region. It fills fewer fields correctly, so your team enters more by hand.</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <Captcha />
+          <div class="field">
+            <label class="opt">
+              <input type="checkbox" name="terms" required />
+              <span>I accept the Obel-MS subscription terms{checkout.termsUrl ? <> (<a class="link-u" href={checkout.termsUrl}>read them</a>)</> : ' (published before online payment opens)'} and the <a class="link-u" href="/legal/privacy">privacy notice</a>.</span>
+            </label>
+            <p class="field-error" role="alert"></p>
+          </div>
+        </div>
+
+        <aside class="lg:col-span-5">
+          <div class="summary" data-billing-scope="annual" data-summary>
+            <p class="text-[13px] text-muted">Order summary</p>
+            {plans.map((p, i) => (
+              <div class="sum-plan" data-sum-plan={p.id} hidden={i !== 0}>
+                <div class="sum-row"><span>{p.name}</span><span class="tnum"><Money amount={p.price} monthly /> a month</span></div>
+                <div class="sum-row text-muted"><span>Onboarding, once</span><span class="tnum">{p.setup.ZAR > 0 ? <Money amount={{ ZAR: p.setup.ZAR, USD: p.setup.USD, EUR: p.setup.EUR, GBP: p.setup.GBP, AUD: p.setup.AUD }} /> : 'None'}</span></div>
+              </div>
+            ))}
+            <p class="mt-4 text-[12.5px] text-muted">{currencyCodes.map((c) => <span data-cur={c}>{currencies[c].taxNote} </span>)}<span data-bill="annual">Billed annually.</span><span data-bill="monthly">Billed monthly.</span></p>
+
+            <button type="submit" class="btn btn-primary mt-6 w-full" data-submit>
+              <span data-label-live hidden={!checkout.enabled}>Continue to payment</span>
+              <span data-label-soon hidden={checkout.enabled}>Send my workspace request</span>
+            </button>
+            <p class="mt-3 text-[12.5px] text-muted" data-note>
+              {checkout.enabled ? 'Payment runs in a secure Paddle checkout. Paddle is our reseller and handles tax.' : 'No payment is taken. We reply by email with your invoice and your workspace link.'}
+            </p>
+            <div class="mt-4" data-fallback></div>
+
+            <ol class="next mt-8">
+              <li><span class="step-n">1</span><span>{checkout.enabled ? 'You pay in the secure checkout.' : 'You send this request.'}</span></li>
+              <li><span class="step-n">2</span><span>We create your workspace in the region you chose.</span></li>
+              <li><span class="step-n">3</span><span>Your admin gets an email to set a password and invite the team.</span></li>
+            </ol>
+          </div>
+        </aside>
+      </form>
+
+      <div id="co-sent" class="sent" hidden>
+        <h2 class="t-h3">Request received.</h2>
+        <p class="t-body mt-3">We reply from {site.email}, usually within one working day, with your invoice and your workspace link.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .soon-banner { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); font-size: 14px; color: var(--color-muted); }
+  .soon-banner p { margin: 0; line-height: 1.5; }
+  .co-legend { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+  .plan-pick { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .plan-pick { grid-template-columns: repeat(3, 1fr); } }
+  .plan-opt { position: relative; cursor: pointer; }
+  .plan-opt input { position: absolute; opacity: 0; }
+  .plan-opt-body { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out); }
+  .plan-opt input:checked + .plan-opt-body { border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(17 17 16 / 0.08); }
+  .plan-opt input:focus-visible + .plan-opt-body { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  .plan-opt-name { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+  .plan-opt-price { font-size: 14px; color: var(--color-ink); }
+  .plan-opt-users { font-size: 12.5px; color: var(--color-muted); }
+  .seg { display: flex; flex-wrap: wrap; gap: 10px; }
+  .seg label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--color-line); border-radius: 999px; background: var(--color-surface); font-size: 14px; cursor: pointer; }
+  .seg label:has(input:checked) { border-color: var(--color-ink); }
+  .seg input { accent-color: var(--color-ink); }
+  .stack-opts { display: grid; gap: 10px; }
+  .opt { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--color-muted); cursor: pointer; }
+  .stack-opts .opt { padding: 14px 16px; border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); }
+  .stack-opts .opt:has(input:checked) { border-color: var(--color-ink); }
+  .opt input { margin-top: 3px; accent-color: var(--color-ink); flex-shrink: 0; }
+  .opt strong { color: var(--color-ink); font-weight: 600; }
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+  .field-full { grid-column: 1 / -1; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field > label:not(.opt) { font-size: 13px; font-weight: 500; color: var(--color-ink); }
+  .field input:not([type='checkbox']):not([type='radio']), .field select {
+    font-size: 16px; line-height: 1.4; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line);
+    border-radius: var(--radius-md); padding: 0.7rem 0.85rem; width: 100%; min-height: 44px;
+  }
+  .field input:focus, .field select:focus { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(17 17 16 / 0.08); }
+  .field.has-error input, .field.has-error select { border-color: var(--color-red); }
+  .field-hint { font-size: 12.5px; color: var(--color-muted); }
+  .field-error { font-size: 13px; color: var(--color-red); min-height: 1em; }
+  .summary { position: sticky; top: calc(var(--nav-h) + 24px); border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); padding: 1.75rem; }
+  .sum-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 15px; }
+  .next { display: grid; gap: 12px; font-size: 13.5px; color: var(--color-muted); }
+  .next li { display: flex; gap: 10px; align-items: flex-start; }
+  .step-n { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; border-radius: 999px; border: 1px solid var(--color-line); font-size: 12px; font-weight: 600; }
+  .sent { margin-top: 3rem; max-width: 36rem; padding: 1.75rem; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); }
+</style>
+
+<script>
+  import { checkout, plans } from '../data/site';
+  import { openCheckout, newOrderRef, slugify, type OrderData } from '../scripts/checkout';
+  import { sendLead, renderFallback, setSending, formGuard, type Lead } from '../scripts/lead';
+
+  const form = document.getElementById('co-form') as HTMLFormElement | null;
+  if (form) {
+    const val = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value?.trim() ?? '';
+    const checked = (n: string) => (form.querySelector(`input[name="${n}"]:checked`) as HTMLInputElement | null)?.value ?? '';
+    const summary = form.querySelector<HTMLElement>('[data-summary]');
+    const slugEl = form.querySelector<HTMLElement>('[data-slug]');
+
+    // Preselect the plan from ?plan= (static site: read in the browser).
+    const q = new URLSearchParams(location.search).get('plan');
+    if (q && plans.some((p) => p.id === q)) (form.querySelector(`input[name="plan"][value="${q}"]`) as HTMLInputElement).checked = true;
+
+    const sync = () => {
+      const plan = checked('plan');
+      const billing = checked('billing') === 'monthly' ? 'monthly' : 'annual';
+      form.querySelectorAll<HTMLElement>('[data-sum-plan]').forEach((el) => { el.hidden = el.dataset.sumPlan !== plan; });
+      form.querySelectorAll<HTMLElement>('[data-plan-price]').forEach((el) => { el.dataset.billingScope = billing; });
+      if (summary) summary.dataset.billingScope = billing;
+      if (slugEl) slugEl.textContent = slugify(val('company')) || 'your-company';
+    };
+    form.addEventListener('change', sync);
+    form.addEventListener('input', sync);
+    sync();
+
+    const fail = (name: string, msg: string) => {
+      const input = form.elements.namedItem(name) as HTMLInputElement | null;
+      const field = input?.closest('.field');
+      field?.classList.toggle('has-error', Boolean(msg));
+      const err = field?.querySelector('.field-error');
+      if (err) err.textContent = msg;
+      return !msg;
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = val('admin_email');
+      const ok = [
+        fail('company', val('company').length >= 2 ? '' : 'Enter your company name.'),
+        fail('admin_name', val('admin_name').length >= 2 ? '' : 'Enter the admin’s full name.'),
+        fail('admin_email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Enter a valid work email.'),
+        fail('terms', (form.elements.namedItem('terms') as HTMLInputElement).checked ? '' : 'Accept the terms to continue.'),
+      ].every(Boolean);
+      if (!ok) return;
+
+      const aiMode = checked('ai_mode') === 'local' ? 'local' : 'openai';
+      const order: OrderData = {
+        v: 1,
+        order_ref: newOrderRef(),
+        plan: checked('plan') as OrderData['plan'],
+        billing: checked('billing') === 'monthly' ? 'monthly' : 'annual',
+        region: val('region'),
+        company: val('company'),
+        workspace: slugify(val('company')),
+        admin_name: val('admin_name'),
+        admin_email: email,
+        ai_mode: aiMode,
+        ai_consent_at: aiMode === 'openai' ? new Date().toISOString() : null,
+        terms_version: checkout.termsVersion,
+        display_currency: document.documentElement.dataset.currency || 'ZAR',
+      };
+
+      if (await openCheckout(order)) return;
+
+      // Coming soon: send the order to our inbox; we provision by hand and invoice.
+      const button = form.querySelector<HTMLButtonElement>('[data-submit]');
+      const lead: Lead = {
+        subject: `Workspace request: ${order.company} (${order.plan}, ${order.billing}, ${order.region})`,
+        replyTo: order.admin_email,
+        name: order.admin_name,
+        fields: Object.fromEntries(Object.entries(order).map(([k, v]) => [k, String(v ?? '')])),
+        ...formGuard(form),
+      };
+      setSending(button, true);
+      const sent = await sendLead(lead);
+      setSending(button, false);
+      if (sent) {
+        form.hidden = true;
+        const done = document.getElementById('co-sent');
+        if (done) { done.hidden = false; done.scrollIntoView({ block: 'center' }); }
+      } else {
+        const host = form.querySelector<HTMLElement>('[data-fallback]');
+        if (host) renderFallback(host, lead, true);
+      }
+    });
+  }
+</script>

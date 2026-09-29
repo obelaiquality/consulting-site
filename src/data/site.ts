@@ -18,6 +18,8 @@ export const site = {
    * The key is safe to publish: it can only send mail to the inbox that created it.
    */
   web3formsKey: '7137c373-adc7-4cb1-a533-75eedc607469' as string,
+  /** hCaptcha through Web3Forms. Turn on only after enabling captcha for this key in the Web3Forms dashboard. */
+  formCaptcha: false as boolean,
   /*
    * Official profiles of the company elsewhere (LinkedIn, G2, Capterra, Crunchbase, Google Business Profile).
    * They go into the Organization schema as `sameAs`, which helps search engines and AI assistants
@@ -75,6 +77,9 @@ export const currencies: Record<Currency, { symbol: string; name: string; taxNot
   GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
   AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST. Business customers account for any GST themselves.' },
 };
+/** JSON for a <script type="application/ld+json"> block: escapes '<' so no value can close the tag. */
+export const jsonLdString = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
+
 export const fmtMoney = (n: number, cur: Currency) => currencies[cur].symbol + n.toLocaleString('en-US');
 /** Month-to-month price: annual price plus the uplift, rounded to R5 or to 1 in other currencies. */
 export const monthlyOf = (n: number, cur: Currency, uplift = 0.15) =>
@@ -188,3 +193,36 @@ export const managed = [
   { title: 'Support', body: 'Quality consultants answer your questions, and we speak ISO 9001 as well as we speak software.' },
   { title: 'Monitoring', body: 'Uptime, errors and storage are watched around the clock, so you hear from us first.' },
 ];
+
+/*
+ * Online checkout (Paddle Billing, merchant of record). NOT ACTIVE: `enabled` stays false until
+ * Paddle approves the account, the price IDs below exist, a production region is live and the
+ * subscription terms are published. The contract with the provisioning service is in
+ * docs/CHECKOUT-CONTRACT.md. The client token and price IDs are public by design; no secret goes here.
+ */
+export type PlanId = (typeof plans)[number]['id'];
+export type Billing = 'annual' | 'monthly';
+export const checkout = {
+  enabled: false,
+  provider: 'paddle' as const,
+  environment: 'sandbox' as 'sandbox' | 'production',
+  clientToken: '',
+  /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
+  statusApi: '',
+  termsUrl: '',
+  termsVersion: '2026-09-29',
+  /** One Paddle price per plan and billing period, with currency overrides that match `plans`. */
+  prices: {
+    lite: { annual: '', monthly: '' },
+    essentials: { annual: '', monthly: '' },
+    professional: { annual: '', monthly: '' },
+  } as Record<PlanId, Record<Billing, string>>,
+  /** One-time onboarding prices, added to the first transaction. */
+  onboardingPrices: { essentials: '', professional: '' } as Partial<Record<PlanId, string>>,
+  regions: [
+    { id: 'za', label: 'South Africa (Johannesburg)' },
+    { id: 'eu', label: 'European Union (Belgium), also for UK workspaces' },
+    { id: 'us', label: 'United States (Iowa)' },
+    { id: 'au', label: 'Australia (Sydney)' },
+  ],
+};

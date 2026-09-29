@@ -70,6 +70,11 @@ const { compact = false } = Astro.props;
           >
             {p.cta}
           </a>
+          {!compact && (
+            <a href={`/checkout?plan=${p.id}`} class:list={['buy-link mt-3 text-[13px]', p.featured ? 'text-night-muted' : 'text-muted']}>
+              Start your workspace <span class="pill pill-amber ml-1">Online payment soon</span>
+            </a>
+          )}
 
           <ul class="mt-7 space-y-3">
             {(compact ? p.features.slice(0, 5) : p.features).map((f) => (
@@ -112,6 +117,7 @@ const { compact = false } = Astro.props;
 <style>
   .check-icon { width: 14px; height: 14px; }
 
+  .buy-link { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-height: 32px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; }
   .switch-note { font-size: 12.5px; color: var(--color-green); font-weight: 500; }
 
   .plan-card { border-radius: var(--radius-lg); }

@@ -1,0 +1,92 @@
+---
+/*
+ * After payment: polls the control plane for the order status (no personal data in the response).
+ * GET {checkout.statusApi}/v1/orders/{order_ref} -> { state, workspace_url? }. Contract: docs/CHECKOUT-CONTRACT.md.
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { site } from '../../data/site';
+const steps = [
+  { id: 'paid', title: 'Payment confirmed' },
+  { id: 'provisioning', title: 'Workspace being created in your region' },
+  { id: 'ready', title: 'Admin invitation sent' },
+];
+---
+<BaseLayout title="Your workspace | Obel-MS" description="The status of your new Obel-MS workspace." noindex>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x max-w-[40rem]">
+      <p class="label-dot mb-6">Your workspace</p>
+      <h1 class="t-h2" data-title>We are preparing your workspace.</h1>
+      <p class="t-lead mt-5" data-lead>This usually takes a few minutes. You can leave this page. We also email your admin when the workspace is ready.</p>
+      <ol class="st mt-10" data-steps>
+        {steps.map((s) => (
+          <li data-step={s.id}><span class="st-dot" aria-hidden="true"></span><span>{s.title}</span></li>
+        ))}
+      </ol>
+      <p class="mt-8 text-[14px] text-muted" data-help>Questions about your order? Email <a class="link-u" href={`mailto:${site.email}`}>{site.email}</a>.</p>
+      <a class="btn btn-primary mt-6" data-open hidden href="#">Open your workspace</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .st { display: grid; gap: 16px; }
+  .st li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--color-muted); }
+  .st-dot { width: 12px; height: 12px; border-radius: 999px; border: 1.5px solid var(--color-line); flex-shrink: 0; transition: background-color .3s var(--ease-calm), border-color .3s var(--ease-calm); }
+  .st li.is-done { color: var(--color-ink); }
+  .st li.is-done .st-dot { background: var(--color-green); border-color: var(--color-green); }
+  .st li.is-now .st-dot { border-color: var(--color-ink); animation: pulse 1.6s var(--ease-calm) infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 5px rgb(17 17 16 / 0.08); } }
+  @media (prefers-reduced-motion: reduce) { .st li.is-now .st-dot { animation: none; } }
+</style>
+
+<script>
+  import { checkout } from '../../data/site';
+  const order = new URLSearchParams(location.search).get('order') || '';
+  const title = document.querySelector<HTMLElement>('[data-title]');
+  const lead = document.querySelector<HTMLElement>('[data-lead]');
+  const open = document.querySelector<HTMLAnchorElement>('[data-open]');
+  const order_ok = /^[a-f0-9-]{32,36}$/i.test(order);
+  const ORDER = ['paid', 'provisioning', 'ready'];
+
+  const show = (state: string) => {
+    const i = ORDER.indexOf(state);
+    document.querySelectorAll<HTMLElement>('[data-step]').forEach((li, j) => {
+      li.classList.toggle('is-done', i >= 0 && j <= i);
+      li.classList.toggle('is-now', j === i + 1);
+    });
+  };
+
+  if (!checkout.enabled || !checkout.statusApi || !order_ok) {
+    if (title) title.textContent = 'Online checkout is coming soon.';
+    if (lead) lead.textContent = 'Nothing was charged. To start a workspace today, send the request form and we reply within one working day.';
+    document.querySelector('[data-steps]')?.setAttribute('hidden', '');
+    if (open) { open.hidden = false; open.textContent = 'Start your workspace'; open.href = '/checkout'; }
+  } else {
+    show('received');
+    let tries = 0;
+    const poll = async () => {
+      tries++;
+      try {
+        const res = await fetch(`${checkout.statusApi}/v1/orders/${encodeURIComponent(order)}`, { headers: { Accept: 'application/json' } });
+        if (res.ok) {
+          const data = (await res.json()) as { state?: string; workspace_url?: string };
+          const state = data.state || 'received';
+          show(state);
+          if (state === 'ready') {
+            if (title) title.textContent = 'Your workspace is ready.';
+            if (lead) lead.textContent = 'Your admin has an email with a link to set a password. Then invite your team.';
+            if (open && data.workspace_url?.startsWith('https://')) { open.href = data.workspace_url; open.hidden = false; }
+            return;
+          }
+          if (state === 'manual_review' || state === 'failed') {
+            if (title) title.textContent = 'We are finishing your workspace by hand.';
+            if (lead) lead.textContent = 'Your payment is safe. We email your admin as soon as the workspace is ready, usually within one working day.';
+            return;
+          }
+        }
+      } catch { /* keep polling */ }
+      if (tries < 100) setTimeout(poll, tries < 20 ? 3000 : 10000);
+    };
+    poll();
+  }
+</script>

@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import { currencyCodes, site } from '../data/site';
+import { site, checkout, jsonLdString } from '../data/site';
 
 interface Props {
   title?: string;
@@ -55,12 +55,36 @@ const crumbs = breadcrumbs?.length
     }
   : null;
 const ld = [org, webSite, ...(crumbs ? [crumbs] : []), ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [])];
+/*
+ * Content-Security-Policy as a <meta> tag: GitHub Pages cannot send headers. A meta CSP cannot carry
+ * frame-ancestors, report-uri or HSTS; those need a CDN (see docs/CHECKOUT-CONTRACT.md §7 and the
+ * security review). Third-party origins are added only when their feature is switched on.
+ */
+const paddle = checkout.enabled ? ['https://cdn.paddle.com', 'https://*.paddle.com'] : [];
+const captcha = site.formCaptcha ? ['https://web3forms.com', 'https://js.hcaptcha.com', 'https://*.hcaptcha.com'] : [];
+const statusOrigin = checkout.statusApi ? [new URL(checkout.statusApi).origin] : [];
+const src = (...parts: string[]) => parts.join(' ');
+const csp = [
+  "default-src 'self'",
+  `script-src ${src("'self'", ...paddle, ...captcha)}`,
+  `style-src ${src("'self'", "'unsafe-inline'", ...captcha)}`,
+  `img-src ${src("'self'", 'data:', ...paddle)}`,
+  "font-src 'self'",
+  `connect-src ${src("'self'", 'https://api.web3forms.com', ...statusOrigin, ...paddle, ...captcha)}`,
+  `frame-src ${paddle.length || captcha.length ? src(...paddle, ...captcha) : "'none'"}`,
+  "form-action 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  'upgrade-insecure-requests',
+].join('; ');
 ---
 <!doctype html>
 <html lang="en-ZA">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
@@ -84,36 +108,10 @@ const ld = [org, webSite, ...(crumbs ? [crumbs] : []), ...(jsonLd ? (Array.isArr
     <meta name="twitter:image" content={ogUrl} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-readable site summary" />
-    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    <script type="application/ld+json" set:html={jsonLdString(ld)} />
     <!-- Mark JS early so reveal styles apply before paint; fail-safe shows content if the motion engine never boots. -->
-    <!-- Pick the price currency before paint: ?currency=, a saved choice, the time zone, then the browser language. No network call. -->
-    <script is:inline define:vars={{ codes: currencyCodes }}>
-      var pick = function () {
-        try { var q = (new URLSearchParams(location.search).get('currency') || '').toUpperCase(); if (codes.indexOf(q) > -1) { localStorage.setItem('obel-currency', q); return q; } } catch (e) {}
-        try { var s = localStorage.getItem('obel-currency'); if (codes.indexOf(s) > -1) return s; } catch (e) {}
-        var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
-        if (/^Africa\/(Johannesburg|Maseru|Mbabane)$/.test(tz)) return 'ZAR';
-        if (/^Europe\/(London|Belfast|Guernsey|Isle_of_Man|Jersey)$/.test(tz)) return 'GBP';
-        if (/^(Europe\/|Atlantic\/(Canary|Madeira|Azores))/.test(tz)) return 'EUR';
-        if (/^Australia\//.test(tz)) return 'AUD';
-        if (tz) return 'USD';
-        var l = (navigator.language || '').toUpperCase();
-        if (/-ZA$/.test(l)) return 'ZAR'; if (/-GB$/.test(l)) return 'GBP'; if (/-AU$/.test(l)) return 'AUD';
-        if (/-(AT|BE|CY|DE|EE|ES|FI|FR|GR|HR|IE|IT|LT|LU|LV|MT|NL|PT|SI|SK)$/.test(l)) return 'EUR';
-        return 'ZAR';
-      };
-      document.documentElement.dataset.currency = pick();
-      window.__setCurrency = function (c) {
-        if (codes.indexOf(c) < 0) return;
-        document.documentElement.dataset.currency = c;
-        try { localStorage.setItem('obel-currency', c); } catch (e) {}
-        document.dispatchEvent(new CustomEvent('currencychange', { detail: c }));
-      };
-    </script>
-    <script is:inline>
-      document.documentElement.classList.add('js');
-      setTimeout(function () { if (!window.__motion) document.documentElement.classList.remove('js'); }, 2500);
-    </script>
+    <!-- Before paint: pick the price currency and mark JS (src/pages/early.js.ts). A file, so the CSP needs no inline script. -->
+    <script is:inline src="/early.js"></script>
   </head>
   <body>
     <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] btn btn-primary">Skip to content</a>
