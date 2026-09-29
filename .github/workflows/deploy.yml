@@ -45,7 +45,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     env:
-      INDEXNOW_KEY: a8516f76ccfbd500482fd028ba2ac12d
+      INDEXNOW_KEY: a8516f76ccfbd500482fd028ba2ac12d # gitleaks:allow (public by design)
     steps:
       - name: Submit sitemap URLs to IndexNow
         run: |

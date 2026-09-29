@@ -29,8 +29,13 @@ declare global {
 export const slugify = (s: string) =>
   s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40);
 
-export const newOrderRef = () =>
-  (crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, '0')).join(''));
+/** Order reference: always a UUID v4 from the browser's crypto (no fallback). */
+export const newOrderRef = () => crypto.randomUUID();
+export const isOrderRef = (s: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(s);
+
+/** Slug rules shared with the control plane (docs/CHECKOUT-CONTRACT.md §3). The server enforces them. */
+export const reservedSlugs = ['www', 'app', 'api', 'admin', 'status', 'eu', 'za', 'us', 'au', 'uk', 'mail', 'support', 'help', 'billing', 'login', 'auth', 'static', 'cdn', 'docs', 'obel', 'obel-ms'];
+export const slugOk = (s: string) => /^[a-z][a-z0-9-]{1,38}[a-z0-9]$/.test(s) && !reservedSlugs.includes(s);
 
 export const statusUrl = (ref: string) => `/checkout/status?order=${encodeURIComponent(ref)}`;
 
@@ -43,7 +48,7 @@ function loadPaddle(onCompleted: () => void): Promise<any> {
     s.async = true;
     s.onload = () => {
       const P = window.Paddle;
-      if (!P) return reject(new Error('Paddle.js did not load'));
+      if (!P) { loading = null; return reject(new Error('Paddle.js did not load')); }
       if (checkout.environment === 'sandbox') P.Environment.set('sandbox');
       P.Initialize({
         token: checkout.clientToken,
@@ -51,7 +56,7 @@ function loadPaddle(onCompleted: () => void): Promise<any> {
       });
       resolve(P);
     };
-    s.onerror = () => reject(new Error('Paddle.js did not load'));
+    s.onerror = () => { loading = null; s.remove(); reject(new Error('Paddle.js did not load')); };
     document.head.appendChild(s);
   });
   return loading;
@@ -64,8 +69,10 @@ export async function openCheckout(order: OrderData): Promise<boolean> {
   const items = [{ priceId, quantity: 1 }];
   const onboarding = checkout.onboardingPrices[order.plan];
   if (onboarding) items.push({ priceId: onboarding, quantity: 1 });
+  if (!isOrderRef(order.order_ref)) return false;
   const done = () => { window.location.href = statusUrl(order.order_ref); };
-  const Paddle = await loadPaddle(done);
+  let Paddle: any;
+  try { Paddle = await loadPaddle(done); } catch { return false; }   // the caller falls back to the email request
   Paddle.Checkout.open({
     items,
     customer: { email: order.admin_email },

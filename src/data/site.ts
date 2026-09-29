@@ -17,7 +17,7 @@ export const site = {
    * Without a key, the forms fall back to "open in your email app / Gmail / Outlook / copy".
    * The key is safe to publish: it can only send mail to the inbox that created it.
    */
-  web3formsKey: '7137c373-adc7-4cb1-a533-75eedc607469' as string,
+  web3formsKey: '7137c373-adc7-4cb1-a533-75eedc607469' as string, // gitleaks:allow (public by design)
   /** hCaptcha through Web3Forms. Turn on only after enabling captcha for this key in the Web3Forms dashboard. */
   formCaptcha: false as boolean,
   /*

@@ -41,11 +41,20 @@ const steps = [
 
 <script>
   import { checkout } from '../../data/site';
+  import { isOrderRef } from '../../scripts/checkout';
+  /** Only https links on obel-ai.com or one of its subdomains (exact suffix match). */
+  const safeWorkspaceUrl = (raw?: string) => {
+    try {
+      const u = new URL(raw || '');
+      const ok = u.protocol === 'https:' && (u.hostname === 'obel-ai.com' || u.hostname.endsWith('.obel-ai.com'));
+      return ok ? u.href : null;
+    } catch { return null; }
+  };
   const order = new URLSearchParams(location.search).get('order') || '';
   const title = document.querySelector<HTMLElement>('[data-title]');
   const lead = document.querySelector<HTMLElement>('[data-lead]');
   const open = document.querySelector<HTMLAnchorElement>('[data-open]');
-  const order_ok = /^[a-f0-9-]{32,36}$/i.test(order);
+  const order_ok = isOrderRef(order);
   const ORDER = ['paid', 'provisioning', 'ready'];
 
   const show = (state: string) => {
@@ -75,7 +84,8 @@ const steps = [
           if (state === 'ready') {
             if (title) title.textContent = 'Your workspace is ready.';
             if (lead) lead.textContent = 'Your admin has an email with a link to set a password. Then invite your team.';
-            if (open && data.workspace_url?.startsWith('https://')) { open.href = data.workspace_url; open.hidden = false; }
+            const href = safeWorkspaceUrl(data.workspace_url);
+            if (open && href) { open.href = href; open.hidden = false; }
             return;
           }
           if (state === 'manual_review' || state === 'failed') {

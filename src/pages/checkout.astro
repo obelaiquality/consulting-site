@@ -26,7 +26,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         <h1 class="t-h2">Choose your plan and where your data lives.</h1>
       </div>
 
-      <form id="co-form" class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-10" novalidate data-enabled={String(checkout.enabled)}>
+      <form id="co-form" method="post" class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-10" novalidate data-enabled={String(checkout.enabled)}>
         <div class="lg:col-span-7 space-y-12">
           <fieldset>
             <legend class="co-legend">1. Plan</legend>
@@ -83,15 +83,17 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 
           <fieldset>
             <legend class="co-legend">4. AI processing</legend>
-            <div class="stack-opts">
+            <p class="field-hint mb-3">Choose one. You can change it later.</p>
+            <div class="stack-opts field" data-ai-field>
               <label class="opt">
-                <input type="radio" name="ai_mode" value="openai" checked />
-                <span><strong>AI extraction with a third-party model provider.</strong> Document text goes to OpenAI through its API, and OpenAI processes it in the United States. It fills the most fields correctly. I consent to this for my organisation.</span>
+                <input type="radio" name="ai_mode" value="openai" required />
+                <span><strong>AI extraction with a third-party model provider.</strong> Document text goes to OpenAI through its API, and OpenAI processes it in the United States. It fills the most fields correctly. By choosing this, I consent to it for my organisation.</span>
               </label>
               <label class="opt">
                 <input type="radio" name="ai_mode" value="local" />
                 <span><strong>No external AI.</strong> Extraction runs on our own servers in your hosting region. It fills fewer fields correctly, so your team enters more by hand.</span>
               </label>
+              <p class="field-error" role="alert"></p>
             </div>
           </fieldset>
 
@@ -190,7 +192,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 
 <script>
   import { checkout, plans } from '../data/site';
-  import { openCheckout, newOrderRef, slugify, type OrderData } from '../scripts/checkout';
+  import { openCheckout, newOrderRef, slugify, slugOk, type OrderData } from '../scripts/checkout';
   import { sendLead, renderFallback, setSending, formGuard, type Lead } from '../scripts/lead';
 
   const form = document.getElementById('co-form') as HTMLFormElement | null;
@@ -210,7 +212,8 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
       form.querySelectorAll<HTMLElement>('[data-sum-plan]').forEach((el) => { el.hidden = el.dataset.sumPlan !== plan; });
       form.querySelectorAll<HTMLElement>('[data-plan-price]').forEach((el) => { el.dataset.billingScope = billing; });
       if (summary) summary.dataset.billingScope = billing;
-      if (slugEl) slugEl.textContent = slugify(val('company')) || 'your-company';
+      const slug = slugify(val('company'));
+      if (slugEl) slugEl.textContent = !slug ? 'your-company' : slugOk(slug) ? slug : `${slug} (we adjust this ID when it is taken or reserved)`;
     };
     form.addEventListener('change', sync);
     form.addEventListener('input', sync);
@@ -225,6 +228,14 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
       return !msg;
     };
 
+    const failAi = (msg: string) => {
+      const field = form.querySelector<HTMLElement>('[data-ai-field]');
+      field?.classList.toggle('has-error', Boolean(msg));
+      const err = field?.querySelector('.field-error');
+      if (err) err.textContent = msg;
+      return !msg;
+    };
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = val('admin_email');
@@ -233,6 +244,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         fail('admin_name', val('admin_name').length >= 2 ? '' : 'Enter the admin’s full name.'),
         fail('admin_email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Enter a valid work email.'),
         fail('terms', (form.elements.namedItem('terms') as HTMLInputElement).checked ? '' : 'Accept the terms to continue.'),
+        failAi(checked('ai_mode') ? '' : 'Choose how AI extraction runs.'),
       ].every(Boolean);
       if (!ok) return;
 

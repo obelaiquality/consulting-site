@@ -67,8 +67,8 @@ const src = (...parts: string[]) => parts.join(' ');
 const csp = [
   "default-src 'self'",
   `script-src ${src("'self'", ...paddle, ...captcha)}`,
-  `style-src ${src("'self'", "'unsafe-inline'", ...captcha)}`,
-  `img-src ${src("'self'", 'data:', ...paddle)}`,
+  `style-src ${src("'self'", "'unsafe-inline'", ...paddle, ...captcha)}`,
+  `img-src ${src("'self'", 'data:', ...paddle, ...captcha)}`,
   "font-src 'self'",
   `connect-src ${src("'self'", 'https://api.web3forms.com', ...statusOrigin, ...paddle, ...captcha)}`,
   `frame-src ${paddle.length || captcha.length ? src(...paddle, ...captcha) : "'none'"}`,
