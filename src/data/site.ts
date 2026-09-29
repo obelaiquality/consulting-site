@@ -206,7 +206,7 @@ export const checkout = {
   enabled: false,
   provider: 'paddle' as const,
   environment: 'sandbox' as 'sandbox' | 'production',
-  clientToken: '',
+  clientToken: 'test_e6a0bdfcdabce7994221dac0133', // gitleaks:allow (Paddle sandbox client-side token, public by design)
   /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
   statusApi: '',
   termsUrl: '',
