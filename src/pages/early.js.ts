@@ -20,7 +20,7 @@ export const GET = () => {
     if (tz) return 'USD';
     var l = (navigator.language || '').toUpperCase();
     if (/-ZA$/.test(l)) return 'ZAR'; if (/-GB$/.test(l)) return 'GBP'; if (/-AU$/.test(l)) return 'AUD';
-    if (/-(AT|BE|CY|DE|EE|ES|FI|FR|GR|HR|IE|IT|LT|LU|LV|MT|NL|PT|SI|SK)$/.test(l)) return 'EUR';
+    if (/-(AT|BE|BG|CY|DE|EE|ES|FI|FR|GR|HR|IE|IT|LT|LU|LV|MT|NL|PT|SI|SK)$/.test(l)) return 'EUR';
     return 'ZAR';
   };
   document.documentElement.dataset.currency = pick();
