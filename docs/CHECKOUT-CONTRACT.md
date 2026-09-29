@@ -50,20 +50,22 @@ The website puts this object in `customData`. Paddle copies it to the transactio
 | Field | Type | Rule |
 | --- | --- | --- |
 | `v` | number | `1` (contract version) |
-| `order_ref` | string | Random UUID from the browser. Key for the status page. |
+| `order_ref` | string | UUID v4 from `crypto.randomUUID()` (no fallback). Key for the status page. Reject any other format. |
 | `plan` | string | `lite`, `essentials` or `professional`. **Informational only.** |
 | `billing` | string | `annual` or `monthly`. **Informational only.** |
 | `region` | string | `za`, `eu`, `us` or `au`. `eu` also serves UK workspaces. |
 | `company` | string | 2–120 characters. |
-| `workspace` | string | Suggested slug, `[a-z0-9-]`, max 40. The control plane makes it unique. |
+| `workspace` | string | Suggested slug. Rules below. The control plane enforces them and makes the slug unique. |
 | `admin_name` | string | 2–120 characters. |
 | `admin_email` | string | The first admin. Can differ from the Paddle customer (billing) email. |
-| `ai_mode` | string | `openai` (consent given) or `local` (no external AI). |
-| `ai_consent_at` | string or null | ISO time of consent when `ai_mode` is `openai`. |
+| `ai_mode` | string | `openai` (consent given) or `local` (no external AI). The customer must choose; there is no default. |
+| `ai_consent_at` | string or null | Browser time of the choice when `ai_mode` is `openai`. **A hint only:** the control plane records its own server time and `terms_version` as the consent record. |
 | `terms_version` | string | The version of the subscription terms accepted. |
 | `display_currency` | string | The currency the visitor saw. Paddle sets the charge currency. |
 
 ## 4. What the control plane must do
+
+**Slug rules.** `^[a-z][a-z0-9-]{1,38}[a-z0-9]$` (3–40 characters, starts with a letter, no hyphen at either end). Reserved: `www, app, api, admin, status, eu, za, us, au, uk, mail, support, help, billing, login, auth, static, cdn, docs, obel, obel-ms`. The website pre-checks the same rules (`src/scripts/checkout.ts`); the control plane is the authority and adds a suffix when a slug is taken or reserved.
 
 **Trust.** `customData` comes from the browser. Treat it as untrusted input.
 
@@ -89,7 +91,7 @@ The website puts this object in `customData`. Paddle copies it to the transactio
 
 `GET /v1/orders/{order_ref}` returns `{ "state": "received" | "paid" | "provisioning" | "ready" | "manual_review" | "failed", "workspace_url": "https://…" }`.
 
-- No personal data in the response. `workspace_url` only when `ready`.
+- No personal data in the response. `workspace_url` only when `ready`, and only an `https:` URL on `obel-ai.com` or a subdomain (the status page ignores anything else).
 - `order_ref` is a random UUID, so it cannot be guessed. Return 404 for an unknown reference.
 - CORS: allow `https://obel-ai.com` only. Rate-limit by IP.
 

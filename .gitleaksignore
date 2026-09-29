@@ -1,7 +1,6 @@
 # Two keys that are public by design (security review, 29 Sep 2026):
 # - Web3Forms access key: it can only send mail to the inbox that owns it.
 # - IndexNow key: it must be published at https://obel-ai.com/<key>.txt.
+# These entries cover git history. The current files carry inline `gitleaks:allow` comments.
 cdf3927cbb6301ee180677caeb4335c775a74fbc:src/data/site.ts:generic-api-key:21
 8bee594329247d2eb9bf225fe8c7c095dd8727bc:.github/workflows/deploy.yml:generic-api-key:48
-src/data/site.ts:generic-api-key:20
-.github/workflows/deploy.yml:generic-api-key:48
