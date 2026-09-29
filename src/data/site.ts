@@ -208,7 +208,7 @@ export const checkout = {
   environment: 'sandbox' as 'sandbox' | 'production',
   clientToken: 'test_e6a0bdfcdabce7994221dac0133', // gitleaks:allow (Paddle sandbox client-side token, public by design)
   /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
-  statusApi: '',
+  statusApi: 'https://provisioner-821333008507.europe-west1.run.app', // sandbox control plane (not answering yet)
   termsUrl: '/legal/terms',
   refundUrl: '/legal/refund',
   termsVersion: '2026-09-29',
