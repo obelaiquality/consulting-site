@@ -1,0 +1,14 @@
+---
+/*
+ * hCaptcha through Web3Forms. Renders nothing until `site.formCaptcha` is true, which needs captcha
+ * enabled for our key in the Web3Forms dashboard. The widget adds `h-captcha-response` to the form;
+ * lead.ts formGuard() passes it to Web3Forms, which checks it server-side.
+ */
+import { site } from '../../data/site';
+---
+{site.formCaptcha && (
+  <>
+    <div class="h-captcha" data-captcha="true"></div>
+    <script is:inline src="https://web3forms.com/client/script.js" async defer></script>
+  </>
+)}

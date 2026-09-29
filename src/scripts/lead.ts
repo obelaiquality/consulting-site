@@ -13,6 +13,16 @@ export interface Lead {
   replyTo?: string;
   name?: string;
   fields: Record<string, string>;
+  /** The honeypot state and the captcha token, read from the form (see formGuard). */
+  botcheck?: boolean;
+  captcha?: string;
+}
+
+/** Reads the honeypot and the hCaptcha token from a form, so Web3Forms can check them server-side. */
+export function formGuard(form: HTMLFormElement): Pick<Lead, 'botcheck' | 'captcha'> {
+  const hp = form.querySelector<HTMLInputElement>('input[name="botcheck"]');
+  const token = form.querySelector<HTMLTextAreaElement>('[name="h-captcha-response"]');
+  return { botcheck: Boolean(hp?.checked), captcha: token?.value || undefined };
 }
 
 const ENDPOINT = 'https://api.web3forms.com/submit';
@@ -37,6 +47,9 @@ export async function sendLead(lead: Lead): Promise<boolean> {
     if (lead.replyTo) { body.append('email', lead.replyTo); body.append('replyto', lead.replyTo); }
     if (lead.name) body.append('name', lead.name);
     for (const [k, v] of Object.entries(lead.fields)) body.append(k, v || '(none)');
+    // Honeypot: Web3Forms rejects a submission where it is set. Empty means a person.
+    body.append('botcheck', lead.botcheck ? 'true' : '');
+    if (lead.captcha) body.append('h-captcha-response', lead.captcha);
     const res = await fetch(ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body });
     const json = (await res.json().catch(() => ({}))) as { success?: boolean };
     return res.ok && json.success === true;
@@ -104,6 +117,7 @@ export function wireWaitlist(form: HTMLFormElement, note: HTMLElement | null, fa
       subject: 'IDC waitlist',
       replyTo: email,
       fields: { Request: 'Add me to the Internal Document Control waitlist.', Email: email },
+      ...formGuard(form),
     };
     const button = form.querySelector<HTMLButtonElement>('button[type=submit]');
     setSending(button, true);
