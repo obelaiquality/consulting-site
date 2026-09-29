@@ -233,10 +233,10 @@ export const checkout = {
  * Empty fields render as a visible "[to be confirmed]" placeholder: fill them before merging.
  */
 export const legal = {
-  entity: '',              // registered company name
-  regNo: '',               // company registration number
-  address: '',             // registered address
-  informationOfficer: '',  // POPIA Information Officer (name or role)
+  entity: 'Obelisk Property Investments (Pty) Ltd, trading as Obel AI & Quality', // CIPC COR14.3
+  regNo: '2015/342921/07',
+  address: '23 Allen Drive, Bellville, Cape Town, 7530, South Africa',
+  informationOfficer: 'Neil Slabbert',
   updated: '29 September 2026',
   refundDays: 14,          // full refund window on the first payment
   leadRetentionMonths: 12, // contact-form requests, after the last contact
