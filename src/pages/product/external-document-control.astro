@@ -3,6 +3,7 @@ import RelatedGuides from '../../components/RelatedGuides.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureRow from '../../components/product/FeatureRow.astro';
 import ProductCta from '../../components/product/ProductCta.astro';
+import Money from '../../components/ui/Money.astro';
 import MockRegister from '../../components/product/MockRegister.astro';
 import MockAiSuggestions from '../../components/product/MockAiSuggestions.astro';
 import MockFolderTree from '../../components/product/MockFolderTree.astro';
@@ -40,7 +41,7 @@ const jsonLd = {
 ---
 <BaseLayout
   title="External Document Control Software | Obel-MS"
-  description="Supplier certificates and specs, AI-read and auto-filed by supplier, manufacturer and product, with expiry tracked for you. Hosted in South Africa."
+  description="Supplier certificates and specs, AI-read and auto-filed by supplier, manufacturer and product, with expiry tracked for you. Hosted in the region you choose."
   breadcrumbs={[{ name: 'External Document Control', href: '/product/external-document-control' }]}
   jsonLd={jsonLd}
 >
@@ -173,6 +174,5 @@ const jsonLd = {
   <RelatedGuides slugs={['control-of-external-documents', 'supplier-certificate-tracking', 'iso-9001-document-control']} />
   <ProductCta
     title="Get your supplier certificates under control."
-    body={`From R${starter.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. Onboarding on Essentials and Professional includes an import of your existing documents.`}
-  />
+  >From <Money amount={starter.price} /> a month excl. tax, hosted in the Google Cloud region you choose. Onboarding on Essentials and Professional includes an import of your existing documents.</ProductCta>
 </BaseLayout>

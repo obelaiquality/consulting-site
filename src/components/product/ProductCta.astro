@@ -6,7 +6,7 @@
 import { site } from '../../data/site';
 interface Props {
   title: string;
-  body: string;
+  body?: string;
   primaryLabel?: string;
   primaryHref?: string;
   secondaryLabel?: string;
@@ -25,7 +25,7 @@ const {
   <div class="container-x">
     <div class="cta-card" data-reveal>
       <p class="t-h2 max-w-[20ch] mx-auto">{title}</p>
-      <p class="t-lead mt-4 mx-auto text-night-muted max-w-[38ch]">{body}</p>
+      <p class="t-lead mt-4 mx-auto text-night-muted max-w-[38ch]">{body}<slot /></p>
       <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
         <a href={primaryHref} class="btn btn-light" data-magnetic>{primaryLabel}</a>
         <a href={secondaryHref} class="btn btn-night-ghost">{secondaryLabel}</a>

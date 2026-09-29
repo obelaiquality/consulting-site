@@ -1,6 +1,6 @@
 ---
 import GuideLayout from '../../layouts/GuideLayout.astro';
-import { site, plans, pricingTerms, type Currency } from '../../data/site';
+import { plans, pricingTerms, type Currency } from '../../data/site';
 
 function fmt(n: number, cur: Currency): string {
   return (cur === 'ZAR' ? 'R' : '$') + n.toLocaleString('en-US');
@@ -156,7 +156,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
 
   <h2>How does Obel-MS fit these checks?</h2>
   <p>
-    Obel-MS is hosted on Google Cloud in {site.region}, priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
+    South African customers can host Obel-MS on Google Cloud in Johannesburg (africa-south1), so their data stays in South Africa. It is priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
     month (about {fmt(lite.price.USD, 'USD')}) excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
     See the full <a href="/pricing">pricing page</a> for every plan. For the documents and records you put
     into Obel-MS, we act as operator under POPIA. You remain the responsible party, and a data processing
@@ -179,7 +179,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
         </tr>
       </thead>
       <tbody>
-        <tr><td>Data location</td><td>{site.region}</td></tr>
+        <tr><td>Data location</td><td>Google Cloud Johannesburg (africa-south1), or another region you choose</td></tr>
         <tr><td>Pricing</td><td>ZAR and USD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
         <tr><td>POPIA role</td><td>Operator for your documents and records, data processing agreement on request</td></tr>
         <tr><td>Support</td><td>Response times stated per plan on the pricing page</td></tr>

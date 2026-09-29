@@ -1,8 +1,9 @@
 ---
+import Money from '../ui/Money.astro';
 import AppWindow from '../mock/AppWindow.astro';
 import { edcDocs } from '../../data/demo';
 import { plans } from '../../data/site';
-const fromPrice = 'R' + Math.min(...plans.filter((p) => p.status === 'live').map((p) => p.price.ZAR)).toLocaleString('en-US');
+const fromPlan = plans.filter((p) => p.status === 'live').reduce((a, b) => (b.price.ZAR < a.price.ZAR ? b : a));
 const rows = edcDocs.slice(0, 7);
 ---
 <section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
@@ -29,7 +30,7 @@ const rows = edcDocs.slice(0, 7);
     <div class="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4" data-reveal>
       <a href="/contact#demo" class="btn btn-primary" data-magnetic>Book a 20-minute demo</a>
       <a href="/pricing" class="btn btn-ghost">See pricing</a>
-      <p class="text-[14px] text-muted">From <span class="text-ink font-medium tnum">{fromPrice}</span> a month, hosted and supported in South Africa.</p>
+      <p class="text-[14px] text-muted">From <span class="text-ink font-medium tnum"><Money amount={fromPlan.price} /></span> a month, hosted in the Google Cloud region you choose.</p>
     </div>
 
     <!-- Product stage -->

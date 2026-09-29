@@ -24,7 +24,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Where is our data hosted?',
-    a: 'On Google Cloud in Johannesburg (africa-south1). Your documents, records and backups stay in South Africa.',
+    a: 'On Google Cloud, in the region you choose. Our standard regions are South Africa (Johannesburg), the European Union (Belgium), the United Kingdom (London), the United States (Iowa) and Australia (Sydney). Other Google Cloud regions, such as Canada, Switzerland, India, Singapore, Japan or Brazil, are available on request. Your documents, records and backups stay in the region you choose.',
     tags: ['security'],
   },
   {

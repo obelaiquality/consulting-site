@@ -3,6 +3,7 @@ import RelatedGuides from '../../components/RelatedGuides.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FeatureRow from '../../components/product/FeatureRow.astro';
 import ProductCta from '../../components/product/ProductCta.astro';
+import Money from '../../components/ui/Money.astro';
 import ScreenFrame from '../../components/mock/ScreenFrame.astro';
 import MockTemplatesList from '../../components/product/MockTemplatesList.astro';
 import MockAiSummary from '../../components/product/MockAiSummary.astro';
@@ -160,8 +161,7 @@ const jsonLd = {
   <RelatedGuides slugs={['capa-and-nonconformance', 'iso-9001-2026-changes', 'spreadsheets-vs-qms-software']} />
   <ProductCta
     title="Give corrective actions a place to close."
-    body={`Workflow Manager is part of the Professional plan, from R${professional.price.ZAR.toLocaleString('en-US')} a month excl. VAT, hosted in South Africa. We help you migrate your open registers.`}
-  />
+  >Workflow Manager is part of the Professional plan, from <Money amount={professional.price} /> a month excl. tax, hosted in the Google Cloud region you choose. We help you migrate your open registers.</ProductCta>
 </BaseLayout>
 
 <style>

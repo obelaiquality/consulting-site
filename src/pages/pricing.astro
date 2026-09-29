@@ -4,7 +4,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PricingTable from '../components/sections/PricingTable.astro';
 import Faq from '../components/sections/Faq.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
-import { plans, site, addons, services, pricingTerms, discounts } from '../data/site';
+import { plans, site, addons, services, pricingTerms, discounts, currencies, currencyCodes } from '../data/site';
+import Money from '../components/ui/Money.astro';
 
 type Cell = true | false | string;
 interface CompareRow {
@@ -46,7 +47,7 @@ const compareGroups: CompareGroup[] = [
     rows: [
       { label: 'Named users', values: ['3', '10', '30'] },
       { label: 'Read-only viewers', values: ['Unlimited', 'Unlimited', 'Unlimited'] },
-      { label: 'Hosted on Google Cloud in Johannesburg', values: [true, true, true] },
+      { label: 'Hosted on Google Cloud in the region you choose', values: [true, true, true] },
       { label: 'Daily backups, encrypted at rest and in transit', values: [true, true, true] },
     ],
   },
@@ -82,7 +83,7 @@ const jsonLd = {
 
 <BaseLayout
   title="ISO 9001 QMS software pricing | Obel-MS"
-  description="Hosted ISO 9001 document control from R1,490 a month excl. VAT. Workflow Manager from R7,950. Hosted in Johannesburg, support included."
+  description="Hosted ISO 9001 document control from R1,490 (USD 95) a month. Workflow Manager on Professional. Hosted in the Google Cloud region you choose, support included."
   breadcrumbs={[{ name: 'Pricing', href: '/pricing' }]}
   jsonLd={jsonLd}
 >
@@ -160,7 +161,7 @@ const jsonLd = {
         <p class="t-body mt-2">Grow a plan without changing tier.</p>
         <dl class="extras mt-6">
           {addons.map((a) => (
-            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum">R{a.price.ZAR.toLocaleString('en-US')} {a.unit}</dd></div>
+            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum"><Money amount={a.price} /> {a.unit}</dd></div>
           ))}
         </dl>
       </div>
@@ -169,7 +170,7 @@ const jsonLd = {
         <p class="t-body mt-2">Our consultants help with implementation, internal audits and audit days.</p>
         <dl class="extras mt-6">
           {services.map((a) => (
-            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum">R{a.price.ZAR.toLocaleString('en-US')} {a.unit}</dd></div>
+            <div class="extras-row"><dt>{a.name}</dt><dd class="tnum"><Money amount={a.price} /> {a.unit}</dd></div>
           ))}
         </dl>
       </div>
@@ -180,7 +181,7 @@ const jsonLd = {
             <div class="extras-row"><dt>{d.name}</dt><dd>{d.value}</dd></div>
           ))}
         </dl>
-        <p class="text-[13px] text-muted mt-6">{pricingTerms.vatNote} {pricingTerms.contract} USD prices are for clients outside South Africa. {pricingTerms.availability}</p>
+        <p class="text-[13px] text-muted mt-6">{currencyCodes.map((c) => <span data-cur={c}>{currencies[c].taxNote} </span>)}{pricingTerms.contract} {pricingTerms.availability}</p>
         <p class="text-[13px] text-muted mt-2">{pricingTerms.aiNote} {pricingTerms.fairUse}</p>
         <p class="text-[13px] text-muted mt-2">{pricingTerms.support}</p>
       </div>

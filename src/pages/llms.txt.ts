@@ -13,7 +13,7 @@ export const GET: APIRoute = () => {
   const lines = [
     `# ${site.name}`,
     '',
-    `> ${site.name} is hosted ISO 9001 document control and workflow software from ${site.company}, for small and mid-sized companies. It supports clause 7.5 (documented information) of ISO 9001:2015 and ISO 9001:2026. It is hosted on Google Cloud in Johannesburg, South Africa, and maintained and supported by Obel.`,
+    `> ${site.name} is hosted ISO 9001 document control and workflow software from ${site.company}, for small and mid-sized companies. It supports clause 7.5 (documented information) of ISO 9001:2015 and ISO 9001:2026. It is sold worldwide. Each customer's workspace is hosted on Google Cloud in the region they choose (standard regions: South Africa, the European Union, the United Kingdom, the United States and Australia; other Google Cloud regions on request), and it is maintained and supported by Obel.`,
     '',
     'Key facts:',
     '- Live modules: External Document Control (supplier certificates, specifications and statements; AI metadata extraction from digital PDFs and from scanned Latin-script documents via OCR, confirmed by a person; auto-filing by supplier, manufacturer and product; expiry tracking with email and Teams alerts) and Workflow Manager (standard templates for nonconformance, CAPA, change control, audits and document review, with approvals by job title, effectiveness verification and an audit trail).',

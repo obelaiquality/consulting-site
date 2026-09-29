@@ -1,0 +1,29 @@
+---
+/* Segmented currency control. It sets html[data-currency] through window.__setCurrency (BaseLayout). */
+import { currencyCodes, currencies } from '../../data/site';
+interface Props { class?: string; tone?: 'light' | 'dark' }
+const { class: cls = '', tone = 'light' } = Astro.props;
+---
+<div class:list={['switch-group cur-picker', { 'switch-dark': tone === 'dark' }, cls]} role="group" aria-label="Currency" data-currency-picker style={`--n:${currencyCodes.length}`}>
+  <span class="switch-thumb" data-thumb aria-hidden="true"></span>
+  {currencyCodes.map((c) => (
+    <button type="button" class="switch-btn" data-set-currency={c} aria-pressed={c === 'ZAR' ? 'true' : 'false'} title={currencies[c].name}>{c}</button>
+  ))}
+</div>
+
+<script>
+  const codes = () => Array.from(document.querySelectorAll<HTMLButtonElement>('[data-set-currency]'));
+  function sync() {
+    const cur = document.documentElement.dataset.currency || 'ZAR';
+    document.querySelectorAll<HTMLElement>('[data-currency-picker]').forEach((g) => {
+      const btns = Array.from(g.querySelectorAll<HTMLButtonElement>('[data-set-currency]'));
+      const i = Math.max(0, btns.findIndex((b) => b.dataset.setCurrency === cur));
+      btns.forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
+      const thumb = g.querySelector<HTMLElement>('[data-thumb]');
+      if (thumb) thumb.style.transform = `translateX(${i * 100}%)`;
+    });
+  }
+  codes().forEach((b) => b.addEventListener('click', () => (window as any).__setCurrency?.(b.dataset.setCurrency)));
+  document.addEventListener('currencychange', sync);
+  sync();
+</script>

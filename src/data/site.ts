@@ -9,8 +9,7 @@ export const site = {
     'Hosted ISO 9001 software for growing teams: document control, corrective actions and audit trail, ready for your certification audit. From R1,490 a month.',
   email: 'chat@obel-ai.com',
   demoMailto:
-    'mailto:chat@obel-ai.com?subject=Obel%20MS%20demo%20request&body=Hi%20Obel%20team%2C%0A%0AI%27d%20like%20a%20demo%20of%20Obel%20MS.%0A%0ACompany%3A%0ARole%3A%0ATeam%20size%3A%0AStandards%20we%20work%20to%3A%0A',
-  region: 'Johannesburg, South Africa (Google Cloud africa-south1)',
+    'mailto:chat@obel-ai.com?subject=Obel-MS%20demo%20request&body=Hi%20Obel%20team%2C%0A%0AI%27d%20like%20a%20demo%20of%20Obel-MS.%0A%0ACompany%3A%0ARole%3A%0ATeam%20size%3A%0AStandards%20we%20work%20to%3A%0A',
   appUrl: '#', // TODO: set when the hosted app has a public sign-in URL
   /*
    * Web3Forms access key (https://web3forms.com): enter chat@obel-ai.com there and it emails you a key.
@@ -25,8 +24,26 @@ export const site = {
    * recognise Obel as one entity. Add each URL once the profile exists; never add a profile that is not live.
    */
   sameAs: [] as string[],
-  areaServed: ['ZA', 'GB', 'EU'],
+  areaServed: 'Worldwide',
 };
+
+/*
+ * Hosting: Obel-MS is sold worldwide. Each customer's workspace runs in the Google Cloud region they choose.
+ * Standard regions are listed; any other region with Cloud Run, Cloud SQL and Cloud Storage is on request
+ * (41 of 43 GCP regions on 29 Sep 2026; research in ~/Repos/obel-listing-kit/research/gcp-regions.md).
+ */
+export const hosting = {
+  summary: 'Hosted on Google Cloud in the region you choose',
+  regions: [
+    { name: 'South Africa', city: 'Johannesburg', id: 'africa-south1' },
+    { name: 'European Union', city: 'Belgium', id: 'europe-west1' },
+    { name: 'United Kingdom', city: 'London', id: 'europe-west2' },
+    { name: 'United States', city: 'Iowa', id: 'us-central1' },
+    { name: 'Australia', city: 'Sydney', id: 'australia-southeast1' },
+  ],
+  more: 'Canada, Switzerland, India, Singapore, Japan, Brazil, the Middle East and more than 30 other Google Cloud regions are available on request.',
+};
+export const hostingList = hosting.regions.map((r) => r.name).join(', ').replace(/, ([^,]*)$/, ' or $1');
 
 export const nav = [
   {
@@ -43,12 +60,30 @@ export const nav = [
   { label: 'Security', href: '/security' },
 ] as const;
 
-export type Currency = 'ZAR' | 'USD';
+/*
+ * Currencies the site can show. The visitor's currency is picked in the browser (BaseLayout head script)
+ * from ?currency=, then a saved choice, then the time zone, then the browser language. No network call.
+ * Every price below has one amount per currency; the HTML carries all of them and CSS shows one.
+ */
+export const currencyCodes = ['ZAR', 'USD', 'EUR', 'GBP', 'AUD'] as const;
+export type Currency = (typeof currencyCodes)[number];
+export type Money = Record<Currency, number>;
+export const currencies: Record<Currency, { symbol: string; name: string; taxNote: string }> = {
+  ZAR: { symbol: 'R', name: 'South African rand', taxNote: 'ZAR prices exclude 15% VAT.' },
+  USD: { symbol: '$', name: 'US dollar', taxNote: 'USD prices exclude any sales tax.' },
+  EUR: { symbol: '€', name: 'Euro', taxNote: 'EUR prices exclude VAT.' },
+  GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT.' },
+  AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST.' },
+};
+export const fmtMoney = (n: number, cur: Currency) => currencies[cur].symbol + n.toLocaleString('en-US');
+/** Month-to-month price: annual price plus the uplift, rounded to R5 or to 1 in other currencies. */
+export const monthlyOf = (n: number, cur: Currency, uplift = 0.15) =>
+  cur === 'ZAR' ? Math.round((n * (1 + uplift)) / 5) * 5 : Math.round(n * (1 + uplift));
 
 /*
  * Pricing Rev B (Obel Cloud pricing review, 26 Sep 2026; chosen by Neil).
  * ZAR excludes 15% VAT, per month, billed annually. Month-to-month costs 15% more.
- * USD is for clients outside South Africa (no VAT). Until multi-tenancy is live, every plan
+ * Other currencies: see currencies above; the price books are set in docs outside this repo. Until multi-tenancy is live, every plan
  * starts with "Book a demo / Start onboarding"; there is no self-serve checkout yet.
  */
 export const pricingTerms = {
@@ -67,8 +102,8 @@ export const plans = [
     name: 'Lite',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'Supplier certificates under control, for small teams.',
-    price: { ZAR: 1490, USD: 95 },
-    setup: { ZAR: 0, USD: 0, label: 'No setup fee' },
+    price: { ZAR: 1490, USD: 95, EUR: 89, GBP: 79, AUD: 149 },
+    setup: { ZAR: 0, USD: 0, EUR: 0, GBP: 0, AUD: 0, label: 'No setup fee' },
     users: '3 named users, unlimited read-only viewers',
     featured: false,
     cta: 'Start onboarding',
@@ -87,8 +122,8 @@ export const plans = [
     name: 'Essentials',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'More users and documents, with faster support.',
-    price: { ZAR: 3950, USD: 250 },
-    setup: { ZAR: 6500, USD: 420, label: 'guided onboarding of up to 2.5 hours: import of up to 100 documents and a 90-minute remote training session' },
+    price: { ZAR: 3950, USD: 250, EUR: 229, GBP: 199, AUD: 389 },
+    setup: { ZAR: 6500, USD: 420, EUR: 390, GBP: 340, AUD: 650, label: 'guided onboarding of up to 2.5 hours: import of up to 100 documents and a 90-minute remote training session' },
     users: '10 named users, unlimited read-only viewers',
     featured: false,
     cta: 'Book a demo',
@@ -106,8 +141,8 @@ export const plans = [
     name: 'Professional',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'Documents and the workflows around them.',
-    price: { ZAR: 7950, USD: 520 },
-    setup: { ZAR: 15000, USD: 980, label: 'onboarding of up to 5.5 hours: 2 workflow templates set up for you, import of up to 250 documents and 2 remote training sessions' },
+    price: { ZAR: 7950, USD: 520, EUR: 479, GBP: 419, AUD: 799 },
+    setup: { ZAR: 15000, USD: 980, EUR: 900, GBP: 790, AUD: 1500, label: 'onboarding of up to 5.5 hours: 2 workflow templates set up for you, import of up to 250 documents and 2 remote training sessions' },
     users: '30 named users, unlimited read-only viewers',
     featured: true,
     cta: 'Book a demo',
@@ -132,19 +167,19 @@ export const discounts = [
 ];
 
 export const addons = [
-  { name: 'Extra 5 users', price: { ZAR: 750, USD: 49 }, unit: 'a month' },
-  { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 23 }, unit: 'a month' },
+  { name: 'Extra 5 users', price: { ZAR: 750, USD: 49, EUR: 45, GBP: 39, AUD: 75 }, unit: 'a month' },
+  { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 23, EUR: 21, GBP: 19, AUD: 35 }, unit: 'a month' },
 ];
 
 export const services = [
-  { name: 'Consulting day', price: { ZAR: 9500, USD: 620 }, unit: 'a day' },
-  { name: 'Consulting half day', price: { ZAR: 5500, USD: 360 }, unit: 'a half day' },
-  { name: 'Remote consulting', price: { ZAR: 1250, USD: 82 }, unit: 'an hour' },
-  { name: 'Audit-day support', price: { ZAR: 12500, USD: 815 }, unit: 'a day' },
+  { name: 'Consulting day', price: { ZAR: 9500, USD: 620, EUR: 570, GBP: 490, AUD: 950 }, unit: 'a day' },
+  { name: 'Consulting half day', price: { ZAR: 5500, USD: 360, EUR: 330, GBP: 290, AUD: 550 }, unit: 'a half day' },
+  { name: 'Remote consulting', price: { ZAR: 1250, USD: 82, EUR: 75, GBP: 65, AUD: 125 }, unit: 'an hour' },
+  { name: 'Audit-day support', price: { ZAR: 12500, USD: 815, EUR: 750, GBP: 650, AUD: 1250 }, unit: 'a day' },
 ];
 
 export const managed = [
-  { title: 'Hosting', body: 'We run Obel-MS on Google Cloud in Johannesburg. We manage the servers, installs and IT tickets, so you don’t have to.' },
+  { title: 'Hosting', body: 'We run Obel-MS on Google Cloud in the region you choose, from Johannesburg to London, Iowa or Sydney. We manage the servers, installs and IT tickets, so you don’t have to.' },
   { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
   { title: 'Updates', body: 'New features and security patches roll out automatically, and you don’t need to schedule downtime.' },
   { title: 'Migration', body: 'Onboarding on Essentials and Professional includes an import of your existing documents. We quote larger migrations by the hour.' },

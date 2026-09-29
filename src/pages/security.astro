@@ -1,7 +1,7 @@
 ---
 import RelatedGuides from '../components/RelatedGuides.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { site } from '../data/site';
+import { site, hosting, hostingList } from '../data/site';
 
 interface Item { term: string; detail: string; }
 interface Group { title: string; items: Item[]; }
@@ -10,7 +10,7 @@ const groups: Group[] = [
   {
     title: 'Hosting',
     items: [
-      { term: 'Where your data lives', detail: `We host Obel-MS on Google Cloud, ${site.region}. Your data stays in South Africa.` },
+      { term: 'Where your data lives', detail: `We host your Obel-MS workspace on Google Cloud in the region you choose: ${hostingList}. ${hosting.more} Your documents, records and backups stay in that region.` },
       { term: 'Backups', detail: 'Daily backups of your database and documents. We test every restore to confirm it works.' },
       { term: 'Encryption', detail: 'Your data is encrypted at rest and in transit.' },
       { term: 'Availability', detail: 'We target 99.5% availability on a best-effort basis.' },
@@ -29,8 +29,8 @@ const groups: Group[] = [
     title: 'AI features',
     items: [
       { term: 'What it does', detail: 'AI reads uploaded supplier documents to suggest metadata such as document type, dates, lot or batch numbers and certificate numbers. It reads digital PDFs directly and scanned Latin-script documents with OCR. It also drafts stage and executive summaries on Workflow Manager records.' },
-      { term: 'Where it runs', detail: 'OCR runs on our own servers in South Africa. Metadata extraction and summaries use the OpenAI API, a third-party model provider, only for organisations that consent. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
-      { term: 'No external AI', detail: 'A no-external-AI option is available on request for organisations that cannot consent. It uses local extraction on our own servers in South Africa, so no document text goes to a third-party model. It fills fewer fields correctly, so your team enters more by hand.' },
+      { term: 'Where it runs', detail: 'OCR runs on our own servers in your hosting region. Metadata extraction and summaries use the OpenAI API, a third-party model provider, only for organisations that consent. Under OpenAI’s API terms, data sent through the API is not used to train its models by default.' },
+      { term: 'No external AI', detail: 'A no-external-AI option is available on request for organisations that cannot consent. It uses local extraction on our own servers in your hosting region, so no document text goes to a third-party model. It fills fewer fields correctly, so your team enters more by hand.' },
       { term: 'Your control', detail: 'An admin can switch AI processing off entirely. Where it runs, a consent gate appears before it processes anything.' },
       { term: 'Human in the loop', detail: 'Every AI suggestion is Accept, Edit or Dismiss. Nothing files itself without a person approving it.' },
     ],
@@ -52,7 +52,7 @@ const roadmap = [
 
 <BaseLayout
   title="Security, hosting and POPIA | Obel-MS"
-  description="Hosted on Google Cloud in Johannesburg, encrypted at rest and in transit, daily backups. How access, AI features and POPIA are handled."
+  description="Hosted on Google Cloud in the region you choose, encrypted at rest and in transit, daily backups. How access, AI features, POPIA and GDPR are handled."
   breadcrumbs={[{ name: 'Security', href: '/security' }]}
 >
   <section class="section-y pt-[calc(var(--nav-h)+3rem)]">

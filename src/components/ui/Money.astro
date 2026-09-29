@@ -1,0 +1,12 @@
+---
+/*
+ * A price in every site currency. CSS shows the one that matches html[data-currency] (ZAR without JS).
+ * Pass `monthly` to also render month-to-month amounts; a parent [data-billing-scope] picks annual or monthly.
+ */
+import { currencyCodes, fmtMoney, monthlyOf, type Money } from '../../data/site';
+interface Props { amount: Money; monthly?: boolean; class?: string }
+const { amount, monthly = false, class: cls = '' } = Astro.props;
+---
+<span class:list={['money', cls]}>{currencyCodes.map((c) => monthly
+  ? <><span data-cur={c} data-bill="annual">{fmtMoney(amount[c], c)}</span><span data-cur={c} data-bill="monthly">{fmtMoney(monthlyOf(amount[c], c), c)}</span></>
+  : <span data-cur={c}>{fmtMoney(amount[c], c)}</span>)}</span>

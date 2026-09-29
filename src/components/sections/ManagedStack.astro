@@ -27,7 +27,7 @@ import { managed } from '../../data/site';
 
               <div class="managed-indicator" aria-hidden="true">
                 {item.title === 'Hosting' && (
-                  <span class="pill pill-green">africa-south1</span>
+                  <span class="flex flex-wrap gap-1.5">{['africa-south1', 'europe-west1', 'europe-west2', 'us-central1', 'australia-southeast1'].map((r) => <span class="pill pill-green">{r}</span>)}</span>
                 )}
                 {item.title === 'Backups' && (
                   <div class="mi-ticks">
