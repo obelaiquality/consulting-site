@@ -102,7 +102,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
           <div class="field">
             <label class="opt">
               <input type="checkbox" name="terms" required />
-              <span>I accept the Obel-MS subscription terms{checkout.termsUrl ? <> (<a class="link-u" href={checkout.termsUrl}>read them</a>)</> : ' (published before online payment opens)'} and the <a class="link-u" href="/legal/privacy">privacy notice</a>.</span>
+              <span>I accept the <a class="link-u" href={checkout.termsUrl} target="_blank" rel="noopener">Terms of Service</a> and the <a class="link-u" href={checkout.refundUrl} target="_blank" rel="noopener">Refund Policy</a>, and I have read the <a class="link-u" href="/legal/privacy" target="_blank" rel="noopener">privacy notice</a>.</span>
             </label>
             <p class="field-error" role="alert"></p>
           </div>
@@ -123,7 +123,8 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
               <span data-label-live hidden={!checkout.enabled}>Continue to payment</span>
               <span data-label-soon hidden={checkout.enabled}>Send my workspace request</span>
             </button>
-            <p class="mt-3 text-[12.5px] text-muted" data-note>
+            <p class="mt-3 text-[12.5px] text-muted">By subscribing you agree to the <a class="link-u" href={checkout.termsUrl}>Terms of Service</a> and the <a class="link-u" href={checkout.refundUrl}>Refund Policy</a>.</p>
+            <p class="mt-2 text-[12.5px] text-muted" data-note>
               {checkout.enabled ? 'Payment runs in a secure Paddle checkout. Paddle is our reseller and handles tax.' : 'No payment is taken. We reply by email with your invoice and your workspace link.'}
             </p>
             <div class="mt-4" data-fallback></div>

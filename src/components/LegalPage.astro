@@ -1,0 +1,46 @@
+---
+/* Shared layout for the legal pages: numbered sections, each with paragraphs and an optional list. */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { site, legal } from '../data/site';
+export interface LegalSection { title: string; body?: string | string[]; items?: string[]; after?: string; important?: boolean }
+interface Props { title: string; description: string; intro?: string; sections: LegalSection[] }
+const { title, description, intro, sections } = Astro.props;
+const paras = (b?: string | string[]) => (b ? (Array.isArray(b) ? b : [b]) : []);
+---
+<BaseLayout title={title} description={description}>
+  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+    <div class="container-x">
+      <div class="max-w-[40rem]">
+        <p class="label-dot mb-6">Legal</p>
+        <h1 class="t-h2">{title}</h1>
+        <p class="mt-4 text-[14px] text-muted tnum">Last updated {legal.updated}</p>
+        {intro && <p class="mt-6 text-[15px] leading-relaxed text-muted">{intro}</p>}
+      </div>
+      <div class="mt-14 max-w-[40rem] flex flex-col gap-10">
+        {sections.map((s: LegalSection, i: number) => (
+          <div id={`s${i + 1}`} class:list={{ 'legal-important': s.important }}>
+            {s.important && <p class="legal-flag">Please read this section carefully. It limits our liability or your rights.</p>}
+            <h2 class="t-h3 !text-[1.15rem]">{i + 1}. {s.title}</h2>
+            {paras(s.body).map((p) => <p class="mt-3 text-[15px] leading-relaxed text-muted">{p}</p>)}
+            {s.items && <ul class="legal-list mt-3">{s.items.map((it: string) => <li>{it}</li>)}</ul>}
+            {s.after && <p class="mt-3 text-[15px] leading-relaxed text-muted">{s.after}</p>}
+          </div>
+        ))}
+      </div>
+      <div class="mt-20 flex flex-wrap items-center gap-x-6 gap-y-4 border-t border-line pt-10">
+        <a href="/legal/terms" class="link-u text-[15px] text-ink">Terms of Service</a>
+        <a href="/legal/refund" class="link-u text-[15px] text-ink">Refund Policy</a>
+        <a href="/legal/privacy" class="link-u text-[15px] text-ink">Privacy notice</a>
+        <a href="/legal/sub-processors" class="link-u text-[15px] text-ink">Sub-processors</a>
+        <a href={`mailto:${site.email}`} class="link-u text-[15px] text-ink">{site.email}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-important { border: 1px solid var(--color-ink); border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: var(--color-surface); }
+  .legal-important p { color: var(--color-ink); }
+  .legal-flag { font-size: 12.5px; font-weight: 600; letter-spacing: .01em; margin-bottom: .6rem; }
+  .legal-list { display: grid; gap: 8px; padding-left: 1.1rem; list-style: disc; font-size: 15px; line-height: 1.6; color: var(--color-muted); }
+</style>

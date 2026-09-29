@@ -209,7 +209,8 @@ export const checkout = {
   clientToken: '',
   /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
   statusApi: '',
-  termsUrl: '',
+  termsUrl: '/legal/terms',
+  refundUrl: '/legal/refund',
   termsVersion: '2026-09-29',
   /** One Paddle price per plan and billing period, with currency overrides that match `plans`. */
   prices: {
@@ -224,5 +225,36 @@ export const checkout = {
     { id: 'eu', label: 'European Union (Belgium), also for UK workspaces' },
     { id: 'us', label: 'United States (Iowa)' },
     { id: 'au', label: 'Australia (Sydney)' },
+  ],
+};
+
+/*
+ * Legal pages (/legal/terms, /legal/refund, /legal/privacy). Draft pending legal review (29 Sep 2026).
+ * Empty fields render as a visible "[to be confirmed]" placeholder: fill them before merging.
+ */
+export const legal = {
+  entity: 'Obelisk Property Investments (Pty) Ltd, trading as Obel AI & Quality', // CIPC COR14.3
+  regNo: '2015/342921/07',
+  address: '23 Allen Drive, Bellville, Cape Town, 7530, South Africa',
+  informationOfficer: 'Neil Slabbert',
+  updated: '29 September 2026',
+  refundDays: 14,          // full refund window on the first payment
+  leadRetentionMonths: 12, // contact-form requests, after the last contact
+  exportDays: 30,          // after the subscription ends, before deletion
+  backupDays: 90,          // deleted data leaves backups within this time
+  availability: '99.5%',   // a target, not a guarantee (single-zone database at launch)
+};
+export const tbc = (v: string, label: string) => v || `[${label}: to be confirmed]`;
+
+/* Sub-processors for Obel-MS and this website. Change this list and `changed` together; customers get 30 days' notice. */
+export const subProcessors = {
+  changed: '29 September 2026',
+  list: [
+    { name: 'Google Cloud', purpose: 'Hosting of Obel-MS: application, database, document storage and backups', where: 'The region the customer chooses' },
+    { name: 'Paddle', purpose: 'Payments, invoices and tax, as Merchant of Record for our orders', where: 'United Kingdom and United States' },
+    { name: 'Amazon Web Services (Simple Email Service)', purpose: 'Transactional email from Obel-MS, such as invitations and expiry alerts', where: 'The customer’s region where available' },
+    { name: 'Google Workspace', purpose: 'Our own email and documents, including support conversations', where: 'Global' },
+    { name: 'Web3Forms', purpose: 'Delivery of the forms on this website', where: 'United States' },
+    { name: 'OpenAI', purpose: 'AI metadata extraction and summaries, only for workspaces whose organisation chooses it', where: 'United States by default' },
   ],
 };

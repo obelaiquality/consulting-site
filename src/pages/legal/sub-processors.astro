@@ -1,0 +1,21 @@
+---
+/* Sub-processor list. Customers get 30 days' notice of a change (Terms, data processing terms). */
+import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
+import { subProcessors, site } from '../../data/site';
+const sections: LegalSection[] = [
+  {
+    title: 'Current sub-processors',
+    body: `Last changed ${subProcessors.changed}. These companies process personal information for Obel-MS or this website, only for the purpose shown:`,
+    items: subProcessors.list.map((x) => `${x.name}: ${x.purpose}. Location: ${x.where}.`),
+  },
+  {
+    title: 'Changes',
+    body: `We tell customers at least 30 days before we add or replace a sub-processor, and they can object. To get notices, make sure the admin email on your account is current, or write to ${site.email}.`,
+  },
+  {
+    title: 'Integrations you set up',
+    body: 'If your team sets up an integration, such as a webhook or Power Automate, Obel-MS sends the data you choose to the destination you choose. That destination is your own processor, not ours, so it is not on this list.',
+  },
+];
+---
+<LegalPage title="Sub-processors" description="The companies that process personal information for Obel-MS and obel-ai.com, what they do and where." sections={sections} />
