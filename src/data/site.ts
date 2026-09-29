@@ -245,3 +245,16 @@ export const legal = {
   availability: '99.5%',   // a target, not a guarantee (single-zone database at launch)
 };
 export const tbc = (v: string, label: string) => v || `[${label}: to be confirmed]`;
+
+/* Sub-processors for Obel-MS and this website. Change this list and `changed` together; customers get 30 days' notice. */
+export const subProcessors = {
+  changed: '29 September 2026',
+  list: [
+    { name: 'Google Cloud', purpose: 'Hosting of Obel-MS: application, database, document storage and backups', where: 'The region the customer chooses' },
+    { name: 'Paddle', purpose: 'Payments, invoices and tax, as Merchant of Record for our orders', where: 'United Kingdom and United States' },
+    { name: 'Amazon Web Services (Simple Email Service)', purpose: 'Transactional email from Obel-MS, such as invitations and expiry alerts', where: 'The customer’s region where available' },
+    { name: 'Google Workspace', purpose: 'Our own email and documents, including support conversations', where: 'Global' },
+    { name: 'Web3Forms', purpose: 'Delivery of the forms on this website', where: 'United States' },
+    { name: 'OpenAI', purpose: 'AI metadata extraction and summaries, only for workspaces whose organisation chooses it', where: 'United States by default' },
+  ],
+};

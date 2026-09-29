@@ -1,7 +1,7 @@
 ---
 /* Privacy notice. DRAFT pending legal review (see PR). Retention and sub-processor facts come from the cloud setup (29 Sep 2026). */
 import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
-import { site, legal, tbc } from '../../data/site';
+import { site, legal, tbc, subProcessors } from '../../data/site';
 
 const entity = tbc(legal.entity, 'Registered company name');
 const sections: LegalSection[] = [
@@ -35,15 +35,8 @@ const sections: LegalSection[] = [
   {
     title: 'Who processes information for us',
     body: 'We use these sub-processors. Each one processes personal information only for the purpose shown, under its own data protection terms:',
-    items: [
-      'Google Cloud: hosting of Obel-MS, in the region the customer chooses.',
-      'Paddle: payments, invoices and tax, as Merchant of Record for our orders (United Kingdom and United States).',
-      'Amazon Web Services (Simple Email Service): transactional email from Obel-MS, such as invitations and expiry alerts.',
-      'Google Workspace: our own email and documents.',
-      'Web3Forms: delivery of the forms on this website (United States).',
-      'OpenAI: AI metadata extraction and summaries, only for workspaces whose organisation chooses it (United States by default).',
-    ],
-    after: 'Where information goes to another country, we rely on the safeguards that the law requires, such as standard contractual clauses.',
+    items: subProcessors.list.map((x) => `${x.name}: ${x.purpose} (${x.where}).`),
+    after: `The current list, with the date of the last change, is on our sub-processor page (/legal/sub-processors, last changed ${subProcessors.changed}). Where information goes to another country, we rely on the safeguards that the law requires, such as standard contractual clauses. If a customer's team sets up an integration, such as a webhook or Power Automate, Obel-MS sends the data they choose to the destination they choose; that destination is the customer's own processor, not ours.`,
   },
   {
     title: 'How long we keep information',
