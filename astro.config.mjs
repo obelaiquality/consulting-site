@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       // Only real, indexable pages: no 404 and no legacy .html redirect stubs.
-      filter: (page) => !page.includes('/404') && !page.endsWith('.html/') && !page.endsWith('.html'),
+      filter: (page) => !page.includes('/404') && !page.includes('/checkout') && !page.endsWith('.html/') && !page.endsWith('.html'),
     }),
   ],
   vite: {

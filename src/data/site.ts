@@ -188,3 +188,36 @@ export const managed = [
   { title: 'Support', body: 'Quality consultants answer your questions, and we speak ISO 9001 as well as we speak software.' },
   { title: 'Monitoring', body: 'Uptime, errors and storage are watched around the clock, so you hear from us first.' },
 ];
+
+/*
+ * Online checkout (Paddle Billing, merchant of record). NOT ACTIVE: `enabled` stays false until
+ * Paddle approves the account, the price IDs below exist, a production region is live and the
+ * subscription terms are published. The contract with the provisioning service is in
+ * docs/CHECKOUT-CONTRACT.md. The client token and price IDs are public by design; no secret goes here.
+ */
+export type PlanId = (typeof plans)[number]['id'];
+export type Billing = 'annual' | 'monthly';
+export const checkout = {
+  enabled: false,
+  provider: 'paddle' as const,
+  environment: 'sandbox' as 'sandbox' | 'production',
+  clientToken: '',
+  /** Obel Cloud control plane, read-only order status (CORS limited to obel-ai.com). */
+  statusApi: '',
+  termsUrl: '',
+  termsVersion: '2026-09-29',
+  /** One Paddle price per plan and billing period, with currency overrides that match `plans`. */
+  prices: {
+    lite: { annual: '', monthly: '' },
+    essentials: { annual: '', monthly: '' },
+    professional: { annual: '', monthly: '' },
+  } as Record<PlanId, Record<Billing, string>>,
+  /** One-time onboarding prices, added to the first transaction. */
+  onboardingPrices: { essentials: '', professional: '' } as Partial<Record<PlanId, string>>,
+  regions: [
+    { id: 'za', label: 'South Africa (Johannesburg)' },
+    { id: 'eu', label: 'European Union (Belgium), also for UK workspaces' },
+    { id: 'us', label: 'United States (Iowa)' },
+    { id: 'au', label: 'Australia (Sydney)' },
+  ],
+};
