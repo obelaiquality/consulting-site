@@ -2,7 +2,7 @@
 /* Shared layout for the legal pages: numbered sections, each with paragraphs and an optional list. */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site, legal } from '../data/site';
-export interface LegalSection { title: string; body?: string | string[]; items?: string[]; after?: string }
+export interface LegalSection { title: string; body?: string | string[]; items?: string[]; after?: string; important?: boolean }
 interface Props { title: string; description: string; intro?: string; sections: LegalSection[] }
 const { title, description, intro, sections } = Astro.props;
 const paras = (b?: string | string[]) => (b ? (Array.isArray(b) ? b : [b]) : []);
@@ -18,7 +18,8 @@ const paras = (b?: string | string[]) => (b ? (Array.isArray(b) ? b : [b]) : [])
       </div>
       <div class="mt-14 max-w-[40rem] flex flex-col gap-10">
         {sections.map((s: LegalSection, i: number) => (
-          <div id={`s${i + 1}`}>
+          <div id={`s${i + 1}`} class:list={{ 'legal-important': s.important }}>
+            {s.important && <p class="legal-flag">Please read this section carefully. It limits our liability or your rights.</p>}
             <h2 class="t-h3 !text-[1.15rem]">{i + 1}. {s.title}</h2>
             {paras(s.body).map((p) => <p class="mt-3 text-[15px] leading-relaxed text-muted">{p}</p>)}
             {s.items && <ul class="legal-list mt-3">{s.items.map((it: string) => <li>{it}</li>)}</ul>}
@@ -37,5 +38,8 @@ const paras = (b?: string | string[]) => (b ? (Array.isArray(b) ? b : [b]) : [])
 </BaseLayout>
 
 <style>
+  .legal-important { border: 1px solid var(--color-ink); border-radius: var(--radius-md); padding: 1.25rem 1.4rem; background: var(--color-surface); }
+  .legal-important p { color: var(--color-ink); }
+  .legal-flag { font-size: 12.5px; font-weight: 600; letter-spacing: .01em; margin-bottom: .6rem; }
   .legal-list { display: grid; gap: 8px; padding-left: 1.1rem; list-style: disc; font-size: 15px; line-height: 1.6; color: var(--color-muted); }
 </style>

@@ -1,5 +1,8 @@
 ---
-/* Terms of Service. DRAFT pending legal review (see PR). Facts come from site.ts (plans, hosting, legal). */
+/*
+ * Terms of Service. Reviewed 29 Sep 2026 against ECTA s43, CPA s48–51, POPIA, GDPR Art 28 and Paddle's
+ * domain requirements; still needs an attorney's sign-off (see PR #31). Facts come from site.ts.
+ */
 import LegalPage, { type LegalSection } from '../../components/LegalPage.astro';
 import { site, legal, tbc, hosting } from '../../data/site';
 
@@ -8,14 +11,14 @@ const sections: LegalSection[] = [
   {
     title: 'Who we are and what these terms cover',
     body: [
-      `These terms are an agreement between ${entity}, registration number ${tbc(legal.regNo, 'Registration number')}, of ${tbc(legal.address, 'Registered address')} ("Obel", "we", "us"), and the organisation that subscribes to Obel-MS ("you").`,
-      'They apply when you subscribe online or sign an order form with us. If you accept them for an organisation, you confirm that you may bind that organisation. An order form that we both sign takes priority over these terms where the two differ.',
+      `These terms are an agreement between ${entity}, a private company registered in South Africa with registration number ${tbc(legal.regNo, 'Registration number')}, of ${tbc(legal.address, 'Registered address')} ("Obel", "we", "us"), and the organisation that subscribes to Obel-MS ("you"). Our email address is ${site.email}, and legal notices can be served at the address above.`,
+      'Obel-MS is for business use. If you accept these terms for an organisation, you confirm that you may bind that organisation. An order form that we both sign takes priority over these terms where the two differ.',
     ],
   },
   {
     title: 'The service',
     body: [
-      'Obel-MS is a hosted quality management system. It includes External Document Control on every plan and Workflow Manager on the Professional plan. We host it, maintain it, back it up, update it and support it.',
+      'Obel-MS is a hosted quality management system. It includes External Document Control on every plan and Workflow Manager on the Professional plan. We host it, maintain it, back it up, update it and support it. Features marked "coming soon" are not part of your subscription until we release them.',
       'Obel-MS supports ISO 9001 compliance. Certification is issued to your organisation by an accredited certification body. We do not certify anyone and we do not guarantee a certification result.',
     ],
   },
@@ -34,16 +37,16 @@ const sections: LegalSection[] = [
     title: 'Ordering and payment',
     body: [
       'Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.',
-      'Paddle charges you, collects any VAT, GST or sales tax, and sends your invoices. The Paddle Buyer Terms apply to your purchase in addition to these terms. Where we invoice you directly by agreement, you pay by bank transfer within the time on the invoice.',
-      'Prices exclude VAT, GST and sales tax.',
+      'Paddle charges you, collects any VAT, GST or sales tax, and sends your invoices. The checkout shows the full amount, including tax, before you pay. The Paddle Buyer Terms apply to your purchase in addition to these terms. Where we invoice you directly by agreement, you pay by bank transfer within the time on the invoice.',
+      'Prices on our website exclude VAT, GST and sales tax.',
     ],
   },
   {
     title: 'Renewal, price changes and cancellation',
     items: [
-      'Your subscription renews automatically at the end of each monthly or annual period until you cancel it.',
+      'Your subscription renews automatically at the end of each monthly or annual period until you cancel it. For an annual subscription, we remind you by email at least 30 days before it renews.',
       'You can cancel at any time in the billing portal or by email. The cancellation takes effect at the end of the period you have paid for.',
-      'We tell you about a price change at least 30 days before it applies. It applies from your next renewal.',
+      'We tell you about a price change at least 30 days before it applies. It applies from your next renewal, and you can cancel before then.',
       'Refunds follow our Refund Policy.',
     ],
   },
@@ -54,9 +57,23 @@ const sections: LegalSection[] = [
   {
     title: 'Your data',
     body: [
-      'You own the documents, records and other data that you put in Obel-MS. We use them only to provide the service to you. We do not sell them.',
-      'For that data we act as your operator (POPIA) or processor (GDPR and UK GDPR), and you are the responsible party or controller. A data processing agreement (DPA) is available on request. We keep your data confidential and protect it with the measures described on our security page.',
+      'You own the documents, records and other data that you put in Obel-MS ("your data"). You give us the right to host, copy and process your data only to provide, support and secure the service for you. We do not sell your data, and we do not use it to train AI models.',
+      'You are responsible for the content of your data and for having the right to put it in Obel-MS, including any personal information about your staff, suppliers or customers.',
     ],
+  },
+  {
+    title: 'Data processing terms',
+    body: 'For personal information in your data, you are the responsible party (POPIA) or controller (GDPR and UK GDPR), and we are your operator or processor. We:',
+    items: [
+      'process it only on your documented instructions, which are these terms and your use of Obel-MS;',
+      'make sure that our staff and contractors who can access it are bound to confidentiality;',
+      'protect it with the security measures described on our security page, including encryption at rest and in transit;',
+      'use only the sub-processors listed in our privacy notice, tell you at least 30 days before we add or replace one, and let you object; if we cannot resolve an objection, you can cancel and receive a refund of any prepaid fees for the unused period;',
+      'tell you without undue delay, and within 72 hours where we can, after we become aware of a security incident that affects your personal information;',
+      'help you answer requests from people who exercise their data protection rights, and give you the information you need to show compliance;',
+      'return or delete your data when the subscription ends, as section 15 describes.',
+    ],
+    after: 'Where personal information is transferred out of the country where it was collected, we use the safeguards that the law requires, such as standard contractual clauses. A signed data processing agreement with these terms is available on request.',
   },
   {
     title: 'Hosting region',
@@ -88,31 +105,61 @@ const sections: LegalSection[] = [
     after: 'You are responsible for your users and for keeping their sign-in details safe.',
   },
   {
+    title: 'Our intellectual property',
+    body: 'Obel-MS, its software, templates, designs and documentation belong to us or our licensors. During your subscription we give you a non-exclusive, non-transferable right for your users to use Obel-MS for your organisation. If you send us ideas or feedback, we can use them without any obligation to you.',
+  },
+  {
     title: 'Suspension',
     body: 'We can suspend access if a payment is more than 14 days late after we remind you, or if your use puts the service or other customers at risk. We tell you first unless the risk is urgent, and we restore access when the cause is fixed. Suspension does not delete your data.',
   },
   {
     title: 'When the subscription ends',
-    body: `When your subscription ends, your workspace becomes read-only. You have ${legal.exportDays} days to export your data. After that we delete it from the live system, and it leaves our backups within ${legal.backupDays} days. We can export your data for you on request, at our remote consulting rate.`,
+    body: `When your subscription ends, your workspace becomes read-only. You have ${legal.exportDays} days to export your data. After that we delete it from the live system, and it leaves our backups within ${legal.backupDays} days, unless the law requires us to keep it. We can export your data for you on request, at our remote consulting rate. Either of us can end the subscription at once if the other seriously breaches these terms and does not fix the breach within 30 days of a written notice.`,
+  },
+  {
+    title: 'Confidentiality',
+    body: 'Each of us keeps the other’s confidential information secret and uses it only for this agreement. This does not apply to information that is public, that the other party already had, or that the law requires us to disclose. We do not name you as a customer in public without your written permission.',
   },
   {
     title: 'Warranties',
-    body: 'We provide the service with reasonable skill and care. Apart from that, and to the extent the law allows, we provide it as it is, without other warranties. We do not promise that it is free of errors or that it meets every requirement of your auditor.',
+    important: true,
+    body: 'We provide the service with reasonable skill and care. Apart from that, and to the extent the law allows, we provide it as it is, without other warranties. We do not promise that it is free of errors, that it is always available, or that it meets every requirement of your auditor.',
   },
   {
     title: 'Liability',
+    important: true,
     body: [
       'Our total liability under these terms is limited to the fees you paid for the service in the 12 months before the event that caused the claim.',
-      'We are not liable for indirect or consequential loss, or for loss of profit, revenue or goodwill. Nothing in these terms limits liability that the law does not allow to be limited, such as liability for fraud or wilful misconduct.',
+      'We are not liable for indirect or consequential loss, or for loss of profit, revenue or goodwill.',
+      'Nothing in these terms limits liability that the law does not allow to be limited, such as liability for fraud, gross negligence or wilful misconduct, or any right that you have under consumer protection law and cannot give up.',
     ],
+  },
+  {
+    title: 'Your responsibility for misuse',
+    important: true,
+    body: 'If someone claims against us because content you put in Obel-MS breaks the law or their rights, or because you broke the acceptable use rules, you cover our reasonable costs of that claim. We tell you about the claim promptly and let you take part in the defence.',
+  },
+  {
+    title: 'Events outside our control',
+    body: 'Neither of us is liable for a delay or failure caused by events outside reasonable control, such as a failure of a cloud provider, the power grid or the internet, a natural disaster or a strike. We tell you about the event and do our best to limit its effect.',
   },
   {
     title: 'Changes to these terms',
     body: 'We can change these terms. We tell you about an important change at least 30 days before it applies. If you do not agree, you can cancel before the change applies.',
   },
   {
-    title: 'Law',
-    body: 'The law of South Africa applies to these terms, and the courts of South Africa can hear disputes. Consumer protection law in your country still applies where it cannot be excluded by agreement.',
+    title: 'General',
+    items: [
+      'These terms, your order and our Refund Policy are the whole agreement between us about Obel-MS.',
+      'If a court finds part of these terms invalid, the rest stays in force.',
+      'If one of us does not enforce a right at once, that party does not give up the right.',
+      'You can transfer this agreement only with our written consent. We can transfer it to a company that takes over Obel-MS, and we tell you if we do.',
+      'Notices under these terms can be sent by email to the addresses we each use for the account.',
+    ],
+  },
+  {
+    title: 'Law and disputes',
+    body: 'The law of South Africa applies to these terms. We first try to settle a dispute by talking to each other. If that fails, the High Court of South Africa, Western Cape Division, Cape Town, can hear the dispute. Consumer protection law in your country still applies where it cannot be excluded by agreement.',
   },
   {
     title: 'Contact',
@@ -122,7 +169,7 @@ const sections: LegalSection[] = [
 ---
 <LegalPage
   title="Terms of Service"
-  description="The terms for an Obel-MS subscription: plans, payment through Paddle, renewal, your data, hosting region, AI processing, availability and liability."
-  intro="These terms describe the Obel-MS subscription in plain language. Please read them before you subscribe."
+  description="The terms for an Obel-MS subscription: plans, payment through Paddle, renewal, your data, data processing, hosting region, AI processing, availability and liability."
+  intro="These terms describe the Obel-MS subscription in plain language. Please read them before you subscribe. The sections in a box limit our liability or your rights, so please read them carefully."
   sections={sections}
 />

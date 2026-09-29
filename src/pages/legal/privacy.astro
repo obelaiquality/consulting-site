@@ -23,6 +23,16 @@ const sections: LegalSection[] = [
       : `The forms on this site do not store anything. When you press send, the page prepares an email to ${site.email}, and we receive only what you choose to send.`,
   },
   {
+    title: 'Why we use your information (legal basis)',
+    items: [
+      'To reply to your request or question: our legitimate interest in answering people who contact us, or steps you ask us to take before a contract.',
+      'To provide Obel-MS, bill for it and support it: the contract with your organisation.',
+      'To keep tax and accounting records: our legal obligations.',
+      'To keep the service and this website secure, for example through security logs: our legitimate interest in protecting them.',
+    ],
+    after: 'We do not use your information for automated decisions that have legal or similar effects on you, and we do not send marketing email without your consent.',
+  },
+  {
     title: 'Who processes information for us',
     body: 'We use these sub-processors. Each one processes personal information only for the purpose shown, under its own data protection terms:',
     items: [
@@ -39,7 +49,7 @@ const sections: LegalSection[] = [
     title: 'How long we keep information',
     items: [
       `Requests sent through our forms: ${legal.leadRetentionMonths} months after our last contact with you, then deleted.`,
-      'Order and billing records: 5 years, as South African tax law requires. Paddle keeps its own records as Merchant of Record.',
+      'Order, billing and accounting records: 7 years, as South African company and tax law requires. Paddle keeps its own records as Merchant of Record.',
       `Customer workspace data: for as long as the subscription runs. After it ends, the customer has ${legal.exportDays} days to export it, and then we delete it from the live system.`,
       `Backups: deleted data leaves our backups within ${legal.backupDays} days. Database backups keep 7 daily copies and 7 days of point-in-time recovery. Document storage keeps old versions and deleted files for up to 90 days.`,
       'Logs: application logs 90 days; security audit logs 400 days.',
@@ -60,14 +70,22 @@ const sections: LegalSection[] = [
     title: 'Your rights',
     body: 'Under POPIA (South Africa), GDPR (European Union) and UK GDPR, you can ask what personal information we hold about you, ask us to correct or delete it, object to how we use it, and, where the law gives the right, ask for a copy in a portable format. You can also complain to a regulator:',
     items: [
-      'South Africa: the Information Regulator.',
+      'South Africa: the Information Regulator, inforegulator.org.za, POPIAComplaints@inforegulator.org.za.',
       'European Union: the data protection authority in your country.',
       'United Kingdom: the Information Commissioner’s Office.',
     ],
   },
   {
+    title: 'Children',
+    body: 'This website and Obel-MS are for businesses. They are not directed at children, and we do not knowingly collect information about children.',
+  },
+  {
+    title: 'Changes to this notice',
+    body: 'When we change this notice, we update the date at the top. If a change affects customers’ data in Obel-MS, we tell customers by email before it applies.',
+  },
+  {
     title: 'Contact and Information Officer',
-    body: `Our Information Officer under POPIA is ${tbc(legal.informationOfficer, 'Information Officer')}. Write to ${site.email} with any request or question about this notice. We reply within 30 days.`,
+    body: `Our Information Officer under POPIA is ${tbc(legal.informationOfficer, 'Information Officer')}, at ${tbc(legal.address, 'Registered address')}. Write to ${site.email} with any request or question about this notice. We reply within 30 days.`,
   },
 ];
 ---
