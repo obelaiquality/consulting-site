@@ -41,7 +41,7 @@ export const hosting = {
     { name: 'United States', city: 'Iowa', id: 'us-central1' },
     { name: 'Australia', city: 'Sydney', id: 'australia-southeast1' },
   ],
-  more: 'Canada, Switzerland, India, Singapore, Japan, Brazil, the Middle East and more than 30 other Google Cloud regions are available on request.',
+  more: 'Canada, Switzerland, Japan, South Korea, Singapore, India, Brazil, the Middle East and more than 30 other Google Cloud regions are available on request, with a one-off regional setup fee.',
 };
 export const hostingList = hosting.regions.map((r) => r.name).join(', ').replace(/, ([^,]*)$/, ' or $1');
 
@@ -70,10 +70,10 @@ export type Currency = (typeof currencyCodes)[number];
 export type Money = Record<Currency, number>;
 export const currencies: Record<Currency, { symbol: string; name: string; taxNote: string }> = {
   ZAR: { symbol: 'R', name: 'South African rand', taxNote: 'ZAR prices exclude 15% VAT.' },
-  USD: { symbol: '$', name: 'US dollar', taxNote: 'USD prices exclude any sales tax.' },
-  EUR: { symbol: '€', name: 'Euro', taxNote: 'EUR prices exclude VAT.' },
-  GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT.' },
-  AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST.' },
+  USD: { symbol: '$', name: 'US dollar', taxNote: 'USD prices exclude sales tax, VAT or GST, which is added to the invoice where it applies.' },
+  EUR: { symbol: '€', name: 'Euro', taxNote: 'EUR prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
+  GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
+  AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST, which is added to the invoice where it applies.' },
 };
 export const fmtMoney = (n: number, cur: Currency) => currencies[cur].symbol + n.toLocaleString('en-US');
 /** Month-to-month price: annual price plus the uplift, rounded to R5 or to 1 in other currencies. */
@@ -83,7 +83,8 @@ export const monthlyOf = (n: number, cur: Currency, uplift = 0.15) =>
 /*
  * Pricing Rev B (Obel Cloud pricing review, 26 Sep 2026; chosen by Neil).
  * ZAR excludes 15% VAT, per month, billed annually. Month-to-month costs 15% more.
- * Other currencies: see currencies above; the price books are set in docs outside this repo. Until multi-tenancy is live, every plan
+ * Price books per currency (29 Sep 2026) are checked for 50% net margin per region in a private note outside this repo.
+ * Until multi-tenancy is live, every plan
  * starts with "Book a demo / Start onboarding"; there is no self-serve checkout yet.
  */
 export const pricingTerms = {
@@ -93,7 +94,7 @@ export const pricingTerms = {
   availability: '99.5% availability target, best effort.',
   aiNote: 'AI metadata extraction is included on every plan and module. Obel-MS reads digital PDFs directly. It reads scanned supplier documents in Latin-script languages with optical character recognition (OCR). The AI suggests the metadata, and a person confirms it in the Inbox.',
   fairUse: 'Each plan includes a monthly page allowance for AI extraction and OCR: 1,000 pages on Lite, 3,000 on Essentials and 10,000 on Professional. Above the allowance, you can move up a plan, or we agree a volume price with you.',
-  support: 'Support covers how-to questions and faults: up to 3 hours a year on Lite, 1 hour a month on Essentials and 2 hours a month on Professional, including the quarterly review call. Configuration and data work beyond that, including larger migrations, costs R1,250 an hour.',
+  support: 'Support covers how-to questions and faults: up to 3 hours a year on Lite, 1 hour a month on Essentials and 2 hours a month on Professional, including the quarterly review call. Configuration and data work beyond that, including larger migrations, is charged at the remote consulting rate.',
 };
 
 export const plans = [
@@ -102,7 +103,7 @@ export const plans = [
     name: 'Lite',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'Supplier certificates under control, for small teams.',
-    price: { ZAR: 1490, USD: 95, EUR: 89, GBP: 79, AUD: 149 },
+    price: { ZAR: 1490, USD: 139, EUR: 119, GBP: 109, AUD: 209 },
     setup: { ZAR: 0, USD: 0, EUR: 0, GBP: 0, AUD: 0, label: 'No setup fee' },
     users: '3 named users, unlimited read-only viewers',
     featured: false,
@@ -122,8 +123,8 @@ export const plans = [
     name: 'Essentials',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'More users and documents, with faster support.',
-    price: { ZAR: 3950, USD: 250, EUR: 229, GBP: 199, AUD: 389 },
-    setup: { ZAR: 6500, USD: 420, EUR: 390, GBP: 340, AUD: 650, label: 'guided onboarding of up to 2.5 hours: import of up to 100 documents and a 90-minute remote training session' },
+    price: { ZAR: 3950, USD: 269, EUR: 239, GBP: 209, AUD: 399 },
+    setup: { ZAR: 6500, USD: 449, EUR: 390, GBP: 340, AUD: 650, label: 'guided onboarding of up to 2.5 hours: import of up to 100 documents and a 90-minute remote training session' },
     users: '10 named users, unlimited read-only viewers',
     featured: false,
     cta: 'Book a demo',
@@ -141,8 +142,8 @@ export const plans = [
     name: 'Professional',
     status: 'live' as 'live' | 'waitlist',
     blurb: 'Documents and the workflows around them.',
-    price: { ZAR: 7950, USD: 520, EUR: 479, GBP: 419, AUD: 799 },
-    setup: { ZAR: 15000, USD: 980, EUR: 900, GBP: 790, AUD: 1500, label: 'onboarding of up to 5.5 hours: 2 workflow templates set up for you, import of up to 250 documents and 2 remote training sessions' },
+    price: { ZAR: 7950, USD: 549, EUR: 489, GBP: 439, AUD: 829 },
+    setup: { ZAR: 15000, USD: 990, EUR: 890, GBP: 750, AUD: 1390, label: 'onboarding of up to 5.5 hours: 2 workflow templates set up for you, import of up to 250 documents and 2 remote training sessions' },
     users: '30 named users, unlimited read-only viewers',
     featured: true,
     cta: 'Book a demo',
@@ -168,7 +169,7 @@ export const discounts = [
 
 export const addons = [
   { name: 'Extra 5 users', price: { ZAR: 750, USD: 49, EUR: 45, GBP: 39, AUD: 75 }, unit: 'a month' },
-  { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 23, EUR: 21, GBP: 19, AUD: 35 }, unit: 'a month' },
+  { name: 'Extra 50 GB storage', price: { ZAR: 350, USD: 25, EUR: 22, GBP: 19, AUD: 35 }, unit: 'a month' },
 ];
 
 export const services = [

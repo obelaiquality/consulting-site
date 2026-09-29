@@ -29,7 +29,7 @@ export const faqs: FaqItem[] = [
   },
   {
     q: 'Can you migrate our spreadsheets?',
-    a: 'Yes. Onboarding on Essentials includes an import of up to 100 documents, and on Professional up to 250. We quote larger migrations at R1,250 an hour, so you start with your document and supplier history in place.',
+    a: 'Yes. Onboarding on Essentials includes an import of up to 100 documents, and on Professional up to 250. We quote larger migrations at our remote consulting rate, so you start with your document and supplier history in place.',
     tags: ['general'],
   },
   {

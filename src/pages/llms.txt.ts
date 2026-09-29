@@ -4,7 +4,7 @@
  * so it stays in step with the pages.
  */
 import type { APIRoute } from 'astro';
-import { site, plans, pricingTerms } from '../data/site';
+import { site, plans, pricingTerms, currencyCodes, fmtMoney } from '../data/site';
 import { guides } from '../data/guides';
 
 export const GET: APIRoute = () => {
@@ -18,7 +18,7 @@ export const GET: APIRoute = () => {
     'Key facts:',
     '- Live modules: External Document Control (supplier certificates, specifications and statements; AI metadata extraction from digital PDFs and from scanned Latin-script documents via OCR, confirmed by a person; auto-filing by supplier, manufacturer and product; expiry tracking with email and Teams alerts) and Workflow Manager (standard templates for nonconformance, CAPA, change control, audits and document review, with approvals by job title, effectiveness verification and an audit trail).',
     '- Coming soon: Internal Document Control (SOPs, policies, work instructions).',
-    `- Pricing (ZAR per month, excl. VAT, billed annually): ${live.map((p) => `${p.name} R${p.price.ZAR.toLocaleString('en-US')}`).join(', ')}. ${pricingTerms.contract}`,
+    `- Pricing per month, billed annually, excl. tax: ${live.map((p) => `${p.name} ${currencyCodes.map((c) => fmtMoney(p.price[c], c)).join(' / ')}`).join('; ')}. ${pricingTerms.contract}`,
     '- Software cannot be ISO 9001 certified; organisations are certified by accredited certification bodies. Obel-MS supports compliance.',
     '- Not available today: single sign-on, multi-factor authentication, e-signatures, OCR of Chinese or other non-Latin scripts.',
     `- Contact: ${site.email}`,

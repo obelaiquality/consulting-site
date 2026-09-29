@@ -24,7 +24,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
   ]}
   related={[
     { label: 'Security and hosting', href: '/security', note: 'Hosting, access control and POPIA in full' },
-    { label: 'Pricing', href: '/pricing', note: 'Obel-MS plans in ZAR and USD' },
+    { label: 'Pricing', href: '/pricing', note: 'Obel-MS plans in ZAR, USD, EUR, GBP and AUD' },
     { label: 'External Document Control', href: '/product/external-document-control', note: 'Supplier certificates, AI-read and auto-filed' },
     { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Nonconformance, CAPA and approvals' },
     { label: 'How much does QMS software cost?', href: '/guides/qms-software-cost', note: 'Price ranges and what drives them' },
@@ -157,7 +157,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
   <h2>How does Obel-MS fit these checks?</h2>
   <p>
     South African customers can host Obel-MS on Google Cloud in Johannesburg (africa-south1), so their data stays in South Africa. It is priced in ZAR from {fmt(lite.price.ZAR, 'ZAR')} a
-    month (about {fmt(lite.price.USD, 'USD')}) excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
+    month excluding VAT. {pricingTerms.vatNote} {pricingTerms.contract}
     See the full <a href="/pricing">pricing page</a> for every plan. For the documents and records you put
     into Obel-MS, we act as operator under POPIA. You remain the responsible party, and a data processing
     agreement is available on request. Full detail on hosting, access control and what's still on our
@@ -180,7 +180,7 @@ const lite = plans.find((p) => p.id === 'lite')!;
       </thead>
       <tbody>
         <tr><td>Data location</td><td>Google Cloud Johannesburg (africa-south1), or another region you choose</td></tr>
-        <tr><td>Pricing</td><td>ZAR and USD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
+        <tr><td>Pricing</td><td>ZAR, USD, EUR, GBP and AUD, published on the <a href="/pricing">pricing page</a>, excluding VAT</td></tr>
         <tr><td>POPIA role</td><td>Operator for your documents and records, data processing agreement on request</td></tr>
         <tr><td>Support</td><td>Response times stated per plan on the pricing page</td></tr>
         <tr><td>Data export</td><td>Full export of documents, metadata and audit trail, confirmed on request</td></tr>

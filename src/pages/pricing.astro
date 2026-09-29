@@ -70,14 +70,14 @@ const jsonLd = {
   operatingSystem: 'Web',
   offers: plans
     .filter((p) => p.status === 'live')
-    .map((p) => ({
+    .flatMap((p) => currencyCodes.map((c) => ({
       '@type': 'Offer',
       name: p.name,
-      price: p.price.ZAR,
-      priceCurrency: 'ZAR',
-      priceSpecification: { '@type': 'UnitPriceSpecification', price: p.price.ZAR, priceCurrency: 'ZAR', unitText: 'MONTH', valueAddedTaxIncluded: false },
+      price: p.price[c],
+      priceCurrency: c,
+      priceSpecification: { '@type': 'UnitPriceSpecification', price: p.price[c], priceCurrency: c, unitText: 'MONTH', valueAddedTaxIncluded: false },
       url: `${site.url}/pricing`,
-    })),
+    }))),
 };
 ---
 
@@ -93,7 +93,7 @@ const jsonLd = {
         Simple pricing. Hosting and support included.
       </h1>
       <p class="t-lead mt-6" data-reveal>
-        Three plans for teams of different sizes. Hosting, backups, updates and support are in every plan. All ZAR prices exclude 15% VAT.
+        Three plans for teams of different sizes. Hosting in the Google Cloud region you choose, backups, updates and support are in every plan. Prices exclude VAT, GST and sales tax.
       </p>
     </div>
   </section>
@@ -167,7 +167,7 @@ const jsonLd = {
       </div>
       <div>
         <h2 class="t-h3">Quality consulting</h2>
-        <p class="t-body mt-2">Our consultants help with implementation, internal audits and audit days.</p>
+        <p class="t-body mt-2">Our consultants help with implementation, internal audits and audit days. Remote work is available worldwide. On-site work outside South Africa is quoted with travel.</p>
         <dl class="extras mt-6">
           {services.map((a) => (
             <div class="extras-row"><dt>{a.name}</dt><dd class="tnum"><Money amount={a.price} /> {a.unit}</dd></div>
