@@ -211,14 +211,18 @@ export const checkout = {
   statusApi: '',
   termsUrl: '',
   termsVersion: '2026-09-29',
-  /** One Paddle price per plan and billing period, with currency overrides that match `plans`. */
+  /**
+   * One Paddle price per plan and billing period, with currency overrides that match `plans`.
+   * These are SANDBOX IDs (catalogue created 29 Sep 2026 by scripts/billing/paddle_catalogue.py in
+   * obel-ms-saas). Replace them with the live IDs when the live catalogue exists.
+   */
   prices: {
-    lite: { annual: '', monthly: '' },
-    essentials: { annual: '', monthly: '' },
-    professional: { annual: '', monthly: '' },
+    lite: { annual: 'pri_01m3p1adzfa7tyh4j4mxe2p8qa', monthly: 'pri_01m3p1ae8p8h0fd8prtmdz77a1' },
+    essentials: { annual: 'pri_01m3p1aehwsr287sq15n3xb86q', monthly: 'pri_01m3p1aev5kcst8rvbyex2b0mz' },
+    professional: { annual: 'pri_01m3p1afd8z9rpqgejbeb3b4zt', monthly: 'pri_01m3p1afp40rt3k7n2z0s250my' },
   } as Record<PlanId, Record<Billing, string>>,
   /** One-time onboarding prices, added to the first transaction. */
-  onboardingPrices: { essentials: '', professional: '' } as Partial<Record<PlanId, string>>,
+  onboardingPrices: { essentials: 'pri_01m3p1af45tv0at9h7mgrb1sbt', professional: 'pri_01m3p1afz1bsfz3hr788kt44v5' } as Partial<Record<PlanId, string>>,
   regions: [
     { id: 'za', label: 'South Africa (Johannesburg)' },
     { id: 'eu', label: 'European Union (Belgium), also for UK workspaces' },
