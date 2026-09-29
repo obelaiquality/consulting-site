@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Captcha from '../components/ui/Captcha.astro';
 import { site, plans } from '../data/site';
 
 const planOptions = [
@@ -100,6 +101,7 @@ const steps = [
             </div>
             <!-- Honeypot: people never see or fill this; bots do. -->
             <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <Captcha />
             <div id="demo-fallback" class="lead-fb" hidden aria-live="polite"></div>
           </form>
           <div id="demo-sent" class="lead-ok" hidden tabindex="-1">
@@ -158,7 +160,7 @@ const steps = [
 </style>
 
 <script>
-  import { sendLead, renderFallback, setSending, leadBackendEnabled } from '../scripts/lead';
+  import { sendLead, renderFallback, setSending, leadBackendEnabled, formGuard } from '../scripts/lead';
 
   // Preselect the plan from ?plan=<id> (links from the pricing table).
   {
@@ -228,7 +230,6 @@ const steps = [
       const get = (k: string) => (data.get(k) as string) || '';
       const planLabel = (form.elements.namedItem('plan') as HTMLSelectElement)?.selectedOptions[0]?.text || 'Not sure yet';
 
-      if ((form.elements.namedItem('botcheck') as HTMLInputElement)?.checked) return;
       const lead = {
         subject: `Obel-MS demo request: ${get('company')}`,
         replyTo: get('email'),
@@ -243,6 +244,7 @@ const steps = [
           'Plan of interest': planLabel,
           Message: get('message'),
         },
+        ...formGuard(form),
       };
       const button = form.querySelector<HTMLButtonElement>('button[type=submit]');
       const fallback = document.getElementById('demo-fallback');

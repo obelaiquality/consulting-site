@@ -18,6 +18,8 @@ export const site = {
    * The key is safe to publish: it can only send mail to the inbox that created it.
    */
   web3formsKey: '7137c373-adc7-4cb1-a533-75eedc607469' as string,
+  /** hCaptcha through Web3Forms. Turn on only after enabling captcha for this key in the Web3Forms dashboard. */
+  formCaptcha: false as boolean,
   /*
    * Official profiles of the company elsewhere (LinkedIn, G2, Capterra, Crunchbase, Google Business Profile).
    * They go into the Organization schema as `sameAs`, which helps search engines and AI assistants
@@ -75,6 +77,9 @@ export const currencies: Record<Currency, { symbol: string; name: string; taxNot
   GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
   AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST. Business customers account for any GST themselves.' },
 };
+/** JSON for a <script type="application/ld+json"> block: escapes '<' so no value can close the tag. */
+export const jsonLdString = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
+
 export const fmtMoney = (n: number, cur: Currency) => currencies[cur].symbol + n.toLocaleString('en-US');
 /** Month-to-month price: annual price plus the uplift, rounded to R5 or to 1 in other currencies. */
 export const monthlyOf = (n: number, cur: Currency, uplift = 0.15) =>

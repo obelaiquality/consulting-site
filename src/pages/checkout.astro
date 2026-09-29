@@ -6,6 +6,7 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Money from '../components/ui/Money.astro';
+import Captcha from '../components/ui/Captcha.astro';
 import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 ---
 <BaseLayout
@@ -94,6 +95,8 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
             </div>
           </fieldset>
 
+          <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <Captcha />
           <div class="field">
             <label class="opt">
               <input type="checkbox" name="terms" required />
@@ -188,7 +191,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 <script>
   import { checkout, plans } from '../data/site';
   import { openCheckout, newOrderRef, slugify, type OrderData } from '../scripts/checkout';
-  import { sendLead, renderFallback, setSending, type Lead } from '../scripts/lead';
+  import { sendLead, renderFallback, setSending, formGuard, type Lead } from '../scripts/lead';
 
   const form = document.getElementById('co-form') as HTMLFormElement | null;
   if (form) {
@@ -259,6 +262,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         replyTo: order.admin_email,
         name: order.admin_name,
         fields: Object.fromEntries(Object.entries(order).map(([k, v]) => [k, String(v ?? '')])),
+        ...formGuard(form),
       };
       setSending(button, true);
       const sent = await sendLead(lead);
