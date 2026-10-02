@@ -77,6 +77,19 @@ export const currencies: Record<Currency, { symbol: string; name: string; taxNot
   GBP: { symbol: '£', name: 'Pound sterling', taxNote: 'GBP prices exclude VAT. Business customers with a valid VAT number pay no VAT (reverse charge).' },
   AUD: { symbol: 'A$', name: 'Australian dollar', taxNote: 'AUD prices exclude GST. Business customers account for any GST themselves.' },
 };
+/**
+ * Each currency's price book is set from the Google Cloud costs of its home region (GLOBAL-PRICING-NOTE, 29 Sep 2026).
+ * GBP uses the EU region, which serves UK workspaces by default.
+ */
+export const currencyHome: Record<Currency, { region: string; place: string }> = {
+  ZAR: { region: 'africa-south1', place: 'Johannesburg' },
+  USD: { region: 'us-central1', place: 'Iowa' },
+  EUR: { region: 'europe-west1', place: 'Belgium' },
+  GBP: { region: 'europe-west1', place: 'Belgium' },
+  AUD: { region: 'australia-southeast1', place: 'Sydney' },
+};
+export const currencyCostNote = (c: Currency) =>
+  `${c} prices follow Google Cloud costs in ${currencyHome[c].place}. The price is the same in every standard region.`;
 /** JSON for a <script type="application/ld+json"> block: escapes '<' so no value can close the tag. */
 export const jsonLdString = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c');
 
