@@ -5,7 +5,7 @@
  * [data-billing-scope] on this table. Every number comes from src/data/site.ts.
  * A plan with status "waitlist" would show "From" pricing, a badge and a waitlist CTA (none today).
  */
-import { plans, pricingTerms, currencies, currencyCodes, fmtMoney } from '../../data/site';
+import { plans, pricingTerms, currencies, currencyCodes, fmtMoney, currencyCostNote } from '../../data/site';
 import Money from '../ui/Money.astro';
 import CurrencyPicker from '../ui/CurrencyPicker.astro';
 
@@ -31,7 +31,17 @@ const { compact = false } = Astro.props;
         <span class="text-[13px] text-muted">Currency</span>
         <CurrencyPicker />
       </div>
+      <p class="cost-note basis-full">{currencyCodes.map((c) => <span data-cur={c}>{currencyCostNote(c)}</span>)}</p>
       <p class="text-[13px] text-muted">{currencyCodes.map((c) => <span data-cur={c}>{currencies[c].taxNote} </span>)}{pricingTerms.contract}</p>
+    </div>
+  )}
+  {compact && (
+    <div class="controls flex flex-wrap items-center gap-x-5 gap-y-3 mb-8">
+      <div class="flex items-center gap-3">
+        <span class="text-[13px] text-muted">Prices in</span>
+        <CurrencyPicker />
+      </div>
+      <p class="cost-note">{currencyCodes.map((c) => <span data-cur={c}>{currencyCostNote(c)}</span>)}</p>
     </div>
   )}
 
@@ -119,6 +129,8 @@ const { compact = false } = Astro.props;
 
   .buy-link { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-height: 32px; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: currentColor; }
   .switch-note { font-size: 12.5px; color: var(--color-green); font-weight: 500; }
+  .cost-note { display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; font-size: 13px; color: var(--color-muted); }
+  .cost-note::before { content: ''; flex: none; margin-top: 7px; width: 6px; height: 6px; border-radius: 99px; background: var(--color-green-bright); box-shadow: 0 0 0 3px rgb(34 197 94 / .16); }
 
   .plan-card { border-radius: var(--radius-lg); }
   .plan-waitlist { background: transparent; border-style: dashed; }

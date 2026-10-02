@@ -4,8 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PricingTable from '../components/sections/PricingTable.astro';
 import Faq from '../components/sections/Faq.astro';
 import CtaBand from '../components/sections/CtaBand.astro';
-import { plans, site, addons, services, pricingTerms, discounts, currencies, currencyCodes } from '../data/site';
+import { plans, site, addons, services, pricingTerms, discounts, currencies, currencyCodes, fmtMoney } from '../data/site';
 import Money from '../components/ui/Money.astro';
+
+const liteFrom = plans.filter((p) => p.status === 'live').reduce((a, b) => (b.price.ZAR < a.price.ZAR ? b : a)).price;
 
 type Cell = true | false | string;
 interface CompareRow {
@@ -83,7 +85,7 @@ const jsonLd = {
 
 <BaseLayout
   title="ISO 9001 QMS software pricing | Obel-MS"
-  description="Hosted ISO 9001 document control from R1,490 (USD 95) a month. Workflow Manager on Professional. Hosted in the Google Cloud region you choose, support included."
+  description={`Hosted ISO 9001 document control from ${fmtMoney(liteFrom.ZAR, 'ZAR')} (USD ${liteFrom.USD}) a month. Workflow Manager on Professional. Hosted in the Google Cloud region you choose, support included.`}
   breadcrumbs={[{ name: 'Pricing', href: '/pricing' }]}
   jsonLd={jsonLd}
 >
