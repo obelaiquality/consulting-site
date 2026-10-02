@@ -1,75 +1,204 @@
 ---
 /*
- * Workflow Manager showcase: the centrepiece of the home page, built from real app screenshots.
- * Desktop with motion: one pinned scene, four chapters; one screenshot changes at a time
- * (opacity only, so the screenshot text stays sharp), and the chapter list follows the timeline.
- * Mobile or reduced motion: each chapter shows its text and its screenshot, in order.
+ * Workflow Manager scene: the partner of the EDC scene. One nonconformance travels
+ * New Record -> stages and approval -> verification -> report, in an HTML miniature of the app.
+ * A stage track under the window shows the five template stages fill as the record moves.
+ * Desktop with motion: the stage pins and a scrubbed timeline drives the mock.
+ * Mobile or reduced motion: the screens render as a simple stacked sequence.
+ * Every screen, label and stage name comes from the real app (Nonconformance template, example data).
  */
-import ScreenFrame from '../mock/ScreenFrame.astro';
-// Tight crops of the 2x app screenshots, so the app text shows at a readable size in the frame.
-import recordsImg from '../../assets/app/wfs-records.png';
-import detailsImg from '../../assets/app/wfs-details.png';
-import verifyImg from '../../assets/app/wfs-verify.png';
-import reportImg from '../../assets/app/wfs-report.png';
+import AppWindow from '../mock/AppWindow.astro';
 
 const chapters = [
-  {
-    title: 'Record it',
-    body: 'Anyone can raise a nonconformance, a CAPA, an audit, a change or a document review. Each record starts from a template with its stages, deadlines and approvers already set.',
-    img: recordsImg,
-    alt: 'Workflow Manager records list with audit, nonconformance and CAPA records at different stages and statuses',
-  },
-  {
-    title: 'Investigate and approve',
-    body: 'Each stage has instructions, a deadline and a place for entries and evidence. When a stage needs sign-off, the Quality Manager approves or rejects it with a comment.',
-    img: detailsImg,
-    alt: 'A nonconformance record waiting for approval, with Approve and Reject buttons, the stage header and the entries',
-  },
-  {
-    title: 'Verify the fix',
-    body: 'After the corrective action, the record waits for its verification date. The verifier checks the evidence and marks the action Effective or Ineffective.',
-    img: verifyImg,
-    alt: 'A record in verification, with the Mark Effective and Mark Ineffective outcome',
-  },
-  {
-    title: 'Show the auditor',
-    body: 'Each record has a report with its details, summary, entries, approvals and verification. Download it as a PDF, together with the audit trail of every change.',
-    img: reportImg,
-    alt: 'The report of a nonconformance record, with its main details, references and executive summary, ready to download as a PDF',
-  },
+  { title: 'Record it', body: 'Anyone can raise a nonconformance, a CAPA, an audit, a change or a document review. Each record starts from a template with its stages, deadlines and approvers already set.' },
+  { title: 'Investigate and approve', body: 'Each stage has instructions, a deadline and a place for entries and evidence. When a stage needs sign-off, the Quality Manager approves or rejects it with a comment.' },
+  { title: 'Verify the fix', body: 'After the corrective action, the record waits for its verification date. The verifier checks the evidence and marks the action Effective or Ineffective.' },
+  { title: 'Show the auditor', body: 'Each record has a report with its details, summary, entries, approvals and verification. Download it as a PDF, together with the audit trail of every change.' },
+];
+const stages = [
+  { name: 'Report & Record', note: '1 day' },
+  { name: 'Immediate Correction', note: '1 day' },
+  { name: 'Investigation & Severity', note: '5 days' },
+  { name: 'CAPA', note: 'Approval' },
+  { name: 'Verification', note: 'Effective?' },
+];
+const title = 'Supplier COA missing moisture result - Northwind Ingredients batch NW-2281';
+const listRows = [
+  ['wf2609260010', 'Internal GMP audit - Warehouse A, Q3 2026', 'Audit', '2/5', 'Active', 'green'],
+  ['wf2609260008', 'Repeat trend - moisture specification deviations across oat suppliers', 'CAPA', '3/6', 'Pending Approval', 'amber'],
+  ['wf2609260004', 'Metal detector calibration overdue - Line 3', 'Nonconformance', '5/5', 'Awaiting Verification', 'blue'],
+];
+const entries = [
+  ['Stage 1', 'Report & Record: COA for rolled-oats batch NW-2281 has no moisture result. Batch held.'],
+  ['Stage 2', 'Immediate Correction: batch kept in the raw-material cage until a corrected COA arrives.'],
+  ['Stage 3', 'Investigation: supplier template change dropped the field. Severity: Minor, no product impact.'],
+  ['Stage 4', 'CAPA: Northwind restores the moisture field; goods-in adds a COA completeness check.'],
+];
+const reportRows = [
+  ['Company', 'Kestrel Foods (Pty) Ltd'],
+  ['Unique ID', 'wf2609260003'],
+  ['Template', 'Nonconformance (v1)'],
+  ['Date started', '2026-09-18'],
+  ['Owner', 'Aisha Patel'],
+  ['Verification', 'Effective'],
 ];
 ---
 <section class="wfs bg-night text-night-fg" data-wf-showcase aria-labelledby="wfs-title">
   <div class="container-x wfs-head">
     <p class="label-dot is-live wfs-label">Workflow Manager</p>
     <h2 id="wfs-title" class="t-h2 mt-5 max-w-[20ch]">Every corrective action, from first report to proven fix.</h2>
-    <p class="wfs-lead">Workflow Manager runs each nonconformance, CAPA, audit, change and document review the same way every time. These are real screens from Obel-MS, with example data.</p>
+    <p class="wfs-lead">Workflow Manager runs each nonconformance, CAPA, audit, change and document review the same way every time. Follow one nonconformance through its five stages, with example data.</p>
   </div>
 
   <div class="container-x">
     <div class="wfs-grid" data-wfs-pin>
       <ol class="wfs-steps">
-        <span class="wfs-rail" aria-hidden="true"><span class="wfs-rail-fill" data-wfs-rail></span></span>
         {chapters.map((c, i) => (
           <li class:list={['wfs-step', { 'is-on': i === 0 }]} data-wfs-step={i}>
             <span class="wfs-num tnum" aria-hidden="true">{i + 1}</span>
+            {i < chapters.length - 1 && <span class="wfs-seg" aria-hidden="true"><span class="wfs-seg-fill" data-wfs-seg></span></span>}
             <div>
               <h3 class="wfs-step-title">{c.title}</h3>
               <p class="wfs-step-body">{c.body}</p>
-            </div>
-            <div class="wfs-inline-shot">
-              <ScreenFrame src={c.img} alt={c.alt} fade sizes="100vw" />
             </div>
           </li>
         ))}
       </ol>
 
       <div class="wfs-stage" aria-hidden="true">
-        {chapters.map((c, i) => (
-          <div class="wfs-shot" data-wfs-shot={i}>
-            <ScreenFrame src={c.img} alt="" fade sizes="(min-width: 1024px) 62vw, 100vw" />
+        <AppWindow class="wfs-window">
+          <div class="wf-canvas">
+
+            <!-- Layer 1: Records list + New Workflow Record -->
+            <div class="wl wl-list" data-wl="list">
+              <p class="wf-eyebrow">Quality Management</p>
+              <p class="wf-title">Workflow Manager</p>
+              <div class="wf-tabs"><span class="on">Records</span><span>Templates</span><span>Archives</span></div>
+              <div class="flex items-center gap-1.5 mt-3.5">
+                <span class="mbtn mbtn-green" data-new-btn>New Record</span>
+                <span class="mbtn mbtn-dark">My Records (<span class="tnum" data-my-count>4</span>)</span>
+                <span class="mbtn">Records in View (5)</span>
+              </div>
+              <div class="mtable mt-3">
+                <div class="mrow lrow mhead"><span>Record</span><span>Title</span><span class="c-tpl">Template</span><span class="c-stage">Stage</span><span>Status</span></div>
+                <div class="lrow-new" data-new-row>
+                  <div class="mrow lrow mrow-hl">
+                    <span class="tnum text-ink">wf2609260003</span><span class="truncate text-ink font-medium">{title}</span><span class="c-tpl">Nonconformance</span><span class="c-stage tnum">1/5</span><span><span class="pill pill-green">Active</span></span>
+                  </div>
+                </div>
+                {listRows.map(([id, t, tpl, st, status, tone]) => (
+                  <div class="mrow lrow">
+                    <span class="tnum">{id}</span><span class="truncate text-ink">{t}</span><span class="c-tpl">{tpl}</span><span class="c-stage tnum">{st}</span><span><span class={`pill pill-${tone}`}>{status}</span></span>
+                  </div>
+                ))}
+              </div>
+
+              <div class="wf-scrim" data-scrim></div>
+              <div class="wf-modal" data-modal>
+                <p class="wf-modal-title">New Workflow Record</p>
+                <div class="wf-modal-body">
+                  <p class="wf-flabel">Template</p>
+                  <div class="wf-input wf-select">
+                    <span class="wf-ph" data-tpl-ph>— select template —</span>
+                    <span class="wf-val" data-tpl-val>Nonconformance</span>
+                  </div>
+                  <p class="wf-flabel mt-2.5">Record title</p>
+                  <div class="wf-input"><span class="wf-type" data-type-title>{title}</span></div>
+                </div>
+                <div class="wf-modal-foot"><span class="mbtn">Cancel</span><span class="mbtn mbtn-green" data-create>Create Record</span></div>
+              </div>
+            </div>
+
+            <!-- Layer 2: the record itself (header stays, the body changes) -->
+            <div class="wl wl-record" data-wl="record">
+              <div class="rec-bar">
+                <span class="rec-logo">OBEL-MS</span>
+                <span class="text-white font-semibold tnum">wf2609260003</span><i>·</i>
+                <span class="text-white">Nonconformance</span><i class="rec-hide">·</i>
+                <span class="rec-hide rec-title">Supplier COA missing …</span><i>·</i>
+                <span class="whitespace-nowrap">Stage <span class="roll tnum"><span class="roll-col" data-roll><b>1</b><b>2</b><b>3</b><b>4</b><b>5</b></span></span> of 5</span>
+                <span class="rec-status">
+                  <span class="pill pill-green" data-status="0">Active</span>
+                  <span class="pill pill-amber" data-status="1">Pending Approval</span>
+                  <span class="pill pill-blue" data-status="2">Awaiting Verification</span>
+                  <span class="pill pill-green" data-status="3">Completed</span>
+                </span>
+              </div>
+              <div class="rec-actions">
+                <div class="rec-btns" data-btns="work"><span class="mbtn mbtn-green" data-approve>Approve…</span><span class="mbtn mbtn-red">Reject…</span><span class="mbtn">Reroute Approval</span></div>
+                <div class="rec-btns" data-btns="verify"><span class="mbtn">Verify</span><span class="mbtn mbtn-red">Reject Verification</span><span class="mbtn">Redirect</span></div>
+                <span class="mbtn ml-auto">Close</span>
+              </div>
+              <div class="wf-tabs rec-tabs">
+                <span class="on" data-rtab="0">Record details</span><span>Audit trail (<span class="tnum" data-audit>4</span>)</span><span>Workflow</span><span data-rtab="1">Report</span>
+              </div>
+
+              <div class="rec-body">
+                <!-- Body A: stages, entries and approval -->
+                <div class="rb" data-rb="details">
+                  <div class="stage-box"><span class="stage-box-k" data-stage-name>Stage 4 — CAPA — Approval</span><span class="stage-box-v" data-stage-text>Define the actions that remove the root cause, with an owner and a due date for each.</span></div>
+                  <p class="rb-label">Entries <span class="tnum text-dim" data-entry-count>(4)</span></p>
+                  <div class="grid gap-1.5">
+                    {entries.map(([st, text]) => (
+                      <div class="entry" data-entry>
+                        <span class="entry-meta">Aisha Patel <i>·</i> <span class="entry-tag">{st}</span></span>
+                        <span class="entry-text">{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div class="approve-card" data-approve-card>
+                    <p class="text-[12px] font-semibold text-ink">Approve stage 4 — CAPA</p>
+                    <div class="wf-input wf-area mt-2"><span class="wf-type" data-type-approve>Actions agreed. Verify after the next three deliveries.</span></div>
+                    <div class="mt-2 flex justify-end gap-1.5"><span class="mbtn">Cancel</span><span class="mbtn mbtn-green" data-approve-go>Approve</span></div>
+                  </div>
+                </div>
+
+                <!-- Body B: verification -->
+                <div class="rb" data-rb="verify">
+                  <div class="stage-box"><span class="stage-box-k">Stage 5 — Verification</span><span class="stage-box-v">Verify that the CAPA prevented a recurrence, then record the outcome.</span></div>
+                  <div class="flex items-end gap-3">
+                    <div><p class="wf-flabel">Verification Due-Date</p><div class="wf-input w-[150px] tnum">2026/11/10</div></div>
+                    <span class="due-chip" data-due>Due today</span>
+                  </div>
+                  <p class="rb-label mt-3.5">Record verification outcome</p>
+                  <div class="wf-input wf-area"><span class="wf-type" data-type-verify>Corrected COAs on the next three deliveries, each with the moisture result.</span></div>
+                  <div class="mt-2 flex items-center gap-1.5">
+                    <span class="mbtn mbtn-green" data-effective>Mark Effective</span><span class="mbtn mbtn-red">Mark Ineffective</span>
+                    <span class="verified" data-verified>Verified effective by Thandi Mokoena</span>
+                  </div>
+                </div>
+
+                <!-- Body C: the report -->
+                <div class="rb" data-rb="report">
+                  <div class="flex items-center justify-between"><span class="text-[10.5px] text-muted">A shareable summary of this record for stakeholders.</span><span class="mbtn" data-pdf>PDF</span></div>
+                  <p class="rep-co">Kestrel Foods (Pty) Ltd</p>
+                  <p class="text-[12.5px] font-semibold text-ink">Workflow Record Report</p>
+                  <p class="text-[11px] text-muted truncate">wf2609260003 — {title}</p>
+                  <div class="rep-grid">
+                    {reportRows.map(([k, v]) => (<div class="rep-row" data-rep-row><span>{k}</span><span class="text-ink">{v}</span></div>))}
+                  </div>
+                  <div class="files">
+                    <span class="file" data-file><span class="pdf">PDF</span>wf2609260003 report.pdf</span>
+                    <span class="file" data-file><span class="pdf">PDF</span>Audit trail (18 events).pdf</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        ))}
+        </AppWindow>
+
+        <!-- The flow: the five stages of the Nonconformance template -->
+        <div class="track" data-track>
+          <span class="track-line"><span class="track-fill" data-track-fill></span></span>
+          <span class="track-dot" data-track-dot></span>
+          {stages.map((s, i) => (
+            <div class="tnode" data-tnode={i}>
+              <span class="tnode-dot tnum"><b>{i + 1}</b><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 6.2 5 8.6l4.6-5"/></svg></span>
+              <span class="tnode-name">{s.name}</span>
+              <span class="tnode-note">{s.note}</span>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -81,28 +210,135 @@ const chapters = [
   .wfs-lead { margin-top: 1.4rem; max-width: 38rem; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.6; color: var(--color-night-muted); }
   .wfs-grid { margin-top: clamp(3rem, 6vw, 5rem); display: grid; gap: 3rem; }
   .wfs-grid > * { min-width: 0; }
-  .wfs-steps { position: relative; display: grid; gap: 3rem; padding-left: 2.75rem; }
-  .wfs-rail { position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: var(--color-night-line); }
-  .wfs-rail-fill { position: absolute; inset: 0; background: var(--color-green-bright); transform-origin: top; transform: scaleY(0); }
+  .wfs-steps { position: relative; display: grid; gap: 2.25rem; padding-left: 2.75rem; }
+  /* One line segment between each pair of balls, with a gap above and below, so the line never crosses a ball. */
+  .wfs-seg { position: absolute; left: calc(-2.75rem + 13px); top: 35px; bottom: calc(-2.25rem + 8px); width: 1px; background: var(--color-night-line); }
+  .wfs-seg-fill { position: absolute; inset: 0; background: var(--color-green-bright); transform-origin: top; transform: scaleY(0); }
   .wfs-step { position: relative; }
+  .wfs-step > div { transition: opacity .4s var(--ease-calm); }
   .wfs-num { position: absolute; left: -2.75rem; top: 0; display: grid; place-items: center; width: 27px; height: 27px; border-radius: 99px; background: var(--color-night); border: 1px solid var(--color-night-line); font-size: 12px; font-weight: 600; color: var(--color-night-muted); transition: background-color .4s var(--ease-calm), color .4s var(--ease-calm), border-color .4s var(--ease-calm); }
   .wfs-step-title { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-night-fg); }
   .wfs-step-body { margin-top: .55rem; font-size: 15.5px; line-height: 1.65; color: var(--color-night-muted); max-width: 30rem; }
-  .wfs-inline-shot { margin-top: 1.5rem; }
-  .wfs-stage { display: none; }
 
-  /* Pinned desktop scene */
   @media (min-width: 1024px) {
-    .wf-pinned .wfs-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4.5rem; align-items: center; min-height: calc(100vh - 140px); }
-    .wf-pinned .wfs-inline-shot { display: none; }
-    .wf-pinned .wfs-steps { gap: 2.25rem; }
-    .wf-pinned .wfs-step { transition: opacity .5s var(--ease-calm); }
-    .wf-pinned .wfs-step:not(.is-on) { opacity: .42; }
+    .wfs-grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4rem; align-items: center; }
+    .wf-pinned .wfs-grid { min-height: calc(100vh - 120px); }
+    .wf-pinned .wfs-step:not(.is-on) > div { opacity: .42; }
     .wf-pinned .wfs-step.is-on .wfs-num { background: var(--color-night-fg); border-color: var(--color-night-fg); color: var(--color-night); }
     .wf-pinned .wfs-step.is-done .wfs-num { background: var(--color-green-bright); border-color: var(--color-green-bright); color: var(--color-night); }
-    .wf-pinned .wfs-stage { display: block; position: relative; }
-    .wf-pinned .wfs-shot { position: absolute; inset: 0 auto auto 0; width: 100%; opacity: 0; will-change: opacity; }
-    .wf-pinned .wfs-shot:first-child { position: relative; opacity: 1; }
+  }
+
+  /* App miniature (same vocabulary as the EDC scene) */
+  .wfs-stage { container-type: inline-size; }
+  .wf-canvas { position: relative; height: 438px; overflow: hidden; }
+  .wl { position: absolute; inset: 0; }
+  .wl-record { opacity: 0; visibility: hidden; }
+  .rb { position: absolute; inset: 0; }
+  .rb + .rb { opacity: 0; visibility: hidden; }
+  .rec-body { position: relative; height: 268px; margin-top: 12px; }
+
+  .wf-eyebrow { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: #b8b8b0; font-weight: 500; }
+  .wf-title { margin-top: 2px; font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.02em; line-height: 1.1; color: var(--color-ink); }
+  .wf-tabs { display: flex; gap: 2px; margin-top: 10px; border-bottom: 1px solid #d8d8d4; font-size: 11.5px; overflow: hidden; color: #78786e; }
+  .wf-tabs > span { position: relative; padding: 6px 10px; white-space: nowrap; transition: color .3s; }
+  .wf-tabs > span.on { color: #111110; font-weight: 600; }
+  .wf-tabs > span.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: #111110; }
+
+  .mbtn { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; color: var(--color-muted); white-space: nowrap; }
+  .mbtn-green { background: var(--color-green); border-color: var(--color-green); color: #fff; font-weight: 600; }
+  .mbtn-dark { background: #111110; border-color: #111110; color: #fff; font-weight: 600; }
+  .mbtn-red { color: var(--color-red-text); border-color: var(--color-red-border); }
+  .mtable { border: 1px solid var(--color-line); border-radius: 8px; overflow: hidden; background: #fff; font-size: 11.5px; }
+  .mrow { display: grid; gap: 12px; align-items: center; height: 40px; padding: 0 12px; border-top: 1px solid #ebebea; color: var(--color-muted); }
+  .lrow { grid-template-columns: 92px minmax(0, 1fr) 104px 40px 150px; }
+  .mhead { height: 30px; border-top: 0; background: var(--color-surface-2); font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .mrow-hl { background: rgb(220 252 231 / .5); box-shadow: inset 3px 0 0 var(--color-green); }
+  .lrow-new { overflow: hidden; }
+  @container (max-width: 700px) { .lrow { grid-template-columns: 92px minmax(0, 1fr) 150px; } .c-tpl, .c-stage { display: none; } }
+  @container (max-width: 480px) { .lrow { grid-template-columns: minmax(0, 1fr) auto; height: auto; min-height: 40px; padding-block: 8px; } .lrow > :first-child { display: none; } .lrow .truncate { white-space: normal; } }
+
+  .wf-scrim { position: absolute; inset: -18px -20px -20px; background: rgb(17 17 16 / .28); opacity: 0; }
+  .wf-modal { position: absolute; left: 50%; top: 56px; width: min(380px, 86%); margin-left: max(-190px, -43%); border-radius: 10px; background: #fff; border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); opacity: 0; overflow: hidden; }
+  .wf-modal-title { padding: 12px 14px; font-family: var(--font-display); font-weight: 700; font-size: 13px; color: var(--color-ink); border-bottom: 1px solid #ebebea; }
+  .wf-modal-body { padding: 12px 14px; }
+  .wf-modal-foot { display: flex; justify-content: flex-end; gap: 6px; padding: 10px 14px; border-top: 1px solid #ebebea; }
+  .wf-flabel { font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 4px; }
+  .wf-input { position: relative; display: flex; align-items: center; min-height: 30px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11.5px; color: var(--color-ink); overflow: hidden; }
+  .wf-area { align-items: flex-start; min-height: 46px; padding-top: 7px; line-height: 1.45; }
+  .wf-select::after { content: ''; position: absolute; right: 12px; top: 11px; width: 5px; height: 5px; border-right: 1.5px solid #78786e; border-bottom: 1.5px solid #78786e; transform: rotate(45deg); }
+  .wf-ph { color: var(--color-muted); } .wf-val { position: absolute; left: 10px; opacity: 0; font-weight: 500; }
+  .wf-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .wf-area .wf-type { white-space: normal; }
+
+  .rec-bar { display: flex; align-items: center; gap: 7px; height: 36px; padding: 0 8px 0 12px; border-radius: 6px; background: #111110; color: #b8b8b0; font-size: 11px; white-space: nowrap; overflow: hidden; }
+  .rec-bar i { font-style: normal; color: #6c6c64; }
+  .rec-logo { font-family: var(--font-display); font-size: 7.5px; font-weight: 700; letter-spacing: .1em; color: #fff; margin-right: 4px; }
+  .rec-title { color: #fff; text-decoration: underline dashed #6c6c64; text-underline-offset: 3px; }
+  @container (max-width: 680px) { .rec-hide { display: none; } }
+  .roll { display: inline-block; height: 14px; overflow: hidden; vertical-align: -2px; color: #fff; font-weight: 600; }
+  .roll-col { display: flex; flex-direction: column; } .roll-col b { height: 14px; line-height: 14px; font-weight: 600; }
+  .rec-status { position: relative; margin-left: auto; height: 22px; min-width: 150px; display: flex; justify-content: flex-end; }
+  .rec-status .pill { position: absolute; right: 0; top: 0; opacity: 0; } .rec-status [data-status="0"] { opacity: 1; }
+  .rec-actions { position: relative; display: flex; align-items: center; height: 26px; margin-top: 10px; }
+  .rec-btns { position: absolute; left: 0; top: 0; display: flex; gap: 6px; } [data-btns="verify"] { opacity: 0; visibility: hidden; }
+  .rec-tabs { margin-top: 8px; }
+
+  .stage-box { display: grid; gap: 2px; padding: 8px 12px; border-radius: 6px; background: #efefec; box-shadow: inset 3px 0 0 #111110; }
+  .stage-box-k { font-size: 12px; font-weight: 600; color: var(--color-ink); }
+  .stage-box-v { font-size: 10.5px; color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rb-label { margin: 10px 0 6px; font-size: 9.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--color-ink); }
+  .entry { display: grid; gap: 1px; padding: 6px 10px; border-radius: 6px; border: 1px solid var(--color-line); background: #fff; font-size: 11px; overflow: hidden; }
+  .entry-meta { color: var(--color-ink); font-weight: 600; font-size: 10.5px; } .entry-meta i { font-style: normal; color: var(--color-dim); }
+  .entry-tag { display: inline-block; padding: 0 5px; border-radius: 4px; background: var(--color-surface-2); color: var(--color-muted); font-weight: 500; font-size: 9.5px; }
+  .entry-text { color: var(--color-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .approve-card { position: absolute; right: 8px; top: 40px; width: min(300px, 70%); padding: 12px; border-radius: 10px; background: #fff; border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); opacity: 0; }
+
+  .due-chip { height: 22px; padding: 0 9px; border-radius: 99px; display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 600; background: var(--color-blue-bg); color: var(--color-blue-text); border: 1px solid var(--color-blue-border); margin-bottom: 4px; }
+  .verified { margin-left: 6px; font-size: 11px; font-weight: 600; color: var(--color-green); }
+
+  .rep-co { margin: 8px 0 8px; text-align: center; font-family: var(--font-display); font-weight: 700; font-size: 15px; color: var(--color-ink); }
+  .rep-grid { margin-top: 10px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 18px; border-top: 1px solid #e3e3df; }
+  .rep-row { display: grid; grid-template-columns: 92px 1fr; gap: 8px; padding: 6px 4px; border-bottom: 1px solid #ebebea; font-size: 11px; color: var(--color-muted); }
+  .files { position: absolute; right: 0; bottom: 0; display: flex; gap: 8px; }
+  .file { display: inline-flex; align-items: center; gap: 8px; height: 34px; padding: 0 12px 0 6px; border-radius: 8px; background: #fff; border: 1px solid var(--color-line); box-shadow: var(--shadow-lift); font-size: 11px; font-weight: 500; color: var(--color-ink); opacity: 0; }
+  .pdf { display: grid; place-items: center; width: 22px; height: 24px; border-radius: 4px; background: var(--color-red-bg); color: var(--color-red-text); font-size: 7.5px; font-weight: 700; border: 1px solid var(--color-red-border); }
+
+  /* The stage track, drawn on the night background under the window */
+  .track { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 26px; }
+  .track-line { position: absolute; left: 10%; right: 10%; top: 13px; height: 2px; background: var(--color-night-line); }
+  .track-fill { position: absolute; inset: 0; background: var(--color-green-bright); transform-origin: left; transform: scaleX(0); }
+  .track-dot { position: absolute; top: 6px; left: 10%; width: 16px; height: 16px; margin-left: -8px; border-radius: 99px; background: var(--color-green-bright); box-shadow: 0 0 0 5px rgb(34 197 94 / .18), 0 0 22px rgb(34 197 94 / .55); opacity: 0; }
+  .tnode { position: relative; display: grid; justify-items: center; text-align: center; gap: 3px; padding: 0 4px; }
+  .tnode-dot { position: relative; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 99px; background: var(--color-night); border: 1px solid var(--color-night-line); color: var(--color-night-muted); font-size: 11.5px; font-weight: 600; transition: background-color .35s var(--ease-calm), border-color .35s var(--ease-calm), color .35s var(--ease-calm); }
+  .tnode-dot svg { position: absolute; width: 12px; height: 12px; opacity: 0; transition: opacity .25s; }
+  .tnode-name { margin-top: 6px; font-size: 12.5px; font-weight: 600; line-height: 1.25; color: var(--color-night-muted); transition: color .35s var(--ease-calm); }
+  .tnode-note { font-size: 11px; color: #6c6c64; }
+  .tnode.is-on .tnode-dot { background: var(--color-night-fg); border-color: var(--color-night-fg); color: var(--color-night); }
+  .tnode.is-on .tnode-name, .tnode.is-done .tnode-name { color: var(--color-night-fg); }
+  .tnode.is-done .tnode-dot { background: var(--color-green-bright); border-color: var(--color-green-bright); color: var(--color-night); }
+  .tnode.is-done .tnode-dot b { opacity: 0; } .tnode.is-done .tnode-dot svg { opacity: 1; }
+
+  /* Static (mobile / reduced motion): show the finished states as a sequence. */
+  .wfs:not(.wf-pinned) .wf-canvas, .wfs:not(.wf-pinned) .rec-body { height: auto; overflow: visible; }
+  .wfs:not(.wf-pinned) .wl, .wfs:not(.wf-pinned) .rb { position: relative; inset: auto; opacity: 1; visibility: visible; }
+  .wfs:not(.wf-pinned) .wl-record { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--color-line); }
+  .wfs:not(.wf-pinned) .rb + .rb { margin-top: 18px; }
+  .wfs:not(.wf-pinned) .wf-modal, .wfs:not(.wf-pinned) .wf-scrim, .wfs:not(.wf-pinned) .approve-card, .wfs:not(.wf-pinned) .rec-actions, .wfs:not(.wf-pinned) .rec-tabs { display: none; }
+  .wfs:not(.wf-pinned) .rec-status [data-status="0"] { opacity: 0; } .wfs:not(.wf-pinned) .rec-status [data-status="3"] { opacity: 1; }
+  .wfs:not(.wf-pinned) .roll-col { transform: translateY(-56px); }
+  .wfs:not(.wf-pinned) .files { position: static; margin-top: 12px; flex-wrap: wrap; } .wfs:not(.wf-pinned) .file { opacity: 1; box-shadow: none; }
+  .wfs:not(.wf-pinned) .due-chip { display: none; }
+  .wfs:not(.wf-pinned) .tnode-dot { background: var(--color-green-bright); border-color: var(--color-green-bright); color: var(--color-night); }
+  .wfs:not(.wf-pinned) .tnode-dot b { opacity: 0; } .wfs:not(.wf-pinned) .tnode-dot svg { opacity: 1; }
+  .wfs:not(.wf-pinned) .tnode-name { color: var(--color-night-fg); }
+  .wfs:not(.wf-pinned) .track-fill { transform: scaleX(1); }
+  @media (max-width: 640px) {
+    .track { grid-template-columns: 1fr; gap: 12px; }
+    .track-line, .track-dot { display: none; }
+    .tnode { grid-template-columns: 28px 1fr auto; justify-items: start; text-align: left; align-items: center; column-gap: 12px; }
+    .tnode-name { margin-top: 0; }
+    .rep-grid { grid-template-columns: 1fr; }
+    .rec-actions { display: none; }
   }
 </style>
 
@@ -123,25 +359,115 @@ const chapters = [
     mm.add('(min-width: 1024px)', () => {
       root.classList.add('wf-pinned');
       const q = gsap.utils.selector(root);
-      const shots = q('[data-wfs-shot]') as HTMLElement[];
+      const one = (s: string) => q(s)[0] as HTMLElement;
       const steps = q('[data-wfs-step]') as HTMLElement[];
-      const n = shots.length;
-      const setStep = (k: number) => steps.forEach((s, i) => { s.classList.toggle('is-on', i === k); s.classList.toggle('is-done', i < k); });
+      const nodes = q('[data-tnode]') as HTMLElement[];
+      const segs = q('[data-wfs-seg]') as HTMLElement[];
+      const rtabs = q('[data-rtab]') as HTMLElement[];
+      const audit = one('[data-audit]');
+      const myCount = one('[data-my-count]');
+      const stageName = one('[data-stage-name]');
+      const stageText = one('[data-stage-text]');
+      const stageCopy = [
+        ['Stage 1 — Report & Record', 'Record the nonconformance, the batch or lot number and the supporting evidence.'],
+        ['Stage 2 — Immediate Correction', 'Record the action that contained the problem at the point of discovery.'],
+        ['Stage 3 — Investigation & Severity Assessment', 'Find the root cause and give the nonconformance a severity rating.'],
+        ['Stage 4 — CAPA — Approval', 'Define the actions that remove the root cause, with an owner and a due date for each.'],
+        ['Stage 4 — CAPA — Approval', 'Define the actions that remove the root cause, with an owner and a due date for each.'],
+      ];
 
-      gsap.set(shots, { opacity: 0 });
-      gsap.set(shots[0], { opacity: 1 });
+      // Times (timeline seconds) where the record enters each stage; the last one is "closed".
+      const stageAt = [1.6, 3.3, 3.6, 3.9, 5.1, 6.9];
+      const chapterAt = [2.4, 5.4, 7.2];
+      const auditAt: Array<[number, number]> = [[1.6, 1], [3.0, 4], [3.6, 8], [3.9, 11], [5.1, 14], [6.9, 18]];
+
+      const sync = (t: number) => {
+        const ch = chapterAt.filter((x) => t >= x).length;
+        steps.forEach((s, i) => { s.classList.toggle('is-on', i === ch); s.classList.toggle('is-done', i < ch); });
+        const cur = stageAt.filter((x) => t >= x).length; // 0 = not created, 1..5 = in stage, 6 = closed
+        nodes.forEach((n, i) => { n.classList.toggle('is-on', i === cur - 1); n.classList.toggle('is-done', i < cur - 1); });
+        rtabs.forEach((el, i) => el.classList.toggle('on', i === (t >= 7.4 ? 1 : 0)));
+        audit.textContent = String(auditAt.filter(([x]) => t >= x).pop()?.[1] ?? 0);
+        myCount.textContent = t >= 1.6 ? '4' : '3';
+        const st = stageCopy[Math.min(Math.max(cur, 1), 5) - 1];
+        if (stageName.textContent !== st[0]) { stageName.textContent = st[0]; stageText.textContent = st[1]; }
+      };
+
+      gsap.set(q('[data-new-row]'), { height: 0 });
+      gsap.set(q('[data-type-title], [data-type-approve], [data-type-verify]'), { clipPath: 'inset(0 100% 0 0)' });
+      gsap.set(q('[data-entry]'), { opacity: 0, y: 8 });
+      gsap.set(q('[data-rep-row]'), { opacity: 0, y: 6 });
+      gsap.set(q('[data-verified], [data-due]'), { opacity: 0 });
+      gsap.set(q('[data-file]'), { opacity: 0, y: 14 });
+
+      const press = (sel: string, at: number) => tl.to(q(sel), { scale: 0.93, duration: 0.12, yoyo: true, repeat: 1, ease: 'power2.inOut' }, at);
+      const status = (k: number, at: number) => tl.to(q('[data-status]'), { opacity: (i: number) => (i === k ? 1 : 0), duration: 0.3 }, at);
+      const roll = (k: number, at: number) => tl.to(q('[data-roll]'), { y: -14 * k, duration: 0.3, ease: 'power2.out' }, at);
+      const track = (k: number, at: number, d = 0.3) => tl
+        .to(q('[data-track-dot]'), { left: `${10 + 20 * k}%`, duration: d, ease: 'power2.inOut' }, at)
+        .to(q('[data-track-fill]'), { scaleX: k / 4, duration: d, ease: 'power2.inOut' }, at);
 
       const tl = gsap.timeline({
-        defaults: { ease: 'power2.inOut' },
-        scrollTrigger: { trigger: q('[data-wfs-pin]')[0], start: 'center center', end: `+=${n * 70}%`, pin: true, scrub: 1 },
-        onUpdate: () => setStep(Math.min(n - 1, Math.floor(tl.progress() * n))),
+        defaults: { ease: 'power3.out' },
+        scrollTrigger: { trigger: q('[data-wfs-pin]')[0], start: 'center center', end: '+=360%', pin: true, scrub: 1 },
+        onUpdate: () => sync(tl.time()),
       });
-      for (let i = 1; i < n; i++) {
-        tl.to(shots[i - 1], { opacity: 0, duration: 0.5 }, i)
-          .to(shots[i], { opacity: 1, duration: 0.5 }, i);
-      }
-      tl.to(q('[data-wfs-rail]'), { scaleY: 1, ease: 'none', duration: n }, 0).to({}, { duration: 0.4 });
-      setStep(0);
+
+      // Chapter 1: New Record -> template -> title -> Create Record -> the row arrives.
+      press('[data-new-btn]', 0.1);
+      tl.to(q('[data-scrim]'), { opacity: 1, duration: 0.3 }, 0.3)
+        .fromTo(q('[data-modal]'), { opacity: 0, y: 10, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.4 }, 0.3)
+        .to(q('[data-tpl-ph]'), { opacity: 0, duration: 0.2 }, 0.6)
+        .to(q('[data-tpl-val]'), { opacity: 1, duration: 0.2 }, 0.65)
+        .to(q('[data-type-title]'), { clipPath: 'inset(0 0% 0 0)', duration: 0.5, ease: 'none' }, 0.75);
+      press('[data-create]', 1.3);
+      tl.to(q('[data-modal]'), { opacity: 0, y: -6, duration: 0.2 }, 1.45)
+        .to(q('[data-scrim]'), { opacity: 0, duration: 0.2 }, 1.45)
+        .to(q('[data-new-row]'), { height: 40, duration: 0.35 }, 1.6)
+        .to(q('[data-track-dot]'), { opacity: 1, duration: 0.2 }, 1.6)
+        .to(segs[0], { scaleY: 1, ease: 'none', duration: 2.4 }, 0);
+
+      // Chapter 2: open the record; entries arrive stage by stage; the CAPA stage is approved.
+      tl.to(q('[data-wl="list"]'), { opacity: 0, y: -10, duration: 0.4 }, 2.4)
+        .set(q('[data-wl="record"]'), { visibility: 'visible' }, 2.4)
+        .fromTo(q('[data-wl="record"]'), { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, 2.5)
+        .to(q('[data-entry]'), { opacity: 1, y: 0, stagger: 0.3, duration: 0.3 }, 3.0);
+      roll(1, 3.3); track(1, 3.3); roll(2, 3.6); track(2, 3.6); roll(3, 3.9); track(3, 3.9);
+      status(1, 4.0);
+      press('[data-approve]', 4.25);
+      tl.fromTo(q('[data-approve-card]'), { opacity: 0, y: 10, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.35 }, 4.35)
+        .to(q('[data-type-approve]'), { clipPath: 'inset(0 0% 0 0)', duration: 0.5, ease: 'none' }, 4.5);
+      press('[data-approve-go]', 4.95);
+      tl.to(q('[data-approve-card]'), { opacity: 0, y: -6, duration: 0.25 }, 5.1);
+      status(2, 5.1); roll(4, 5.1); track(4, 5.1, 0.4);
+      tl.to(segs[1], { scaleY: 1, ease: 'none', duration: 3 }, 2.4);
+
+      // Chapter 3: verification. The record waits for its date, then the verifier marks it Effective.
+      tl.to(q('[data-rb="details"]'), { opacity: 0, duration: 0.3 }, 5.4)
+        .set(q('[data-rb="verify"]'), { visibility: 'visible' }, 5.4)
+        .to(q('[data-rb="verify"]'), { opacity: 1, duration: 0.35 }, 5.5)
+        .to(q('[data-btns="work"]'), { opacity: 0, duration: 0.25 }, 5.4)
+        .set(q('[data-btns="verify"]'), { visibility: 'visible' }, 5.4)
+        .to(q('[data-btns="verify"]'), { opacity: 1, duration: 0.3 }, 5.5)
+        .fromTo(q('[data-due]'), { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3 }, 5.8)
+        .to(q('[data-type-verify]'), { clipPath: 'inset(0 0% 0 0)', duration: 0.6, ease: 'none' }, 6.0);
+      press('[data-effective]', 6.7);
+      tl.to(q('[data-verified]'), { opacity: 1, duration: 0.3 }, 6.9);
+      status(3, 6.9);
+      tl.to(q('[data-track-dot]'), { opacity: 0, scale: 0.6, duration: 0.3 }, 6.9)
+        .to(segs[2], { scaleY: 1, ease: 'none', duration: 1.8 }, 5.4);
+
+      // Chapter 4: the report, then the PDF and the audit trail.
+      tl.to(q('[data-rb="verify"]'), { opacity: 0, duration: 0.3 }, 7.3)
+        .set(q('[data-rb="report"]'), { visibility: 'visible' }, 7.3)
+        .to(q('[data-rb="report"]'), { opacity: 1, duration: 0.35 }, 7.4)
+        .to(q('[data-btns="verify"]'), { opacity: 0, duration: 0.25 }, 7.3)
+        .to(q('[data-rep-row]'), { opacity: 1, y: 0, stagger: 0.1, duration: 0.3 }, 7.6);
+      press('[data-pdf]', 8.4);
+      tl.to(q('[data-file]'), { opacity: 1, y: 0, stagger: 0.2, duration: 0.4 }, 8.55)
+        .to({}, { duration: 0.6 });
+
+      sync(0);
       return () => root.classList.remove('wf-pinned');
     });
   });
