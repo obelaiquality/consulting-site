@@ -2,21 +2,21 @@
 /*
  * Workflow Manager showcase: the centrepiece of the home page, built from real app screenshots.
  * Desktop with motion: one pinned scene, four chapters; one screenshot changes at a time
- * (opacity and a very small scale), and the chapter list follows the timeline.
+ * (opacity only, so the screenshot text stays sharp), and the chapter list follows the timeline.
  * Mobile or reduced motion: each chapter shows its text and its screenshot, in order.
  */
 import ScreenFrame from '../mock/ScreenFrame.astro';
-import recordsImg from '../../assets/app/wfm-records-my.png';
-import detailsImg from '../../assets/app/wfm-record-details.png';
-import verifyImg from '../../assets/app/wfm-record-verification.png';
-import reportImg from '../../assets/app/wfm-record-report.png';
+// Tight crops of the 2x app screenshots, so the app text shows at a readable size in the frame.
+import recordsImg from '../../assets/app/wfs-records.png';
+import detailsImg from '../../assets/app/wfs-details.png';
+import verifyImg from '../../assets/app/wfs-verify.png';
+import reportImg from '../../assets/app/wfs-report.png';
 
 const chapters = [
   {
     title: 'Record it',
     body: 'Anyone can raise a nonconformance, a CAPA, an audit, a change or a document review. Each record starts from a template with its stages, deadlines and approvers already set.',
     img: recordsImg,
-    top: 0.285,
     alt: 'Workflow Manager records list with audit, nonconformance and CAPA records at different stages and statuses',
   },
   {
@@ -58,7 +58,7 @@ const chapters = [
               <p class="wfs-step-body">{c.body}</p>
             </div>
             <div class="wfs-inline-shot">
-              <ScreenFrame src={c.img} alt={c.alt} crop={0.6} top={c.top} sizes="100vw" />
+              <ScreenFrame src={c.img} alt={c.alt} fade sizes="100vw" />
             </div>
           </li>
         ))}
@@ -67,7 +67,7 @@ const chapters = [
       <div class="wfs-stage" aria-hidden="true">
         {chapters.map((c, i) => (
           <div class="wfs-shot" data-wfs-shot={i}>
-            <ScreenFrame src={c.img} alt="" crop={0.6} top={c.top} sizes="(min-width: 1024px) 62vw, 100vw" />
+            <ScreenFrame src={c.img} alt="" fade sizes="(min-width: 1024px) 62vw, 100vw" />
           </div>
         ))}
       </div>
@@ -101,7 +101,7 @@ const chapters = [
     .wf-pinned .wfs-step.is-on .wfs-num { background: var(--color-night-fg); border-color: var(--color-night-fg); color: var(--color-night); }
     .wf-pinned .wfs-step.is-done .wfs-num { background: var(--color-green-bright); border-color: var(--color-green-bright); color: var(--color-night); }
     .wf-pinned .wfs-stage { display: block; position: relative; }
-    .wf-pinned .wfs-shot { position: absolute; inset: 0 auto auto 0; width: 100%; opacity: 0; will-change: opacity, transform; }
+    .wf-pinned .wfs-shot { position: absolute; inset: 0 auto auto 0; width: 100%; opacity: 0; will-change: opacity; }
     .wf-pinned .wfs-shot:first-child { position: relative; opacity: 1; }
   }
 </style>
@@ -128,8 +128,8 @@ const chapters = [
       const n = shots.length;
       const setStep = (k: number) => steps.forEach((s, i) => { s.classList.toggle('is-on', i === k); s.classList.toggle('is-done', i < k); });
 
-      gsap.set(shots, { opacity: 0, scale: 1.015 });
-      gsap.set(shots[0], { opacity: 1, scale: 1 });
+      gsap.set(shots, { opacity: 0 });
+      gsap.set(shots[0], { opacity: 1 });
 
       const tl = gsap.timeline({
         defaults: { ease: 'power2.inOut' },
@@ -137,8 +137,8 @@ const chapters = [
         onUpdate: () => setStep(Math.min(n - 1, Math.floor(tl.progress() * n))),
       });
       for (let i = 1; i < n; i++) {
-        tl.to(shots[i - 1], { opacity: 0, scale: 0.985, duration: 0.5 }, i)
-          .to(shots[i], { opacity: 1, scale: 1, duration: 0.5 }, i);
+        tl.to(shots[i - 1], { opacity: 0, duration: 0.5 }, i)
+          .to(shots[i], { opacity: 1, duration: 0.5 }, i);
       }
       tl.to(q('[data-wfs-rail]'), { scaleY: 1, ease: 'none', duration: n }, 0).to({}, { duration: 0.4 });
       setStep(0);

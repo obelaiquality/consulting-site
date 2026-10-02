@@ -17,8 +17,10 @@ interface Props {
   /** Start the crop this far down the screenshot, as a fraction of its height (0–1). */
   top?: number;
   sizes?: string;
+  /** Fade the right edge, for a screenshot cropped through the middle of the app. */
+  fade?: boolean;
 }
-const { src, alt, url = 'app.obel-ai.com', class: cls = '', eager = false, crop, top = 0, sizes = '(min-width: 1024px) 60vw, 100vw' } = Astro.props;
+const { src, alt, url = 'app.obel-ai.com', class: cls = '', eager = false, crop, top = 0, sizes = '(min-width: 1024px) 60vw, 100vw', fade = false } = Astro.props;
 const shift = top ? `margin-top: -${((top * src.height) / src.width) * 100}%` : '';
 const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.width} / ${src.height}`;
 ---
@@ -27,7 +29,7 @@ const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.
     <span class="sf-dots"><i></i><i></i><i></i></span>
     <span class="sf-url">{url}</span>
   </div>
-  <div class="sf-view" style={`aspect-ratio: ${ratio}`}>
+  <div class:list={['sf-view', { 'sf-fade': fade }]} style={`aspect-ratio: ${ratio}`}>
     <Picture
       src={src}
       alt={alt}
@@ -48,5 +50,6 @@ const ratio = crop ? `${src.width} / ${Math.round(src.height * crop)}` : `${src.
   .sf-dots { display: flex; gap: 6px; } .sf-dots i { width: 8px; height: 8px; border-radius: 99px; background: #2e2e2b; }
   .sf-url { margin-inline: auto; transform: translateX(-22px); height: 17px; padding: 0 10px; border-radius: 6px; background: #1c1c1a; color: #7d7d75; font-size: 10.5px; line-height: 17px; }
   .sf-view { position: relative; overflow: hidden; background: #f8f8f6; }
+  .sf-fade::after { content: ''; position: absolute; inset: 0 0 0 auto; width: 8%; background: linear-gradient(to right, rgb(248 248 246 / 0), #f8f8f6 92%); pointer-events: none; }
   .sf-view :global(img), .sf-view :global(picture) { display: block; width: 100%; height: auto; }
 </style>
