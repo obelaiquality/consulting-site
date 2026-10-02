@@ -2,41 +2,93 @@
 /*
  * After payment: polls the control plane for the order status (no personal data in the response).
  * GET {checkout.statusApi}/v1/orders/{order_ref} -> { state, workspace_url? }. Contract: docs/CHECKOUT-CONTRACT.md.
+ * The steps use the same ball-and-line language as the checkout and the home-page scenes.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { site } from '../../data/site';
 const steps = [
-  { id: 'paid', title: 'Payment confirmed' },
-  { id: 'provisioning', title: 'Workspace being created in your region' },
-  { id: 'ready', title: 'Admin invitation sent' },
+  { id: 'paid', title: 'Payment confirmed', body: 'Paddle confirms the payment and emails your receipt.' },
+  { id: 'provisioning', title: 'Workspace being created', body: 'We set up your workspace in the Google Cloud region you chose.' },
+  { id: 'ready', title: 'Admin invitation sent', body: 'Your admin gets an email with a link to set a password.' },
 ];
+const check = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ---
 <BaseLayout title="Your workspace | Obel-MS" description="The status of your new Obel-MS workspace." noindex>
   <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
-    <div class="container-x max-w-[40rem]">
-      <p class="label-dot mb-6">Your workspace</p>
-      <h1 class="t-h2" data-title>We are preparing your workspace.</h1>
-      <p class="t-lead mt-5" data-lead>This usually takes a few minutes. You can leave this page. We also email your admin when the workspace is ready.</p>
-      <ol class="st mt-10" data-steps>
-        {steps.map((s) => (
-          <li data-step={s.id}><span class="st-dot" aria-hidden="true"></span><span>{s.title}</span></li>
-        ))}
-      </ol>
-      <p class="mt-8 text-[14px] text-muted" data-help>Questions about your order? Email <a class="link-u" href={`mailto:${site.email}`}>{site.email}</a>.</p>
-      <a class="btn btn-primary mt-6" data-open hidden href="#">Open your workspace</a>
+    <div class="container-x">
+      <div class="st-wrap">
+        <div class="st-card" data-st-card>
+          <div class="st-badge" aria-hidden="true">
+            <span class="st-spin" data-st-spin></span>
+            <span class="st-ok" set:html={check} />
+            <span class="st-hold"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.6" stroke="currentColor" stroke-width="1.6"/><path d="M8 5v3.2l2 1.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+          </div>
+          <p class="label-dot is-live mt-7" data-eyebrow>Your workspace</p>
+          <h1 class="t-h2 mt-4" data-title>We are preparing your workspace.</h1>
+          <p class="t-lead mt-4" data-lead>This usually takes a few minutes. You can leave this page. We also email your admin when the workspace is ready.</p>
+
+          <ol class="st" data-steps aria-live="polite">
+            {steps.map((s, i) => (
+              <li class="st-step" data-step={s.id}>
+                <span class="st-ball tnum" aria-hidden="true"><b>{i + 1}</b><Fragment set:html={check} /></span>
+                {i < steps.length - 1 && <span class="st-seg" aria-hidden="true"><span></span></span>}
+                <div>
+                  <p class="st-title">{s.title}</p>
+                  <p class="st-body">{s.body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div class="st-actions">
+            <a class="btn btn-primary" data-open hidden href="#">Open your workspace</a>
+            <p class="st-ref" data-ref hidden>Order <span class="tnum" data-ref-id></span></p>
+          </div>
+          <p class="st-slow" data-slow hidden>This is taking longer than usual. Your payment is safe, and we email your admin as soon as the workspace is ready.</p>
+        </div>
+        <p class="st-help">Questions about your order? Email <a class="link-u" href={`mailto:${site.email}`}>{site.email}</a> with your order number.</p>
+      </div>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .st { display: grid; gap: 16px; }
-  .st li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--color-muted); }
-  .st-dot { width: 12px; height: 12px; border-radius: 999px; border: 1.5px solid var(--color-line); flex-shrink: 0; transition: background-color .3s var(--ease-calm), border-color .3s var(--ease-calm); }
-  .st li.is-done { color: var(--color-ink); }
-  .st li.is-done .st-dot { background: var(--color-green); border-color: var(--color-green); }
-  .st li.is-now .st-dot { border-color: var(--color-ink); animation: pulse 1.6s var(--ease-calm) infinite; }
-  @keyframes pulse { 50% { box-shadow: 0 0 0 5px rgb(17 17 16 / 0.08); } }
-  @media (prefers-reduced-motion: reduce) { .st li.is-now .st-dot { animation: none; } }
+  .st-wrap { max-width: 40rem; margin-inline: auto; }
+  .st-card { padding: clamp(1.6rem, 4vw, 2.75rem); border: 1px solid var(--color-line); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-soft); }
+  .st-badge { position: relative; width: 52px; height: 52px; }
+  .st-spin { position: absolute; inset: 0; border-radius: 99px; border: 2px solid var(--color-surface-3); border-top-color: var(--color-ink); animation: st-rot 1s linear infinite; transition: opacity .3s; }
+  .st-ok { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 99px; background: var(--color-green); color: #fff; opacity: 0; transform: scale(.6); transition: opacity .35s var(--ease-out), transform .45s var(--ease-spring); }
+  .st-ok :global(svg) { width: 24px; height: 24px; }
+  .is-ready .st-spin, .is-hold .st-spin { opacity: 0; }
+  .is-ready .st-ok { opacity: 1; transform: none; }
+  .st-hold { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 99px; background: var(--color-amber-bg); color: var(--color-amber-text); opacity: 0; transform: scale(.6); transition: opacity .35s var(--ease-out), transform .45s var(--ease-spring); }
+  .st-hold svg { width: 24px; height: 24px; }
+  .is-hold .st-hold { opacity: 1; transform: none; }
+  @keyframes st-rot { to { transform: rotate(360deg); } }
+
+  .st { display: grid; gap: 22px; margin-top: 2.25rem; padding-top: 2rem; border-top: 1px solid var(--color-surface-3); }
+  .st-step { position: relative; display: grid; grid-template-columns: 28px 1fr; gap: 14px; }
+  .st-ball { position: relative; z-index: 1; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 99px; border: 1px solid var(--color-line); background: var(--color-surface); font-size: 12px; font-weight: 600; color: var(--color-muted); transition: background-color .35s var(--ease-calm), border-color .35s var(--ease-calm), color .35s var(--ease-calm); }
+  .st-ball :global(svg) { position: absolute; width: 13px; height: 13px; opacity: 0; transition: opacity .25s; }
+  /* The line runs between the balls, never through them. */
+  .st-seg { position: absolute; left: 13.5px; top: 34px; bottom: -16px; width: 1px; background: var(--color-line); }
+  .st-seg span { position: absolute; inset: 0; background: var(--color-green); transform-origin: top; transform: scaleY(0); transition: transform .7s var(--ease-out); }
+  .st-title { font-size: 15.5px; font-weight: 600; color: var(--color-muted); line-height: 28px; transition: color .3s; }
+  .st-body { font-size: 14px; line-height: 1.55; color: var(--color-muted); }
+  .st-step.is-now .st-ball { border-color: var(--color-ink); color: var(--color-ink); animation: st-pulse 1.6s var(--ease-calm) infinite; }
+  .st-step.is-now .st-title, .st-step.is-done .st-title { color: var(--color-ink); }
+  .st-step.is-done .st-ball { background: var(--color-green); border-color: var(--color-green); color: #fff; }
+  .st-step.is-done .st-ball b { opacity: 0; } .st-step.is-done .st-ball :global(svg) { opacity: 1; }
+  .st-step.is-done .st-seg span { transform: scaleY(1); }
+  @keyframes st-pulse { 50% { box-shadow: 0 0 0 6px rgb(17 17 16 / 0.07); } }
+  @media (prefers-reduced-motion: reduce) { .st-step.is-now .st-ball, .st-spin { animation: none; } }
+
+  .st-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 2rem; }
+  .st-actions:not(:has(> :not([hidden]))) { display: none; }
+  .st-ref { font-size: 13px; color: var(--color-muted); }
+  .st-ref span { padding: 3px 8px; margin-left: 4px; border-radius: 6px; background: var(--color-surface-2); color: var(--color-ink); font-size: 12.5px; }
+  .st-slow { margin-top: 1.5rem; padding: 12px 14px; border-radius: var(--radius-md); background: var(--color-amber-bg); color: var(--color-amber-text); font-size: 13.5px; line-height: 1.5; }
+  .st-help { margin-top: 1.25rem; text-align: center; font-size: 13.5px; color: var(--color-muted); }
 </style>
 
 <script>
@@ -51,10 +103,11 @@ const steps = [
     } catch { return null; }
   };
   const order = new URLSearchParams(location.search).get('order') || '';
+  const card = document.querySelector<HTMLElement>('[data-st-card]');
   const title = document.querySelector<HTMLElement>('[data-title]');
   const lead = document.querySelector<HTMLElement>('[data-lead]');
   const open = document.querySelector<HTMLAnchorElement>('[data-open]');
-  const order_ok = isOrderRef(order);
+  const slow = document.querySelector<HTMLElement>('[data-slow]');
   const ORDER = ['paid', 'provisioning', 'ready'];
 
   const show = (state: string) => {
@@ -65,12 +118,16 @@ const steps = [
     });
   };
 
-  if (!checkout.enabled || !checkout.statusApi || !order_ok) {
+  if (!checkout.enabled || !checkout.statusApi || !isOrderRef(order)) {
     if (title) title.textContent = 'Online checkout is coming soon.';
     if (lead) lead.textContent = 'Nothing was charged. To start a workspace today, send the request form and we reply within one working day.';
+    card?.classList.add('is-hold');
     document.querySelector('[data-steps]')?.setAttribute('hidden', '');
     if (open) { open.hidden = false; open.textContent = 'Start your workspace'; open.href = '/checkout'; }
   } else {
+    const ref = document.querySelector<HTMLElement>('[data-ref]');
+    const refId = document.querySelector<HTMLElement>('[data-ref-id]');
+    if (ref && refId) { refId.textContent = order.slice(0, 8).toUpperCase(); ref.title = order; ref.hidden = false; }
     show('received');
     let tries = 0;
     const poll = async () => {
@@ -82,6 +139,8 @@ const steps = [
           const state = data.state || 'received';
           show(state);
           if (state === 'ready') {
+            card?.classList.add('is-ready');
+            if (slow) slow.hidden = true;
             if (title) title.textContent = 'Your workspace is ready.';
             if (lead) lead.textContent = 'Your admin has an email with a link to set a password. Then invite your team.';
             const href = safeWorkspaceUrl(data.workspace_url);
@@ -89,12 +148,14 @@ const steps = [
             return;
           }
           if (state === 'manual_review' || state === 'failed') {
+            card?.classList.add('is-hold');
             if (title) title.textContent = 'We are finishing your workspace by hand.';
             if (lead) lead.textContent = 'Your payment is safe. We email your admin as soon as the workspace is ready, usually within one working day.';
             return;
           }
         }
       } catch { /* keep polling */ }
+      if (slow && tries === 40) slow.hidden = false;   // about 4 minutes
       if (tries < 100) setTimeout(poll, tries < 20 ? 3000 : 10000);
     };
     poll();

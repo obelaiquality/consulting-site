@@ -11,7 +11,7 @@ We use **Paddle Billing** (not Paddle Classic) for every currency. Reasons:
 1. Stripe does not accept South African companies. Only a US entity (Stripe Atlas) would work.
 2. Paddle is the merchant of record. It is the seller to the customer, and it collects and pays VAT, GST and US sales tax in every country. We do not register for tax abroad.
 3. Paddle handles subscriptions, the monthly and annual periods, one-time items (onboarding), invoices, the customer portal, dunning and card updates.
-4. Paddle.js opens an overlay checkout from a static site. No website server is needed.
+4. Paddle.js opens the checkout inline in the page (step 2 of /checkout) from a static site. No website server is needed. The page shows its own order summary from the Paddle.js checkout events (subtotal, tax, total, recurring total).
 5. One provider gives one webhook contract, one customer record and one refund path.
 
 Fee: about 5% + USD 0.50 per transaction, plus a conversion margin when the payment currency differs from the payout currency. The margin model uses 6.6%.
@@ -26,7 +26,7 @@ Fee: about 5% + USD 0.50 per transaction, plus a conversion margin when the paym
 Website (static)            Paddle                         Control plane (Google Cloud)
 ----------------            ------                         ----------------------------
 /checkout form
-  builds OrderData  ──────▶ Checkout overlay
+  builds OrderData  ──────▶ Inline checkout  
   (order_ref = UUID)         customer pays
                              subscription.created ────────▶ POST /v1/webhooks/paddle
                                                             1. verify Paddle-Signature (HMAC-SHA256)

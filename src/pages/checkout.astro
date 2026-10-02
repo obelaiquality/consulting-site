@@ -1,64 +1,92 @@
 ---
 /*
- * Checkout (coming soon). The form collects what provisioning needs and opens the Paddle overlay
- * when `checkout.enabled` is true. Until then it sends the same order to our inbox as a request,
- * and we set the workspace up by hand. Contract: docs/CHECKOUT-CONTRACT.md.
+ * Checkout in two steps. Step 1 collects what provisioning needs. Step 2 (only when `checkout.enabled`)
+ * shows the Paddle checkout inline, beside our own summary, which follows Paddle's totals.
+ * While checkout is not active, step 1 sends the same order to our inbox as a request, and we set the
+ * workspace up by hand. Contract: docs/CHECKOUT-CONTRACT.md.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Money from '../components/ui/Money.astro';
 import Captcha from '../components/ui/Captcha.astro';
-import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
+import CurrencyPicker from '../components/ui/CurrencyPicker.astro';
+import { plans, checkout, site, currencies, currencyCodes, type Money as MoneyT } from '../data/site';
+
+const live = checkout.enabled;
+const steps = live ? ['Your details', 'Payment', 'Your workspace'] : ['Your details', 'Request sent', 'Your workspace'];
+const yearly = (m: MoneyT) => Object.fromEntries(currencyCodes.map((c) => [c, m[c] * 12])) as MoneyT;
+const setupOf = (p: (typeof plans)[number]) => Object.fromEntries(currencyCodes.map((c) => [c, p.setup[c]])) as MoneyT;
+/** "European Union (Belgium), also for UK workspaces" -> name, place, note. */
+const regions = checkout.regions.map((r) => {
+  const m = r.label.match(/^([^(]+)\(([^)]+)\)(?:,\s*(.*))?$/);
+  return { id: r.id, name: (m?.[1] ?? r.label).trim(), place: m?.[2] ?? '', note: m?.[3] ?? '' };
+});
+const check = '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 ---
 <BaseLayout
   title="Start your workspace | Obel-MS"
   description="Choose a plan, a billing period and the Google Cloud region for your Obel-MS workspace."
   noindex
 >
-  <section class="section-y pt-[calc(var(--nav-h)+3rem)]">
+  <section class="co section-y pt-[calc(var(--nav-h)+2.5rem)]" data-co data-step="1">
     <div class="container-x">
-      <div class="soon-banner" role="status">
-        <span class="pill pill-amber">Coming soon</span>
-        <p>Online payment opens soon. Until then, send this form and we set up your workspace and send you an invoice, usually within one working day.</p>
+      {!live && (
+        <div class="soon-banner" role="status">
+          <span class="pill pill-amber">Coming soon</span>
+          <p>Online payment opens soon. Until then, send this form and we set up your workspace and send you an invoice, usually within one working day.</p>
+        </div>
+      )}
+
+      <div class="co-head">
+        <div>
+          <p class="label-dot is-live">Start your workspace</p>
+          <h1 class="t-h2 mt-5 max-w-[16ch]" data-co-title>Set up Obel-MS in a few minutes.</h1>
+        </div>
+        <ol class="co-steps" aria-label="Checkout steps">
+          {steps.map((s, i) => (
+            <li class:list={['co-step', { 'is-on': i === 0 }]} data-co-step={i + 1}>
+              <span class="co-ball tnum" aria-hidden="true"><b>{i + 1}</b><Fragment set:html={check} /></span>
+              <span class="co-step-label">{s}</span>
+              {i < steps.length - 1 && <span class="co-seg" aria-hidden="true"><span></span></span>}
+            </li>
+          ))}
+        </ol>
       </div>
 
-      <div class="mt-10 max-w-[42rem]">
-        <p class="label-dot mb-6">Start your workspace</p>
-        <h1 class="t-h2">Choose your plan and where your data lives.</h1>
-      </div>
-
-      <form id="co-form" method="post" class="mt-12 grid gap-12 lg:grid-cols-12 lg:gap-10" novalidate data-enabled={String(checkout.enabled)}>
-        <div class="lg:col-span-7 space-y-12">
-          <fieldset>
-            <legend class="co-legend">1. Plan</legend>
+      <form id="co-form" method="post" class="co-grid" novalidate data-enabled={String(live)}>
+        <!-- Step 1: details -->
+        <div class="co-main" data-pane="details">
+          <fieldset class="co-card">
+            <legend class="co-legend"><span class="co-n">01</span>Plan</legend>
             <div class="plan-pick">
               {plans.map((p, i) => (
-                <label class="plan-opt">
+                <label class="pick plan-opt">
                   <input type="radio" name="plan" value={p.id} checked={i === 0} />
-                  <span class="plan-opt-body">
-                    <span class="plan-opt-name">{p.name}</span>
-                    <span class="plan-opt-price tnum" data-billing-scope="annual" data-plan-price><Money amount={p.price} monthly /> a month</span>
-                    <span class="plan-opt-users">{p.users.split(',')[0]}</span>
+                  <span class="pick-body">
+                    <span class="pick-top"><span class="plan-name">{p.name}</span><span class="pick-tick" set:html={check} /></span>
+                    <span class="plan-price tnum" data-billing-scope="annual" data-plan-price><Money amount={p.price} monthly /><small>/month</small></span>
+                    <span class="plan-users">{p.users.split(',')[0]}</span>
+                    {p.id === 'professional' && <span class="plan-tag">Includes Workflow Manager</span>}
                   </span>
                 </label>
               ))}
             </div>
-          </fieldset>
-
-          <fieldset>
-            <legend class="co-legend">2. Billing</legend>
-            <div class="seg">
-              <label><input type="radio" name="billing" value="annual" checked /> <span>Annual</span></label>
-              <label><input type="radio" name="billing" value="monthly" /> <span>Monthly, 15% more</span></label>
+            <div class="bill-row">
+              <div class="switch-group bill-switch" role="radiogroup" aria-label="Billing">
+                <span class="switch-thumb" aria-hidden="true"></span>
+                <label class="switch-btn"><input type="radio" name="billing" value="annual" checked />Annual</label>
+                <label class="switch-btn"><input type="radio" name="billing" value="monthly" />Monthly</label>
+              </div>
+              <span class="bill-note" data-billing-scope="annual"><span data-bill="annual">Best price. Billed once a year.</span><span data-bill="monthly">Month to month, 15% more.</span></span>
             </div>
           </fieldset>
 
-          <fieldset>
-            <legend class="co-legend">3. Your workspace</legend>
+          <fieldset class="co-card">
+            <legend class="co-legend"><span class="co-n">02</span>Your workspace</legend>
             <div class="form-grid">
               <div class="field field-full">
                 <label for="co-company">Company name</label>
-                <input id="co-company" name="company" type="text" autocomplete="organization" required maxlength="120" />
-                <p class="field-hint">Workspace ID: <span class="tnum" data-slug>your-company</span></p>
+                <input id="co-company" name="company" type="text" autocomplete="organization" required maxlength="120" placeholder="Kestrel Foods (Pty) Ltd" />
+                <p class="field-hint">Workspace address: <span class="slug tnum"><span data-slug>your-company</span>.obel-ai.com</span></p>
                 <p class="field-error" role="alert"></p>
               </div>
               <div class="field">
@@ -71,27 +99,43 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
                 <input id="co-email" name="admin_email" type="email" autocomplete="email" required maxlength="200" />
                 <p class="field-error" role="alert"></p>
               </div>
-              <div class="field field-full">
-                <label for="co-region">Hosting region</label>
-                <select id="co-region" name="region" required>
-                  {checkout.regions.map((r) => <option value={r.id}>{r.label}</option>)}
-                </select>
-                <p class="field-hint">Need another Google Cloud region or in-country UK hosting? <a class="link-u" href="/contact#demo">Contact us</a>. A one-off regional setup fee applies.</p>
-              </div>
             </div>
           </fieldset>
 
-          <fieldset>
-            <legend class="co-legend">4. AI processing</legend>
-            <p class="field-hint mb-3">Choose one. You can change it later.</p>
-            <div class="stack-opts field" data-ai-field>
-              <label class="opt">
+          <fieldset class="co-card">
+            <legend class="co-legend"><span class="co-n">03</span>Where your data lives</legend>
+            <p class="co-sub">Your documents, records and backups stay in this Google Cloud region.</p>
+            <div class="region-pick">
+              {regions.map((r, i) => (
+                <label class="pick region-opt">
+                  <input type="radio" name="region" value={r.id} checked={i === 0} />
+                  <span class="pick-body">
+                    <span class="pick-top"><span class="region-name">{r.name}</span><span class="pick-tick" set:html={check} /></span>
+                    <span class="region-place">{r.place}{r.note && <span class="region-note"> · {r.note}</span>}</span>
+                  </span>
+                </label>
+              ))}
+            </div>
+            <p class="field-hint mt-3">Need another Google Cloud region or in-country UK hosting? <a class="link-u" href="/contact#demo">Contact us</a>. A one-off regional setup fee applies.</p>
+          </fieldset>
+
+          <fieldset class="co-card">
+            <legend class="co-legend"><span class="co-n">04</span>AI processing</legend>
+            <p class="co-sub">Choose one. You can change it later.</p>
+            <div class="ai-pick field" data-ai-field>
+              <label class="pick ai-opt">
                 <input type="radio" name="ai_mode" value="openai" required />
-                <span><strong>AI extraction with a third-party model provider.</strong> Document text goes to OpenAI through its API, and OpenAI processes it in the United States. It fills the most fields correctly. By choosing this, I consent to it for my organisation.</span>
+                <span class="pick-body">
+                  <span class="pick-top"><span class="ai-name">AI extraction with a third-party model provider</span><span class="pick-tick" set:html={check} /></span>
+                  <span class="ai-text">Document text goes to OpenAI through its API, and OpenAI processes it in the United States. It fills the most fields correctly. By choosing this, I consent to it for my organisation.</span>
+                </span>
               </label>
-              <label class="opt">
+              <label class="pick ai-opt">
                 <input type="radio" name="ai_mode" value="local" />
-                <span><strong>No external AI.</strong> Extraction runs on our own servers in your hosting region. It fills fewer fields correctly, so your team enters more by hand.</span>
+                <span class="pick-body">
+                  <span class="pick-top"><span class="ai-name">No external AI</span><span class="pick-tick" set:html={check} /></span>
+                  <span class="ai-text">Extraction runs on our own servers in your hosting region. It fills fewer fields correctly, so your team enters more by hand.</span>
+                </span>
               </label>
               <p class="field-error" role="alert"></p>
             </div>
@@ -99,38 +143,78 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 
           <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
           <Captcha />
-          <div class="field">
-            <label class="opt">
+          <div class="field terms">
+            <label class="tick">
               <input type="checkbox" name="terms" required />
+              <span class="tick-box" set:html={check} />
               <span>I accept the <a class="link-u" href={checkout.termsUrl} target="_blank" rel="noopener">Terms of Service</a> and the <a class="link-u" href={checkout.refundUrl} target="_blank" rel="noopener">Refund Policy</a>, and I have read the <a class="link-u" href="/legal/privacy" target="_blank" rel="noopener">privacy notice</a>.</span>
             </label>
             <p class="field-error" role="alert"></p>
           </div>
         </div>
 
-        <aside class="lg:col-span-5">
+        <!-- Step 2: payment (inline Paddle frame) -->
+        {live && (
+          <div class="co-main co-pay" data-pane="payment" hidden>
+            <div class="co-card pay-card">
+              <div class="pay-head">
+                <button type="button" class="back" data-back>
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3.5 5.5 8l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  Edit details
+                </button>
+                <span class="secure">
+                  <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3.5" y="7" width="9" height="6.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7" stroke="currentColor" stroke-width="1.5"/></svg>
+                  Secure payment by Paddle
+                </span>
+              </div>
+              <div class="pay-frame">
+                <div class="pay-loading" data-pay-loading><span></span>Loading the secure checkout…</div>
+                <div class="obel-paddle-checkout"></div>
+              </div>
+              <p class="pay-mor">Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our orders. Paddle provides all customer service inquiries and handles returns.</p>
+            </div>
+          </div>
+        )}
+
+        <aside class="co-side">
           <div class="summary" data-billing-scope="annual" data-summary>
-            <p class="text-[13px] text-muted">Order summary</p>
+            <div class="sum-top">
+              <p class="sum-eyebrow">Order summary</p>
+              <span data-pane-only="details"><CurrencyPicker tone="dark" class="sum-cur" /></span>
+            </div>
+
             {plans.map((p, i) => (
               <div class="sum-plan" data-sum-plan={p.id} hidden={i !== 0}>
-                <div class="sum-row"><span>{p.name}</span><span class="tnum"><Money amount={p.price} monthly /> a month</span></div>
-                <div class="sum-row text-muted"><span>Onboarding, once</span><span class="tnum">{p.setup.ZAR > 0 ? <Money amount={{ ZAR: p.setup.ZAR, USD: p.setup.USD, EUR: p.setup.EUR, GBP: p.setup.GBP, AUD: p.setup.AUD }} /> : 'None'}</span></div>
+                <p class="sum-name">Obel-MS {p.name}</p>
+                <p class="sum-price tnum"><Money amount={p.price} monthly /><small>/month</small></p>
+                <dl class="sum-lines">
+                  <div><dt>Billed</dt><dd class="tnum"><span data-bill="annual"><Money amount={yearly(p.price)} /> a year</span><span data-bill="monthly"><Money amount={p.price} monthly /> a month</span></dd></div>
+                  <div><dt>Onboarding, once</dt><dd class="tnum">{p.setup.ZAR > 0 ? <Money amount={setupOf(p)} /> : 'None'}</dd></div>
+                  <div><dt>Hosting</dt><dd data-sum-region>{regions[0].name}</dd></div>
+                  <div><dt>AI processing</dt><dd data-sum-ai>Not chosen yet</dd></div>
+                </dl>
               </div>
             ))}
-            <p class="mt-4 text-[12.5px] text-muted">{currencyCodes.map((c) => <span data-cur={c}>{currencies[c].taxNote} </span>)}<span data-bill="annual">Billed annually.</span><span data-bill="monthly">Billed monthly.</span></p>
 
-            <button type="submit" class="btn btn-primary mt-6 w-full" data-submit>
-              <span data-label-live hidden={!checkout.enabled}>Continue to payment</span>
-              <span data-label-soon hidden={checkout.enabled}>Send my workspace request</span>
+            <!-- Filled from Paddle's totals on step 2 -->
+            <dl class="sum-lines sum-paddle" data-paddle-totals hidden>
+              <div><dt>Subtotal</dt><dd class="tnum" data-pt="subtotal"></dd></div>
+              <div><dt>Tax</dt><dd class="tnum" data-pt="tax"></dd></div>
+              <div class="sum-due"><dt>Due today</dt><dd class="tnum" data-pt="total"></dd></div>
+              <div><dt data-pt-next-label>Then</dt><dd class="tnum" data-pt="next"></dd></div>
+            </dl>
+
+            <p class="sum-tax">{currencyCodes.map((c) => <span data-cur={c}>{currencies[c].taxNote} </span>)}<span data-pane-only="details">{live ? 'The checkout shows the amount in your local currency, with tax.' : ''}</span></p>
+
+            <button type="submit" class="btn btn-light sum-btn" data-submit data-pane-only="details">
+              <span>{live ? 'Continue to payment' : 'Send my workspace request'}</span>
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h9.5M8.5 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <p class="mt-3 text-[12.5px] text-muted">By subscribing you agree to the <a class="link-u" href={checkout.termsUrl}>Terms of Service</a> and the <a class="link-u" href={checkout.refundUrl}>Refund Policy</a>.</p>
-            <p class="mt-2 text-[12.5px] text-muted" data-note>
-              {checkout.enabled ? 'Payment runs in a secure Paddle checkout. Paddle is our reseller and handles tax.' : 'No payment is taken. We reply by email with your invoice and your workspace link.'}
-            </p>
+            <p class="sum-small" data-note data-pane-only="details">{live ? 'You pay in the next step. Nothing is charged yet.' : 'No payment is taken. We reply by email with your invoice and your workspace link.'}</p>
             <div class="mt-4" data-fallback></div>
 
-            <ol class="next mt-8">
-              <li><span class="step-n">1</span><span>{checkout.enabled ? 'You pay in the secure checkout.' : 'You send this request.'}</span></li>
+            <ol class="next">
+              <li><span class="step-n">1</span><span>{live ? 'You pay in the secure checkout.' : 'You send this request.'}</span></li>
               <li><span class="step-n">2</span><span>We create your workspace in the region you chose.</span></li>
               <li><span class="step-n">3</span><span>Your admin gets an email to set a password and invite the team.</span></li>
             </ol>
@@ -138,8 +222,17 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         </aside>
       </form>
 
+      <!-- Mobile: a sticky bar with the price and the next step -->
+      <div class="mbar" data-mbar data-billing-scope="annual" aria-hidden="true">
+        <div class="mbar-price tnum">
+          {plans.map((p, i) => <span data-mbar-plan={p.id} hidden={i !== 0}>{p.name} · <Money amount={p.price} monthly />/mo</span>)}
+        </div>
+        <button type="button" class="btn btn-light btn-sm" data-mbar-go tabindex="-1">{live ? 'Continue' : 'Send request'}</button>
+      </div>
+
       <div id="co-sent" class="sent" hidden>
-        <h2 class="t-h3">Request received.</h2>
+        <span class="sent-ball" set:html={check} />
+        <h2 class="t-h3 mt-5">Request received.</h2>
         <p class="t-body mt-3">We reply from {site.email}, usually within one working day, with your invoice and your workspace link.</p>
       </div>
     </div>
@@ -147,78 +240,222 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
 </BaseLayout>
 
 <style>
-  .soon-banner { display: flex; gap: 14px; align-items: flex-start; padding: 14px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); font-size: 14px; color: var(--color-muted); }
+  .soon-banner { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 2.5rem; padding: 14px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); font-size: 14px; color: var(--color-muted); }
   .soon-banner p { margin: 0; line-height: 1.5; }
-  .co-legend { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; margin-bottom: 1rem; }
+
+  /* Header + step indicator (same language as the home-page scenes) */
+  .co-head { display: grid; gap: 2rem; align-items: end; }
+  @media (min-width: 1024px) { .co-head { grid-template-columns: 1fr auto; } }
+  .co-steps { display: flex; gap: 0; }
+  .co-step { position: relative; display: flex; align-items: center; gap: 10px; padding-right: 54px; }
+  .co-step:last-child { padding-right: 0; }
+  .co-ball { position: relative; display: grid; place-items: center; width: 28px; height: 28px; flex: none; border-radius: 99px; border: 1px solid var(--color-line); background: var(--color-surface); font-size: 12px; font-weight: 600; color: var(--color-muted); transition: background-color .35s var(--ease-calm), border-color .35s var(--ease-calm), color .35s var(--ease-calm); }
+  .co-ball :global(svg) { position: absolute; width: 13px; height: 13px; opacity: 0; transition: opacity .25s; }
+  .co-step-label { font-size: 13.5px; font-weight: 500; color: var(--color-muted); white-space: nowrap; transition: color .35s; }
+  .co-seg { position: absolute; right: 8px; top: 50%; width: 38px; height: 1px; background: var(--color-line); }
+  .co-seg span { position: absolute; inset: 0; background: var(--color-green); transform-origin: left; transform: scaleX(0); transition: transform .6s var(--ease-out); }
+  .co-step.is-on .co-ball { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-night-fg); }
+  .co-step.is-on .co-step-label, .co-step.is-done .co-step-label { color: var(--color-ink); }
+  .co-step.is-done .co-ball { background: var(--color-green); border-color: var(--color-green); color: #fff; }
+  .co-step.is-done .co-ball b { opacity: 0; } .co-step.is-done .co-ball :global(svg) { opacity: 1; }
+  .co-step.is-done .co-seg span { transform: scaleX(1); }
+  @media (max-width: 640px) { .co-step { padding-right: 30px; } .co-seg { width: 18px; right: 6px; } .co-step:not(.is-on) .co-step-label { display: none; } }
+
+  /* Layout */
+  .co-grid { margin-top: clamp(2.5rem, 5vw, 3.5rem); display: grid; gap: 1.5rem; }
+  @media (min-width: 1024px) { .co-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4.4fr); gap: 2rem; align-items: start; } }
+  .co-main { display: grid; gap: 1.25rem; min-width: 0; }
+  .co-card { min-width: 0; padding: clamp(1.25rem, 2.6vw, 1.9rem); border: 1px solid var(--color-line); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-soft); }
+  .co-legend { float: left; width: 100%; display: flex; align-items: baseline; gap: 12px; margin-bottom: 1.1rem; font-family: var(--font-display); font-weight: 600; font-size: 1.2rem; letter-spacing: -0.015em; }
+  .co-legend + * { clear: both; }
+  .co-n { font-family: var(--font-sans); font-size: 12px; font-weight: 600; letter-spacing: .08em; color: var(--color-dim); }
+  .co-sub { clear: both; margin: -0.35rem 0 1rem; font-size: 14px; color: var(--color-muted); }
+
+  /* Tactile option cards (plan, region, AI) */
+  .pick { position: relative; display: block; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .pick input { position: absolute; opacity: 0; pointer-events: none; }
+  .pick-body { display: flex; flex-direction: column; gap: 6px; height: 100%; padding: 16px 16px 15px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-bg); transition: border-color .2s var(--ease-out), box-shadow .25s var(--ease-out), transform .16s var(--ease-out), background-color .2s; }
+  @media (hover: hover) and (pointer: fine) { .pick:hover .pick-body { border-color: var(--color-line-hover); } }
+  .pick:active .pick-body { transform: scale(0.985); }
+  .pick input:checked + .pick-body { border-color: var(--color-ink); background: var(--color-surface); box-shadow: 0 0 0 1px var(--color-ink), 0 10px 24px -14px rgb(17 17 16 / .35); }
+  .pick input:focus-visible + .pick-body { outline: 2px solid var(--color-ink); outline-offset: 3px; }
+  .pick-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .pick-tick { display: grid; place-items: center; width: 20px; height: 20px; flex: none; border-radius: 99px; border: 1px solid var(--color-line); background: var(--color-surface); color: transparent; transition: background-color .2s, border-color .2s, color .2s, transform .25s var(--ease-spring); }
+  .pick-tick :global(svg) { width: 11px; height: 11px; }
+  .pick input:checked + .pick-body .pick-tick { background: var(--color-ink); border-color: var(--color-ink); color: #fff; transform: scale(1.06); }
+
   .plan-pick { display: grid; gap: 10px; }
-  @media (min-width: 640px) { .plan-pick { grid-template-columns: repeat(3, 1fr); } }
-  .plan-opt { position: relative; cursor: pointer; }
-  .plan-opt input { position: absolute; opacity: 0; }
-  .plan-opt-body { display: flex; flex-direction: column; gap: 4px; padding: 16px; border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); transition: border-color .2s var(--ease-out), box-shadow .2s var(--ease-out); }
-  .plan-opt input:checked + .plan-opt-body { border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(17 17 16 / 0.08); }
-  .plan-opt input:focus-visible + .plan-opt-body { outline: 2px solid var(--color-ink); outline-offset: 2px; }
-  .plan-opt-name { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
-  .plan-opt-price { font-size: 14px; color: var(--color-ink); }
-  .plan-opt-users { font-size: 12.5px; color: var(--color-muted); }
-  .seg { display: flex; flex-wrap: wrap; gap: 10px; }
-  .seg label { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid var(--color-line); border-radius: 999px; background: var(--color-surface); font-size: 14px; cursor: pointer; }
-  .seg label:has(input:checked) { border-color: var(--color-ink); }
-  .seg input { accent-color: var(--color-ink); }
-  .stack-opts { display: grid; gap: 10px; }
-  .opt { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.5; color: var(--color-muted); cursor: pointer; }
-  .stack-opts .opt { padding: 14px 16px; border: 1px solid var(--color-line); border-radius: var(--radius-md); background: var(--color-surface); }
-  .stack-opts .opt:has(input:checked) { border-color: var(--color-ink); }
-  .opt input { margin-top: 3px; accent-color: var(--color-ink); flex-shrink: 0; }
-  .opt strong { color: var(--color-ink); font-weight: 600; }
-  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+  @media (min-width: 640px) { .plan-pick { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .plan-name { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: -0.01em; }
+  .plan-price { margin-top: 6px; font-family: var(--font-display); font-weight: 600; font-size: 1.45rem; letter-spacing: -0.02em; line-height: 1; }
+  .plan-price small, .sum-price small { margin-left: 3px; font-family: var(--font-sans); font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--color-muted); }
+  .plan-users { font-size: 13px; color: var(--color-muted); }
+  .plan-tag { align-self: flex-start; margin-top: 4px; padding: 2px 8px; border-radius: 99px; background: var(--color-green-bg); color: var(--color-green); font-size: 11.5px; font-weight: 600; }
+
+  .bill-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; margin-top: 1.25rem; }
+  .bill-switch { --n: 2; }
+  .bill-switch .switch-btn { display: inline-flex; align-items: center; cursor: pointer; min-height: 40px; }
+  .bill-switch input { position: absolute; opacity: 0; pointer-events: none; }
+  .bill-switch .switch-btn:has(input:checked) { color: var(--color-night-fg); }
+  .bill-switch .switch-btn:has(input:focus-visible) { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  .bill-switch:has(input[value='monthly']:checked) .switch-thumb { transform: translateX(100%); }
+  .bill-note { font-size: 13px; font-weight: 500; color: var(--color-green); }
+
+  .region-pick { display: grid; gap: 10px; }
+  @media (min-width: 640px) { .region-pick { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .region-name { font-weight: 600; font-size: 15px; color: var(--color-ink); }
+  .region-place { font-size: 13px; color: var(--color-muted); }
+
+  .ai-pick { display: grid; gap: 10px; }
+  .ai-name { font-weight: 600; font-size: 15px; color: var(--color-ink); line-height: 1.35; }
+  .ai-text { font-size: 13.5px; line-height: 1.55; color: var(--color-muted); max-width: 52ch; }
+
+  /* Fields */
+  .form-grid { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
   @media (min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } }
   .field-full { grid-column: 1 / -1; }
   .field { display: flex; flex-direction: column; gap: 0.4rem; }
-  .field > label:not(.opt) { font-size: 13px; font-weight: 500; color: var(--color-ink); }
-  .field input:not([type='checkbox']):not([type='radio']), .field select {
-    font-size: 16px; line-height: 1.4; color: var(--color-ink); background: var(--color-surface); border: 1px solid var(--color-line);
-    border-radius: var(--radius-md); padding: 0.7rem 0.85rem; width: 100%; min-height: 44px;
+  .field > label:not(.tick) { font-size: 13px; font-weight: 500; color: var(--color-ink); }
+  .field input:not([type='checkbox']):not([type='radio']) {
+    font-size: 16px; line-height: 1.4; color: var(--color-ink); background: var(--color-bg); border: 1px solid var(--color-line);
+    border-radius: var(--radius-md); padding: 0.72rem 0.9rem; width: 100%; min-height: 46px; transition: border-color .2s, box-shadow .2s, background-color .2s;
   }
-  .field input:focus, .field select:focus { outline: none; border-color: var(--color-ink); box-shadow: 0 0 0 3px rgb(17 17 16 / 0.08); }
-  .field.has-error input, .field.has-error select { border-color: var(--color-red); }
+  .field input::placeholder { color: var(--color-dim); }
+  .field input:focus { outline: none; border-color: var(--color-ink); background: var(--color-surface); box-shadow: 0 0 0 4px rgb(17 17 16 / 0.07); }
+  .field.has-error input { border-color: var(--color-red); box-shadow: 0 0 0 4px rgb(220 38 38 / 0.08); }
+  .field.has-error .pick-body { border-color: var(--color-red-border); }
   .field-hint { font-size: 12.5px; color: var(--color-muted); }
+  .slug { color: var(--color-ink); font-weight: 500; }
   .field-error { font-size: 13px; color: var(--color-red); min-height: 1em; }
-  .summary { position: sticky; top: calc(var(--nav-h) + 24px); border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); padding: 1.75rem; }
-  .sum-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; font-size: 15px; }
-  .next { display: grid; gap: 12px; font-size: 13.5px; color: var(--color-muted); }
+  .field-error:empty { min-height: 0; }
+
+  .terms { padding: 0 4px; }
+  .tick { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: var(--color-muted); cursor: pointer; }
+  .tick input { position: absolute; opacity: 0; pointer-events: none; }
+  .tick-box { display: grid; place-items: center; width: 22px; height: 22px; flex: none; margin-top: 1px; border-radius: 6px; border: 1px solid var(--color-line-hover); background: var(--color-surface); color: transparent; transition: background-color .2s, border-color .2s, color .2s, transform .16s var(--ease-out); }
+  .tick-box :global(svg) { width: 13px; height: 13px; }
+  .tick:active .tick-box { transform: scale(0.92); }
+  .tick input:checked + .tick-box { background: var(--color-ink); border-color: var(--color-ink); color: #fff; }
+  .tick input:focus-visible + .tick-box { outline: 2px solid var(--color-ink); outline-offset: 2px; }
+  .terms.has-error .tick-box { border-color: var(--color-red); }
+
+  /* Summary: the dark card, like the featured plan */
+  .co-side { min-width: 0; }
+  .summary { position: relative; padding: clamp(1.4rem, 2.6vw, 1.9rem); border-radius: var(--radius-xl); background: var(--color-night); color: var(--color-night-fg); border: 1px solid var(--color-night-line); box-shadow: var(--shadow-window); }
+  @media (min-width: 1024px) { .summary { position: sticky; top: calc(var(--nav-h) + 24px); } }
+  .sum-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+  .sum-eyebrow { font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--color-night-muted); }
+  .sum-cur :global(.switch-btn) { width: 44px; min-height: 30px; font-size: 12px; }
+  .sum-name { margin-top: 1.4rem; font-size: 14px; color: var(--color-night-muted); }
+  .sum-price { margin-top: 6px; font-family: var(--font-display); font-weight: 600; font-size: clamp(2rem, 3vw, 2.5rem); letter-spacing: -0.03em; line-height: 1; }
+  .sum-price small { color: var(--color-night-muted); }
+  .sum-lines { margin-top: 1.3rem; display: grid; border-top: 1px solid var(--color-night-line); }
+  .sum-lines > div { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--color-night-line); font-size: 14px; }
+  .sum-lines dt { color: var(--color-night-muted); }
+  .sum-lines dd { text-align: right; color: var(--color-night-fg); }
+  .sum-due { font-weight: 600; } .sum-due dt { color: var(--color-night-fg) !important; }
+  .sum-tax { margin-top: 1rem; font-size: 12.5px; line-height: 1.5; color: var(--color-night-muted); }
+  .sum-btn { margin-top: 1.4rem; width: 100%; height: 50px; font-size: 15.5px; }
+  .sum-btn svg { width: 16px; height: 16px; transition: transform .25s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .sum-btn:hover svg { transform: translateX(3px); } }
+  .sum-small { margin-top: .75rem; font-size: 12.5px; color: var(--color-night-muted); text-align: center; }
+  .next { display: grid; gap: 10px; margin-top: 1.5rem; padding-top: 1.3rem; border-top: 1px solid var(--color-night-line); font-size: 13.5px; color: var(--color-night-muted); }
   .next li { display: flex; gap: 10px; align-items: flex-start; }
-  .step-n { display: grid; place-items: center; width: 24px; height: 24px; flex-shrink: 0; border-radius: 999px; border: 1px solid var(--color-line); font-size: 12px; font-weight: 600; }
-  .sent { margin-top: 3rem; max-width: 36rem; padding: 1.75rem; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); }
+  .step-n { display: grid; place-items: center; width: 22px; height: 22px; flex-shrink: 0; border-radius: 999px; border: 1px solid var(--color-night-line); font-size: 11.5px; font-weight: 600; color: var(--color-night-fg); }
+  .summary :global(.lead-fb) { background: rgb(255 255 255 / .04); border-color: var(--color-night-line); color: var(--color-night-fg); }
+
+  /* Step 2: payment */
+  .pay-card { padding: clamp(1rem, 2vw, 1.5rem); }
+  .pay-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 1rem; border-bottom: 1px solid var(--color-surface-3); }
+  .back { display: inline-flex; align-items: center; gap: 6px; height: 36px; padding: 0 12px 0 8px; border-radius: 99px; border: 1px solid var(--color-line); font-size: 14px; font-weight: 500; transition: border-color .2s, transform .16s var(--ease-out); }
+  .back svg { width: 16px; height: 16px; } .back:active { transform: scale(.97); }
+  @media (hover: hover) and (pointer: fine) { .back:hover { border-color: var(--color-line-hover); } }
+  .secure { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-muted); }
+  .secure svg { width: 15px; height: 15px; color: var(--color-green); }
+  .pay-frame { position: relative; min-height: 450px; margin-top: 1rem; }
+  .pay-loading { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 14px; color: var(--color-muted); transition: opacity .3s; }
+  .pay-loading span { width: 16px; height: 16px; border-radius: 99px; border: 2px solid var(--color-line); border-right-color: var(--color-ink); animation: lead-spin .7s linear infinite; }
+  .pay-loading.is-done { opacity: 0; pointer-events: none; }
+  .pay-mor { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--color-surface-3); font-size: 12px; line-height: 1.5; color: var(--color-muted); }
+
+  /* Step states */
+  [data-step='2'] [data-pane-only='details'] { display: none !important; }
+  .co-pane-in { animation: pane-in .45s var(--ease-out) both; }
+  @keyframes pane-in { from { opacity: 0; transform: translateY(10px); } }
+  @media (prefers-reduced-motion: reduce) { .co-pane-in { animation: none; } .pay-loading span { animation-duration: 2s; } }
+
+  /* Mobile sticky bar */
+  .mbar { position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 8px 8px 16px; border-radius: 99px; background: var(--color-night); color: var(--color-night-fg); border: 1px solid var(--color-night-line); box-shadow: var(--shadow-lift); font-size: 14px; transform: translateY(140%); transition: transform .35s var(--ease-out); }
+  .mbar.is-on { transform: none; }
+  .mbar-price { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 500; }
+  @media (min-width: 1024px) { .mbar { display: none; } }
+  @media (max-width: 1023px) { .co { padding-bottom: calc(var(--section-y, 6rem) + 72px); } }
+
+  .sent { margin-top: 3rem; max-width: 36rem; padding: 2rem; border: 1px solid var(--color-line); border-radius: var(--radius-xl); background: var(--color-surface); box-shadow: var(--shadow-soft); }
+  .sent-ball { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 99px; background: var(--color-green); color: #fff; }
+  .sent-ball :global(svg) { width: 20px; height: 20px; }
 </style>
 
 <script>
   import { checkout, plans } from '../data/site';
-  import { openCheckout, newOrderRef, slugify, slugOk, type OrderData } from '../scripts/checkout';
+  import { openCheckout, closeCheckout, onPaddleEvent, fmtTotal, newOrderRef, slugify, slugOk, statusUrl, type OrderData } from '../scripts/checkout';
   import { sendLead, renderFallback, setSending, formGuard, type Lead } from '../scripts/lead';
 
+  const root = document.querySelector<HTMLElement>('[data-co]');
   const form = document.getElementById('co-form') as HTMLFormElement | null;
-  if (form) {
+  if (root && form) {
+    const $ = <T extends HTMLElement>(s: string) => root.querySelector<T>(s);
+    const $$ = <T extends HTMLElement>(s: string) => Array.from(root.querySelectorAll<T>(s));
     const val = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value?.trim() ?? '';
     const checked = (n: string) => (form.querySelector(`input[name="${n}"]:checked`) as HTMLInputElement | null)?.value ?? '';
-    const summary = form.querySelector<HTMLElement>('[data-summary]');
-    const slugEl = form.querySelector<HTMLElement>('[data-slug]');
+    const regionName = (id: string) => form.querySelector(`input[name="region"][value="${id}"]`)?.closest('label')?.querySelector('.region-name')?.textContent ?? id;
 
-    // Preselect the plan from ?plan= (static site: read in the browser).
-    const q = new URLSearchParams(location.search).get('plan');
-    if (q && plans.some((p) => p.id === q)) (form.querySelector(`input[name="plan"][value="${q}"]`) as HTMLInputElement).checked = true;
+    // Preselect from ?plan= and ?billing= (static site: read in the browser).
+    const qs = new URLSearchParams(location.search);
+    const qPlan = qs.get('plan');
+    if (qPlan && plans.some((p) => p.id === qPlan)) (form.querySelector(`input[name="plan"][value="${qPlan}"]`) as HTMLInputElement).checked = true;
+    if (qs.get('billing') === 'monthly') (form.querySelector('input[name="billing"][value="monthly"]') as HTMLInputElement).checked = true;
 
     const sync = () => {
       const plan = checked('plan');
       const billing = checked('billing') === 'monthly' ? 'monthly' : 'annual';
-      form.querySelectorAll<HTMLElement>('[data-sum-plan]').forEach((el) => { el.hidden = el.dataset.sumPlan !== plan; });
-      form.querySelectorAll<HTMLElement>('[data-plan-price]').forEach((el) => { el.dataset.billingScope = billing; });
-      if (summary) summary.dataset.billingScope = billing;
+      $$('[data-sum-plan]').forEach((el) => { el.hidden = el.dataset.sumPlan !== plan; });
+      $$('[data-mbar-plan]').forEach((el) => { el.hidden = el.dataset.mbarPlan !== plan; });
+      $$('[data-billing-scope]').forEach((el) => { el.dataset.billingScope = billing; });
+      $$('[data-sum-region]').forEach((el) => { el.textContent = regionName(checked('region')); });
+      const ai = checked('ai_mode');
+      $$('[data-sum-ai]').forEach((el) => { el.textContent = ai === 'openai' ? 'OpenAI (US)' : ai === 'local' ? 'No external AI' : 'Not chosen yet'; });
       const slug = slugify(val('company'));
-      if (slugEl) slugEl.textContent = !slug ? 'your-company' : slugOk(slug) ? slug : `${slug} (we adjust this ID when it is taken or reserved)`;
+      const slugEl = $('[data-slug]');
+      if (slugEl) slugEl.textContent = !slug ? 'your-company' : slugOk(slug) ? slug : `${slug}`;
+      const hint = slugEl?.closest('.field-hint');
+      if (hint) hint.setAttribute('title', slug && !slugOk(slug) ? 'We adjust this address when it is taken or reserved.' : '');
     };
     form.addEventListener('change', sync);
     form.addEventListener('input', sync);
     sync();
+    // Clear a field's error as soon as the visitor changes it.
+    const clear = (e: Event) => {
+      const field = (e.target as HTMLElement).closest('.field');
+      if (!field?.classList.contains('has-error')) return;
+      field.classList.remove('has-error');
+      const err = field.querySelector('.field-error');
+      if (err) err.textContent = '';
+    };
+    form.addEventListener('input', clear);
+    form.addEventListener('change', clear);
+
+    // Step indicator.
+    const setStep = (n: 1 | 2 | 3) => {
+      root.dataset.step = String(n);
+      if (n !== 1) $('[data-mbar]')?.classList.remove('is-on');
+      $$('[data-co-step]').forEach((li) => {
+        const k = Number(li.dataset.coStep);
+        li.classList.toggle('is-on', k === n);
+        li.classList.toggle('is-done', k < n);
+        li.querySelector('.co-step-label')?.setAttribute('aria-current', k === n ? 'step' : 'false');
+      });
+    };
 
     const fail = (name: string, msg: string) => {
       const input = form.elements.namedItem(name) as HTMLInputElement | null;
@@ -228,14 +465,46 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
       if (err) err.textContent = msg;
       return !msg;
     };
-
     const failAi = (msg: string) => {
-      const field = form.querySelector<HTMLElement>('[data-ai-field]');
+      const field = $('[data-ai-field]');
       field?.classList.toggle('has-error', Boolean(msg));
       const err = field?.querySelector('.field-error');
       if (err) err.textContent = msg;
       return !msg;
     };
+
+    // Step 2 summary follows Paddle's own totals (tax and currency for the buyer's country).
+    const totalsBox = $('[data-paddle-totals]');
+    const loadingEl = $('[data-pay-loading]');
+    onPaddleEvent((e) => {
+      if (e.name === 'checkout.loaded') loadingEl?.classList.add('is-done');
+      if (e.name === 'checkout.completed') setStep(3);
+      const d = e.data;
+      if (!totalsBox || !d?.totals || !d.currency_code) return;
+      const put = (k: string, v: string) => { const el = totalsBox.querySelector<HTMLElement>(`[data-pt="${k}"]`); if (el) el.textContent = v; };
+      put('subtotal', fmtTotal(d.totals.subtotal, d.currency_code));
+      put('tax', fmtTotal(d.totals.tax, d.currency_code));
+      put('total', fmtTotal(d.totals.total, d.currency_code));
+      const next = d.recurring_totals?.total;
+      const per = checked('billing') === 'monthly' ? 'a month' : 'a year';
+      put('next', next != null ? `${fmtTotal(next, d.currency_code)} ${per}` : '');
+      const label = totalsBox.querySelector<HTMLElement>('[data-pt-next-label]');
+      if (label) label.textContent = 'Then, incl. tax';
+      totalsBox.hidden = false;
+    });
+
+    const details = $('[data-pane="details"]');
+    const payment = $('[data-pane="payment"]');
+    const toDetails = () => {
+      closeCheckout();
+      if (payment) payment.hidden = true;
+      if (details) { details.hidden = false; details.classList.add('co-pane-in'); }
+      if (totalsBox) totalsBox.hidden = true;
+      loadingEl?.classList.remove('is-done');
+      setStep(1);
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    $('[data-back]')?.addEventListener('click', toDetails);
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -244,10 +513,13 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         fail('company', val('company').length >= 2 ? '' : 'Enter your company name.'),
         fail('admin_name', val('admin_name').length >= 2 ? '' : 'Enter the admin’s full name.'),
         fail('admin_email', /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? '' : 'Enter a valid work email.'),
-        fail('terms', (form.elements.namedItem('terms') as HTMLInputElement).checked ? '' : 'Accept the terms to continue.'),
         failAi(checked('ai_mode') ? '' : 'Choose how AI extraction runs.'),
+        fail('terms', (form.elements.namedItem('terms') as HTMLInputElement).checked ? '' : 'Accept the terms to continue.'),
       ].every(Boolean);
-      if (!ok) return;
+      if (!ok) {
+        form.querySelector('.has-error')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
 
       const aiMode = checked('ai_mode') === 'local' ? 'local' : 'openai';
       const order: OrderData = {
@@ -255,7 +527,7 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         order_ref: newOrderRef(),
         plan: checked('plan') as OrderData['plan'],
         billing: checked('billing') === 'monthly' ? 'monthly' : 'annual',
-        region: val('region'),
+        region: checked('region'),
         company: val('company'),
         workspace: slugify(val('company')),
         admin_name: val('admin_name'),
@@ -266,9 +538,24 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
         display_currency: document.documentElement.dataset.currency || 'ZAR',
       };
 
-      if (await openCheckout(order)) return;
+      if (checkout.enabled && payment && details) {
+        details.hidden = true;
+        payment.hidden = false;
+        payment.classList.add('co-pane-in');
+        setStep(2);
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (await openCheckout(order)) {
+          // A completed checkout goes to the status page (successUrl); this is the fallback.
+          onPaddleEvent((ev) => { if (ev.name === 'checkout.completed') setTimeout(() => { location.href = statusUrl(order.order_ref); }, 1500); });
+          return;
+        }
+        // Paddle.js did not load: go back and send the request instead.
+        payment.hidden = true;
+        details.hidden = false;
+        setStep(1);
+      }
 
-      // Coming soon: send the order to our inbox; we provision by hand and invoice.
+      // Coming soon (or Paddle unavailable): send the order to our inbox; we provision by hand and invoice.
       const button = form.querySelector<HTMLButtonElement>('[data-submit]');
       const lead: Lead = {
         subject: `Workspace request: ${order.company} (${order.plan}, ${order.billing}, ${order.region})`,
@@ -282,12 +569,25 @@ import { plans, checkout, site, currencies, currencyCodes } from '../data/site';
       setSending(button, false);
       if (sent) {
         form.hidden = true;
+        $('[data-mbar]')?.remove();
+        setStep(2);
         const done = document.getElementById('co-sent');
-        if (done) { done.hidden = false; done.scrollIntoView({ block: 'center' }); }
+        if (done) { done.hidden = false; done.classList.add('co-pane-in'); done.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
       } else {
         const host = form.querySelector<HTMLElement>('[data-fallback]');
         if (host) renderFallback(host, lead, true);
       }
     });
+
+    // Mobile: show the sticky bar while the summary is off screen, on step 1 only.
+    const mbar = $('[data-mbar]');
+    const summary = $('[data-summary]');
+    if (mbar && summary && 'IntersectionObserver' in window) {
+      let summaryVisible = false;
+      const update = () => mbar.classList.toggle('is-on', !summaryVisible && root.dataset.step === '1' && window.scrollY > 200);
+      new IntersectionObserver(([en]) => { summaryVisible = en.isIntersecting; update(); }).observe(summary);
+      window.addEventListener('scroll', update, { passive: true });
+      $('[data-mbar-go]')?.addEventListener('click', () => form.requestSubmit());
+    }
   }
 </script>
