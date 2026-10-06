@@ -1,19 +1,22 @@
 ---
 /*
- * Closing CTA band. Ink surface, centred Syne line, a subtle oversized pillar mark
- * drifting behind the text on scroll (data-parallax, see scripts/motion.ts).
+ * Closing CTA band. Ink surface, centred Syne line, and behind it an engraved guilloche
+ * rosette (the security-print pattern of deeds and certificates) that turns slowly with
+ * scroll. Adapted from the ThreeUI "Engraved Certificate" (scripts/threeui/engraved-rosette.ts).
  */
-import Logo from '../ui/Logo.astro';
 ---
 
 <section class="cta-band relative overflow-hidden bg-night text-center" aria-labelledby="cta-heading">
   <div class="cta-mark" data-parallax="0.08" aria-hidden="true">
-    <Logo mark class="h-full w-full" label="" />
+    <div class="cta-rosette" data-rosette>
+      <canvas data-rosette-base></canvas>
+      <canvas data-rosette-drift></canvas>
+    </div>
   </div>
 
   <div class="container-x relative">
     <h2 id="cta-heading" class="t-hero text-night-fg mx-auto max-w-[16ch]" data-split>
-      Get audit-ready this quarter.
+      Get your documents in order this quarter.
     </h2>
     <p class="cta-lead mx-auto mt-6" data-reveal>
       Book a 20-minute demo and see External Document Control and Workflow Manager on your own documents.
@@ -28,19 +31,23 @@ import Logo from '../ui/Logo.astro';
 <style>
   .cta-band { padding-block: clamp(4.5rem, 14vw, 160px); }
 
+  /* Centred with inset + margin, not a transform: data-parallax animates the transform. */
   .cta-mark {
+    --s: clamp(520px, 72vw, 1000px);
     position: absolute;
-    top: 50%;
-    left: 50%;
-    width: clamp(460px, 62vw, 920px);
-    aspect-ratio: 97 / 230;
-    transform: translate(-50%, -50%);
-    color: var(--color-night-3);
-    opacity: 0.55;
+    inset: 0;
+    width: var(--s);
+    height: var(--s);
+    margin: auto;
     pointer-events: none;
     z-index: 0;
     will-change: transform;
   }
+
+  .cta-rosette { position: absolute; inset: 0; }
+  .cta-rosette canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  /* Fade the engraving toward its centre so the headline always sits on clean ink. */
+  .cta-rosette { mask-image: radial-gradient(circle, transparent 18%, #000 52%); }
 
   .cta-lead {
     max-width: 42ch;
@@ -49,3 +56,12 @@ import Logo from '../ui/Logo.astro';
     color: var(--color-night-muted);
   }
 </style>
+
+<script>
+  import { onReady } from '../../scripts/motion';
+  import { mountEngravedRosette } from '../../scripts/threeui/engraved-rosette';
+  onReady(() => {
+    const el = document.querySelector<HTMLElement>('[data-rosette]');
+    if (el) mountEngravedRosette(el, [240, 240, 236], 0.32);
+  });
+</script>

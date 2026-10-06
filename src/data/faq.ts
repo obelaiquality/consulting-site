@@ -13,9 +13,14 @@ export interface FaqItem {
 
 export const faqs: FaqItem[] = [
   {
+    q: 'Is Obel-MS only for ISO 9001 and quality teams?',
+    a: 'No. Any team that must keep documents current and show who approved what can use it: legal practices, manufacturers, healthcare providers, construction firms and professional services. Admins define their own document types, and you build your own workflow templates in the designer. The register files documents by supplier, manufacturer and product, so it suits documents that come from outside your organisation. If you work to ISO 9001, our clause map shows where Obel-MS supports it.',
+    tags: ['general'],
+  },
+  {
     q: 'Does Obel-MS support ISO 9001:2026?',
     a: 'Yes. ISO 9001:2026 was published on 16 September 2026 and keeps clause 7.5 on documented information, so the controls in Obel-MS apply to both editions. Certificates to ISO 9001:2015 stay valid through a three-year transition, so you can move at the pace your certification body agrees.',
-    tags: ['iso', 'general'],
+    tags: ['iso'],
   },
   {
     q: 'Is Obel-MS ISO 9001 certified?',
