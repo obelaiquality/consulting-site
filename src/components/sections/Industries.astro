@@ -1,0 +1,239 @@
+---
+/*
+ * "Who it is for": one tab per document-heavy industry. Each panel shows product proof in the
+ * app's own language: register rows (document type, supplier, Document Status pill) and the
+ * workflows that industry would run, marked as a standard template or one built in the designer.
+ * Claims (docs/BUILD-SPEC.md section 6): document types are defined by admins, templates can be
+ * built in the designer, and the register files by supplier, manufacturer and product. Every
+ * company name below is synthetic.
+ */
+import { wfmTemplates } from '../../data/demo';
+
+type Tone = 'green' | 'amber' | 'red';
+type Doc = { type: string; supplier: string; status: string; tone: Tone };
+type Flow = { name: string; stages: string[]; standard: boolean };
+type Industry = { id: string; name: string; summary: string; docs: Doc[]; flows: Flow[]; link?: { label: string; href: string } };
+
+const std = (name: string, label = name): Flow => {
+  const t = wfmTemplates.find((x) => x.name === name);
+  return { name: label, stages: t ? [...t.stages] : [], standard: true };
+};
+const own = (name: string, stages: string[]): Flow => ({ name, stages, standard: false });
+
+const industries: Industry[] = [
+  {
+    id: 'legal',
+    name: 'Legal practices',
+    summary: 'Keep vendor agreements and insurance current, and record who approved each precedent and new client.',
+    docs: [
+      { type: 'Professional indemnity certificate', supplier: 'Kestrel Underwriters', status: 'Active', tone: 'green' },
+      { type: 'Data processing agreement', supplier: 'Ledgerline Cloud', status: 'Expiring soon', tone: 'amber' },
+      { type: 'Vendor security attestation', supplier: 'Brightdesk IT', status: 'Expired', tone: 'red' },
+    ],
+    flows: [
+      own('New client intake', ['Capture details', 'Conflict check', 'Partner approval', 'Engagement letter sent']),
+      std('Document Review', 'Precedent review'),
+      own('Complaint handling', ['Log complaint', 'Investigate', 'Respond', 'Close out']),
+    ],
+  },
+  {
+    id: 'food',
+    name: 'Food and manufacturing',
+    summary: 'Supplier certificates, specifications and statements, with corrective actions that close properly.',
+    docs: [
+      { type: 'Halal certificate', supplier: 'Aurelia Biotech', status: 'Active', tone: 'green' },
+      { type: 'Product specification', supplier: 'Kestrel Packaging', status: 'Expiring soon', tone: 'amber' },
+      { type: 'Certificate of analysis', supplier: 'Silverleaf Botanics', status: 'Active', tone: 'green' },
+    ],
+    flows: [std('Nonconformance'), std('CAPA'), std('Change Control')],
+    link: { label: 'Working to ISO 9001? See the clause map', href: '/iso-9001' },
+  },
+  {
+    id: 'health',
+    name: 'Healthcare and laboratories',
+    summary: 'Calibration and supplier licences on one register, with incidents and SOP reviews on record.',
+    docs: [
+      { type: 'Calibration certificate', supplier: 'Precision Metrology', status: 'Expiring soon', tone: 'amber' },
+      { type: 'Supplier licence', supplier: 'Cape Medical Supplies', status: 'Active', tone: 'green' },
+      { type: 'Equipment service report', supplier: 'Halden Service Co.', status: 'Active', tone: 'green' },
+    ],
+    flows: [
+      own('Incident review', ['Report incident', 'Immediate action', 'Investigate', 'Sign-off']),
+      std('CAPA'),
+      std('Document Review', 'SOP review'),
+    ],
+  },
+  {
+    id: 'construction',
+    name: 'Construction and engineering',
+    summary: 'Subcontractor insurance and inspection certificates that flag themselves before they lapse.',
+    docs: [
+      { type: 'Public liability insurance', supplier: 'Ridgeway Civils', status: 'Expired', tone: 'red' },
+      { type: 'Lifting equipment inspection', supplier: 'Hoistline Inspections', status: 'Expiring soon', tone: 'amber' },
+      { type: 'Subcontractor safety file', supplier: 'Ridgeway Civils', status: 'Active', tone: 'green' },
+    ],
+    flows: [
+      std('Change Control', 'Variation order'),
+      std('Nonconformance', 'Site nonconformance'),
+      std('Document Review', 'Method statement review'),
+    ],
+  },
+  {
+    id: 'services',
+    name: 'Professional and financial services',
+    summary: 'Third-party contracts and due diligence in one place, with policy reviews and internal audits on schedule.',
+    docs: [
+      { type: 'Outsourcing agreement', supplier: 'Ledgerline Cloud', status: 'Active', tone: 'green' },
+      { type: 'Cyber insurance policy', supplier: 'Kestrel Underwriters', status: 'Expiring soon', tone: 'amber' },
+      { type: 'Due diligence pack', supplier: 'Halden Payments', status: 'Active', tone: 'green' },
+    ],
+    flows: [std('Document Review', 'Policy review'), std('Audit', 'Internal audit'), own('Complaint handling', ['Log complaint', 'Investigate', 'Respond', 'Close out'])],
+  },
+];
+const MAX_STAGES = 4;
+---
+<section id="industries" class="ind section-y" aria-labelledby="ind-heading" data-industries>
+  <div class="container-x">
+    <div class="max-w-[46rem]">
+      <h2 id="ind-heading" class="t-h2">For any team that runs on documents.</h2>
+      <p class="t-lead mt-5">
+        You define the document types and build the workflows. Obel-MS keeps every document current and records who approved what.
+      </p>
+    </div>
+
+    <div class="ind-grid mt-12">
+      <div class="ind-tabs" role="tablist" aria-label="Industries" aria-orientation="vertical" data-ind-tabs>
+        {industries.map((ind, i) => (
+          <button type="button" class="ind-tab" role="tab" id={`ind-tab-${ind.id}`} aria-controls={`ind-panel-${ind.id}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}>
+            <span class="ind-tab-dot" aria-hidden="true"></span>
+            <span class="ind-tab-name">{ind.name}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="ind-stage">
+        {industries.map((ind, i) => (
+          <div class="ind-panel" role="tabpanel" id={`ind-panel-${ind.id}`} aria-labelledby={`ind-tab-${ind.id}`} hidden={i !== 0} tabindex="0">
+            <p class="ind-summary" data-ind-item>{ind.summary}</p>
+
+            <div class="ind-card" data-ind-item>
+              <p class="ind-card-title">Documents you keep current</p>
+              <div class="ind-rows">
+                <div class="ind-row ind-row-head" aria-hidden="true"><span>Document type</span><span class="hidden sm:block">Supplier</span><span>Document status</span></div>
+                {ind.docs.map((d) => (
+                  <div class="ind-row">
+                    <span class="text-ink sm:truncate">{d.type}</span>
+                    <span class="hidden sm:block truncate">{d.supplier}</span>
+                    <span><span class={`pill pill-${d.tone}`}>{d.status}</span></span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="ind-card" data-ind-item>
+              <p class="ind-card-title">Workflows you run</p>
+              <ul class="ind-flows">
+                {ind.flows.map((f) => (
+                  <li class="ind-flow">
+                    <div class="ind-flow-head">
+                      <span class="text-ink font-medium">{f.name}</span>
+                      <span class="ind-kind">{f.standard ? 'Standard template' : 'Built in the designer'}</span>
+                    </div>
+                    <ol class="ind-stages">
+                      {f.stages.slice(0, MAX_STAGES).map((s) => <li>{s}</li>)}
+                      {f.stages.length > MAX_STAGES && <li class="ind-more">{`${f.stages.length - MAX_STAGES} more`}</li>}
+                    </ol>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {ind.link && <a class="link-u ind-link" href={ind.link.href} data-ind-item>{ind.link.label}</a>}
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <p class="ind-note">
+      Admins define document types and add register columns. The register files every document by supplier, manufacturer and product, so it suits documents that come from outside your organisation.
+    </p>
+  </div>
+</section>
+
+<style>
+  .ind-grid { display: grid; gap: 2rem; }
+  @media (min-width: 1024px) { .ind-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 4rem; align-items: start; } }
+
+  /* Tabs: a ruled list on desktop, a scrollable row of chips on small screens. */
+  .ind-tabs { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding: 2px var(--gutter); }
+  .ind-tabs::-webkit-scrollbar { display: none; }
+  .ind-tab { position: relative; display: inline-flex; align-items: center; gap: 10px; flex: none; min-height: 44px; padding: 0 16px; border: 1px solid var(--color-line); border-radius: 999px; background: var(--color-surface); font-size: 14.5px; color: var(--color-muted); cursor: pointer; transition: color .2s, border-color .2s, transform .15s var(--ease-out); }
+  .ind-tab:active { transform: scale(.98); }
+  .ind-tab[aria-selected='true'] { color: var(--color-ink); border-color: var(--color-ink); }
+  .ind-tab-dot { width: 7px; height: 7px; border-radius: 99px; background: var(--color-line-hover); transition: background-color .3s var(--ease-calm), box-shadow .3s var(--ease-calm); }
+  .ind-tab[aria-selected='true'] .ind-tab-dot { background: var(--color-green); box-shadow: 0 0 0 3px rgb(22 101 52 / .12); }
+  @media (min-width: 1024px) {
+    .ind-tabs { flex-direction: column; gap: 0; overflow: visible; margin: 0; padding: 0; border-top: 1px solid var(--color-line); }
+    .ind-tab { width: 100%; min-height: 0; padding: 1.15rem 0; border: 0; border-bottom: 1px solid var(--color-line); border-radius: 0; background: none; font-family: var(--font-display); font-size: clamp(1.25rem, 1.7vw, 1.6rem); font-weight: 700; letter-spacing: -0.02em; text-align: left; color: #b2b2aa; }
+    .ind-tab:active { transform: none; }
+    .ind-tab-name { transition: transform .35s var(--ease-out); }
+    .ind-tab[aria-selected='true'] .ind-tab-name { transform: translateX(4px); }
+    @media (hover: hover) and (pointer: fine) { .ind-tab:hover { color: var(--color-ink); } }
+  }
+
+  .ind-panel { display: grid; gap: 14px; outline-offset: 6px; }
+  .ind-panel[hidden] { display: none; }
+  .ind-summary { font-size: 17px; line-height: 1.5; color: var(--color-ink); max-width: 52ch; margin-bottom: 4px; }
+  .ind-card { padding: 16px 18px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg, 14px); background: var(--color-surface); box-shadow: 0 1px 2px rgb(17 17 16 / .04); }
+  .ind-card-title { font-size: 12.5px; font-weight: 600; color: var(--color-muted); margin-bottom: 10px; }
+  .ind-rows { border: 1px solid #ebebea; border-radius: 8px; overflow: hidden; font-size: 13px; }
+  .ind-row { display: grid; grid-template-columns: minmax(0, 1fr) 118px; align-items: center; gap: 12px; min-height: 40px; padding: 8px 12px; line-height: 1.35; border-top: 1px solid #ebebea; color: var(--color-muted); }
+  @media (min-width: 640px) { .ind-row { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 118px; } }
+  .ind-row-head { min-height: 32px; padding-block: 0; border-top: 0; background: var(--color-surface-2); font-size: 11.5px; font-weight: 600; }
+  .ind-flows { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .ind-flow + .ind-flow { padding-top: 12px; border-top: 1px solid #ebebea; }
+  .ind-flow-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; font-size: 14px; }
+  .ind-kind { font-size: 12px; color: var(--color-muted); }
+  .ind-stages { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+  .ind-stages li { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border: 1px dashed var(--color-line); border-radius: 6px; font-size: 12px; color: var(--color-muted); }
+  .ind-stages .ind-more { border-style: solid; background: var(--color-surface-2); }
+  .ind-link { justify-self: start; margin-top: 4px; font-size: 14px; color: var(--color-ink); }
+  .ind-note { margin-top: 2.5rem; max-width: 70ch; font-size: 13.5px; line-height: 1.55; color: var(--color-muted); }
+</style>
+
+<script>
+  import { onReady, gsap, reduced } from '../../scripts/motion';
+
+  onReady(() => {
+    const root = document.querySelector<HTMLElement>('[data-industries]');
+    const list = root?.querySelector<HTMLElement>('[data-ind-tabs]');
+    if (!root || !list) return;
+    const tabs = Array.from(list.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+
+    const select = (tab: HTMLButtonElement, focus = false) => {
+      if (tab.getAttribute('aria-selected') === 'true') return;
+      for (const t of tabs) {
+        const on = t === tab;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(t.getAttribute('aria-controls') || '');
+        if (panel) panel.hidden = !on;
+      }
+      if (focus) tab.focus();
+      tab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      const panel = document.getElementById(tab.getAttribute('aria-controls') || '');
+      if (!panel || reduced) return;
+      gsap.fromTo(panel.querySelectorAll('[data-ind-item]'), { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.42, stagger: 0.05, ease: 'power3.out', overwrite: true });
+    };
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => select(tab)));
+    list.addEventListener('keydown', (e) => {
+      const i = tabs.indexOf(document.activeElement as HTMLButtonElement);
+      if (i < 0) return;
+      const next = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+      if (next === undefined) return;
+      e.preventDefault();
+      select(tabs[(next + tabs.length) % tabs.length], true);
+    });
+  });
+</script>

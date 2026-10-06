@@ -15,7 +15,7 @@ interface Props {
   ogType?: 'website' | 'article';
 }
 const { title, description = site.description, ogImage = '/og.png', noindex = false, jsonLd, breadcrumbs, ogType = 'website' } = Astro.props;
-const fullTitle = title ? (title.includes(site.name) || title.includes('Obel') ? title : `${title} | ${site.name}`) : `${site.name}: Hosted ISO 9001 Document Control for SMEs`;
+const fullTitle = title ? (title.includes(site.name) || title.includes('Obel') ? title : `${title} | ${site.name}`) : `${site.name}: Hosted Document Control, Approvals and Audit Trail`;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogUrl = new URL(ogImage, site.url).href;
 
@@ -28,7 +28,7 @@ const org = {
   url: site.url,
   email: site.email,
   logo: `${site.url}/favicon.png`,
-  description: `${site.company} builds and hosts ${site.name}, ISO 9001 document control and workflow management software for small and mid-sized companies.`,
+  description: `${site.company} builds and hosts ${site.name}, hosted document control and workflow software for small and mid-sized teams in document-heavy industries.`,
   areaServed: site.areaServed,
   contactPoint: { '@type': 'ContactPoint', contactType: 'sales', email: site.email, availableLanguage: ['English'] },
   ...(site.sameAs.length ? { sameAs: site.sameAs } : {}),

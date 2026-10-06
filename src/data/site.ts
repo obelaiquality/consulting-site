@@ -4,9 +4,9 @@ export const site = {
   name: 'Obel-MS',
   company: 'Obel AI & Quality',
   url: 'https://obel-ai.com',
-  tagline: 'The calm way to ISO 9001 certification.',
+  tagline: 'Every document current. Every approval on record.',
   description:
-    'Hosted ISO 9001 software for growing teams: document control, corrective actions and audit trail, ready for your certification audit. From R1,490 a month.',
+    'Hosted document control for document-heavy teams: keep certificates, contracts and policies current, run approvals and workflows, and keep a full audit trail. From R1,490 a month.',
   email: 'chat@obel-ai.com',
   demoMailto:
     'mailto:chat@obel-ai.com?subject=Obel-MS%20demo%20request&body=Hi%20Obel%20team%2C%0A%0AI%27d%20like%20a%20demo%20of%20Obel-MS.%0A%0ACompany%3A%0ARole%3A%0ATeam%20size%3A%0AStandards%20we%20work%20to%3A%0A',
@@ -51,12 +51,12 @@ export const nav = [
   {
     label: 'Product',
     children: [
-      { label: 'External Document Control', href: '/product/external-document-control', note: 'Supplier certificates, standards, specs', status: 'live' },
-      { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Approvals, NCRs, CAPA, change control', status: 'live' },
+      { label: 'External Document Control', href: '/product/external-document-control', note: 'Certificates, contracts and licences from third parties', status: 'live' },
+      { label: 'Workflow Manager', href: '/product/workflow-manager', note: 'Reviews, approvals, incidents and corrective actions', status: 'live' },
       { label: 'Internal Document Control', href: '/product/internal-document-control', note: 'SOPs, policies, work instructions', status: 'soon' },
     ],
   },
-  { label: 'ISO 9001', href: '/iso-9001' },
+  { label: 'Industries', href: '/#industries' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Guides', href: '/guides' },
   { label: 'Security', href: '/security' },
@@ -203,7 +203,7 @@ export const managed = [
   { title: 'Backups', body: 'Daily backups of your database and documents, encrypted at rest and in transit.' },
   { title: 'Updates', body: 'New features and security patches roll out automatically, and you don’t need to schedule downtime.' },
   { title: 'Migration', body: 'Onboarding on Essentials and Professional includes an import of your existing documents. We quote larger migrations by the hour.' },
-  { title: 'Support', body: 'Quality consultants answer your questions, and we speak ISO 9001 as well as we speak software.' },
+  { title: 'Support', body: 'Consultants who know document control and compliance answer your questions, not a ticket queue.' },
   { title: 'Monitoring', body: 'Uptime, errors and storage are watched around the clock, so you hear from us first.' },
 ];
 

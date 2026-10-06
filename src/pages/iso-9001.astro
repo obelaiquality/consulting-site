@@ -1,6 +1,7 @@
 ---
 import RelatedGuides from '../components/RelatedGuides.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Faq from '../components/sections/Faq.astro';
 
 interface Row {
   clause: string;
@@ -174,6 +175,7 @@ const moduleClass: Record<Row['module'], string> = {
       </div>
     </div>
   </section>
+<Faq tags={['iso']} heading="ISO 9001 questions" withSchema />
 <RelatedGuides slugs={['iso-9001-2026-changes', 'iso-9001-document-control', 'document-control-procedure']} />
   </BaseLayout>
 

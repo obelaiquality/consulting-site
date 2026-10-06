@@ -150,6 +150,12 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - Billing: we stay the seller of record. Outside South Africa we send an annual invoice in the customer's currency (bank transfer); card payments may be charged in ZAR. Do not say we add sales tax or GST.
 - On-site consulting outside South Africa is quoted with travel.
 
+**Updates (6 Oct 2026, positioning for document-heavy industries):**
+- Lead with documents and approvals, not ISO 9001. The audience is any small or mid-sized team that runs on documents: legal practices, food and manufacturing, healthcare and laboratories, construction and engineering, professional and financial services. ISO 9001 is one use case; it keeps its own page (`/iso-9001`) and guides, but it is not the home-page headline.
+- You may say: admins define their own document types (with keywords and validity rules) and add register columns; customers build their own workflow templates (stages, fields, approvers, deadlines) in the designer.
+- Say honestly that the register files documents by supplier, manufacturer and product, so it suits documents that come from outside the organisation. Do not claim a configurable folder hierarchy, hideable register columns, or AI tuned for contracts (no "clause extraction" or "renewal terms").
+- Two canvas effects are adapted from the MIT ThreeUI Community library (`src/scripts/threeui/`, notice in `docs/THIRD-PARTY-NOTICES.md`). They follow every motion rule in section 4: pause off screen, static frame for reduced motion, aria-hidden.
+
 **Never claim:**
 - That the software is "ISO 9001 certified" or "compliant". Say "supports ISO 9001 compliance" or "built around clause 7.5". Only organisations get certified.
 - SSO, SAML or MFA.

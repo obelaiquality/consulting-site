@@ -1,18 +1,51 @@
 ---
 /*
- * "The problem" statement on paper background. One large Syne paragraph whose words fill
- * from dim to ink as the section scrolls through the viewport, then a small muted line
- * naming what Obel-MS does about it. No other decoration — see docs/BUILD-SPEC.md section 4.
+ * "The problem" on paper background. One large Syne statement whose words fill from dim to
+ * ink as the section scrolls, then the records flow: the scattered places from the statement
+ * sit as large dim words, and dense dotted streams carry their records into one real record
+ * card. While the statement fills, the words fade and the record turns validated.
+ * The flow is adapted from the ThreeUI "Gateway Flow" canvas (scripts/threeui/records-flow.ts).
+ * It repeats the statement, so it is aria-hidden.
  */
+// x and y are percentages of the flow box (desktop); the mobile layout stacks them in CSS.
+const places = [
+  { label: 'Inbox', x: 2, y: 8 },
+  { label: 'Shared drive', x: 15, y: 30 },
+  { label: 'Email thread', x: 0, y: 52 },
+  { label: 'Spreadsheet', x: 12, y: 74 },
+  { label: 'Desktop folder', x: 1, y: 92 },
+];
 ---
 <section class="problem-scroll section-y" aria-labelledby="problem-heading">
   <div class="container-x">
     <p id="problem-heading" class="problem-text" data-problem-text>
-      Supplier certificates live in someone's inbox, and specs sit on a shared drive. Approvals happen in email threads, with no single record of who agreed. Then the auditor asks for the current version.
+      The contract is in someone's inbox. The policy is on a shared drive. The approval is buried in an email thread. Then someone asks for the current version.
     </p>
     <p class="problem-sub t-body mt-8">
-      Obel-MS puts every controlled document and approval in one place, with a record of who did what and when.
+      Obel-MS keeps each document current in one register, and records every approval: who, what and when.
     </p>
+
+    <div class="rf" data-records-flow aria-hidden="true">
+      <canvas class="rf-canvas" data-rf-lines></canvas>
+      <canvas class="rf-canvas" data-rf-dots></canvas>
+      {places.map((p) => <span class="rf-word" data-rf-source style={`--x:${p.x}%;--y:${p.y}%`}>{p.label}</span>)}
+
+      <div class="rf-card" data-rf-node>
+        <div class="rf-card-top">
+          <span class="rf-type">Data processing agreement</span>
+          <span class="rf-pill"><span class="pill pill-grey rf-pill-wait">In review</span><span class="pill pill-green rf-pill-ok">Validated</span></span>
+        </div>
+        <p class="rf-title">Ledgerline Cloud, version 3</p>
+        <dl class="rf-meta">
+          <div><dt>Supplier</dt><dd>Ledgerline Cloud</dd></div>
+          <div><dt>Expiration date</dt><dd class="tnum">2027-10-31</dd></div>
+        </dl>
+        <p class="rf-audit">
+          <span class="rf-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="rf-audit-text"><span><b>Thandi Mokoena</b> approved</span><span class="tnum">2026-10-06 09:14</span></span>
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -24,17 +57,59 @@
     font-size: clamp(2rem, 4.6vw, 3.6rem);
     line-height: 1.12;
     letter-spacing: -0.03em;
-    max-width: 22ch;
+    max-width: 24ch;
     color: var(--color-ink);
   }
   /* Reduced motion / no-JS fallback: text is simply ink, no per-word span needed. */
   .problem-text :global(.word) { color: #c9c9c2; }
+
+  /* Records flow. The canvases fill the box. The words and the card are real HTML, and the
+     script reads their positions to anchor the streams. */
+  .rf { position: relative; height: clamp(420px, 40vw, 520px); margin-top: clamp(3rem, 6vw, 5rem); touch-action: pan-y; user-select: none; }
+  .rf-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .rf-word { position: absolute; left: var(--x); top: var(--y); transform: translateY(-50%); font-family: var(--font-display); font-weight: 700; font-size: clamp(1.15rem, 2.2vw, 2rem); letter-spacing: -0.03em; line-height: 1; color: #c9c9c2; white-space: nowrap; transition: opacity .6s var(--ease-calm); }
+  .rf:global(.is-on) .rf-word { opacity: .6; }
+
+  .rf-card { position: absolute; right: 0; top: 50%; width: min(380px, 46%); padding: 20px 22px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-soft); transform: translateY(-50%); transition: border-color .6s var(--ease-calm), box-shadow .6s var(--ease-calm); }
+  .rf-card:global(.is-on) { border-color: var(--color-green-border); box-shadow: 0 1px 2px rgb(17 17 16 / .04), 0 18px 50px -18px rgb(22 101 52 / .28); }
+  .rf-card:global(.is-hit) { animation: rf-press .5s var(--ease-out); }
+  @keyframes rf-press { 30% { transform: translateY(-50%) scale(.992); } }
+  .rf-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .rf-type { font-size: 12.5px; color: var(--color-muted); }
+  .rf-pill { display: grid; justify-items: end; }
+  .rf-pill > * { grid-area: 1 / 1; transition: opacity .4s var(--ease-calm), transform .45s var(--ease-spring); }
+  .rf-pill-ok { opacity: 0; transform: scale(.94); }
+  .rf-card:global(.is-on) .rf-pill-ok { opacity: 1; transform: none; }
+  .rf-card:global(.is-on) .rf-pill-wait { opacity: 0; }
+  .rf-title { margin-top: 10px; font-family: var(--font-display); font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-ink); }
+  .rf-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--color-surface-3); }
+  .rf-meta dt { font-size: 11.5px; color: var(--color-muted); }
+  .rf-meta dd { margin: 2px 0 0; font-size: 13.5px; color: var(--color-ink); }
+  .rf-audit { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--color-surface-2); font-size: 13px; color: var(--color-muted); }
+  .rf-audit b { color: var(--color-ink); font-weight: 600; }
+  .rf-audit-text { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; flex: 1; }
+  .rf-check { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 99px; background: var(--color-line); color: #fff; transition: background-color .5s var(--ease-calm); }
+  .rf-check svg { width: 12px; height: 12px; }
+  .rf-card:global(.is-on) .rf-check { background: var(--color-green); }
+  @media (prefers-reduced-motion: reduce) { .rf-card:global(.is-hit) { animation: none; } }
+
+  /* Small screens: the words sit in a column at the top, the card at the bottom. */
+  @media (max-width: 767px) {
+    .rf { height: auto; padding-bottom: 0; }
+    .rf-word { position: relative; left: auto; top: auto; display: block; width: max-content; transform: none; margin-left: calc(var(--x) * .6); font-size: 1.3rem; padding: 9px 0; }
+    .rf-card { position: relative; right: auto; top: auto; width: 100%; margin-top: 110px; transform: none; }
+    @keyframes rf-press { 30% { transform: scale(.992); } }
+  }
 </style>
 
 <script>
   import { onReady, gsap, SplitText, reduced } from '../../scripts/motion';
+  import { mountRecordsFlow } from '../../scripts/threeui/records-flow';
 
   onReady(() => {
+    const flow = document.querySelector<HTMLElement>('[data-records-flow]');
+    if (flow) mountRecordsFlow(flow);
+
     const el = document.querySelector<HTMLElement>('[data-problem-text]');
     if (!el) return;
 
