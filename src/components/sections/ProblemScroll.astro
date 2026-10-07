@@ -1,20 +1,13 @@
 ---
 /*
- * "The problem" on paper background. One large Syne statement whose words fill from dim to
- * ink as the section scrolls, then the records flow: the scattered places from the statement
- * sit as large dim words, and dense dotted streams carry their records into one real record
- * card. While the statement fills, the words fade and the record turns validated.
- * The flow is adapted from the ThreeUI "Gateway Flow" canvas (scripts/threeui/records-flow.ts).
- * It repeats the statement, so it is aria-hidden.
+ * "The problem" on paper background. One large Syne statement whose words fill from dim to ink
+ * as the section scrolls. Below it, "desk to register": three real-looking fragments (an email
+ * thread, a shared-drive folder, an old tracker spreadsheet) each hand one fact to one Obel-MS
+ * record as the reader scrolls: the expiry date, the current version, the approval. Dot trails
+ * carry each fact (scripts/threeui/desk-flow.ts, adapted from ThreeUI "Gateway Flow").
+ * Claims: the spreadsheet is the tracker Obel-MS replaces, not an import (EDC takes PDF and
+ * images only). The scene repeats the statement, so it is aria-hidden. Names are synthetic.
  */
-// x and y are percentages of the flow box (desktop); the mobile layout stacks them in CSS.
-const places = [
-  { label: 'Inbox', x: 2, y: 8 },
-  { label: 'Shared drive', x: 15, y: 30 },
-  { label: 'Email thread', x: 0, y: 52 },
-  { label: 'Spreadsheet', x: 12, y: 74 },
-  { label: 'Desktop folder', x: 1, y: 92 },
-];
 ---
 <section class="problem-scroll section-y" aria-labelledby="problem-heading">
   <div class="container-x">
@@ -22,28 +15,72 @@ const places = [
       The contract is in someone's inbox. The policy is on a shared drive. The approval is buried in an email thread. Then someone asks for the current version.
     </p>
     <p class="problem-sub t-body mt-8">
-      Obel-MS keeps each document current in one register, and records every approval: who, what and when.
+      Obel-MS turns the pile into one record: the current version, when it expires and who approved it.
     </p>
 
-    <div class="rf" data-records-flow aria-hidden="true">
-      <canvas class="rf-canvas" data-rf-lines></canvas>
-      <canvas class="rf-canvas" data-rf-dots></canvas>
-      {places.map((p) => <span class="rf-word" data-rf-source style={`--x:${p.x}%;--y:${p.y}%`}>{p.label}</span>)}
+    <div class="desk" data-desk aria-hidden="true">
+      <canvas class="desk-dots" data-desk-dots></canvas>
 
-      <div class="rf-card" data-rf-node>
-        <div class="rf-card-top">
-          <span class="rf-type">Data processing agreement</span>
-          <span class="rf-pill"><span class="pill pill-grey rf-pill-wait">In review</span><span class="pill pill-green rf-pill-ok">Validated</span></span>
+      <div class="pile">
+        <!-- Email thread: holds the approval. -->
+        <article class="frag frag-mail" data-frag>
+          <header class="frag-bar"><span class="frag-app">Inbox</span><span class="frag-count tnum">14 messages</span></header>
+          <div class="mail-head">
+            <p class="mail-subj">RE: FW: RE: Ledgerline DPA, signed copy?</p>
+            <p class="mail-from">Pieter van Wyk <span class="tnum">Tue 09:02</span></p>
+          </div>
+          <p class="mail-body">Is v3 the final one? I only have v2 on the drive.</p>
+          <blockquote class="mail-quote"><span class="fact" data-src="approval">Approved, go ahead with v3. Thandi</span></blockquote>
+        </article>
+
+        <!-- Shared drive: holds the current version, among near-duplicates. -->
+        <article class="frag frag-drive" data-frag>
+          <header class="frag-bar"><span class="frag-app">Shared drive</span><span class="frag-path">Legal › Vendors › Ledgerline</span></header>
+          <ul class="drive-list">
+            <li><span class="file-ic"></span><span>DPA_v2.pdf</span></li>
+            <li><span class="file-ic"></span><span>DPA_v3_FINAL.pdf</span></li>
+            <li><span class="file-ic"></span><span class="fact" data-src="version">DPA_v3_FINAL_signed(1).pdf</span></li>
+            <li><span class="file-ic"></span><span>DPA_v3_FINAL_old.pdf</span></li>
+          </ul>
+        </article>
+
+        <!-- Old tracker spreadsheet: holds a doubtful expiry date. -->
+        <article class="frag frag-sheet" data-frag>
+          <header class="frag-bar"><span class="frag-app">Vendor tracker (old).xlsx</span></header>
+          <table class="sheet">
+            <thead><tr><th></th><th>A</th><th>B</th><th>C</th></tr></thead>
+            <tbody>
+              <tr><th>1</th><td>Document</td><td>Expires</td><td>Owner</td></tr>
+              <tr><th>2</th><td>Ledgerline DPA</td><td><span class="fact" data-src="expiry">31/10/27?</span></td><td>Pieter</td></tr>
+              <tr><th>3</th><td>PI cover</td><td>31/03/2027</td><td>Thandi</td></tr>
+              <tr><th>4</th><td>B-220 calibration</td><td class="sheet-err">#REF!</td><td></td></tr>
+            </tbody>
+          </table>
+        </article>
+      </div>
+
+      <!-- The one record. Each field starts as a skeleton and fills when its fact arrives. -->
+      <div class="rec" data-rec>
+        <div class="rec-top">
+          <span class="rec-type">External Document Control</span>
+          <span class="rec-pill"><span class="pill pill-grey rec-wait">Draft</span><span class="pill pill-green rec-ok">Validated</span></span>
         </div>
-        <p class="rf-title">Ledgerline Cloud, version 3</p>
-        <dl class="rf-meta">
+        <div class="field field-title" data-dst="version">
+          <span class="skel"></span>
+          <span class="val">Data processing agreement, version 3</span>
+        </div>
+        <dl class="rec-meta">
           <div><dt>Supplier</dt><dd>Ledgerline Cloud</dd></div>
-          <div><dt>Expiration date</dt><dd class="tnum">2027-10-31</dd></div>
+          <div>
+            <dt>Expiration date</dt>
+            <dd class="field" data-dst="expiry"><span class="skel"></span><span class="val tnum">2027-10-31</span></dd>
+          </div>
         </dl>
-        <p class="rf-audit">
-          <span class="rf-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span class="rf-audit-text"><span><b>Thandi Mokoena</b> approved</span><span class="tnum">2026-10-06 09:14</span></span>
-        </p>
+        <p class="rec-alert">Reminder by email and Teams 30 days before it expires.</p>
+        <div class="field rec-audit" data-dst="approval">
+          <span class="skel"></span>
+          <span class="val"><span class="rec-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3.5 8.5 6.5 11.5 12.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>Thandi Mokoena</b> approved</span><span class="tnum rec-time">2026-10-06 09:14</span></span>
+        </div>
       </div>
     </div>
   </div>
@@ -63,52 +100,98 @@ const places = [
   /* Reduced motion / no-JS fallback: text is simply ink, no per-word span needed. */
   .problem-text :global(.word) { color: #c9c9c2; }
 
-  /* Records flow. The canvases fill the box. The words and the card are real HTML, and the
-     script reads their positions to anchor the streams. */
-  .rf { position: relative; height: clamp(420px, 40vw, 520px); margin-top: clamp(3rem, 6vw, 5rem); touch-action: pan-y; user-select: none; }
-  .rf-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
-  .rf-word { position: absolute; left: var(--x); top: var(--y); transform: translateY(-50%); font-family: var(--font-display); font-weight: 700; font-size: clamp(1.15rem, 2.2vw, 2rem); letter-spacing: -0.03em; line-height: 1; color: #c9c9c2; white-space: nowrap; transition: opacity .6s var(--ease-calm); }
-  .rf:global(.is-on) .rf-word { opacity: .6; }
+  /* ---------- Desk to register ---------- */
+  .desk { position: relative; display: grid; gap: 2.5rem; margin-top: clamp(3rem, 6vw, 5rem); }
+  .desk-dots { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; display: none; }
+  @media (min-width: 1024px) {
+    .desk { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 5rem; align-items: center; min-height: 520px; }
+    .desk-dots { display: block; }
+  }
 
-  .rf-card { position: absolute; right: 0; top: 50%; width: min(380px, 46%); padding: 20px 22px 18px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-soft); transform: translateY(-50%); transition: border-color .6s var(--ease-calm), box-shadow .6s var(--ease-calm); }
-  .rf-card:global(.is-on) { border-color: var(--color-green-border); box-shadow: 0 1px 2px rgb(17 17 16 / .04), 0 18px 50px -18px rgb(22 101 52 / .28); }
-  .rf-card:global(.is-hit) { animation: rf-press .5s var(--ease-out); }
-  @keyframes rf-press { 30% { transform: translateY(-50%) scale(.992); } }
-  .rf-card-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-  .rf-type { font-size: 12.5px; color: var(--color-muted); }
-  .rf-pill { display: grid; justify-items: end; }
-  .rf-pill > * { grid-area: 1 / 1; transition: opacity .4s var(--ease-calm), transform .45s var(--ease-spring); }
-  .rf-pill-ok { opacity: 0; transform: scale(.94); }
-  .rf-card:global(.is-on) .rf-pill-ok { opacity: 1; transform: none; }
-  .rf-card:global(.is-on) .rf-pill-wait { opacity: 0; }
-  .rf-title { margin-top: 10px; font-family: var(--font-display); font-size: clamp(1.15rem, 1.6vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-ink); }
-  .rf-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--color-surface-3); }
-  .rf-meta dt { font-size: 11.5px; color: var(--color-muted); }
-  .rf-meta dd { margin: 2px 0 0; font-size: 13.5px; color: var(--color-ink); }
-  .rf-audit { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--color-surface-2); font-size: 13px; color: var(--color-muted); }
-  .rf-audit b { color: var(--color-ink); font-weight: 600; }
-  .rf-audit-text { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 10px; flex: 1; }
-  .rf-check { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 99px; background: var(--color-line); color: #fff; transition: background-color .5s var(--ease-calm); }
-  .rf-check svg { width: 12px; height: 12px; }
-  .rf-card:global(.is-on) .rf-check { background: var(--color-green); }
-  @media (prefers-reduced-motion: reduce) { .rf-card:global(.is-hit) { animation: none; } }
+  /* The pile: overlapping, slightly turned fragments on desktop; a tidy stack on small screens. */
+  .pile { position: relative; display: grid; gap: 14px; }
+  @media (min-width: 1024px) { .pile { display: block; height: 520px; } }
+  .frag { position: relative; border: 1px solid var(--color-line); border-radius: 12px; background: var(--color-surface); box-shadow: 0 1px 2px rgb(17 17 16 / .04), 0 14px 34px -18px rgb(17 17 16 / .22); font-size: 12.5px; color: var(--color-muted); overflow: hidden; transition: opacity .6s var(--ease-calm); }
+  @media (min-width: 1024px) {
+    .frag { position: absolute; }
+    .frag-mail { left: 0; top: 0; width: 58%; rotate: -1.4deg; z-index: 2; }
+    .frag-drive { right: 0; top: 30%; width: 50%; rotate: 1.2deg; z-index: 1; }
+    .frag-sheet { left: 6%; bottom: 0; width: 60%; rotate: -.8deg; z-index: 2; }
+  }
+  .desk:global(.is-done) .frag { opacity: .55; }
+  .frag-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; height: 32px; padding: 0 12px; border-bottom: 1px solid var(--color-surface-3); background: var(--color-surface-2); font-size: 11.5px; }
+  .frag-app { font-weight: 600; color: var(--color-ink); }
+  .frag-path, .frag-count { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  /* Small screens: the words sit in a column at the top, the card at the bottom. */
-  @media (max-width: 767px) {
-    .rf { height: auto; padding-bottom: 0; }
-    .rf-word { position: relative; left: auto; top: auto; display: block; width: max-content; transform: none; margin-left: calc(var(--x) * .6); font-size: 1.3rem; padding: 9px 0; }
-    .rf-card { position: relative; right: auto; top: auto; width: 100%; margin-top: 110px; transform: none; }
-    @keyframes rf-press { 30% { transform: scale(.992); } }
+  .mail-head { padding: 12px 14px 0; }
+  .mail-subj { font-size: 13.5px; font-weight: 600; color: var(--color-ink); }
+  .mail-from { margin-top: 2px; display: flex; justify-content: space-between; gap: 10px; }
+  .mail-body { padding: 10px 14px 0; color: var(--color-ink); }
+  .mail-quote { margin: 10px 14px 14px; padding-left: 10px; border-left: 2px solid var(--color-line); }
+
+  .drive-list { margin: 0; padding: 6px 0; list-style: none; }
+  .drive-list li { display: flex; align-items: center; gap: 10px; height: 32px; padding: 0 14px; color: var(--color-ink); }
+  .file-ic { flex: none; width: 14px; height: 17px; border: 1px solid var(--color-line-hover); border-radius: 2px 5px 2px 2px; background: var(--color-surface-2); }
+
+  .sheet { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  .sheet th, .sheet td { height: 28px; padding: 0 8px; border: 1px solid var(--color-surface-3); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sheet thead th, .sheet tbody th { background: var(--color-surface-2); font-weight: 500; color: var(--color-muted); text-align: center; }
+  .sheet thead th:first-child, .sheet tbody th { width: 28px; padding: 0; }
+  .sheet tbody td { color: var(--color-ink); }
+  .sheet tbody tr:first-child td { font-weight: 600; }
+  .sheet-err { color: var(--color-red-text) !important; }
+
+  /* A fact: highlighted when it is picked up. */
+  .fact { position: relative; padding: 1px 4px; margin: -1px -4px; border-radius: 4px; transition: background-color .35s var(--ease-calm), box-shadow .35s var(--ease-calm); }
+  .fact:global(.is-lit) { background: var(--color-amber-bg); box-shadow: inset 0 0 0 1px var(--color-amber-border); }
+  .desk:global(.is-done) .fact:global(.is-lit) { background: var(--color-green-bg); box-shadow: inset 0 0 0 1px var(--color-green-border); }
+
+  /* The record. */
+  .rec { position: relative; z-index: 2; padding: 22px 24px 20px; border: 1px solid var(--color-line); border-radius: var(--radius-lg); background: var(--color-surface); box-shadow: var(--shadow-soft); transition: border-color .6s var(--ease-calm), box-shadow .6s var(--ease-calm); }
+  .rec:global(.is-done) { border-color: var(--color-green-border); box-shadow: 0 1px 2px rgb(17 17 16 / .04), 0 22px 60px -22px rgb(22 101 52 / .3); }
+  .rec-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .rec-type { font-size: 12.5px; color: var(--color-muted); }
+  .rec-pill { display: grid; justify-items: end; }
+  .rec-pill > * { grid-area: 1 / 1; transition: opacity .35s var(--ease-calm), transform .45s var(--ease-spring); }
+  .rec-ok { opacity: 0; transform: scale(.94); }
+  .rec:global(.is-done) .rec-ok { opacity: 1; transform: none; }
+  .rec:global(.is-done) .rec-wait { opacity: 0; }
+
+  /* Fields: a skeleton bar, then the value. Opacity and transform only. */
+  .field { position: relative; display: grid; }
+  .field > * { grid-area: 1 / 1; }
+  .skel { align-self: center; height: .7em; width: 70%; border-radius: 4px; background: var(--color-surface-3); transition: opacity .3s var(--ease-calm); }
+  .val { opacity: 0; transform: translateX(-6px); transition: opacity .4s var(--ease-out), transform .5s var(--ease-out); }
+  .field:global(.is-filled) .skel { opacity: 0; }
+  .field:global(.is-filled) .val { opacity: 1; transform: none; }
+  .field-title { margin-top: 12px; font-family: var(--font-display); font-size: clamp(1.2rem, 1.7vw, 1.45rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--color-ink); min-height: 1.75em; }
+  .field-title .skel { height: .8em; width: 82%; }
+  .rec-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0 0; padding-top: 14px; border-top: 1px solid var(--color-surface-3); }
+  .rec-meta dt { font-size: 11.5px; color: var(--color-muted); }
+  .rec-meta dd { margin: 3px 0 0; font-size: 14px; color: var(--color-ink); min-height: 1.3em; }
+  .rec-meta .skel { width: 60%; }
+  .rec-alert { margin-top: 12px; font-size: 12.5px; color: var(--color-muted); }
+  .rec-audit { margin-top: 14px; padding: 11px 12px; border-radius: var(--radius-md); background: var(--color-surface-2); font-size: 13px; color: var(--color-muted); min-height: 46px; }
+  .rec-audit .skel { width: 55%; }
+  .rec-audit .val { display: flex; align-items: center; gap: 10px; }
+  .rec-audit b { color: var(--color-ink); font-weight: 600; }
+  .rec-time { margin-left: auto; white-space: nowrap; }
+  .rec-check { display: grid; place-items: center; flex: none; width: 22px; height: 22px; border-radius: 99px; background: var(--color-green); color: #fff; }
+  .rec-check svg { width: 12px; height: 12px; }
+
+  @media (max-width: 1023px) {
+    .frag-mail { rotate: -.6deg; } .frag-drive { rotate: .5deg; } .frag-sheet { rotate: -.3deg; }
+    .rec-time { display: none; }
   }
 </style>
 
 <script>
   import { onReady, gsap, SplitText, reduced } from '../../scripts/motion';
-  import { mountRecordsFlow } from '../../scripts/threeui/records-flow';
+  import { mountDeskFlow } from '../../scripts/threeui/desk-flow';
 
   onReady(() => {
-    const flow = document.querySelector<HTMLElement>('[data-records-flow]');
-    if (flow) mountRecordsFlow(flow);
+    const desk = document.querySelector<HTMLElement>('[data-desk]');
+    if (desk) mountDeskFlow(desk);
 
     const el = document.querySelector<HTMLElement>('[data-problem-text]');
     if (!el) return;

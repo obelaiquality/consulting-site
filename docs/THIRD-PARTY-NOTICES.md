@@ -5,7 +5,7 @@
 Two canvas effects on this site are adapted from the open-source ThreeUI Community library
 (https://github.com/MengTo/threeui):
 
-- `src/scripts/threeui/records-flow.ts`, adapted from "Gateway Flow" (Constellation Field).
+- `src/scripts/threeui/desk-flow.ts`, adapted from "Gateway Flow" (Constellation Field).
 - `src/scripts/threeui/engraved-rosette.ts`, adapted from "Engraved Certificate".
 
 Both are rewritten for this site's palette, motion rules and accessibility rules. No ThreeUI
