@@ -1,10 +1,21 @@
 ---
 import Money from '../ui/Money.astro';
 import AppWindow from '../mock/AppWindow.astro';
-import { edcDocs } from '../../data/demo';
+import type { Tone } from '../../data/demo';
 import { plans } from '../../data/site';
 const fromPlan = plans.filter((p) => p.status === 'live').reduce((a, b) => (b.price.ZAR < a.price.ZAR ? b : a));
-const rows = edcDocs.slice(0, 7);
+// Mixed industries on purpose: legal, food, healthcare, construction and services documents in
+// one register. The columns are the real EDC Register columns. Every company name is synthetic.
+type Row = { title: string; type: string; product: string; supplier: string; cert: string; expiry: string; status: string; tone: Tone };
+const rows: Row[] = [
+  { title: 'Professional Indemnity Certificate - 2027', type: 'Insurance Certificate', product: 'Professional indemnity', supplier: 'Harbour Brokers', cert: 'KU-PI-88213', expiry: '2027-03-31', status: 'Active', tone: 'green' },
+  { title: 'Data Processing Agreement - Ledgerline Cloud', type: 'Contract', product: 'Cloud hosting', supplier: 'Ledgerline Cloud', cert: 'DPA-2291', expiry: '2026-10-21', status: 'Expiring soon', tone: 'amber' },
+  { title: 'Halal Certificate - Sunflower Lecithin', type: 'Halal Certificate', product: 'Sunflower Lecithin', supplier: 'Aurelia Biotech', cert: 'HAL-60417', expiry: '2027-09-18', status: 'Active', tone: 'green' },
+  { title: 'Calibration Certificate - Balance B-220', type: 'Calibration Certificate', product: 'Analytical balance', supplier: 'Precision Metrology', cert: 'CAL-55104', expiry: '2026-09-30', status: 'Expired', tone: 'red' },
+  { title: 'Public Liability Insurance - Ridgeway Civils', type: 'Insurance Certificate', product: 'Site works', supplier: 'Ridgeway Civils', cert: 'RC-PL-7781', expiry: '2027-06-30', status: 'Active', tone: 'green' },
+  { title: 'Wholesale Licence - Cape Medical Supplies', type: 'Licence', product: 'Medical consumables', supplier: 'Cape Medical Supplies', cert: 'LIC-30957', expiry: '2028-01-31', status: 'Active', tone: 'green' },
+  { title: 'Information Security Policy - Brightdesk IT', type: 'Policy', product: 'Managed IT services', supplier: 'Brightdesk IT', cert: '', expiry: '', status: 'No expiry set', tone: 'grey' },
+];
 ---
 <section class="hero relative overflow-x-clip pb-24 pt-[calc(var(--nav-h)+clamp(3.5rem,9vw,7.5rem))]" data-hero>
   <div aria-hidden="true" class="hero-bg paper-grid"></div>
@@ -76,7 +87,7 @@ const rows = edcDocs.slice(0, 7);
           </span>
           <div>
             <p class="text-[12px] font-semibold text-ink leading-tight">Expires in 14 days</p>
-            <p class="text-[11px] text-muted leading-tight">Vegan statement for Xanthan Gum</p>
+            <p class="text-[11px] text-muted leading-tight">Data processing agreement, Ledgerline Cloud</p>
           </div>
         </div>
         <p class="mt-2.5 text-[11px] text-muted">Flagged in today's expiry digest by email and Teams.</p>
@@ -85,11 +96,11 @@ const rows = edcDocs.slice(0, 7);
       <div class="callout callout-b" data-callout aria-hidden="true">
         <p class="text-[11px] font-medium text-muted">AI Suggestions</p>
         <div class="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[11px]">
-          <span class="text-muted">Type</span><span class="text-ink">Halal Certificate</span>
-          <span class="text-muted">Cert. No.</span><span class="text-ink tnum">HAL-60417</span>
-          <span class="text-muted">Expiry</span><span class="text-ink tnum">2027-09-18</span>
+          <span class="text-muted">Type</span><span class="text-ink">Insurance Certificate</span>
+          <span class="text-muted">Cert. No.</span><span class="text-ink tnum">KU-PI-88213</span>
+          <span class="text-muted">Expiry</span><span class="text-ink tnum">2027-03-31</span>
         </div>
-        <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-green"><span class="size-1.5 rounded-full bg-green"></span>Filed to Meridian › Aurelia Biotech › Sunflower Lecithin</div>
+        <div class="mt-2.5 flex items-center gap-1.5 text-[11px] text-green"><span class="size-1.5 rounded-full bg-green"></span>Filed to Harbour Brokers › Kestrel Underwriters › Professional indemnity</div>
       </div>
 
       <div class="callout callout-c" data-callout aria-hidden="true">
