@@ -156,6 +156,10 @@ Sources: Anthropic frontend-design, Vercel Web Interface Guidelines, Emil Kowals
 - Say honestly that the register files documents by supplier, manufacturer and product, so it suits documents that come from outside the organisation. Do not claim a configurable folder hierarchy, hideable register columns, or AI tuned for contracts (no "clause extraction" or "renewal terms").
 - Two canvas effects are adapted from the MIT ThreeUI Community library (`src/scripts/threeui/`, notice in `docs/THIRD-PARTY-NOTICES.md`). They follow every motion rule in section 4: pause off screen, static frame for reduced motion, aria-hidden.
 
+**Updates (7 Oct 2026, spreadsheets, verified in obel-ms-saas code):**
+- You may say: attach Excel or CSV files to workflow records (up to 50 MB each); export the audit trail and report tables to CSV; import customer and product master data and Sample Tracker sales data from Excel or CSV.
+- Do not claim: Excel or CSV upload into External Document Control (it takes PDF and images only), spreadsheet preview, AI or OCR reading of spreadsheets, import of an existing register or expiry tracker, or an EDC Register export. On the site, a spreadsheet stands for the tracker Obel-MS replaces. Our onboarding team imports the documents themselves (capped per plan).
+
 **Never claim:**
 - That the software is "ISO 9001 certified" or "compliant". Say "supports ISO 9001 compliance" or "built around clause 7.5". Only organisations get certified.
 - SSO, SAML or MFA.
